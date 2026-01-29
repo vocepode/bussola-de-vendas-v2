@@ -1,11 +1,14 @@
-import { eq } from "drizzle-orm";
+import { eq, and, desc, asc, isNull } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { 
+  InsertUser, users, modules, lessons, exercises, submissions, 
+  lessonProgress, moduleProgress, badges, userBadges, resources,
+  Module, Lesson, Exercise, Submission, ModuleProgress, LessonProgress
+} from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
-// Lazily create the drizzle instance so local tooling can run without a DB.
 export async function getDb() {
   if (!_db && process.env.DATABASE_URL) {
     try {
@@ -17,6 +20,8 @@ export async function getDb() {
   }
   return _db;
 }
+
+// ========== USER MANAGEMENT ==========
 
 export async function upsertUser(user: InsertUser): Promise<void> {
   if (!user.openId) {
@@ -89,4 +94,265 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// ========== MODULES ==========
+
+export async function getAllModules(): Promise<Module[]> {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(modules).where(eq(modules.isActive, true)).orderBy(asc(modules.orderIndex));
+}
+
+export async function getModuleBySlug(slug: string): Promise<Module | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(modules).where(eq(modules.slug, slug)).limit(1);
+  return result[0];
+}
+
+// ========== LESSONS ==========
+
+export async function getLessonsByModuleId(moduleId: number): Promise<Lesson[]> {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(lessons)
+    .where(and(eq(lessons.moduleId, moduleId), eq(lessons.isActive, true)))
+    .orderBy(asc(lessons.orderIndex));
+}
+
+export async function getLessonById(lessonId: number): Promise<Lesson | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(lessons).where(eq(lessons.id, lessonId)).limit(1);
+  return result[0];
+}
+
+// ========== EXERCISES ==========
+
+export async function getExercisesByLessonId(lessonId: number): Promise<Exercise[]> {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(exercises).where(eq(exercises.lessonId, lessonId));
+}
+
+export async function getExerciseById(exerciseId: number): Promise<Exercise | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(exercises).where(eq(exercises.id, exerciseId)).limit(1);
+  return result[0];
+}
+
+// ========== SUBMISSIONS ==========
+
+export async function createSubmission(data: {
+  userId: number;
+  exerciseId: number;
+  answer?: string;
+  fileUrl?: string;
+}): Promise<number> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const [result] = await db.insert(submissions).values({
+    userId: data.userId,
+    exerciseId: data.exerciseId,
+    answer: data.answer,
+    fileUrl: data.fileUrl,
+    status: "submitted",
+  });
+  
+  return result.insertId;
+}
+
+export async function getUserSubmissions(userId: number): Promise<Submission[]> {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(submissions)
+    .where(eq(submissions.userId, userId))
+    .orderBy(desc(submissions.submittedAt));
+}
+
+export async function getSubmissionByUserAndExercise(userId: number, exerciseId: number): Promise<Submission | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(submissions)
+    .where(and(eq(submissions.userId, userId), eq(submissions.exerciseId, exerciseId)))
+    .orderBy(desc(submissions.submittedAt))
+    .limit(1);
+  
+  return result[0];
+}
+
+// ========== LESSON PROGRESS ==========
+
+export async function upsertLessonProgress(data: {
+  userId: number;
+  lessonId: number;
+  status: "not_started" | "in_progress" | "completed";
+}): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const existing = await db.select().from(lessonProgress)
+    .where(and(eq(lessonProgress.userId, data.userId), eq(lessonProgress.lessonId, data.lessonId)))
+    .limit(1);
+  
+  if (existing.length > 0) {
+    const updates: Partial<LessonProgress> = { status: data.status };
+    
+    if (data.status === "in_progress" && !existing[0].startedAt) {
+      updates.startedAt = new Date();
+    }
+    
+    if (data.status === "completed") {
+      updates.completedAt = new Date();
+    }
+    
+    await db.update(lessonProgress)
+      .set(updates)
+      .where(eq(lessonProgress.id, existing[0].id));
+  } else {
+    await db.insert(lessonProgress).values({
+      userId: data.userId,
+      lessonId: data.lessonId,
+      status: data.status,
+      startedAt: data.status !== "not_started" ? new Date() : null,
+      completedAt: data.status === "completed" ? new Date() : null,
+    });
+  }
+}
+
+export async function getUserLessonProgress(userId: number, lessonId: number): Promise<LessonProgress | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+  
+  const result = await db.select().from(lessonProgress)
+    .where(and(eq(lessonProgress.userId, userId), eq(lessonProgress.lessonId, lessonId)))
+    .limit(1);
+  
+  return result[0];
+}
+
+// ========== MODULE PROGRESS ==========
+
+export async function calculateModuleProgress(userId: number, moduleId: number): Promise<number> {
+  const db = await getDb();
+  if (!db) return 0;
+  
+  const moduleLessons = await getLessonsByModuleId(moduleId);
+  if (moduleLessons.length === 0) return 0;
+  
+  const completedLessons = await db.select().from(lessonProgress)
+    .where(and(
+      eq(lessonProgress.userId, userId),
+      eq(lessonProgress.status, "completed")
+    ));
+  
+  const completedLessonIds = new Set(completedLessons.map(p => p.lessonId));
+  const completedCount = moduleLessons.filter(l => completedLessonIds.has(l.id)).length;
+  
+  return Math.round((completedCount / moduleLessons.length) * 100);
+}
+
+export async function upsertModuleProgress(data: {
+  userId: number;
+  moduleId: number;
+  status: "locked" | "in_progress" | "completed";
+  progressPercentage: number;
+}): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const existing = await db.select().from(moduleProgress)
+    .where(and(eq(moduleProgress.userId, data.userId), eq(moduleProgress.moduleId, data.moduleId)))
+    .limit(1);
+  
+  if (existing.length > 0) {
+    const updates: Partial<ModuleProgress> = {
+      status: data.status,
+      progressPercentage: data.progressPercentage,
+    };
+    
+    if (data.status === "in_progress" && !existing[0].startedAt) {
+      updates.startedAt = new Date();
+    }
+    
+    if (data.status === "completed") {
+      updates.completedAt = new Date();
+    }
+    
+    await db.update(moduleProgress)
+      .set(updates)
+      .where(eq(moduleProgress.id, existing[0].id));
+  } else {
+    await db.insert(moduleProgress).values({
+      userId: data.userId,
+      moduleId: data.moduleId,
+      status: data.status,
+      progressPercentage: data.progressPercentage,
+      startedAt: data.status !== "locked" ? new Date() : null,
+      completedAt: data.status === "completed" ? new Date() : null,
+    });
+  }
+}
+
+export async function getUserModuleProgress(userId: number): Promise<ModuleProgress[]> {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(moduleProgress).where(eq(moduleProgress.userId, userId));
+}
+
+// ========== BADGES ==========
+
+export async function getAllBadges() {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(badges);
+}
+
+export async function getUserBadges(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  return await db.select().from(userBadges).where(eq(userBadges.userId, userId));
+}
+
+export async function awardBadge(userId: number, badgeId: number): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  // Check if already awarded
+  const existing = await db.select().from(userBadges)
+    .where(and(eq(userBadges.userId, userId), eq(userBadges.badgeId, badgeId)))
+    .limit(1);
+  
+  if (existing.length === 0) {
+    await db.insert(userBadges).values({ userId, badgeId });
+  }
+}
+
+// ========== RESOURCES ==========
+
+export async function getResourcesByModuleId(moduleId: number | null) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  if (moduleId === null) {
+    return await db.select().from(resources)
+      .where(and(isNull(resources.moduleId), eq(resources.isActive, true)))
+      .orderBy(asc(resources.orderIndex));
+  }
+  
+  return await db.select().from(resources)
+    .where(and(eq(resources.moduleId, moduleId), eq(resources.isActive, true)))
+    .orderBy(asc(resources.orderIndex));
+}
