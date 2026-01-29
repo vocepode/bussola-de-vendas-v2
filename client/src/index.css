@@ -43,13 +43,20 @@
 }
 
 :root {
-  /* Paleta COMPASS */
-  --compass-norte: oklch(0.55 0.22 240);
-  --compass-raio-x: oklch(0.60 0.15 190);
-  --compass-mapa: oklch(0.65 0.18 300);
-  --compass-rota: oklch(0.65 0.20 40);
-  --compass-marco-zero: oklch(0.45 0.05 240);
-  --compass-bonus: oklch(0.60 0.15 145);
+  /* Paleta Oficial COMPASS - VocêPode */
+  --compass-cyan: oklch(0.75 0.15 195);      /* #00D4D4 - Cyan vibrante */
+  --compass-teal: oklch(0.60 0.12 190);      /* #00A0A0 - Teal médio */
+  --compass-blue: oklch(0.50 0.15 240);      /* #0066CC - Azul profundo */
+  --compass-purple: oklch(0.40 0.18 280);    /* #6600CC - Roxo escuro */
+  --compass-dark: oklch(0.25 0.05 260);      /* #1A1A40 - Azul escuro quase preto */
+  
+  /* Mapeamento para módulos */
+  --compass-marco-zero: var(--compass-dark);
+  --compass-norte: var(--compass-blue);
+  --compass-raio-x: var(--compass-teal);
+  --compass-mapa: var(--compass-purple);
+  --compass-rota: var(--compass-cyan);
+  --compass-bonus: var(--compass-teal);
   
   --primary: var(--color-blue-700);
   --primary-foreground: var(--color-blue-50);
@@ -142,29 +149,29 @@
 }
 
 @layer utilities {
-  /* Gradientes do COMPASS */
+  /* Gradientes Oficiais COMPASS */
+  .gradient-marco-zero {
+    background: linear-gradient(135deg, var(--compass-dark) 0%, oklch(0.20 0.08 260) 100%);
+  }
+  
   .gradient-norte {
-    background: linear-gradient(135deg, oklch(0.60 0.22 240) 0%, oklch(0.65 0.18 200) 100%);
+    background: linear-gradient(135deg, var(--compass-blue) 0%, oklch(0.55 0.18 240) 100%);
   }
   
   .gradient-raio-x {
-    background: linear-gradient(135deg, oklch(0.65 0.18 200) 0%, oklch(0.60 0.15 170) 100%);
+    background: linear-gradient(135deg, var(--compass-teal) 0%, oklch(0.65 0.14 190) 100%);
   }
   
   .gradient-mapa {
-    background: linear-gradient(135deg, oklch(0.65 0.18 300) 0%, oklch(0.70 0.20 330) 100%);
+    background: linear-gradient(135deg, var(--compass-purple) 0%, oklch(0.45 0.20 280) 100%);
   }
   
   .gradient-rota {
-    background: linear-gradient(135deg, oklch(0.70 0.20 40) 0%, oklch(0.65 0.22 20) 100%);
-  }
-  
-  .gradient-marco-zero {
-    background: linear-gradient(135deg, oklch(0.45 0.05 240) 0%, oklch(0.35 0.03 240) 100%);
+    background: linear-gradient(135deg, var(--compass-cyan) 0%, oklch(0.70 0.12 180) 100%);
   }
   
   .gradient-bonus {
-    background: linear-gradient(135deg, oklch(0.60 0.15 145) 0%, oklch(0.55 0.18 160) 100%);
+    background: linear-gradient(135deg, var(--compass-teal) 0%, oklch(0.55 0.15 185) 100%);
   }
   
   /* Animações */

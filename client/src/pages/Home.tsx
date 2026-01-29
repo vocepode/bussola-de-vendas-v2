@@ -34,8 +34,8 @@ export default function Home() {
         <div className="container py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             {/* Logo/Branding */}
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-white mb-4">
-              <Compass className="w-10 h-10" />
+            <div className="inline-flex items-center justify-center mb-4">
+              <img src="/logo-compass.png" alt="Método COMPASS" className="w-24 h-24" />
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
@@ -113,9 +113,7 @@ export default function Home() {
         <div className="container py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full gradient-norte flex items-center justify-center text-white">
-                <Compass className="w-5 h-5" />
-              </div>
+              <img src="/logo-compass.png" alt="Método COMPASS" className="w-10 h-10" />
               <div>
                 <h1 className="text-xl font-bold">Bússola de Vendas</h1>
                 <p className="text-sm text-muted-foreground">Método COMPASS</p>
