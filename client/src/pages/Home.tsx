@@ -58,23 +58,12 @@ export default function Home() {
       </header>
 
       {/* Hero Banner */}
-      <div 
-        className="relative h-[300px] bg-cover bg-center overflow-hidden"
-        style={{ backgroundImage: 'url(/bg-topographic.png)' }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-background/40" />
-        
-        <div className="relative container h-full flex items-center justify-between">
-          {/* Left: VocêPode Logo */}
-          <img src="/logos/compass-white.png" alt="COMPASS" className="w-48 h-auto" />
-          
-          {/* Center: COMPASS Icon */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            <img src="/logos/compass-white.png" alt="COMPASS" className="w-32 h-32" />
-          </div>
-          
-
-        </div>
+      <div className="relative h-[300px] overflow-hidden">
+        <img 
+          src="/banner-hero.png" 
+          alt="COMPASS - A bússola para vender mais" 
+          className="w-full h-full object-cover"
+        />
       </div>
 
       {/* User Identification */}
