@@ -40,7 +40,7 @@ export default function Home() {
         <div className="container py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <img src="/logos/compass-white.png" alt="Método COMPASS" className="w-10 h-10" />
+              <img src="/logos/vcp-color.png" alt="VocêPode" className="w-10 h-10" />
               <div>
                 <h1 className="text-xl font-bold">Bússola de Vendas</h1>
                 <p className="text-sm text-muted-foreground">Método COMPASS</p>
@@ -66,29 +66,22 @@ export default function Home() {
         
         <div className="relative container h-full flex items-center justify-between">
           {/* Left: VocêPode Logo */}
-          <img src="/logos/vcp-white.png" alt="VocêPode" className="w-32 h-auto" />
+          <img src="/logos/compass-white.png" alt="COMPASS" className="w-48 h-auto" />
           
           {/* Center: COMPASS Icon */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <img src="/logos/compass-white.png" alt="COMPASS" className="w-32 h-32" />
           </div>
           
-          {/* Right: Title */}
-          <div className="text-right">
-            <p className="text-cyan-400 text-lg mb-2">Implementação</p>
-            <h2 className="text-5xl font-bold text-white mb-2">compass</h2>
-            <p className="text-cyan-400 text-sm">a bússola para vender mais</p>
-          </div>
+
         </div>
       </div>
 
       {/* User Identification */}
       <div className="bg-card border-b">
         <div className="container py-6">
-          <h3 className="text-2xl font-bold mb-2">IMC [vcp.{user?.name?.toLowerCase().split(' ')[0]}] | Bússola de Vendas</h3>
           <p className="text-muted-foreground max-w-3xl">
-            Seu guia estratégico para maximizar resultados e alcançar metas de vendas através da 
-            metodologia COMPASS. Navegue pelas etapas abaixo para progredir.
+            A Bússola é sua principal ferramenta durante a jornada para aprender a vender através da metodologia COMPASS. Navegue pelas etapas abaixo para progredir.
           </p>
         </div>
       </div>
@@ -156,7 +149,7 @@ export default function Home() {
 
         {/* A sua bússola para vender mais */}
         <section>
-          <h2 className="text-3xl font-bold mb-6 text-cyan-400">A sua bússola para vender mais</h2>
+          <h2 className="text-3xl font-bold mb-6 text-cyan-400">Seu sistema de implementação dos pilares do método COMPASS</h2>
           <div className="grid md:grid-cols-2 gap-6">
             {/* NORTE */}
             <Link href="/modulo/norte">
