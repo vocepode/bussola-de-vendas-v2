@@ -78,9 +78,13 @@
 - [x] Criar exercício de upload de perfil Instagram
 - [x] Criar checklist detalhado com 5 itens
 - [x] Mapear e popular conteúdo do módulo NORTE
-- [ ] Mapear e popular conteúdo do módulo RAIO-X
-- [ ] Mapear e popular conteúdo do módulo MAPA
-- [ ] Mapear e popular conteúdo do módulo ROTA
+- [x] Mapear e popular conteúdo do módulo RAIO-X
+  - [x] Acessar links do Notion do RAIO-X
+  - [x] Mapear estrutura de lições e exercícios
+  - [x] Criar script de população
+  - [x] Testar conteúdo populado
+- [x] Mapear e popular conteúdo do módulo MAPA
+- [x] Mapear e popular conteúdo do módulo ROTA
 - [x] Testar navegação completa com conteúdo real
 
 
