@@ -241,3 +241,4 @@
 - [ ] Testar em Dark e Light mode
 
 - [x] Aumentar tamanho da logo COMPASS na página de login
+- [x] Ajustar espaçamento vertical entre logo COMPASS e texto "Sistema de Implementação"

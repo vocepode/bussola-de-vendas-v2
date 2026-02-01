@@ -38,7 +38,7 @@ export default function Login() {
         {/* Left Side - Branding */}
         <div className="flex-1 flex flex-col justify-between p-8 md:p-12 lg:p-16">
           {/* Logo COMPASS + Subtitle */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             <img 
               src="/logos/compass-white.png" 
               alt="Método COMPASS" 
