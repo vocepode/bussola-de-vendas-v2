@@ -40,17 +40,16 @@ export default function Home() {
         <div className="container py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <img src="/logos/vcp-color.png" alt="VocêPode" className="w-10 h-10" />
+              <img src="/logos/vcp-black.png" alt="VocêPode" className="w-10 h-10" />
               <div>
-                <h1 className="text-xl font-bold">Bússola de Vendas</h1>
-                <p className="text-sm text-muted-foreground">Método COMPASS</p>
+                <h1 className="text-xl font-bold">VocêPodeVenderMais</h1>
               </div>
             </div>
             
             <div className="flex items-center gap-4">
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-medium">{user?.name}</p>
-                <p className="text-xs text-muted-foreground">{user?.email}</p>
+                <img src="/logos/vcp-black.png" alt="VocêPode" className="h-8 w-auto" />
+                <p className="text-xs text-muted-foreground">suporte@vocepodevendermais.com.br</p>
               </div>
             </div>
           </div>
