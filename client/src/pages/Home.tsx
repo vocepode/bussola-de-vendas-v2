@@ -3,9 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
-import { Compass, Award, BookOpen, TrendingUp, Loader2, ArrowRight, Lightbulb, FileText, KanbanSquare } from "lucide-react";
+import { Compass, Award, BookOpen, TrendingUp, Loader2, Play, CheckCircle, Medal, Info } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Home() {
@@ -28,24 +27,20 @@ export default function Home() {
   }
 
   if (!isAuthenticated) {
-    // Redirecionar para página de login dedicada
     window.location.href = "/login";
     return null;
   }
 
-
-
-  // Dashboard do aluno autenticado
   const progressMap = new Map(moduleProgress?.map(p => [p.moduleId, p]) || []);
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-white sticky top-0 z-10 shadow-sm">
+      <header className="border-b bg-card sticky top-0 z-10 shadow-sm">
         <div className="container py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <img src="/logo-compass.png" alt="Método COMPASS" className="w-10 h-10" />
+              <img src="/logos/compass-white.png" alt="Método COMPASS" className="w-10 h-10" />
               <div>
                 <h1 className="text-xl font-bold">Bússola de Vendas</h1>
                 <p className="text-sm text-muted-foreground">Método COMPASS</p>
@@ -62,140 +57,156 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Hero Banner */}
+      <div 
+        className="relative h-[300px] bg-cover bg-center overflow-hidden"
+        style={{ backgroundImage: 'url(/bg-topographic.png)' }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-background/40" />
+        
+        <div className="relative container h-full flex items-center justify-between">
+          {/* Left: VocêPode Logo */}
+          <img src="/logos/vcp-white.png" alt="VocêPode" className="w-32 h-auto" />
+          
+          {/* Center: COMPASS Icon */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <img src="/logos/compass-white.png" alt="COMPASS" className="w-32 h-32" />
+          </div>
+          
+          {/* Right: Title */}
+          <div className="text-right">
+            <p className="text-cyan-400 text-lg mb-2">Implementação</p>
+            <h2 className="text-5xl font-bold text-white mb-2">compass</h2>
+            <p className="text-cyan-400 text-sm">a bússola para vender mais</p>
+          </div>
+        </div>
+      </div>
+
+      {/* User Identification */}
+      <div className="bg-card border-b">
+        <div className="container py-6">
+          <h3 className="text-2xl font-bold mb-2">IMC [vcp.{user?.name?.toLowerCase().split(' ')[0]}] | Bússola de Vendas</h3>
+          <p className="text-muted-foreground max-w-3xl">
+            Seu guia estratégico para maximizar resultados e alcançar metas de vendas através da 
+            metodologia COMPASS. Navegue pelas etapas abaixo para progredir.
+          </p>
+        </div>
+      </div>
+
       {/* Main Content */}
-      <main className="container py-8 space-y-8">
-        {/* Progress Overview */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Seu Progresso</CardTitle>
-            <CardDescription>Acompanhe sua jornada no Método COMPASS</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">Progresso Geral</span>
-                <span className="text-2xl font-bold text-primary">{dashboard?.overallProgress || 0}%</span>
-              </div>
-              <Progress value={dashboard?.overallProgress || 0} className="h-3" />
-            </div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t">
-              <div className="text-center">
-                <p className="text-3xl font-bold text-primary">{dashboard?.submissionsCount || 0}</p>
-                <p className="text-sm text-muted-foreground">Exercícios</p>
-              </div>
-              <div className="text-center">
-                <p className="text-3xl font-bold text-primary">{dashboard?.badgesCount || 0}</p>
-                <p className="text-sm text-muted-foreground">Badges</p>
-              </div>
-              <div className="text-center">
-                <p className="text-3xl font-bold text-primary">{moduleProgress?.filter(p => p.status === "completed").length || 0}</p>
-                <p className="text-sm text-muted-foreground">Módulos</p>
-              </div>
-              <div className="text-center">
-                <p className="text-3xl font-bold text-primary">{modules?.length || 0}</p>
-                <p className="text-sm text-muted-foreground">Total</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Ferramentas de Conteúdo */}
-        <div>
-          <h2 className="text-2xl font-bold mb-6">Ferramentas de Conteúdo</h2>
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
-            <Link href="/ideias">
-              <Card className="h-full transition-all hover:shadow-lg cursor-pointer border-2 hover:border-cyan-400">
-                <CardHeader>
-                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white mb-4">
-                    <Lightbulb className="w-8 h-8" />
-                  </div>
-                  <CardTitle className="text-xl">💡 Ideias de Conteúdo</CardTitle>
-                  <CardDescription className="mt-2">
-                    Organize suas ideias e transforme-as em roteiros prontos para produção
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
-
-            <Link href="/matriz">
-              <Card className="h-full transition-all hover:shadow-lg cursor-pointer border-2 hover:border-purple-400">
-                <CardHeader>
-                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white mb-4">
-                    <KanbanSquare className="w-8 h-8" />
-                  </div>
-                  <CardTitle className="text-xl">📋 Matriz de Conteúdo</CardTitle>
-                  <CardDescription className="mt-2">
-                    Visualize e gerencie todo o pipeline de produção em Kanban
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
-
-            <Card className="h-full transition-all opacity-60">
-              <CardHeader>
-                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-slate-400 to-slate-500 flex items-center justify-center text-white mb-4">
-                  <FileText className="w-8 h-8" />
+      <main className="container py-12 space-y-12">
+        {/* Iniciando sua jornada */}
+        <section>
+          <h2 className="text-3xl font-bold mb-6">Iniciando sua jornada</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Comece Aqui */}
+            <Card className="transition-all hover:shadow-lg hover:border-cyan-400 cursor-pointer">
+              <CardHeader className="text-center">
+                <div className="w-20 h-20 rounded-full bg-card border-2 border-border flex items-center justify-center mx-auto mb-4">
+                  <Play className="w-10 h-10 text-cyan-400" />
                 </div>
-                <CardTitle className="text-xl">📅 Calendário</CardTitle>
+                <CardTitle className="text-xl">▶️ Comece Aqui</CardTitle>
                 <CardDescription className="mt-2">
-                  Em breve: Visualização mensal e programação de publicações
+                  Introdução ao sistema e primeiros passos
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            {/* O Método COMPASS */}
+            <Card className="transition-all hover:shadow-lg hover:border-purple-400 cursor-pointer">
+              <CardHeader className="text-center">
+                <div className="w-20 h-20 rounded-full bg-card border-2 border-border flex items-center justify-center mx-auto mb-4 relative">
+                  <Compass className="w-10 h-10 text-purple-400" />
+                  <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
+                    <CheckCircle className="w-4 h-4 text-white" />
+                  </div>
+                </div>
+                <CardTitle className="text-xl">🧭 Conheça o Método COMPASS</CardTitle>
+                <CardDescription className="mt-2">
+                  Entenda a metodologia completa
+                </CardDescription>
+              </CardHeader>
+            </Card>
+
+            {/* Marco Zero */}
+            <Card className="transition-all hover:shadow-lg hover:border-blue-400 cursor-pointer">
+              <CardHeader className="text-center">
+                <div className="w-20 h-20 rounded-full bg-card border-2 border-border flex items-center justify-center mx-auto mb-4">
+                  <Medal className="w-10 h-10 text-blue-400" />
+                </div>
+                <CardTitle className="text-xl">🎯 Marco Zero</CardTitle>
+                <CardDescription className="mt-2">
+                  Checklist obrigatório para começar
                 </CardDescription>
               </CardHeader>
             </Card>
           </div>
-        </div>
 
-        {/* Modules Grid */}
-        <div>
-          <h2 className="text-2xl font-bold mb-6">Módulos do COMPASS</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {modules?.map((module) => {
-              const progress = progressMap.get(module.id);
-              const isLocked = progress?.status === "locked";
-              const isCompleted = progress?.status === "completed";
-              
-              return (
-                <Link key={module.id} href={`/modulo/${module.slug}`}>
-                  <Card className={`h-full transition-all hover:shadow-lg ${isLocked ? "opacity-60" : "cursor-pointer"}`}>
-                    <CardHeader>
-                      <div className={`w-16 h-16 rounded-xl gradient-${module.slug.replace(/-/g, '-')} flex items-center justify-center text-white mb-4`}>
-                        <Compass className="w-8 h-8" />
-                      </div>
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <CardTitle className="text-xl">{module.title}</CardTitle>
-                          <CardDescription className="mt-2">{module.description}</CardDescription>
-                        </div>
-                        {isCompleted && (
-                          <Badge variant="default" className="ml-2">
-                            <Award className="w-3 h-3 mr-1" />
-                            Completo
-                          </Badge>
-                        )}
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Progresso</span>
-                          <span className="font-semibold">{progress?.progressPercentage || 0}%</span>
-                        </div>
-                        <Progress value={progress?.progressPercentage || 0} className="h-2" />
-                      </div>
-                      
-                      {isLocked && (
-                        <p className="text-xs text-muted-foreground mt-4">
-                          🔒 Complete o módulo anterior para desbloquear
-                        </p>
-                      )}
-                    </CardContent>
-                  </Card>
-                </Link>
-              );
-            })}
+          {/* Callout */}
+          <div className="mt-6 p-4 border-l-4 border-cyan-400 bg-card rounded-r-lg">
+            <div className="flex items-start gap-3">
+              <Info className="w-5 h-5 text-cyan-400 mt-0.5 flex-shrink-0" />
+              <p className="text-sm">
+                Após <strong>completar o checklist do Marco Zero</strong>, comece a sua jornada pela 
+                Bússola de Vendas pelo <strong className="text-cyan-400">NORTE</strong>
+              </p>
+            </div>
           </div>
-        </div>
+        </section>
+
+        {/* A sua bússola para vender mais */}
+        <section>
+          <h2 className="text-3xl font-bold mb-6 text-cyan-400">A sua bússola para vender mais</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* NORTE */}
+            <Link href="/modulo/norte">
+              <Card className="h-[280px] relative overflow-hidden cursor-pointer transition-all hover:scale-[1.02] group">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-purple-500 to-cyan-500" />
+                <CardContent className="relative h-full flex flex-col items-center justify-center text-white p-8">
+                  <img src="/logos/compass-white.png" alt="NORTE" className="w-24 h-24 mb-6 opacity-90 group-hover:scale-110 transition-transform" />
+                  <h3 className="text-4xl font-bold mb-2">NORTE</h3>
+                  <p className="text-lg opacity-90">Estratégia | NORTE</p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* RAIO-X */}
+            <Link href="/modulo/raio-x">
+              <Card className="h-[280px] relative overflow-hidden cursor-pointer transition-all hover:scale-[1.02] group">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400" />
+                <CardContent className="relative h-full flex flex-col items-center justify-center text-white p-8">
+                  <img src="/logos/compass-white.png" alt="RAIO-X" className="w-24 h-24 mb-6 opacity-90 group-hover:scale-110 transition-transform" />
+                  <h3 className="text-4xl font-bold mb-2">RAIO-X</h3>
+                  <p className="text-lg opacity-90">Estratégia | RAIO-X</p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* MAPA */}
+            <Link href="/modulo/mapa">
+              <Card className="h-[280px] relative overflow-hidden cursor-pointer transition-all hover:scale-[1.02] group">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-teal-500 to-cyan-500" />
+                <CardContent className="relative h-full flex flex-col items-center justify-center text-white p-8">
+                  <img src="/logos/compass-white.png" alt="MAPA" className="w-24 h-24 mb-6 opacity-90 group-hover:scale-110 transition-transform" />
+                  <h3 className="text-4xl font-bold mb-2">MAPA</h3>
+                  <p className="text-lg opacity-90">Conteúdo | MAPA</p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* ROTA */}
+            <Link href="/modulo/rota">
+              <Card className="h-[280px] relative overflow-hidden cursor-pointer transition-all hover:scale-[1.02] group">
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 via-blue-500 to-blue-600" />
+                <CardContent className="relative h-full flex flex-col items-center justify-center text-white p-8">
+                  <img src="/logos/compass-white.png" alt="ROTA" className="w-24 h-24 mb-6 opacity-90 group-hover:scale-110 transition-transform" />
+                  <h3 className="text-4xl font-bold mb-2">ROTA</h3>
+                  <p className="text-lg opacity-90">Performance | ROTA</p>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+        </section>
       </main>
     </div>
   );

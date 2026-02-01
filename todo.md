@@ -242,3 +242,13 @@
 
 - [x] Aumentar tamanho da logo COMPASS na página de login
 - [x] Ajustar espaçamento vertical entre logo COMPASS e texto "Sistema de Implementação"
+
+
+## Redesign Completo da Home
+
+- [ ] Criar wireframe da nova estrutura
+- [x] Implementar banner hero com fundo topográfico e nome do aluno
+- [x] Criar seção "Iniciando sua jornada" (Comece Aqui, Método COMPASS, Marco Zero)
+- [x] Redesenhar cards de módulos com gradientes vibrantes
+- [ ] Mover Ideias e Matriz para dentro do módulo MAPA
+- [x] Adicionar callout de orientação após Marco Zero
