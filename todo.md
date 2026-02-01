@@ -253,3 +253,4 @@
 - [ ] Mover Ideias e Matriz para dentro do módulo MAPA
 - [x] Adicionar callout de orientação após Marco Zero
 - [x] Substituir imagens dos módulos pelas capas oficiais (17.png=NORTE, 18.png=RAIO-X, 19.png=MAPA, 20.png=ROTA)
+- [x] Atualizar Home.tsx para usar imagens dos módulos ao invés de gradientes CSS

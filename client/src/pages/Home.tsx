@@ -138,48 +138,28 @@ export default function Home() {
             {/* NORTE */}
             <Link href="/modulo/norte">
               <Card className="h-[280px] relative overflow-hidden cursor-pointer transition-all hover:scale-[1.02] group">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-purple-500 to-cyan-500" />
-                <CardContent className="relative h-full flex flex-col items-center justify-center text-white p-8">
-                  <img src="/logos/compass-white.png" alt="NORTE" className="w-24 h-24 mb-6 opacity-90 group-hover:scale-110 transition-transform" />
-                  <h3 className="text-4xl font-bold mb-2">NORTE</h3>
-                  <p className="text-lg opacity-90">Estratégia | NORTE</p>
-                </CardContent>
+                <img src="/modulo_norte.png" alt="NORTE" className="absolute inset-0 w-full h-full object-cover" />
               </Card>
             </Link>
 
             {/* RAIO-X */}
             <Link href="/modulo/raio-x">
               <Card className="h-[280px] relative overflow-hidden cursor-pointer transition-all hover:scale-[1.02] group">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400" />
-                <CardContent className="relative h-full flex flex-col items-center justify-center text-white p-8">
-                  <img src="/logos/compass-white.png" alt="RAIO-X" className="w-24 h-24 mb-6 opacity-90 group-hover:scale-110 transition-transform" />
-                  <h3 className="text-4xl font-bold mb-2">RAIO-X</h3>
-                  <p className="text-lg opacity-90">Estratégia | RAIO-X</p>
-                </CardContent>
+                <img src="/modulo_raiox.png" alt="RAIO-X" className="absolute inset-0 w-full h-full object-cover" />
               </Card>
             </Link>
 
             {/* MAPA */}
             <Link href="/modulo/mapa">
               <Card className="h-[280px] relative overflow-hidden cursor-pointer transition-all hover:scale-[1.02] group">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-teal-500 to-cyan-500" />
-                <CardContent className="relative h-full flex flex-col items-center justify-center text-white p-8">
-                  <img src="/logos/compass-white.png" alt="MAPA" className="w-24 h-24 mb-6 opacity-90 group-hover:scale-110 transition-transform" />
-                  <h3 className="text-4xl font-bold mb-2">MAPA</h3>
-                  <p className="text-lg opacity-90">Conteúdo | MAPA</p>
-                </CardContent>
+                <img src="/modulo_mapa.png" alt="MAPA" className="absolute inset-0 w-full h-full object-cover" />
               </Card>
             </Link>
 
             {/* ROTA */}
             <Link href="/modulo/rota">
               <Card className="h-[280px] relative overflow-hidden cursor-pointer transition-all hover:scale-[1.02] group">
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500 via-blue-500 to-blue-600" />
-                <CardContent className="relative h-full flex flex-col items-center justify-center text-white p-8">
-                  <img src="/logos/compass-white.png" alt="ROTA" className="w-24 h-24 mb-6 opacity-90 group-hover:scale-110 transition-transform" />
-                  <h3 className="text-4xl font-bold mb-2">ROTA</h3>
-                  <p className="text-lg opacity-90">Performance | ROTA</p>
-                </CardContent>
+                <img src="/modulo_rota.png" alt="ROTA" className="absolute inset-0 w-full h-full object-cover" />
               </Card>
             </Link>
           </div>
