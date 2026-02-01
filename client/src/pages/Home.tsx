@@ -5,7 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
-import { Compass, Award, BookOpen, TrendingUp, Loader2, ArrowRight } from "lucide-react";
+import { Compass, Award, BookOpen, TrendingUp, Loader2, ArrowRight, Lightbulb, FileText, KanbanSquare } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Home() {
@@ -167,6 +167,52 @@ export default function Home() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Ferramentas de Conteúdo */}
+        <div>
+          <h2 className="text-2xl font-bold mb-6">Ferramentas de Conteúdo</h2>
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <Link href="/ideias">
+              <Card className="h-full transition-all hover:shadow-lg cursor-pointer border-2 hover:border-cyan-400">
+                <CardHeader>
+                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white mb-4">
+                    <Lightbulb className="w-8 h-8" />
+                  </div>
+                  <CardTitle className="text-xl">💡 Ideias de Conteúdo</CardTitle>
+                  <CardDescription className="mt-2">
+                    Organize suas ideias e transforme-as em roteiros prontos para produção
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+
+            <Link href="/matriz">
+              <Card className="h-full transition-all hover:shadow-lg cursor-pointer border-2 hover:border-purple-400">
+                <CardHeader>
+                  <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white mb-4">
+                    <KanbanSquare className="w-8 h-8" />
+                  </div>
+                  <CardTitle className="text-xl">📋 Matriz de Conteúdo</CardTitle>
+                  <CardDescription className="mt-2">
+                    Visualize e gerencie todo o pipeline de produção em Kanban
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </Link>
+
+            <Card className="h-full transition-all opacity-60">
+              <CardHeader>
+                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-slate-400 to-slate-500 flex items-center justify-center text-white mb-4">
+                  <FileText className="w-8 h-8" />
+                </div>
+                <CardTitle className="text-xl">📅 Calendário</CardTitle>
+                <CardDescription className="mt-2">
+                  Em breve: Visualização mensal e programação de publicações
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+        </div>
 
         {/* Modules Grid */}
         <div>

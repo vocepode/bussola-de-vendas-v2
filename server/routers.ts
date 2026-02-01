@@ -48,6 +48,14 @@ export const appRouter = router({
         return await db.getLessonById(input.lessonId);
       }),
     
+    getProgress: protectedProcedure
+      .input(z.object({ lessonId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const progress = await db.getUserLessonProgress(ctx.user.id, input.lessonId);
+        // Retornar objeto padrão se não houver progresso
+        return progress || { status: "not_started" as const, userId: ctx.user.id, lessonId: input.lessonId };
+      }),
+    
     markProgress: protectedProcedure
       .input(z.object({
         lessonId: z.number(),
@@ -80,12 +88,6 @@ export const appRouter = router({
         }
         
         return { success: true };
-      }),
-    
-    getProgress: protectedProcedure
-      .input(z.object({ lessonId: z.number() }))
-      .query(async ({ ctx, input }) => {
-        return await db.getUserLessonProgress(ctx.user.id, input.lessonId);
       }),
   }),
 

@@ -186,3 +186,9 @@
 - [x] Implementar filtros por funil
 - [ ] Implementar filtros por plataforma, tema, estratégia, progresso
 - [x] Adicionar indicadores visuais de deadline
+
+
+## Bugs a Corrigir
+
+- [x] Corrigir query lessons.getProgress retornando undefined para lição 60016
+- [x] Adicionar navegação visível para sistema de Ideias/Roteiros/Matriz na Home
