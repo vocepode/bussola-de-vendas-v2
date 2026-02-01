@@ -93,3 +93,96 @@
 - [x] Substituir ícone atual pelo logo da VocêPode
 - [x] Atualizar gradientes dos módulos com cores oficiais
 - [x] Testar nova identidade visual
+
+
+## Revisão Completa de Conteúdo
+
+- [ ] Revisar MAPA explorando todos os links clicáveis internos
+  - [ ] Acessar instruções detalhadas de Editorias e Temas
+  - [ ] Capturar exemplos e templates
+  - [ ] Verificar vídeos tutoriais embutidos
+- [ ] Atualizar conteúdo do MAPA com detalhes completos
+- [ ] Revisar Marco Zero com todos os links internos
+- [ ] Revisar NORTE com todos os links internos
+- [ ] Revisar RAIO-X com todos os links internos
+- [ ] Revisar ROTA com todos os links internos
+- [ ] Atualizar todos os módulos com conteúdo detalhado
+
+
+## Correções Críticas de Conteúdo
+
+### MAPA - Prioridade ALTA
+- [x] Adicionar estrutura completa de tabelas de Editorias (Nome, Por quê, Contexto)
+- [x] Adicionar estrutura de tabelas de Temas (Nome, Contexto, Editoria)
+- [x] Adicionar visualização "Temas por Editoria"
+- [x] Implementar estrutura de Funil (C1-Topo, C2-Meio, C3-Fundo) em Ideias
+- [x] Adicionar Matriz de Conteúdo (calendário editorial)
+
+### Marco Zero - Prioridade MÉDIA
+- [ ] Atualizar checklist final com itens corretos
+- [ ] Adicionar contextos às perguntas de reflexão
+
+### NORTE - Prioridade MÉDIA
+- [ ] Adicionar explicações de Matrioska (Mercado, Nicho, Subnicho, Segmento)
+- [ ] Adicionar instruções detalhadas do Laddering
+- [ ] Adicionar template de Proposta de Valor
+
+### RAIO-X - Prioridade MÉDIA
+- [ ] Adicionar tabela estruturada de análise de concorrentes
+- [ ] Adicionar tabela de referências de Branding
+
+### ROTA - Prioridade MÉDIA
+- [ ] Adicionar tabela de acompanhamento mensal de métricas
+- [ ] Adicionar estrutura detalhada de Planejamento de Vendas
+
+
+## Sistema de Ideias de Conteúdo e Roteiros Integrados
+
+### Schema e Banco de Dados
+- [x] Criar tabela `contentIdeas` com campos (tema, tópico, funil, formato, etc.)
+- [x] Criar tabela `contentScripts` (roteiros) com campos dinâmicos
+- [x] Criar tabela `scriptFields` para armazenar campos JSON por tipo de roteiro
+- [x] Adicionar campos de Laddering (atributos, benefícios) aos roteiros
+- [x] Criar relacionamentos entre Ideias → Roteiros → Editorias/Temas
+
+### APIs tRPC
+- [x] Criar procedure `contentIdeas.create` (criar ideia)
+- [x] Criar procedure `contentIdeas.list` (listar ideias)
+- [x] Criar procedure `contentIdeas.update` (atualizar ideia)
+- [x] Criar procedure `contentScripts.create` (criar roteiro)
+- [x] Criar procedure `contentScripts.get` (buscar roteiro com campos dinâmicos)
+- [x] Criar procedure `contentScripts.update` (atualizar roteiro e progresso Kanban)
+- [x] Criar procedure `contentMatrix.getByFunnel` (buscar por C1/C2/C3)
+- [x] Criar testes unitários completos (17 testes passando)
+
+### Interface de Ideias
+- [x] Criar página de listagem de Ideias de Conteúdo
+- [x] Implementar formulário de criação de Ideia
+- [x] Adicionar seleção de Tema (dropdown com temas criados no MAPA)
+- [x] Adicionar seleção de Tópico (Dicas, Principais Desejos, Perguntas Comuns, Mitos, Histórias, Erros Comuns)
+- [x] Adicionar seleção de Funil (C1/C2/C3)
+- [x] Implementar lógica de Formato baseado em Funil (C1: Imagem/Vídeo Curto, C2: Carrossel/Vídeo, C3: Carrossel/Vídeo)
+
+### Editor de Roteiros Dinâmicos
+- [x] Criar página de edição de Roteiro
+- [x] Implementar campos de metadados (deadline planejamento, estratégia, plataforma)
+- [x] Integrar seleção de Laddering (atributos, benefícios funcionais, benefícios emocionais do NORTE)
+- [x] Adicionar campo Meta do Funil (Seguidores, Branding, Leads, Venda, Autoridade, Quebrar Objeção, Inspirar, Prova Social)
+- [x] Implementar Progresso Matriz (Kanban): Ideia, A Fazer, Planejando Roteiro, Gravação, Design, Aprovação, Programado, Publicado
+- [x] Implementar campos dinâmicos baseados em tipo de roteiro (Vídeo: 4 seções, Carrossel: 10 cards, Estático: 2 elementos)
+- [ ] Adicionar seção de Avaliação Pós-Publicação (O que foi Bom / O que foi Ruim)
+- [ ] Implementar upload de capa/thumb do vídeo
+- [ ] Adicionar seção de Referências
+- [ ] Adicionar campo deadline conteúdo
+- [ ] Adicionar campo data post
+- [ ] Adicionar campo link post
+
+### Matriz de Conteúdo (Kanban)
+- [x] Criar página Matriz de Conteúdo
+- [x] Implementar Kanban com colunas de progresso (Ideia, A Fazer, Planejando, Gravação, Design, Aprovação, Programado, Publicado)
+- [x] Criar views filtradas por Funil (1. C1 - Topo, 2. C2 - Meio, 3. C3 - Fundo, 4. Geral)
+- [ ] Implementar drag-and-drop entre colunas do Kanban
+- [x] Adicionar cards com informações resumidas (título, tema, tópico, formato, plataforma, deadline)
+- [x] Implementar filtros por funil
+- [ ] Implementar filtros por plataforma, tema, estratégia, progresso
+- [x] Adicionar indicadores visuais de deadline

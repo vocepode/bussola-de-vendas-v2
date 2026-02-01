@@ -3,7 +3,8 @@ import { drizzle } from "drizzle-orm/mysql2";
 import { 
   InsertUser, users, modules, lessons, exercises, submissions, 
   lessonProgress, moduleProgress, badges, userBadges, resources,
-  Module, Lesson, Exercise, Submission, ModuleProgress, LessonProgress
+  Module, Lesson, Exercise, Submission, ModuleProgress, LessonProgress,
+  contentIdeas, contentScripts, ContentIdea, ContentScript, InsertContentIdea, InsertContentScript
 } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
@@ -355,4 +356,146 @@ export async function getResourcesByModuleId(moduleId: number | null) {
   return await db.select().from(resources)
     .where(and(eq(resources.moduleId, moduleId), eq(resources.isActive, true)))
     .orderBy(asc(resources.orderIndex));
+}
+
+
+// ========== CONTENT IDEAS & SCRIPTS ==========
+
+/**
+ * Criar nova ideia de conteúdo
+ */
+export async function createContentIdea(idea: InsertContentIdea) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const [result] = await db.insert(contentIdeas).values(idea);
+  return result.insertId;
+}
+
+/**
+ * Listar ideias de conteúdo do usuário
+ */
+export async function listContentIdeas(userId: number, filters?: {
+  funnel?: "c1" | "c2" | "c3";
+  format?: string;
+  theme?: string;
+}) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  const conditions = [eq(contentIdeas.userId, userId)];
+  
+  if (filters?.funnel) {
+    conditions.push(eq(contentIdeas.funnel, filters.funnel));
+  }
+  
+  const results = await db.select().from(contentIdeas).where(and(...conditions));
+  return results;
+}
+
+/**
+ * Buscar ideia por ID
+ */
+export async function getContentIdeaById(id: number, userId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const results = await db
+    .select()
+    .from(contentIdeas)
+    .where(and(eq(contentIdeas.id, id), eq(contentIdeas.userId, userId)))
+    .limit(1);
+  
+  return results[0] || null;
+}
+
+/**
+ * Atualizar ideia de conteúdo
+ */
+export async function updateContentIdea(id: number, userId: number, data: Partial<InsertContentIdea>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db
+    .update(contentIdeas)
+    .set(data)
+    .where(and(eq(contentIdeas.id, id), eq(contentIdeas.userId, userId)));
+}
+
+/**
+ * Criar roteiro para uma ideia
+ */
+export async function createContentScript(script: InsertContentScript) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  const [result] = await db.insert(contentScripts).values(script);
+  return result.insertId;
+}
+
+/**
+ * Buscar roteiro por ID da ideia
+ */
+export async function getContentScriptByIdeaId(contentIdeaId: number, userId: number) {
+  const db = await getDb();
+  if (!db) return null;
+  
+  const results = await db
+    .select()
+    .from(contentScripts)
+    .where(and(
+      eq(contentScripts.contentIdeaId, contentIdeaId),
+      eq(contentScripts.userId, userId)
+    ))
+    .limit(1);
+  
+  return results[0] || null;
+}
+
+/**
+ * Atualizar roteiro
+ */
+export async function updateContentScript(id: number, userId: number, data: Partial<InsertContentScript>) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  
+  await db
+    .update(contentScripts)
+    .set(data)
+    .where(and(eq(contentScripts.id, id), eq(contentScripts.userId, userId)));
+}
+
+/**
+ * Listar roteiros com suas ideias (para Matriz de Conteúdo)
+ */
+export async function listContentScriptsWithIdeas(userId: number, filters?: {
+  funnel?: "c1" | "c2" | "c3";
+  progressStatus?: string;
+  platform?: string;
+}) {
+  const db = await getDb();
+  if (!db) return [];
+  
+  // Query base juntando scripts com ideias
+  const results = await db
+    .select({
+      script: contentScripts,
+      idea: contentIdeas,
+    })
+    .from(contentScripts)
+    .innerJoin(contentIdeas, eq(contentScripts.contentIdeaId, contentIdeas.id))
+    .where(eq(contentScripts.userId, userId));
+  
+  // Filtrar no código (MySQL não suporta filtros complexos em JSON facilmente)
+  let filtered = results;
+  
+  if (filters?.funnel) {
+    filtered = filtered.filter(r => r.idea.funnel === filters.funnel);
+  }
+  
+  if (filters?.progressStatus) {
+    filtered = filtered.filter(r => r.script.progressStatus === filters.progressStatus);
+  }
+  
+  return filtered;
 }

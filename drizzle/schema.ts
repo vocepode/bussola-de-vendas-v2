@@ -158,6 +158,121 @@ export const resources = mysqlTable("resources", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
+/**
+ * Ideias de Conteúdo (MAPA - Matriz de Conteúdo)
+ * Cada ideia representa um conteúdo que será criado
+ */
+export const contentIdeas = mysqlTable("contentIdeas", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  title: varchar("title", { length: 500 }).notNull(), // título da ideia de conteúdo
+  theme: varchar("theme", { length: 255 }), // tema relacionado (do MAPA)
+  topic: mysqlEnum("topic", [
+    "dicas",
+    "principais_desejos",
+    "perguntas_comuns",
+    "mitos",
+    "historias",
+    "erros_comuns",
+    "feedbacks",
+    "diferencial_marca",
+    "nossos_produtos"
+  ]).notNull(), // tópico de conteúdo
+  funnel: mysqlEnum("funnel", ["c1", "c2", "c3"]).notNull(), // C1-Topo, C2-Meio, C3-Fundo
+  format: mysqlEnum("format", ["video_curto", "video", "carrossel", "imagem", "estatico", "live", "stories"]).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+/**
+ * Roteiros de Conteúdo (ligados às Ideias)
+ * Cada roteiro tem campos dinâmicos baseados no formato
+ */
+export const contentScripts = mysqlTable("contentScripts", {
+  id: int("id").autoincrement().primaryKey(),
+  contentIdeaId: int("contentIdeaId").notNull(),
+  userId: int("userId").notNull(),
+  
+  // Metadados do roteiro
+  deadlinePlanning: timestamp("deadlinePlanning"), // deadline do planejamento
+  strategy: mysqlEnum("strategy", ["vendas", "atracao", "autoridade", "branding"]), // estratégia
+  
+  // Integração com Laddering (NORTE)
+  ladderingAttributes: json("ladderingAttributes").$type<string[]>(), // atributos selecionados
+  ladderingFunctionalBenefits: json("ladderingFunctionalBenefits").$type<string[]>(), // benefícios funcionais
+  ladderingEmotionalBenefits: json("ladderingEmotionalBenefits").$type<string[]>(), // benefícios emocionais
+  
+  // Meta e progresso
+  funnelGoal: mysqlEnum("funnelGoal", [
+    "seguidores",
+    "branding",
+    "leads",
+    "venda",
+    "autoridade",
+    "quebrar_objecao",
+    "inspirar",
+    "gerar_leads",
+    "prova_social"
+  ]),
+  progressStatus: mysqlEnum("progressStatus", [
+    "ideia",
+    "a_fazer",
+    "planejando_roteiro",
+    "gravacao",
+    "design",
+    "aprovacao",
+    "programado",
+    "publicado"
+  ]).default("ideia").notNull(),
+  
+  // Plataformas e datas
+  platforms: json("platforms").$type<string[]>(), // ["instagram", "tiktok", "youtube", "linkedin", "facebook"]
+  deadlineContent: timestamp("deadlineContent"), // deadline do conteúdo
+  postDate: timestamp("postDate"), // data de publicação
+  postLink: varchar("postLink", { length: 500 }), // link do post publicado
+  
+  // Campos dinâmicos do roteiro (JSON flexível baseado no formato)
+  scriptFields: json("scriptFields").$type<{
+    // Para VÍDEO
+    capa?: string;
+    headline?: string;
+    gancho?: string;
+    conteudo?: string;
+    fechamento?: string;
+    legenda?: string;
+    thumbUrl?: string;
+    
+    // Para CARROSSEL
+    card1_capa?: string;
+    card2_contracapa?: string;
+    card3_gancho?: string;
+    card4?: string;
+    card5?: string;
+    card6?: string;
+    card7?: string;
+    card8?: string;
+    card9_transicao?: string;
+    card10_fechamento?: string;
+    
+    // Para ESTÁTICO
+    imagemDesign?: string;
+    
+    // Campos comuns
+    objetivo?: string;
+    tempoVideo?: string;
+    sentimentos?: string[];
+    quantidadeCards?: number;
+  }>(),
+  
+  // Avaliação pós-publicação
+  evaluationGood: text("evaluationGood"), // o que foi bom
+  evaluationBad: text("evaluationBad"), // o que foi ruim
+  references: text("references"), // referências usadas
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
 // Relations
 export const modulesRelations = relations(modules, ({ many, one }) => ({
   lessons: many(lessons),
@@ -194,6 +309,25 @@ export const submissionsRelations = relations(submissions, ({ one }) => ({
   }),
 }));
 
+export const contentIdeasRelations = relations(contentIdeas, ({ one, many }) => ({
+  user: one(users, {
+    fields: [contentIdeas.userId],
+    references: [users.id],
+  }),
+  scripts: many(contentScripts),
+}));
+
+export const contentScriptsRelations = relations(contentScripts, ({ one }) => ({
+  contentIdea: one(contentIdeas, {
+    fields: [contentScripts.contentIdeaId],
+    references: [contentIdeas.id],
+  }),
+  user: one(users, {
+    fields: [contentScripts.userId],
+    references: [users.id],
+  }),
+}));
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
@@ -210,3 +344,7 @@ export type ModuleProgress = typeof moduleProgress.$inferSelect;
 export type Badge = typeof badges.$inferSelect;
 export type UserBadge = typeof userBadges.$inferSelect;
 export type Resource = typeof resources.$inferSelect;
+export type ContentIdea = typeof contentIdeas.$inferSelect;
+export type InsertContentIdea = typeof contentIdeas.$inferInsert;
+export type ContentScript = typeof contentScripts.$inferSelect;
+export type InsertContentScript = typeof contentScripts.$inferInsert;

@@ -4,6 +4,9 @@ import NotFound from "@/pages/NotFound";
 import Home from "@/pages/Home";
 import Module from "@/pages/Module";
 import Lesson from "@/pages/Lesson";
+import ContentIdeas from "@/pages/ContentIdeas";
+import ScriptEditor from "@/pages/ScriptEditor";
+import ContentMatrix from "@/pages/ContentMatrix";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -14,6 +17,9 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/modulo/:slug" component={Module} />
       <Route path="/licao/:id" component={Lesson} />
+      <Route path="/ideias" component={ContentIdeas} />
+      <Route path="/roteiro/:ideaId" component={ScriptEditor} />
+      <Route path="/matriz" component={ContentMatrix} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

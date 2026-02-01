@@ -190,6 +190,130 @@ export const appRouter = router({
       };
     }),
   }),
+
+  contentIdeas: router({
+    create: protectedProcedure
+      .input(z.object({
+        title: z.string(),
+        theme: z.string().optional(),
+        topic: z.enum(["dicas", "principais_desejos", "perguntas_comuns", "mitos", "historias", "erros_comuns", "feedbacks", "diferencial_marca", "nossos_produtos"]),
+        funnel: z.enum(["c1", "c2", "c3"]),
+        format: z.enum(["video_curto", "video", "carrossel", "imagem", "estatico", "live", "stories"]),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const ideaId = await db.createContentIdea({
+          userId: ctx.user.id,
+          title: input.title,
+          theme: input.theme || null,
+          topic: input.topic,
+          funnel: input.funnel,
+          format: input.format,
+        });
+        return { id: ideaId };
+      }),
+
+    list: protectedProcedure
+      .input(z.object({
+        funnel: z.enum(["c1", "c2", "c3"]).optional(),
+        format: z.enum(["video_curto", "video", "carrossel", "imagem", "estatico", "live", "stories"]).optional(),
+        theme: z.string().optional(),
+      }).optional())
+      .query(async ({ ctx, input }) => {
+        return await db.listContentIdeas(ctx.user.id, input);
+      }),
+
+    getById: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .query(async ({ ctx, input }) => {
+        return await db.getContentIdeaById(input.id, ctx.user.id);
+      }),
+
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        title: z.string().optional(),
+        theme: z.string().optional(),
+        topic: z.enum(["dicas", "principais_desejos", "perguntas_comuns", "mitos", "historias", "erros_comuns", "feedbacks", "diferencial_marca", "nossos_produtos"]).optional(),
+        funnel: z.enum(["c1", "c2", "c3"]).optional(),
+        format: z.enum(["video_curto", "video", "carrossel", "imagem", "estatico", "live", "stories"]).optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { id, ...data } = input;
+        await db.updateContentIdea(id, ctx.user.id, data);
+        return { success: true };
+      }),
+  }),
+
+  contentScripts: router({
+    create: protectedProcedure
+      .input(z.object({
+        contentIdeaId: z.number(),
+        deadlinePlanning: z.string().optional(),
+        strategy: z.enum(["vendas", "atracao", "autoridade", "branding"]).optional(),
+        ladderingAttributes: z.array(z.string()).optional(),
+        ladderingFunctionalBenefits: z.array(z.string()).optional(),
+        ladderingEmotionalBenefits: z.array(z.string()).optional(),
+        funnelGoal: z.enum(["seguidores", "branding", "leads", "venda", "autoridade", "quebrar_objecao", "inspirar", "gerar_leads", "prova_social"]).optional(),
+        progressStatus: z.enum(["ideia", "a_fazer", "planejando_roteiro", "gravacao", "design", "aprovacao", "programado", "publicado"]).optional(),
+        platforms: z.array(z.string()).optional(),
+        scriptFields: z.any().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const scriptId = await db.createContentScript({
+          userId: ctx.user.id,
+          contentIdeaId: input.contentIdeaId,
+          deadlinePlanning: input.deadlinePlanning ? new Date(input.deadlinePlanning) : null,
+          strategy: input.strategy || null,
+          ladderingAttributes: input.ladderingAttributes || null,
+          ladderingFunctionalBenefits: input.ladderingFunctionalBenefits || null,
+          ladderingEmotionalBenefits: input.ladderingEmotionalBenefits || null,
+          funnelGoal: input.funnelGoal || null,
+          progressStatus: input.progressStatus || "ideia",
+          platforms: input.platforms || null,
+          scriptFields: input.scriptFields || null,
+        });
+        return { id: scriptId };
+      }),
+
+    getByIdeaId: protectedProcedure
+      .input(z.object({ contentIdeaId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        return await db.getContentScriptByIdeaId(input.contentIdeaId, ctx.user.id);
+      }),
+
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        deadlinePlanning: z.string().optional(),
+        strategy: z.enum(["vendas", "atracao", "autoridade", "branding"]).optional(),
+        ladderingAttributes: z.array(z.string()).optional(),
+        ladderingFunctionalBenefits: z.array(z.string()).optional(),
+        ladderingEmotionalBenefits: z.array(z.string()).optional(),
+        funnelGoal: z.enum(["seguidores", "branding", "leads", "venda", "autoridade", "quebrar_objecao", "inspirar", "gerar_leads", "prova_social"]).optional(),
+        progressStatus: z.enum(["ideia", "a_fazer", "planejando_roteiro", "gravacao", "design", "aprovacao", "programado", "publicado"]).optional(),
+        platforms: z.array(z.string()).optional(),
+        scriptFields: z.any().optional(),
+      }))
+      .mutation(async ({ ctx, input }) => {
+        const { id, deadlinePlanning, ...rest } = input;
+        const data = {
+          ...rest,
+          deadlinePlanning: deadlinePlanning ? new Date(deadlinePlanning) : undefined,
+        };
+        await db.updateContentScript(id, ctx.user.id, data);
+        return { success: true };
+      }),
+
+    listWithIdeas: protectedProcedure
+      .input(z.object({
+        funnel: z.enum(["c1", "c2", "c3"]).optional(),
+        progressStatus: z.enum(["ideia", "a_fazer", "planejando_roteiro", "gravacao", "design", "aprovacao", "programado", "publicado"]).optional(),
+        platform: z.string().optional(),
+      }).optional())
+      .query(async ({ ctx, input }) => {
+        return await db.listContentScriptsWithIdeas(ctx.user.id, input);
+      }),
+  }),
 });
 
 // Helper para verificar e conceder badges
