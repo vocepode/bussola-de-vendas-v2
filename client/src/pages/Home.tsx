@@ -28,80 +28,12 @@ export default function Home() {
   }
 
   if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-cyan-50">
-        {/* Hero Section */}
-        <div className="container py-16 md:py-24">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            {/* Logo/Branding */}
-            <div className="inline-flex items-center justify-center mb-4">
-              <img src="/logo-compass.png" alt="Método COMPASS" className="w-24 h-24" />
-            </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
-              Bússola de Vendas
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-              Transforme conhecimento em prática, planejamento em ação e inteligência em vendas com o <strong>Método COMPASS</strong>
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-              <Button size="lg" asChild className="text-lg px-8 py-6">
-                <a href={getLoginUrl()}>
-                  Começar Agora
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </a>
-              </Button>
-            </div>
-          </div>
-
-          {/* Features Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-20 max-w-6xl mx-auto">
-            <Card className="border-2 hover:border-blue-200 transition-colors">
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg gradient-norte flex items-center justify-center text-white mb-4">
-                  <Compass className="w-6 h-6" />
-                </div>
-                <CardTitle>NORTE</CardTitle>
-                <CardDescription>Defina sua estratégia de vendas</CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="border-2 hover:border-cyan-200 transition-colors">
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg gradient-raio-x flex items-center justify-center text-white mb-4">
-                  <TrendingUp className="w-6 h-6" />
-                </div>
-                <CardTitle>RAIO-X</CardTitle>
-                <CardDescription>Análise profunda do negócio</CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="border-2 hover:border-purple-200 transition-colors">
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg gradient-mapa flex items-center justify-center text-white mb-4">
-                  <BookOpen className="w-6 h-6" />
-                </div>
-                <CardTitle>MAPA</CardTitle>
-                <CardDescription>Planejamento de conteúdo</CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="border-2 hover:border-orange-200 transition-colors">
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg gradient-rota flex items-center justify-center text-white mb-4">
-                  <Award className="w-6 h-6" />
-                </div>
-                <CardTitle>ROTA</CardTitle>
-                <CardDescription>Performance e métricas</CardDescription>
-              </CardHeader>
-            </Card>
-          </div>
-        </div>
-      </div>
-    );
+    // Redirecionar para página de login dedicada
+    window.location.href = "/login";
+    return null;
   }
+
+
 
   // Dashboard do aluno autenticado
   const progressMap = new Map(moduleProgress?.map(p => [p.moduleId, p]) || []);

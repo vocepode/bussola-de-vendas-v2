@@ -192,3 +192,50 @@
 
 - [x] Corrigir query lessons.getProgress retornando undefined para lição 60016
 - [x] Adicionar navegação visível para sistema de Ideias/Roteiros/Matriz na Home
+
+
+## Redesign Completo - Dark/Light Mode
+
+### Sistema de Temas
+- [ ] Criar paleta de cores Dark/Light baseada em Creators Drive
+- [ ] Atualizar index.css com CSS variables para ambos os temas
+- [ ] Implementar ThemeProvider com toggle Dark/Light
+- [ ] Adicionar persistência de tema no localStorage
+- [ ] Criar componente ThemeToggle (ícone sol/lua)
+
+### Identidade Visual
+- [ ] Integrar logos VocêPode e COMPASS
+- [ ] Atualizar favicon com logo VocêPode
+- [ ] Aplicar tipografia Inter/Poppins
+- [ ] Implementar glassmorphism em cards
+- [ ] Adicionar gradientes e sombras profundas
+
+### Redesign de Páginas
+- [ ] Home - Hero section + cards de ferramentas
+- [ ] Módulos - Cards com progresso visual
+- [ ] Lições - Layout de conteúdo educacional
+- [ ] Exercícios - Interface de resposta
+- [ ] Ideias de Conteúdo - Lista e formulário
+- [ ] Editor de Roteiros - Campos dinâmicos
+- [ ] Matriz Kanban - Colunas de progresso
+- [ ] Painel Admin - Gestão de alunos
+
+### Componentes
+- [ ] Atualizar todos os shadcn/ui components para novo tema
+- [ ] Criar variantes dark/light para badges
+- [ ] Atualizar botões com novos estilos
+- [ ] Redesenhar cards com glassmorphism
+- [ ] Atualizar inputs e selects
+
+
+## Implementação de Login com Nova Identidade Visual
+
+- [x] Criar página de login com fundo topográfico
+- [x] Adicionar logo COMPASS em destaque
+- [x] Adicionar texto "Sistema de Implementação"
+- [x] Adicionar logo VocêPode como assinatura
+- [x] Implementar card de login com glassmorphism
+- [x] Integrar OAuth Google existente
+- [x] Adicionar ThemeToggle na página de login
+- [ ] Adicionar ThemeToggle no header da aplicação
+- [ ] Testar em Dark e Light mode
