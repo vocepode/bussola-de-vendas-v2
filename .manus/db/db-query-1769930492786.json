@@ -1,0 +1,76 @@
+{
+  "query": "SELECT l.id, l.title, l.orderIndex, m.slug as moduleSlug \nFROM lessons l \nJOIN modules m ON l.moduleId = m.id \nWHERE m.slug = 'norte' \nORDER BY l.orderIndex;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2KYc1YeAxisra92.root --database A48QXSJ39Mff5dJxBnQcxi --execute SELECT l.id, l.title, l.orderIndex, m.slug as moduleSlug \nFROM lessons l \nJOIN modules m ON l.moduleId = m.id \nWHERE m.slug = 'norte' \nORDER BY l.orderIndex;",
+  "rows": [
+    {
+      "id": "5",
+      "title": "Boas-vindas ao Método COMPASS",
+      "orderIndex": "1",
+      "moduleSlug": "norte"
+    },
+    {
+      "id": "6",
+      "title": "Descobrindo o seu Norte",
+      "orderIndex": "2",
+      "moduleSlug": "norte"
+    },
+    {
+      "id": "7",
+      "title": "Análise do seu Negócio",
+      "orderIndex": "3",
+      "moduleSlug": "norte"
+    },
+    {
+      "id": "8",
+      "title": "Registro de Perfil Atual",
+      "orderIndex": "4",
+      "moduleSlug": "norte"
+    },
+    {
+      "id": "9",
+      "title": "Checklist Final",
+      "orderIndex": "5",
+      "moduleSlug": "norte"
+    },
+    {
+      "id": "30001",
+      "title": "1. Onde Você Está?",
+      "orderIndex": "6",
+      "moduleSlug": "norte"
+    },
+    {
+      "id": "30002",
+      "title": "2. Laddering",
+      "orderIndex": "7",
+      "moduleSlug": "norte"
+    },
+    {
+      "id": "30003",
+      "title": "3. Reflexão sobre Proposta de Valor",
+      "orderIndex": "8",
+      "moduleSlug": "norte"
+    },
+    {
+      "id": "30004",
+      "title": "4. Definição da Proposta de Valor",
+      "orderIndex": "9",
+      "moduleSlug": "norte"
+    },
+    {
+      "id": "30005",
+      "title": "5. Para Quem Você Vende? (Persona)",
+      "orderIndex": "10",
+      "moduleSlug": "norte"
+    },
+    {
+      "id": "30006",
+      "title": "6. Checklist Final do NORTE",
+      "orderIndex": "11",
+      "moduleSlug": "norte"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\torderIndex\tmoduleSlug\n5\tBoas-vindas ao Método COMPASS\t1\tnorte\n6\tDescobrindo o seu Norte\t2\tnorte\n7\tAnálise do seu Negócio\t3\tnorte\n8\tRegistro de Perfil Atual\t4\tnorte\n9\tChecklist Final\t5\tnorte\n30001\t1. Onde Você Está?\t6\tnorte\n30002\t2. Laddering\t7\tnorte\n30003\t3. Reflexão sobre Proposta de Valor\t8\tnorte\n30004\t4. Definição da Proposta de Valor\t9\tnorte\n30005\t5. Para Quem Você Vende? (Persona)\t10\tnorte\n30006\t6. Checklist Final do NORTE\t11\tnorte\n",
+  "stderr": "",
+  "execution_time_ms": 49
+}

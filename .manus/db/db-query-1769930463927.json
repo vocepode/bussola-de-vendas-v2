@@ -1,0 +1,52 @@
+{
+  "query": "SELECT id, slug, title, description, orderIndex FROM modules ORDER BY orderIndex;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2KYc1YeAxisra92.root --database A48QXSJ39Mff5dJxBnQcxi --execute SELECT id, slug, title, description, orderIndex FROM modules ORDER BY orderIndex;",
+  "rows": [
+    {
+      "id": "1",
+      "slug": "marco-zero",
+      "title": "Marco Zero",
+      "description": "Checklist de atividades iniciais obrigatórias antes da Aula Inaugural",
+      "orderIndex": "0"
+    },
+    {
+      "id": "2",
+      "slug": "norte",
+      "title": "NORTE - Estratégia",
+      "description": "Defina a estratégia de vendas e o direcionamento do seu negócio",
+      "orderIndex": "1"
+    },
+    {
+      "id": "3",
+      "slug": "raio-x",
+      "title": "RAIO-X - Análise",
+      "description": "Análise profunda do seu negócio, mercado e concorrência",
+      "orderIndex": "2"
+    },
+    {
+      "id": "4",
+      "slug": "mapa",
+      "title": "MAPA - Conteúdo",
+      "description": "Planejamento estratégico de conteúdo para atrair e converter",
+      "orderIndex": "3"
+    },
+    {
+      "id": "5",
+      "slug": "rota",
+      "title": "ROTA - Performance",
+      "description": "Acompanhamento de métricas e otimização de resultados",
+      "orderIndex": "4"
+    },
+    {
+      "id": "6",
+      "slug": "ferramentas-bonus",
+      "title": "Ferramentas Bônus",
+      "description": "Recursos complementares e materiais de apoio",
+      "orderIndex": "5"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tslug\ttitle\tdescription\torderIndex\n1\tmarco-zero\tMarco Zero\tChecklist de atividades iniciais obrigatórias antes da Aula Inaugural\t0\n2\tnorte\tNORTE - Estratégia\tDefina a estratégia de vendas e o direcionamento do seu negócio\t1\n3\traio-x\tRAIO-X - Análise\tAnálise profunda do seu negócio, mercado e concorrência\t2\n4\tmapa\tMAPA - Conteúdo\tPlanejamento estratégico de conteúdo para atrair e converter\t3\n5\trota\tROTA - Performance\tAcompanhamento de métricas e otimização de resultados\t4\n6\tferramentas-bonus\tFerramentas Bônus\tRecursos complementares e materiais de apoio\t5\n",
+  "stderr": "",
+  "execution_time_ms": 92
+}

@@ -1,0 +1,13 @@
+{
+  "query": "SELECT id FROM modules WHERE slug = 'norte';",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 2KYc1YeAxisra92.root --database A48QXSJ39Mff5dJxBnQcxi --execute SELECT id FROM modules WHERE slug = 'norte';",
+  "rows": [
+    {
+      "id": "2"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\n2\n",
+  "stderr": "",
+  "execution_time_ms": 51
+}

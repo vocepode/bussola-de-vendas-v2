@@ -261,5 +261,14 @@
 - [x] Remover card "Marco Zero" da seção "Iniciando sua jornada"
 - [x] Ajustar layout para 2 cards (Comece Aqui + Conheça o Método COMPASS)
 - [x] Adicionar imagens dos 2 cards introdutórios
-- [ ] Integrar Marco Zero como primeira seção do módulo NORTE
+- [x] Integrar Marco Zero como primeira seção do módulo NORTE
 - [x] Atualizar callout de orientação para refletir nova estrutura
+
+
+## Integração Marco Zero no Módulo NORTE
+
+- [x] Analisar estrutura atual do Marco Zero no banco de dados
+- [x] Verificar ordem das lições no módulo NORTE
+- [x] Reorganizar Marco Zero como primeira seção do NORTE
+- [x] Atualizar interface do módulo NORTE para mostrar Marco Zero primeiro
+- [x] Testar navegação e progressão
