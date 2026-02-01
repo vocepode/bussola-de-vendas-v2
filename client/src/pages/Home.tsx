@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { trpc } from "@/lib/trpc";
-import { Compass, Award, BookOpen, TrendingUp, Loader2, Play, CheckCircle, Medal, Info } from "lucide-react";
+import { Compass, Award, BookOpen, TrendingUp, Loader2, Medal, Info } from "lucide-react";
 import { Link } from "wouter";
 
 export default function Home() {
@@ -75,48 +75,18 @@ export default function Home() {
         {/* Iniciando sua jornada */}
         <section>
           <h2 className="text-3xl font-bold mb-6">Iniciando sua jornada</h2>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
             {/* Comece Aqui */}
-            <Card className="transition-all hover:shadow-lg hover:border-cyan-400 cursor-pointer">
-              <CardHeader className="text-center">
-                <div className="w-20 h-20 rounded-full bg-card border-2 border-border flex items-center justify-center mx-auto mb-4">
-                  <Play className="w-10 h-10 text-cyan-400" />
-                </div>
-                <CardTitle className="text-xl">▶️ Comece Aqui</CardTitle>
-                <CardDescription className="mt-2">
-                  Introdução ao sistema e primeiros passos
-                </CardDescription>
-              </CardHeader>
+            <Card className="transition-all hover:shadow-lg hover:border-cyan-400 cursor-pointer overflow-hidden">
+              <img src="/card_comece_aqui.png" alt="Comece Aqui" className="w-full h-48 object-cover" />
             </Card>
 
             {/* O Método COMPASS */}
-            <Card className="transition-all hover:shadow-lg hover:border-purple-400 cursor-pointer">
-              <CardHeader className="text-center">
-                <div className="w-20 h-20 rounded-full bg-card border-2 border-border flex items-center justify-center mx-auto mb-4 relative">
-                  <Compass className="w-10 h-10 text-purple-400" />
-                  <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
-                    <CheckCircle className="w-4 h-4 text-white" />
-                  </div>
-                </div>
-                <CardTitle className="text-xl">🧭 Conheça o Método COMPASS</CardTitle>
-                <CardDescription className="mt-2">
-                  Entenda a metodologia completa
-                </CardDescription>
-              </CardHeader>
+            <Card className="transition-all hover:shadow-lg hover:border-purple-400 cursor-pointer overflow-hidden">
+              <img src="/card_metodo_compass.png" alt="O Método COMPASS" className="w-full h-48 object-cover" />
             </Card>
 
-            {/* Marco Zero */}
-            <Card className="transition-all hover:shadow-lg hover:border-blue-400 cursor-pointer">
-              <CardHeader className="text-center">
-                <div className="w-20 h-20 rounded-full bg-card border-2 border-border flex items-center justify-center mx-auto mb-4">
-                  <Medal className="w-10 h-10 text-blue-400" />
-                </div>
-                <CardTitle className="text-xl">🎯 Marco Zero</CardTitle>
-                <CardDescription className="mt-2">
-                  Checklist obrigatório para começar
-                </CardDescription>
-              </CardHeader>
-            </Card>
+
           </div>
 
           {/* Callout */}
@@ -124,8 +94,7 @@ export default function Home() {
             <div className="flex items-start gap-3">
               <Info className="w-5 h-5 text-cyan-400 mt-0.5 flex-shrink-0" />
               <p className="text-sm">
-                Após <strong>completar o checklist do Marco Zero</strong>, comece a sua jornada pela 
-                Bússola de Vendas pelo <strong className="text-cyan-400">NORTE</strong>
+                Comece sua jornada pelo <strong className="text-cyan-400">NORTE</strong>, onde você definirá seu posicionamento estratégico e completará o <strong>Marco Zero</strong>
               </p>
             </div>
           </div>

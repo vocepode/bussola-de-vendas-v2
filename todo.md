@@ -255,3 +255,11 @@
 - [x] Substituir imagens dos módulos pelas capas oficiais (17.png=NORTE, 18.png=RAIO-X, 19.png=MAPA, 20.png=ROTA)
 - [x] Atualizar Home.tsx para usar imagens dos módulos ao invés de gradientes CSS
 - [x] Substituir capas dos módulos pelas versões com fontes menores (18.png=NORTE, 19.png=RAIO-X, 20.png=MAPA, 21.png=ROTA)
+
+## Reorganização da Estrutura
+
+- [x] Remover card "Marco Zero" da seção "Iniciando sua jornada"
+- [x] Ajustar layout para 2 cards (Comece Aqui + Conheça o Método COMPASS)
+- [x] Adicionar imagens dos 2 cards introdutórios
+- [ ] Integrar Marco Zero como primeira seção do módulo NORTE
+- [x] Atualizar callout de orientação para refletir nova estrutura
