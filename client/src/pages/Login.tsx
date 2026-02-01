@@ -42,7 +42,7 @@ export default function Login() {
             <img 
               src="/logos/compass-white.png" 
               alt="Método COMPASS" 
-              className="w-64 h-auto"
+              className="w-96 h-auto"
             />
             <p className="text-2xl font-medium text-[#10b981]">
               Sistema de Implementação

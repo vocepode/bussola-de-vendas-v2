@@ -239,3 +239,5 @@
 - [x] Adicionar ThemeToggle na página de login
 - [ ] Adicionar ThemeToggle no header da aplicação
 - [ ] Testar em Dark e Light mode
+
+- [x] Aumentar tamanho da logo COMPASS na página de login
