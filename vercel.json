@@ -1,5 +1,5 @@
 {
   "buildCommand": "yarn build",
   "installCommand": "yarn install",
-  "framework": "next"
+  "framework": "nextjs"
 }
