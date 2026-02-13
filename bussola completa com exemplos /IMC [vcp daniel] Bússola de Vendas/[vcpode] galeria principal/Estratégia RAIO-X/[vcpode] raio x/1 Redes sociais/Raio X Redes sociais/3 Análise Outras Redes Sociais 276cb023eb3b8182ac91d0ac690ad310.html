@@ -1,0 +1,721 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>3. Análise Outras Redes Sociais</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-8182-ac91-d0ac690ad310" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/follow_blue.svg"/></div><h1 class="page-title" dir="auto">3. Análise Outras Redes Sociais</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-812c-9264-d693e27ea7dc" class="quote-large">Caso você tenha outras redes sociais além do Instagram, você pode fazer uma análise semelhante. Deixamos algumas ideias abaixo e o que você precisa levar em consideração em cada rede social para ter um bom perfil.</blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8169-866d-c75035ee8f9c" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-81b4-af4e-cf39f066f279" class=""><mark class="highlight-blue">Aprenda a fazer o exercício!</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8138-b4a7-d8238d641b48"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-blue_background">Se estiver com dúvidas, veja o vídeo abaixo para ver mais detalhes de como preencher essa página:</mark></summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8117-acf9-d0a8b37fcf5d"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought-dialogue_blue.svg"/></div><div style="width:100%"><strong>Tutorial - Preenchendo o RAIO-X - Análise de Outras Redes</strong><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81b5-85a7-d7dbb2f138bd"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/3eaAM8mbeg" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/3eaAM8mbeg</div></div></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8143-bc91-c3a0e288c516" class="">
+</p></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8137-99ce-ef54aabb4e68"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8175-8da1-f70fe1c837bc" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815e-a342-ddd37fbbb8c1" class="">Clique em &#x27;Abrir&#x27; para acessar cada uma das características da sua rede social e veja as instruções sobre o que são boas características para cada uma delas. Em seguida, avalie se sua rede social está atendendo aos critérios e classifique como <strong>Ruim, Médio, Bom ou Incrível.</strong></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8182-847f-f5f044cc1a93" class="">Para os aspectos que precisarem de ajustes, você pode criar ideias dentro do próprio card e trabalhar para melhorá-los.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81b6-8dc1-d8c073099fa7"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c9-89df-e0475dc51f00" class="toggle"><li><details open=""><summary><strong>Instruções para classificação</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8163-ba9c-c758109a3bff" class=""><mark class="highlight-red_background"><strong>Ruim →</strong></mark> Não tem estratégia nem intencionalidade. Preciso ajustar agora!</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8192-867a-cb81ef2de052" class=""><mark class="highlight-yellow_background"><strong>Médio →</strong></mark> Até atende um critério, mas precisa melhorar bastante.,</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ea-8360-e8c6082a49f6" class=""><mark class="highlight-teal_background"><strong>Bom →</strong></mark> Atende a maioria dos critérios, mas posso ajustar para atender a todos.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8174-8d7a-c2270d708a52" class=""><mark class="highlight-purple_background"><strong>Incrível →</strong></mark> Atende a todos os critérios e está muito bacana. Não mudaria nada</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d6-901e-e7accc3a86d2"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8167-8efb-f2b1a2bce502" class=""><mark class="highlight-blue">YouTube</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d1-9778-cae861730e80"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e4-9c63-d761178c89dd" class="">O YouTube é uma plataforma vital para o marketing digital devido ao seu imenso alcance e à preferência dos consumidores por conteúdo em vídeo. No Método 🧭COMPASS, a análise do YouTube é crucial porque:</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81c5-a81e-e293fe26aeb3" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8100-a4e1-eb7765bd0b35" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81aa-b47c-c03ffff0e364" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Visibilidade e Alcance</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e2-acb5-e23aa4a5cef4" class="">O YouTube é o segundo maior motor de busca do mundo, oferecendo uma oportunidade única de alcançar um público amplo e diversificado.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8129-8933-f7aad2e0ec80" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Autoridade de Marca</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81fe-9e43-e72a99a6cd5c" class="">Vídeos bem produzidos e informativos estabelecem a marca como autoridade em seu nicho, construindo confiança com o público.</p></div></details></li></ul></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8103-8504-fc02a8644a5f" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81cd-9e49-fa4cbd8aca59" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Engajamento Profundo</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a0-80a7-ccf94b406422" class="">O formato de vídeo permite um engajamento mais profundo e emocional, facilitando a conexão com a audiência de maneira significativa.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81b1-92d3-dde78d205d9e" class="block-color-blue_background toggle"><li><details open=""><summary><strong>SEO</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81b9-9f2b-ead7c28007e5" class="">Vídeos do YouTube frequentemente aparecem nos resultados de busca do Google, melhorando a visibilidade geral da marca online.</p></div></details></li></ul></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-819f-8465-d3818772aec9"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-818d-8023-d7990f14739f" class=""><strong>Fazendo a análise</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8111-87ce-c7331737eb33"/></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-8147-9c06-db0f9616f452" class="collection-content"><h4 class="collection-title">Raio X | Meu Youtube</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Tema da análise</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/info-alternate_gray.svg" style="width:14px;height:14px;display:block"/></span>Classificação</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/warning_gray.svg" style="width:14px;height:14px;display:block"/></span>O que pode melhorar?</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/checkmark-square_gray.svg" style="width:14px;height:14px;display:block"/></span>Ajustado</th></tr></thead><tbody><tr id="276cb023-eb3b-812d-ae19-e96c397365bd"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Youtube/Sua%20imagem%20de%20perfil%20276cb023eb3b812dae19e96c397365bd.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/user-circle-filled_blue.svg"/>Sua imagem de perfil</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-81af-8696-c114e9f0ec79"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Youtube/Capa%20do%20canal%20276cb023eb3b81af8696c114e9f0ec79.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/photo-landscape_blue.svg"/>Capa do canal</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-8145-8ce6-f5a284df7311"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Youtube/Identificador%20(Nome%20de%20usu%C3%A1rio)%20276cb023eb3b81458ce6f5a284df7311.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/username_blue.svg"/>Identificador (Nome de usuário)</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-813f-a9cb-ffb185817e80"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Youtube/Nome%20do%20canal%20276cb023eb3b813fa9cbffb185817e80.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/user_blue.svg"/>Nome do canal</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-819c-ab93-d5cf191c55bd"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Youtube/Descri%C3%A7%C3%A3o%20276cb023eb3b819cab93d5cf191c55bd.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/stars_blue.svg"/>Descrição</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-814a-b537-d4d9065ed61c"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Youtube/Links%20externos%20276cb023eb3b814ab537d4d9065ed61c.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/link_blue.svg"/>Links externos</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-8169-befa-ec5496f6eaea"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Youtube/V%C3%ADdeo%20em%20destaque%20276cb023eb3b8169befaec5496f6eaea.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie_blue.svg"/>Vídeo em destaque </a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-8156-9e5a-dc64532a598a"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Youtube/CTA%20276cb023eb3b81569e5adc64532a598a.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/megaphone_blue.svg"/>CTA</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-815a-a72a-f5f2b954f97e" class=""><mark class="highlight-blue">TikTok</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-813b-b3b3-f0e96567b235"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8117-a51c-d59916402ac8" class="">O TikTok revolucionou o marketing digital com seu conteúdo dinâmico e formatos criativos. A análise do TikTok é importante no Método 🧭COMPASS por várias razões:</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-812b-a592-e405dd194e6f" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-816f-860b-d71465a6887d" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8168-9139-fae8eb1d8cbe" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Alcance da Geração Z e Millennials</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-814d-b261-c87bc1ded5d9" class="">O TikTok tem uma base de usuários jovem e engajada, oferecendo acesso direto a esses segmentos de mercado.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8150-8e0f-ca135b2562bf" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Viralidade</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8147-aed9-e9dff7771478" class="">O algoritmo do TikTok favorece o conteúdo criativo e original, oferecendo a chance de viralizar e aumentar exponencialmente o alcance.</p></div></details></li></ul></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81e0-9b94-c88f604edfeb" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-814a-a3b9-fa9bd6e85b3b" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Engajamento</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8136-80a0-ddb8b5ccb97c" class="">A natureza interativa e divertida do TikTok incentiva altos níveis de engajamento, fortalecendo a conexão com a audiência.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8196-a0c4-f34d7db2ce11" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Tendências de Mercado</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8197-a01a-d0d1a1cb0723" class="">Participar do TikTok permite que as marcas se mantenham atualizadas com as últimas tendências e comportamentos do consumidor</p></div></details></li></ul></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-816f-a6e1-efac7168fbab"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d7-a4a2-effdfc50331c" class=""><strong>Fazendo a análise</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-811d-9e60-c752bd63f89a"/></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-8137-af5a-ca731dd192b2" class="collection-content"><h4 class="collection-title">Raio X | Meu TikTok</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Tema da análise</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/info-alternate_gray.svg" style="width:14px;height:14px;display:block"/></span>Classificação</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/warning_gray.svg" style="width:14px;height:14px;display:block"/></span>O que pode melhorar?</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/checkmark-square_gray.svg" style="width:14px;height:14px;display:block"/></span>Ajustado</th></tr></thead><tbody><tr id="276cb023-eb3b-81cc-b330-e1cf84d22a93"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20TikTok/Sua%20imagem%20de%20perfil%20276cb023eb3b81ccb330e1cf84d22a93.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/user-circle-filled_blue.svg"/>Sua imagem de perfil</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-812c-8a18-d55c4adba1f9"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20TikTok/O%20seu%20nome%20de%20usu%C3%A1rio%20@%20276cb023eb3b812c8a18d55c4adba1f9.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/username_blue.svg"/>O seu nome de usuário @</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-81ab-b5ad-cb9fd7da72f2"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20TikTok/Bio%20276cb023eb3b81abb5adcb9fd7da72f2.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/stars_blue.svg"/>Bio </a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-815e-a0c9-d18c8af90f07"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20TikTok/Links%20276cb023eb3b815ea0c9d18c8af90f07.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/link_blue.svg"/>Links</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8198-abfa-d3528d2ad5d3" class=""><mark class="highlight-blue">LinkedIn</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81bb-b883-cdf1a8238e87"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a0-adb2-ee45c5151671" class="">O LinkedIn é a principal rede social profissional, tornando-se essencial para marcas B2B e profissionais que buscam estabelecer conexões de negócios. A análise do LinkedIn no Método 🧭COMPASS é importante porque:</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8198-8ee5-d871bd2b0bc3" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81fc-9086-dada35425096" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-815e-89be-dd0fb29a7e13" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Networking Profissional</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8137-ace5-e1f27c15edac" class="">Permite a construção de uma rede de contatos valiosa, abrindo portas para parcerias, clientes e oportunidades de negócios.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81bc-a016-f9872a57811c" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Credibilidade e Autoridade</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811b-971c-cae502e5ecfb" class="">Compartilhar conteúdo relevante e insights da indústria reforça a autoridade da marca e a credibilidade no mercado.</p></div></details></li></ul></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8194-b900-dc70d9fca772" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8168-80cd-e4401695f562" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Geração de Leads</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8183-ac18-d8e1c00aa3a7" class="">O LinkedIn é uma ferramenta poderosa para a geração de leads qualificados, especialmente no setor B2B.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-812f-8133-d33d45d82ae6" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Recrutamento</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8171-b4a4-cf3965777bfd" class="">Além de marketing, o LinkedIn é uma plataforma chave para atrair talentos, refletindo a cultura e os valores da empresa.</p></div></details></li></ul></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8151-939e-f11cc3a0b514"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e2-acf7-fd0854118b48" class=""><strong>Fazendo a análise</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d7-ab23-dc2035652d34"/></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-8101-bb7f-eccb593ae11a" class="collection-content"><h4 class="collection-title">Raio X | Meu Linkedin</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Tema da análise</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/info-alternate_gray.svg" style="width:14px;height:14px;display:block"/></span>Classificação</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/warning_gray.svg" style="width:14px;height:14px;display:block"/></span>O que pode melhorar?</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/checkmark-square_gray.svg" style="width:14px;height:14px;display:block"/></span>Ajustado</th></tr></thead><tbody><tr id="276cb023-eb3b-819f-ac2d-e0a5c1e8f053"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Linkedin/Sua%20imagem%20de%20perfil%20276cb023eb3b819fac2de0a5c1e8f053.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/user-circle-filled_blue.svg"/>Sua imagem de perfil</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-818e-abe1-cd8669441331"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Linkedin/Capa%20276cb023eb3b818eabe1cd8669441331.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/photo-landscape_blue.svg"/>Capa</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-818d-8180-d91e6aea9d92"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Linkedin/O%20seu%20nome%20de%20usu%C3%A1rio%20(URL)%20276cb023eb3b818d8180d91e6aea9d92.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/link_blue.svg"/>O seu nome de usuário (URL)</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-8143-ae72-ea37d9e1675d"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Linkedin/Nome%20da%20empresa%20276cb023eb3b8143ae72ea37d9e1675d.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/user_blue.svg"/>Nome da empresa</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-81ea-8a66-c3d4128acbca"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Linkedin/Slogan%20276cb023eb3b81ea8a66c3d4128acbca.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/gem_blue.svg"/>Slogan</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-8197-8e51-f7346674fc6a"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Linkedin/Bot%C3%A3o%20personalizado%20276cb023eb3b81978e51f7346674fc6a.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/cursor-button_blue.svg"/>Botão personalizado</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-8181-aa57-c07da910b8af"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Linkedin/Destaques%20276cb023eb3b8181aa57c07da910b8af.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/lights_blue.svg"/>Destaques</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-8107-9e36-d6f9e7cb8f1a"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Linkedin/Sobre%20276cb023eb3b81079e36d6f9e7cb8f1a.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/stars_blue.svg"/>Sobre</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8167-8295-e3f06f41ffef" class=""><mark class="highlight-blue">Pinterest</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8152-b29f-ccf3c81a21a8"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c6-ac26-f9196a3e7b72" class="">O Pinterest é uma ferramenta poderosa para inspiração e descoberta, tornando-se essencial para marcas visuais e e-commerce. A análise do Pinterest é importante no Método 🧭COMPASS devido a:</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-816d-a592-c2940386b364" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8197-bb56-e818359e6750" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8167-888c-e6b0fab37ebc" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Intenção de Compra</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8120-93f4-d830ea57d833" class="">Usuários do Pinterest frequentemente buscam inspiração para compras futuras, tornando-o ideal para conversão.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c7-860a-fe2090877054" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Tráfego para o Site</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8127-8696-fd4af140a393" class="">Pins bem otimizados podem direcionar tráfego significativo para o site ou e-commerce da marca.</p></div></details></li></ul></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81a8-8e22-eff32bfdc2e7" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c4-861f-dfdc0d374d49" class="block-color-blue_background toggle"><li><details open=""><summary><strong>SEO</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81eb-96cc-f66c07143b1b" class="">O Pinterest contribui para a estratégia de SEO, ajudando a melhorar a visibilidade online da marca.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ac-ad70-cd416733e0e3" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Longevidade do Conteúdo</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8185-981b-def299818a31" class="">Diferentemente de outras redes sociais, o conteúdo no Pinterest tem uma vida útil mais longa, continuando a gerar engajamento e tráfego ao longo do tempo.</p></div></details></li></ul></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81cf-a6c2-c25d4d2932e4"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-818c-b710-c81cdd86f1cd" class=""><strong>Fazendo a análise</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81b3-91f3-f7eda8092db7"/></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-8199-b009-c911a2d6ddff" class="collection-content"><h4 class="collection-title">Raio X | Meu Linkedin (1)</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Tema da análise</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/info-alternate_gray.svg" style="width:14px;height:14px;display:block"/></span>Classificação</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/warning_gray.svg" style="width:14px;height:14px;display:block"/></span>O que pode melhorar?</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/checkmark-square_gray.svg" style="width:14px;height:14px;display:block"/></span>Ajustado</th></tr></thead><tbody><tr id="276cb023-eb3b-8193-90b9-d3c5fed7ee04"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Linkedin%20(1)/Sua%20imagem%20de%20perfil%20276cb023eb3b819390b9d3c5fed7ee04.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/user-circle-filled_blue.svg"/>Sua imagem de perfil</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-8188-9da0-d44df99d3ab5"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Linkedin%20(1)/Bio%20276cb023eb3b81889da0d44df99d3ab5.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/stars_blue.svg"/>Bio </a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-8172-95b0-f4c3ad471a2c"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Linkedin%20(1)/Boards%20276cb023eb3b817295b0f4c3ad471a2c.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/hanafuda_blue.svg"/>Boards</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr><tr id="276cb023-eb3b-8125-98c8-eec81c62747c"><td class="cell-title"><a href="3%20An%C3%A1lise%20Outras%20Redes%20Sociais/Raio%20X%20Meu%20Linkedin%20(1)/Links%20276cb023eb3b812598c8eec81c62747c.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/link_blue.svg"/>Links</a></td><td class="cell-t&gt;Bq"></td><td class="cell-XE~`"></td><td class="cell-yvdL"><div class="checkbox checkbox-off"></div></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8193-8d62-f24e3a922a62" class="">
+</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81ee-8c5e-d163055cba6e" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8187-8de6-ec34ab042e89" style="width:62.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8167-a984-fbff1924d5ea" class=""><strong>Volte para a página anterior</strong></p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8190-a993-cc04b6fcadb1" style="width:37.49999999999999%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8128-91a4-f4ade0957d88" class=""><strong>Avance para a próxima página</strong></p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8153-93c2-f14234dc84a2"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8175-a112-e5b411a32afb" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81ae-870e-c974a668cf25" style="width:68.75%" class="column"></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8119-bb46-d627bf696583" style="width:31.250000000000007%" class="column"></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8134-9255-c49541c5d4ab"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e5-88f0-d23c580e343a" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8124-86dd-c1130c906a55" class="">
+</p></div><div style="display:contents" dir="auto"><div style="display:contents" dir="auto"><div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8151-8208-d3a18be30a77"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8129-aab5-f16e8a294db2" class="">Bússola de Vendas desenvolvido por <strong><a href="https://www.notion.so/f8156e7b171a4df68144f6293ae02538?pvs=21">Consultoria Inception</a></strong> para VocêPode Mkt Digital</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f6-bdc6-f5ec39f5a795" class=""><br/>Copyright © Castro Américo Digital – Todos os direitos reservados.<br/>É proibida a reprodução total ou parcial dos conteúdos dessa ferramenta.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8184-a344-d6b2fc8359af" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8117-a316-ccb13abc34ff" class=""><a href="http://vocepodevendermais.com.br">Site</a> l <a href="https://hotmart.com/pt-br/club/vocepode-vendermais/products/3939809">Plataforma de Alunos</a> | <a href="https://www.instagram.com/vocepode.vendermais">Instagram</a></p></div></div></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d1-ba00-cf2651607d2d" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,720 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Quais plataformas você deve postar seu conteúdo? </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-81d5-bb83-d89905d89ca6" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/camera-roll-portrait_blue.svg"/></div><h1 class="page-title" dir="auto">Quais plataformas você deve postar seu conteúdo? </h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-8139-963f-d95964814fa4" class="quote-large">Você tem dúvidas sobre onde postar os seu conteúdo? Pra te ajudar criamos essa ferramenta que te ajuda a conhecer um pouco mais sobre as características de cada uma delas e, em seguida, faça nosso quiz para ter uma ideia de onde você poderia investir mais no seu conteúdo ou usar como principal rede de apoio.</blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8166-99c2-e9151b4f3bc1" class=""><em><strong>Lembrando que este questionário é apenas um guia e não deve ser tratado como a palavra final sobre como construir sua estratégia. Esteja sempre atento ao seu público e aos seus objetivos ao tomar essa decisão.</strong></em></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81db-845e-f104064d7de1" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8177-aaab-dcfe065985ba"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c1-8195-cb34d5b2e34c" class="toggle"><li><details open=""><summary><strong>Características de cada rede social </strong></summary><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-818c-9ba0-dd09f2a09124"><div style="font-size:1.5em"><img class="icon" src="Quais%20plataformas%20voc%C3%AA%20deve%20postar%20seu%20conte%C3%BAdo/1298747_instagram_brand_logo_social_media_icon.png"/></div><div style="width:100%"><strong>Instagram</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81c3-adc5-c67e293af43d"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81bf-a6c0-d4891ab09f48" class="bulleted-list"><li style="list-style-type:disc">Variedade de faixa etária alcançada.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81cb-8023-ffab820cc1da" class="bulleted-list"><li style="list-style-type:disc">Conteúdo altamente visual e estético, como fotos e vídeos curtos.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8105-b56b-cffcc312e872" class="bulleted-list"><li style="list-style-type:disc">Uso frequente de hashtags para alcançar novos públicos.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-814e-b71c-f664e51ced0a" class="bulleted-list"><li style="list-style-type:disc">Recursos como Stories e IGTV para compartilhar conteúdo mais informal e interativo.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ee-acc0-efc8d5e220d4" class="bulleted-list"><li style="list-style-type:disc">Ênfase na autenticidade e na construção de uma marca pessoal.</li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81f1-9db7-fa99529b1283"><div style="font-size:1.5em"><img class="icon" src="Quais%20plataformas%20voc%C3%AA%20deve%20postar%20seu%20conte%C3%BAdo/5296521_play_video_vlog_youtube_youtube_logo_icon.png"/></div><div style="width:100%"><strong>YouTube</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8170-9c19-e6e7d686ba39"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8113-9395-c58857e23b68" class="bulleted-list"><li style="list-style-type:disc">Maior retenção do público.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8187-8ca9-e6db991b8e0e" class="bulleted-list"><li style="list-style-type:disc">Vídeos de longa duração, ideais para tutoriais, vlogs, análises e conteúdo educacional.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-814f-b2f3-f3ca0e6be493" class="bulleted-list"><li style="list-style-type:disc">Possibilidade de monetização por meio de anúncios e parcerias.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8130-9a54-cc4b3d7d815c" class="bulleted-list"><li style="list-style-type:disc">Engajamento com a comunidade por meio de comentários e transmissões ao vivo.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8118-969e-de187313a617" class="bulleted-list"><li style="list-style-type:disc">Foco na qualidade de produção e consistência de conteúdo.</li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-818a-a12d-fad0acb3f1cc"><div style="font-size:1.5em"><img class="icon" src="Quais%20plataformas%20voc%C3%AA%20deve%20postar%20seu%20conte%C3%BAdo/4102586_applications_linkedin_social_social_media_icon.png"/></div><div style="width:100%"><strong>LinkedIn</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-812b-8901-c1f642224d82"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e6-8c1f-f72f2e204e9b" class="bulleted-list"><li style="list-style-type:disc">Conteúdo profissional e voltado para negócios, como artigos, postagens de status e vídeos educacionais.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81a7-bb8e-f4964deacdad" class="bulleted-list"><li style="list-style-type:disc">Networking e conexões profissionais são incentivadas.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81dc-b535-dbbd59339bb3" class="bulleted-list"><li style="list-style-type:disc">Ênfase na construção de autoridade e credibilidade no seu campo de atuação.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81f3-8d63-c387f598d9e6" class="bulleted-list"><li style="list-style-type:disc">Abordagem mais formal e direcionada para profissionais e empresas.</li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-813f-b6bd-ed6a89c983aa"><div style="font-size:1.5em"><img class="icon" src="Quais%20plataformas%20voc%C3%AA%20deve%20postar%20seu%20conte%C3%BAdo/317746_facebook_social_media_social_icon.png"/></div><div style="width:100%"><strong>Facebook</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d2-a564-f9865a56f4fa"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8101-b4d7-d3568fdf6009" class="bulleted-list"><li style="list-style-type:disc">Variedade de conteúdo, incluindo texto, imagens, vídeos e links.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8136-899e-cf81360d1ca6" class="bulleted-list"><li style="list-style-type:disc">Ênfase no compartilhamento e na interação com amigos, família e grupos.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8168-9135-de716dfd6b5c" class="bulleted-list"><li style="list-style-type:disc">Possibilidade de criar páginas de negócios para promover sua marca ou empresa.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8167-a444-d75549a1d9f2" class="bulleted-list"><li style="list-style-type:disc">Algoritmo que prioriza conteúdo de qualidade e relevância para o usuário.</li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8145-ac6a-ed1c158e24de"><div style="font-size:1.5em"><img class="icon" src="Quais%20plataformas%20voc%C3%AA%20deve%20postar%20seu%20conte%C3%BAdo/5296503_inspiration_pin_pinned_pinterest_social_network_icon.png"/></div><div style="width:100%"><strong>Pinterest</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8190-a79b-f61c0bc5d6dc"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81f1-8409-f12dd5cf59d1" class="bulleted-list"><li style="list-style-type:disc">Plataforma altamente visual, focada em imagens e gráficos.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8193-8586-dd94601d8896" class="bulleted-list"><li style="list-style-type:disc">Ideal para inspiração e descoberta de ideias, incluindo decoração, moda, culinária e DIY.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-815b-9fd2-da8f8171cda4" class="bulleted-list"><li style="list-style-type:disc">Funcionalidade de &quot;pins&quot; permite salvar e organizar conteúdo favorito.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81b0-bdbf-f4de55a6e97d" class="bulleted-list"><li style="list-style-type:disc">Público predominantemente feminino e voltado para o consumidor.</li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8179-bc93-dab9814fde07"><div style="font-size:1.5em"><img class="icon" src="Quais%20plataformas%20voc%C3%AA%20deve%20postar%20seu%20conte%C3%BAdo/4362958_tiktok_logo_social_media_icon.png"/></div><div style="width:100%"><strong>TikTok</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-816d-adab-f723a2eebbe6"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-812f-8c9c-eeacf20e9340" class="bulleted-list"><li style="list-style-type:disc">Alcance maior entre um público mais jovem (adolescentes e jovens adultos)</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8128-950e-dec9b1d5644c" class="bulleted-list"><li style="list-style-type:disc">Vídeos curtos e altamente criativos, geralmente com música de fundo e efeitos visuais.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-812b-a0f1-c5ffcdbae181" class="bulleted-list"><li style="list-style-type:disc">Conteúdo de entretenimento e humor é muito popular.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-813d-bf16-c84faa1e04e3" class="bulleted-list"><li style="list-style-type:disc">Desafios e tendências virais incentivam o engajamento da comunidade.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8139-9e64-f5be919453ab" class="bulleted-list"><li style="list-style-type:disc">Abordagem informal e autêntica, com foco na espontaneidade e na originalidade.</li></ul></div></div></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d1-a3a9-f5cf04a63b03"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81cb-9531-d57c3dfd5f04" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-817a-a8e6-c9adfdec074c" class=""><mark class="highlight-blue">Questionário sobre Plataformas de conteúdo</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f7-83a9-fb1ffed90a40"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-812f-9051-dd0d191a633c"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Qual é o principal formato do seu conteúdo?</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8199-8a2e-de2cf962450c"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81df-bdcc-c4e6b27a90d2" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">a) Vídeos curtos</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-811f-b84d-dd222ed17cda" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">b) Vídeos longos</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8102-8317-fc1ff76ca9ef" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">c) Imagens e fotos</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e6-b05b-f3c9fa6fb2f3" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">d) Textos e artigos</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8166-97fa-c57cab0128b6" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">e) Infográficos e imagens visuais</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c0-961e-fe47abdff869" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">f) Diversos formatos</span><div class="indented"></div></li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-812d-a37e-d208d00bbf08"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Qual é o seu principal objetivo ao compartilhar conteúdo?</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ae-877f-e80b453c2838"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-818d-b403-e68540f57447" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">a) Entretenimento</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-816f-a7f6-ffadc8eac850" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">b) Educação e informação</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8182-8f2f-f2caf3fd713a" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">c) Networking e conexões profissionais</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-811d-b390-f6263450c0ad" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">d) Geração de leads e vendas</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-811b-8954-e983a9a356c6" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">e) Inspiração e descoberta</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-810a-b322-d3b9c176250d" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">f) Difusão de conhecimento e engajamento</span><div class="indented"></div></li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81f9-abec-f666f92a643a"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Qual é o seu público-alvo principal?</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-812d-836c-d391d430f305"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ee-8b2c-f74dce33eeed" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">a) Adolescentes e jovens adultos</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-819f-8f25-c21acc3b922c" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">b) Pessoas interessadas em conteúdo educativo ou instrutivo</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-814a-917e-c80a69dfbbd6" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">c) Profissionais e empresas</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e1-a2eb-f11418e0e9bd" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">d) Consumidores em geral</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-811a-95ea-f39d92483dc9" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">e) Pessoas em busca de inspiração e criatividade</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-815c-9104-dfa77ead9768" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">f) Diversos públicos-alvo</span><div class="indented"></div></li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81fb-982e-d3d4d043139f"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Com que frequência você pode produzir conteúdo?</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f9-9b86-d792e9e69be5"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81d8-8c5e-deba0b1d5ab0" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">a) Diariamente</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-818c-9b0a-f40c8c52858d" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">b) Semanalmente</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81a9-b6f0-ff1063007146" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">c) Esporadicamente</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8187-b4c8-f836ee44e8a7" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">d) Regularmente, mas com menos frequência do que diariamente</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81dc-8b81-c9caa5fed9ac" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">e) Ocasionalmente</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8199-84ec-cd8d7b59ec77" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">f) Em intervalos variados</span><div class="indented"></div></li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81a0-ad10-ce6419d382df"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Qual é a sua preferência de interação com o público?</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d4-bc2e-f7ba4981286d"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-819e-9063-d479561d121c" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">a) Comentários rápidos e interações em tempo real</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8161-bab4-d9fbc0ab25cf" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">b) Comentários e discussões mais longas e detalhadas</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81d2-b38a-c7f5df7eca6d" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">c) Networking e conexões profissionais</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8103-9cbb-c3e886498e9f" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">d) Feedback direto e interação com os clientes</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c9-bb7e-f04bddea083e" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">e) Likes e compartilhamentos de conteúdo inspirador</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8114-9f61-ce206f8fd73c" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">f) Diversos tipos de interação</span><div class="indented"></div></li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8153-9b9b-f412e1784e96"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Agora some os pontos de suas respostas:</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-817c-a5d0-f352b778e536"/></div><div style="display:contents" dir="ltr"><table id="276cb023-eb3b-8121-ac9e-e17f62bcb3ab" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8165-aa88-e434a74a0550"><th id="SVu[" class="simple-table-header-color simple-table-header">Quantidade</th><th id="Vt]c" class="simple-table-header-color simple-table-header">Resposta</th><th id="HFuL" class="simple-table-header-color simple-table-header">Plataforma</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-815e-a3ef-dea6265e42b5"><td id="SVu[" class=""><em>anote aqui</em></td><td id="Vt]c" class="">Maioria das respostas a)</td><td id="HFuL" class="">Instagram</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-815c-9c1c-d8023a3f54c4"><td id="SVu[" class=""><em>anote aqui</em></td><td id="Vt]c" class="">Maioria das respostas b)</td><td id="HFuL" class="">YouTube</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8142-afd8-f47d1d1452eb"><td id="SVu[" class=""><em>anote aqui</em></td><td id="Vt]c" class="">Maioria das respostas c)</td><td id="HFuL" class="">LinkedIn</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-816d-8f6c-eddf330f4da6"><td id="SVu[" class=""><em>anote aqui</em></td><td id="Vt]c" class="">Maioria das respostas d)</td><td id="HFuL" class="">Facebook</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8188-a3a8-ddd76e5e64a1"><td id="SVu[" class=""><em>anote aqui</em></td><td id="Vt]c" class="">Maioria das respostas e)</td><td id="HFuL" class="">Pinterest</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-813c-b640-f91dfe2ce639"><td id="SVu[" class=""><em>anote aqui</em></td><td id="Vt]c" class="">Maioria das respostas f)</td><td id="HFuL" class="">TikTok</td></tr></div></tbody></table></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a2-94dd-cd934b84ab25" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811d-8cbc-d664aba44cdc" class=""><strong>Baseando-se nas respostas do quiz, você pode identificar a plataforma que melhor atende às suas necessidades e objetivos de conteúdo.</strong></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815b-934a-f1f5c68c9d9a" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8141-b37a-cf4167b32e9d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81bb-a2f7-cecfb0bb07a9" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8149-9ad5-d6a6a18ac473" class=""><strong>Navegue entre os conteúdos</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81c7-b0ae-e2df48884bd9"/></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8120-ad8e-f33ae8b61c54"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-816b-b8a5-ccbc6ade2b0d" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

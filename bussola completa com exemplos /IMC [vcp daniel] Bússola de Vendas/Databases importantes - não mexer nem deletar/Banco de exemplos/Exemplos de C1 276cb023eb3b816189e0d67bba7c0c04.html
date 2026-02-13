@@ -1,0 +1,718 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Exemplos de C1</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-8161-89e0-d67bba7c0c04" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/magnet_blue.svg"/></div><h1 class="page-title" dir="auto">Exemplos de C1</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-8154-b579-daffeaad1fda" class="quote-large">Aqui seguem exemplos de C1 para você ter como referência no planejamento e produção dos seus conteúdos. </blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ef-a17b-dc948ab5f162" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8163-915f-f02c6f2a146c" class=""><strong>Exemplos</strong></p></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81c2-a383-cc797899bbb4"><a href="https://www.instagram.com/p/C0iKNH4NlJ5/?fbclid=IwAR3b9pOtlfiAh5qrKkk8XRnYg5xggdyK1aQr-wxNvfYn4zCaxoxR26OfSTM" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Tecidos, Artesanato e Aviamentos on Instagram: &quot;Tricoline Digital de Barrados para Aplicação você encontra aqui na César Tecidos!  www.cesartecidos.com.br Whatsapp (19) 98872-3953  Rua Luiz Suzigan, 266 Distrito Industrial de Santa Barbara D’’oeste - SP&quot;</div><div class="bookmark-description">1,938 likes, 50 comments -  cesartecidosDecember 6, 2023 on : &quot;Tricoline Digital de Barrados para Aplicação você encontra aqui na César Tecidos!  www.cesartecidos.com.br Whatsapp (19) 98872-3953  ...&quot;</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C0iKNH4NlJ5/?fbclid=IwAR3b9pOtlfiAh5qrKkk8XRnYg5xggdyK1aQr-wxNvfYn4zCaxoxR26OfSTM</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/407931276_324315983721456_2964301041482006273_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=100&amp;_nc_ohc=9z3XMLN4M18Ab7NZxo8&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCzKh9nYktlkJU73rTKMS0I3U877l_QlnwY9xlT2uhvhQ&amp;oe=661DF56B&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81f0-9794-db039abb55b5"><a href="https://www.instagram.com/p/C2PdXnDNt6e/?fbclid=IwAR3AsokGW91kJcEzN6-Zayz311b5fWoA8CpS-n6_lPCqrBGo1okQc1EBWZs" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Tecidos, Artesanato e Aviamentos on Instagram: &quot;César Tecidos: A Escolha Pioneira para Tecidos e Artesanato por mais de 25 Anos.  Oferecemos uma extensa gama de tecidos de alta qualidade, desde tricoline de marcas renomadas até viscose e linho para a moda de verão. Além disso, destacamos produtos artesanais da Estilotex, aviamentos para confecção de roupas e bolsas, e materiais sintéticos premium para criar bolsas exclusivas.  Nossa linha bebê inclui fraldas por metro, flanelas e atoalhados macios.  Itens prontos para casa como almofadas, lençol, tapetes, toalhas e muito mais. Com um compromisso inabalável com a qualidade, a César Tecidos é sua parceira criativa, proporcionando não apenas produtos excepcionais, mas uma experiência completa.  Pode entrar em contato via Whatsapp (19) 98872-3953  Explore nosso site para descobrir inspiração e iniciar sua jornada criativa hoje. www.cesartecidos.com.br  Ou em nossa loja física próxima a Campinas, interior de São Paulo Rua Luiz Suzigan, 266 - Distrito Industrial de Santa Barbara D’oeste - SP&quot;</div><div class="bookmark-description">721 likes, 4 comments -  cesartecidosJanuary 18, 2024 on : &quot;César Tecidos: A Escolha Pioneira para Tecidos e Artesanato por mais de 25 Anos.  Oferecemos uma extensa gama de tecidos de alta qualida...&quot;</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C2PdXnDNt6e/?fbclid=IwAR3AsokGW91kJcEzN6-Zayz311b5fWoA8CpS-n6_lPCqrBGo1okQc1EBWZs</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/420981866_385648770820329_6969873299521958767_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=bT5LosAQpoUAb6Labd5&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAy10Boh8xA5S9v0MzNznfD2kxPBvmAfpSw7C7CRpQPsQ&amp;oe=661E03E2&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8103-b4ed-e012c64f1a13"><a href="https://www.instagram.com/p/C3FQBYGtfYy/?fbclid=IwAR14Afe74befBuKpcrzYwsHmy3JnewOAIuW3OrfgNoZcGpWp2uE1r8emiAc" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Tecidos, Artesanato e Aviamentos on Instagram: &quot;Passo a Passo de uma Pasta Organizadora com a Lu Leticia!! Vem ver como é fácil fazer e super prático para a volta as aulas!! Para acompanhar a aula inteira está postado em nosso feed!  As medidas dos tecidos utilizados: Tecido dublado 2x de 25cm x 34cm PVC cristal 1x 25cm x 34cm PVC cristal 1x 13cm x 34cm PVC cristal 1x 18cm x 34cm  Itens do kit: Dublado, pvc cristal, viés Boneon, zíper e cursor  Kit R$ 28,25 pedidos via WhatsApp (19) 98872-3953&quot;</div><div class="bookmark-description">787 likes, 10 comments - cesartecidos on February 8, 2024: &quot;Passo a Passo de uma Pasta Organizadora com a Lu Leticia!! Vem ver como é fácil fazer e super prático para a volta as aulas!! Para aco...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C3FQBYGtfYy/?fbclid=IwAR14Afe74befBuKpcrzYwsHmy3JnewOAIuW3OrfgNoZcGpWp2uE1r8emiAc</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/427390741_764025018640492_6587269274772943512_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=104&amp;_nc_ohc=K8cc6VqJStoAb7ysOmn&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfDw_IS-fNN2HbseXig7KfmQ2Qwq3uCjHBqjvMj09Qj5AQ&amp;oe=662A28F5&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8103-bb6c-e0d5792d67fa"><a href="https://www.instagram.com/p/C3FQKDrN71_/?fbclid=IwAR3sH3SdifirjdOHnBzHxVO7derz7phWZRkjzh5nuH3SBQHC0L7ZjhGmLFQ" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Tecidos, Artesanato e Aviamentos on Instagram: &quot;🎥🧵✨ Esse passo a passo fez tanto sucesso em 2023 que resolvi fazer com vocês!! Vem ver como é fácil costurar! Ele pode se transformar em estojo, necesserie ou bolsa!! ✂️💼💖  🌟🧵 Se você sempre quis aprender a costurar, mas achava complicado ou difícil, eu tenho a solução perfeita para você! Esse tutorial é tão simples e prático que vai te surpreender. Vamos transformar um sintético em um item super útil e estiloso, seja um estojo, uma necesserie ou até mesmo uma bolsa!  🗣️💕 Então, queridos amigos, gostaram desse conteúdo incrível? Se sim, não deixem de comentar e curtir! Quero saber se vocês estão animados para aprender a costurar e se gostariam de ver mais tutoriais como esse.  #CosturandoComAmor #ArteComAgulha #FaçaVocêMesmo #CosturaCriativa #Estojo #Necesserie #Bolsa #Criatividade #Artesanato #Reels #Instagram #Inspiração #PassoAPasso #MãosNaMassa #CosturandoComigo #VemCosturar #Moda #Estilo #crieseuestilo #cesartecidos&quot;</div><div class="bookmark-description">939 likes, 8 comments - cesartecidos on February 8, 2024: &quot;🎥🧵✨ Esse passo a passo fez tanto sucesso em 2023 que resolvi fazer com vocês!! Vem ver como é fácil costurar! Ele pode se transformar em estojo, necesserie ou bolsa!! ✂️💼💖  🌟🧵 Se você sempre quis aprender a costurar, mas achava complicado ou difícil, eu tenho a solução perfeita para você! Esse tutorial é tão simples e prático que vai te surpreender. Vamos transformar um sintético em um item super útil e estiloso, seja um estojo, uma necesserie ou até mesmo uma bolsa!  🗣️💕 Então, queridos amigos, gostaram desse conteúdo incrível? Se sim, não deixem de comentar e curtir! Quero saber se vocês estão animados para aprender a costurar e se gostariam de ver mais tutoriais como esse.  #CosturandoComAmor #ArteComAgulha #FaçaVocêMesmo #CosturaCriativa #Estojo #Necesserie #Bolsa #Criatividade #Artesanato #Reels #Instagram #Inspiração #PassoAPasso #MãosNaMassa #CosturandoComigo #VemCosturar #Moda #Estilo #crieseuestilo #cesartecidos&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C3FQKDrN71_/?fbclid=IwAR3sH3SdifirjdOHnBzHxVO7derz7phWZRkjzh5nuH3SBQHC0L7ZjhGmLFQ</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/426096666_1378913222733122_4440328809332523722_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=102&amp;_nc_ohc=hnQhV5UKfIwQ7kNvgG8v0mM&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfArjeEyeQkNvjF5vbgHoBOT5f5MdaRUVDpqcl4AKBhJJg&amp;oe=662A1BD4&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-818a-a177-e2bdb91efa48"><a href="https://www.instagram.com/p/C3h4wUUtrTK" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Local.e on Instagram: &quot;Na negociação com os supermercados, é comum que eles te peçam o primeiro pedido bonificado.   Isso significa que eles gostaram do seu produto, mas querem testá-lo com os consumidores antes de se comprometerem com uma parceria mais duradoura. É um test-drive.   Dois pontos importantes antes de aceitar a bonificação:   - o perfil do supermercado está alinhado com o perfil da sua marca? O seu produto vai girar neste varejo?   - a projeção das vendas futuras vão compensar o investimento do primeiro pedido bonificado?   Faça as contas antes de aceitar as condições de negociação dos supermercados!   #negociação #vendas #varejo #supermercados #apoiemarcaslocais&quot;</div><div class="bookmark-description">1,025 likes, 46 comments - local.e on February 19, 2024: &quot;Na negociação com os supermercados, é comum que eles te peçam o primeiro pedido bonificado.   Isso significa que eles gostaram do seu...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C3h4wUUtrTK</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/428716880_1536802623837399_8766463240542759427_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=103&amp;_nc_ohc=ax3hB2L1F7sQ7kNvgHwppVU&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBjsNteWi-hPfeD-EgAwZfKgLj1M6Fk63i40Npn5stHQw&amp;oe=662A1889&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81f6-bf2c-f0797d268fb1"><a href="https://www.instagram.com/p/CwnschrNwgd" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">moda | tendência | estilo | autenticidade on Instagram: &quot;Vem embalar o pedido da Larissa com a gente! 📦🫶🏼&quot;</div><div class="bookmark-description">5,870 likes, 21 comments - calistoree on August 31, 2023: &quot;Vem embalar o pedido da Larissa com a gente! 📦🫶🏼&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CwnschrNwgd</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/372767729_6145618748881415_4097766481686030997_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=111&amp;_nc_ohc=cT-SKBYJzvkAb5SzPSD&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBOZ44uwh0k-7wBBs4WXvLcsy6oSUQdfiCvzWzXCXs6eg&amp;oe=662A3460&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-812d-88e1-cf2c01b4fdd6"><a href="https://www.instagram.com/p/CywLMIdAndO" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">moda | tendência | estilo | autenticidade on Instagram: &quot;Inspiração que tirei do Pinterest com look completo @calistoree (inclusive nossa calça Patrícia voltou pro estoque hoje) 🖤 me contem aqui o que acharam?&quot;</div><div class="bookmark-description">2,528 likes, 29 comments - calistoree on October 23, 2023: &quot;Inspiração que tirei do Pinterest com look completo @calistoree (inclusive nossa calça Patrícia voltou pro estoque hoje) 🖤 me cont...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CywLMIdAndO</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/395195677_169422332904011_1709144890930008593_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=111&amp;_nc_ohc=yjD3cXgJfQoAb6LBVxF&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfDSrLa4k2GRjkusrwF97qoaYvtz3rsqLXplZK-JVDaXxg&amp;oe=662A2FB9&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-814c-9276-cf27978f335b"><a href="https://www.instagram.com/p/C0h3PfXgIcw" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">moda | tendência | estilo | autenticidade on Instagram: &quot;Vem com a gente embalar um pedido de 14 PEÇAS 😱🔥&quot;</div><div class="bookmark-description">1,467 likes, 2 comments - calistoree on December 6, 2023: &quot;Vem com a gente embalar um pedido de 14 PEÇAS 😱🔥&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C0h3PfXgIcw</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/408247807_1726606697852744_5467027051388597387_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=108&amp;_nc_ohc=JvSMcyVrEiYAb4fnqcf&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCgbgMWVtFG4tDhXf8T6lXe2rUSK1QKQWYe-fWqcKslbg&amp;oe=662A1B88&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81ee-aafb-d2fc79294756"><a href="https://www.instagram.com/p/CzBungfAEnS" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">moda | tendência | estilo | autenticidade on Instagram: &quot;Lembrando que todas as nossas calças estão disponíveis do PP ao GG  e o tamanho que a Lu usou no vídeo foi o G 🖤&quot;</div><div class="bookmark-description">2,839 likes, 46 comments - calistoree on October 30, 2023: &quot;Lembrando que todas as nossas calças estão disponíveis do PP ao GG  e o tamanho que a Lu usou no vídeo foi o G 🖤&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CzBungfAEnS</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/396511306_281624324226787_6879681852023962297_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=107&amp;_nc_ohc=1_xPRKoDOk0Q7kNvgEf-pgK&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAqB1MgqOeJs7-EGpVmBToUZM6WAb9XJtrGlSvE0RSotg&amp;oe=662A0CA7&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8176-b0ed-ed6381180b6c"><a href="https://www.instagram.com/p/CzxhGM0t-W7" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Fralía Cacau Brasil on Instagram: &quot;Conheça a fábrica da Fralía Cacau Brasil!  Nossa fábrica é como nossa segunda casa. Aqui não só nos engajamos na produção de cacau e seus derivados, mas também desfrutamos de momentos em equipe, através de cursos, palestras motivacionais, cafés da tarde especiais e muito mais.  Trabalhamos com alegria e com vontade de entregar aos nossos parceiros o melhor cacau para suas produções industriais.  Venha ser um parceiro da Fralía você também e conheça de perto nosso atendimento consultivo, nossa produção cuidadosa e nossa paixão por cacau: fralia.com.br/orcamento  #agenteentendedecacau #fraliacacaubrasil&quot;</div><div class="bookmark-description">1,217 likes, 9 comments - fraliacacaubrasil on November 17, 2023: &quot;Conheça a fábrica da Fralía Cacau Brasil!  Nossa fábrica é como nossa segunda casa. Aqui não só nos engajamos na produção de cac...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CzxhGM0t-W7</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/403552462_357059190153236_7217923083477609838_n.jpg?stp=dst-jpg_e15_p480x480&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=108&amp;_nc_ohc=6SvbpEU00BsQ7kNvgFEjSjc&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAAjpAFpPGXPeQhBO88m7T7Wmddj3nsIek54hvp6QIjEQ&amp;oe=662A2FC1&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-812f-afea-f6f207f99751"><a href="https://www.instagram.com/p/C2hrOyFAkrR/?fbclid=IwAR0b_up2oY5363hQgZFNFu-kYpqOKiSr_WVoHRcUgx4BPb9-m_s5KIP-8l8" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GEŌRGIA | ALFAIATARIA CASUAL E FESTA on Instagram: &quot;Arrumei uma mala e criei uma marca!  Nada melhor que um papo de provador né?! Vem conferir a história da Geórgia e como uma mala de viagem influenciou a marca a nascer! 🌞✨&quot;</div><div class="bookmark-description">2,078 likes, 8 comments - georgia.oficial on January 25, 2024: &quot;Arrumei uma mala e criei uma marca!  Nada melhor que um papo de provador né?! Vem conferir a história da Geórgia e como uma mala de vi...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C2hrOyFAkrR/?fbclid=IwAR0b_up2oY5363hQgZFNFu-kYpqOKiSr_WVoHRcUgx4BPb9-m_s5KIP-8l8</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/424476835_1549829285859162_6360116293916824725_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=106&amp;_nc_ohc=pMXKfA15--IAb6LbpTd&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfC7vDNbJzL1WmHuoDzzLCv93M7FnGM2Ul3HqVGiuTmfYA&amp;oe=662A0DC4&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81c7-9b64-dd4c3bfae497"><a href="https://www.instagram.com/p/C3VWs3lgfqx/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Renato Moura on Instagram: &quot;Você não precisa esperar o bicho pegar para começar a se cuidar…  Essa é uma excelente respiração pra ter já manga, mas antes de te contar os benefícios dela eu queria propor de você experimentar fazer ela comigo aqui no vídeo (apenas 1 min) e depois deixar nos comentários o que você sentiu.  Vamos respirar juntos? 🙏✨💜&quot;</div><div class="bookmark-description">981 likes, 136 comments - renatomourayoga on February 14, 2024: &quot;Você não precisa esperar o bicho pegar para começar a se cuidar…  Essa é uma excelente respiração pra ter já manga, mas antes de...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C3VWs3lgfqx/</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/427242910_389211310368507_974091389247792901_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=103&amp;_nc_ohc=4M5yv7wYAP0Q7kNvgGS8Lra&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAqmqmwBC9SJpusfeBGABib_ohRQd19yjBVNw3cN0lLzQ&amp;oe=662A0CF1&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8139-9ccc-fe6c90c3077b"><a href="https://www.instagram.com/p/C3JR9W-AWku" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Renato Moura on Instagram: &quot;Sabe quando bate aquela ansiedade e parar pra respirar parece algo impossível?  Então experimenta esse exercício, que também é uma forma de trazer você para o momento presente, aumentando a sua capacidade pulmonar e gerando mais espaço interno para você processar melhor as suas emoções.  Comece com as mãos em frente ao peito (com as palmas das mãos juntas) puxe o ar abrindo bem os braços e solte o ar voltando para a posição inicial. Se for possível vai coordenando o movimento dos braços com a respiração, isso vai ajudar a trazer mais foco e presença e aliviar a ansiedade.  Experimente fazer de 5 a 10 vezes e ao finalizar leve o braço lá no alto como se tivesse espreguiçando, e depois relaxe os braços e de um tempinho apenas observando os efeitos desse exercício no seu corpo.  Deixa nos comentários como foi ✨  E aproveita para compartilhar com quem possa se interessar ❤️  Espero que ajude 🙏&quot;</div><div class="bookmark-description">405 likes, 4 comments - renatomourayoga on February 9, 2024: &quot;Sabe quando bate aquela ansiedade e parar pra respirar parece algo impossível?  Então experimenta esse exercício, que também é uma f...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C3JR9W-AWku</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/427736154_716209936978619_6361305639464989896_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=111&amp;_nc_ohc=eZ5z3cf1QuMQ7kNvgFyzc1E&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCKcQb18udHmItYvAl42vTL7ERDzWfJT40h-TjILPPhng&amp;oe=662A1543&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-815e-9849-ffe29074aef7"><a href="https://www.instagram.com/p/C02BnCFNzDb/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">PS Contrata | Cargos estratégicos on Instagram: &quot;Com mais de 10 anos de experiência, nossa missão é encontrar as pessoas certas para nossos clientes. Atuamos com Inteligência em contratações estratégicas, oferecendo Recrutamento e Seleção para vagas de alto nível em empresas de todo o Brasil e América Latina.  Nossa metodologia consiste em uma verdadeira engenharia de pessoas para encontrar o candidato que melhor exerça a função e por mais tempo. Temos certeza que podemos ajudar você e sua empresa a recrutar os melhores talentos para levar o seu negócio para o futuro!&quot;</div><div class="bookmark-description">191 likes, 1 comments - pscontrata on December 14, 2023: &quot;Com mais de 10 anos de experiência, nossa missão é encontrar as pessoas certas para nossos clientes. Atuamos com Inteligência em cont...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C02BnCFNzDb/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/409848703_1714546219058019_7564180667980727086_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=103&amp;_nc_ohc=TMAGJUrZcdgAb5D_Yab&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAnXIQ9TddZw8s_S1eBcTP8FOpiFrtMW8nCJUkm0F3YVg&amp;oe=662A1ABE&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-819a-b419-e46ab34d0351"><a href="https://www.instagram.com/p/CvGR8IgNuUn/?fbclid=IwAR2ueWn7NF7ueAXqY2S4n0fMPjJzyNTDY2wOeXzZFzOu6DbKY3phhvJh87o_aem_AXMVGjd_jdwr6K-l2LMA56DcUPzFM8IT9Gy9cnaThUW4c8z0oKFgY8J4jd9TyENYcvWwy4ezTl52Nf31ZBEOr7zo" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">PS Contrata | Cargos estratégicos on Instagram: &quot;Sem pessoas motivadas e conectadas, o seu negócio está condenado à falta de inovação!  No episódio 2 do nosso PS Cast, recebemos Marina Mendonça, referência na área de inovação empresarial, psicóloga, administradora e Diretora de Cultura e Comportamento na Tropos Lab.  Marina compartilhou insights poderosos sobre a importância de ter equipes habilidosas, motivadas e conectadas para impulsionar a inovação ao máximo. Muitos ainda não pensam assim, mas a inovação vai além de métodos e recursos, o mais importante são as pessoas, elas que fazem a diferença. Se você não tiver esses profissionais, a sua empresa não chegará onde deseja e não irá inovar.   Ficou interessado e quer ter acesso a esse conteúdo? Siga o nosso perfil e clique no link da bio para ouvir ou assistir o episódio completo, estamos disponíveis no Spotify e no Youtube.&quot;</div><div class="bookmark-description">309 likes, 4 comments - pscontrata on July 24, 2023: &quot;Sem pessoas motivadas e conectadas, o seu negócio está condenado à falta de inovação!  No episódio 2 do nosso PS Cast, recebemos Ma...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CvGR8IgNuUn/?fbclid=IwAR2ueWn7NF7ueAXqY2S4n0fMPjJzyNTDY2wOeXzZFzOu6DbKY3phhvJh87o_aem_AXMVGjd_jdwr6K-l2LMA56DcUPzFM8IT9Gy9cnaThUW4c8z0oKFgY8J4jd9TyENYcvWwy4ezTl52Nf31ZBEOr7zo</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/362654904_1883761755357977_1921098701743335976_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=105&amp;_nc_ohc=XuHC-33P1GEAb7EMgeN&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBVK5PsbZnIvkMTuITvZ_Dw3weUVLYncd17BFI0cuIn5g&amp;oe=662A14BF&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81d8-b835-f77dad343a85"><a href="https://www.instagram.com/p/CtwTZ3vtUlE/#advertise" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Prussia Bier - Cervejaria on Instagram: &quot;Existe realmente copo para tomar cerveja?  Sendo no copo de requeijão ou um Dublin o que mais importa é uma boa Prussia lá dentro. Mas se você quer ter a melhor experiência possível te recomendamos o copo certo.  Caso queria adquirir a sua Taça Dublin corre no link da bio e garanta a sua.&quot;</div><div class="bookmark-description">12K likes, 166 comments - prussiabier on June 21, 2023: &quot;Existe realmente copo para tomar cerveja?  Sendo no copo de requeijão ou um Dublin o que mais importa é uma boa Prussia lá dentro. Mas...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CtwTZ3vtUlE/#advertise</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/355398078_3492234347720207_2094416453012925712_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=111&amp;_nc_ohc=wDnFqrVf5VgAb4AuXyF&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBgwUvdC9vfUf_PRrYfltqwXBSiQWxFb1ZjMjKxZ8lmYA&amp;oe=662A16A6&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81b8-b6b3-e54c66329d00"><a href="https://www.instagram.com/p/CyNBZaINFwy/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Prussia Bier - Cervejaria on Instagram: &quot;Você já conhece a taça teku?&quot;</div><div class="bookmark-description">30K likes, 735 comments - prussiabier on October 9, 2023: &quot;Você já conhece a taça teku?&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CyNBZaINFwy/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/387678280_199404009841522_3920683893166622950_n.jpg?stp=dst-jpg_e15_p480x480&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=110&amp;_nc_ohc=wmuYsOhr8w8Ab4fmjz7&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfB1A2HjwwusYlhR3vzH1IilLTT2ucEtoLlKzNVc9GJHEA&amp;oe=662A257E&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8158-8fcb-f70a31a9bc3d"><a href="https://www.instagram.com/p/C434Csog1Mq/?fbclid=IwAR0ko0mmRkW1_qQRloLIZtK2IkFJ5-55aX5vWI_wjsPaqHQ9H4wqS3Spyhs_aem_AeGJ61X4Gun0kuyBSbT14Ilz8CMTsNs_4uxNP-pUuW6u5C1P11QCIVqXqxNKhnmMncbf9mbHlCpIx2_EIKksPXrV" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">TAIJI | moda festa &amp; casual chique on Instagram: &quot;NEW IN: Blusa Paola! ✨ Explore a versatilidade da nossa nova peça favorita com 3 maneiras incríveis de usá-la!  -para saber mais, clique no perfil @taiji.store&quot;</div><div class="bookmark-description">4,996 likes, 19 comments - taiji.store on March 23, 2024: &quot;NEW IN: Blusa Paola! ✨ Explore a versatilidade da nossa nova peça favorita com 3 maneiras incríveis de usá-la!  -para saber mais, cl...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C434Csog1Mq/?fbclid=IwAR0ko0mmRkW1_qQRloLIZtK2IkFJ5-55aX5vWI_wjsPaqHQ9H4wqS3Spyhs_aem_AeGJ61X4Gun0kuyBSbT14Ilz8CMTsNs_4uxNP-pUuW6u5C1P11QCIVqXqxNKhnmMncbf9mbHlCpIx2_EIKksPXrV</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/434891436_1367799137207179_2553509398349083143_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=107&amp;_nc_ohc=KNKXduQ5wrgQ7kNvgFWYC8a&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCMTXMtQxNJPQ0Svyc01YLG-vkA5VcRbNjG9rzWeEMWiA&amp;oe=662A1488&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8127-9b9f-dd1c9bb9f4cb"><a href="https://www.instagram.com/p/C5EjsIPA2XP/?fbclid=IwAR0abmHXRjZvcCHR2w_0Gw-DSR3gRXiy3fM7sHTCthTFx1Dd-QygOaG9Uko_aem_ASDbsMnflV7jo7eWg9Fs0NlX6UpkRrcddn4gKiZzk3GH5IvadTzcq3yvpTHCcHrE5TFbhRlvgULWhGrMl3_b-biH" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">TAIJI | moda festa &amp; casual chique on Instagram: &quot;Hoje a paleta selecionada é um pouco diferente! 💍🤍  Pensando nas noivinhas, fizemos uma seleção de diferentes estilos de looks brancos. Conta pra gente qual é mais a sua cara e compartilha com sua amiga que está a procura da roupa perfeita!   \- Para conhecer mais acesse o nosso perfil \@taiji.store!&quot;</div><div class="bookmark-description">4,911 likes, 18 comments - taiji.store on March 28, 2024: &quot;Hoje a paleta selecionada é um pouco diferente! 💍🤍  Pensando nas noivinhas, fizemos uma seleção de diferentes estilos de looks b...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C5EjsIPA2XP/?fbclid=IwAR0abmHXRjZvcCHR2w_0Gw-DSR3gRXiy3fM7sHTCthTFx1Dd-QygOaG9Uko_aem_ASDbsMnflV7jo7eWg9Fs0NlX6UpkRrcddn4gKiZzk3GH5IvadTzcq3yvpTHCcHrE5TFbhRlvgULWhGrMl3_b-biH</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/435456565_305453542563883_3240944483851260031_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=107&amp;_nc_ohc=IBcwgQIuTKgQ7kNvgGFu8P7&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBqUs0M4I9M2jQCY0y7GvPQp5PAnKLB07e-F6e7hEJUDg&amp;oe=662A217E&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8120-890a-f29b136ce22d"><a href="https://www.instagram.com/p/CvUlLx1NLvj/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">NSDB | MAQUIAGEM CREMOSA on Instagram: &quot;Poder contar com um único produto pra “resolver” a pele, que sempre vai funcionar e é sinônimo de “porto seguro” na maquiagem é uma paz que só quem usa o corretivo FLEX sente! 🤎  👉🏻 Agora conta pra gente: você já se rendeu? O que o corretivo FLEX faz pela sua rotina e pela sua autoestima? 💭&quot;</div><div class="bookmark-description">429 likes, 61 comments - nemsodeblushbeauty on July 29, 2023: &quot;Poder contar com um único produto pra “resolver” a pele, que sempre vai funcionar e é sinônimo de “porto seguro” na maquiagem ...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CvUlLx1NLvj/</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/363949573_1178640423528281_340012792517600100_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=105&amp;_nc_ohc=80-9_LC0fH0Q7kNvgHayox9&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBqqassWXECKPs-lwvPCHQsKMt48gRkzDbcZaUQ8xK1-g&amp;oe=662A28FB&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81b6-afeb-fd690df32a62"><a href="https://www.instagram.com/p/CyUCUk5tzAT/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">NSDB | MAQUIAGEM CREMOSA on Instagram: &quot;o delineado mais fácil e perfeito do mundo com nossa queridinha: a sombra líquida Joia Rara ✨  vem garantir a sua no dia do maquiador NSDB! Em compras acima de R$350,00 ela vai de PRESENTE pra você!! 🩷  Corre porque é só hoje e amanhã! 🫣&quot;</div><div class="bookmark-description">119 likes, 11 comments - nemsodeblushbeauty on October 11, 2023: &quot;o delineado mais fácil e perfeito do mundo com nossa queridinha: a sombra líquida Joia Rara ✨  vem garantir a sua no dia do maquiador...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CyUCUk5tzAT/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/402873794_1453351902175210_4763353605542369458_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=110&amp;_nc_ohc=QPK9G6_DcNEQ7kNvgFXFBh9&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfDnW1D2bZxOUDseY-S1nFw7WEJXiopjiDOFvYRdiSzeVQ&amp;oe=662A262C&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-816f-8634-ebeea14727de"><a href="https://www.instagram.com/p/CwKfgj3NPk7/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">NSDB | MAQUIAGEM CREMOSA on Instagram: &quot;não tem nada mais prático que ter uma pele per-fei-ta com um produto só! 😍  nosso Corretivo Flex cumpre esse papel muuuito bem! Da o play e vem conferir! ✨  Você já testou nosso cremoso? Conta pra gente! 😍&quot;</div><div class="bookmark-description">294 likes, 47 comments - nemsodeblushbeauty on August 19, 2023: &quot;não tem nada mais prático que ter uma pele per-fei-ta com um produto só! 😍  nosso Corretivo Flex cumpre esse papel muuuito bem! Da ...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CwKfgj3NPk7/</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/386245355_210653565231622_8008047887565634541_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=110&amp;_nc_ohc=k75f5rakKk4Ab5DlloU&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCexHP6MQbAbKnpY209lJOOHdSRDMsl0Lx2L_3lNZQK5A&amp;oe=662A226E&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81b9-b98f-f9fb00627257"><a href="https://www.instagram.com/p/C0jpPW1u54z/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Gleire • Calçados e Bolsas 👠 on Instagram: &quot;A estação mais quente do ano chegou, época de curtir muito! Por isso trouxemos uma coleção bem fresh, alegre e básica para vocês! Para usar muito e combinar com tudo!  Toda em couro por R$239,00 . . 📍Av. Presidente Vargas, 444 - Ribeirão Preto/Sp 📲 www.gleire.com.br&quot;</div><div class="bookmark-description">524 likes, 92 comments - gleire.com.br on December 7, 2023: &quot;A estação mais quente do ano chegou, época de curtir muito! Por isso trouxemos uma coleção bem fresh, alegre e básica para vocês! ...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C0jpPW1u54z/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/407953610_365856305824453_2338624146494888262_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=101&amp;_nc_ohc=mYfuMhd1WvUQ7kNvgF0JQnk&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfA1ixO7y3bGmXko2_01URhPxZd7xSQLg35KE4zhEUZPCg&amp;oe=662A0FBE&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8128-b8ae-d5c70b7cc95f"><a href="https://www.instagram.com/p/Cxtn6FhtVWq/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Gleire • Calçados e Bolsas 👠 on Instagram: &quot;Sabe aquela sandália que vai impactar e fazer diferença em qualquer produção? É este modelo! E o melhor para as amanhã de salto baixo ela tem um pequeno salto amadeirado lindíssimo! Disponível no prata metalizado e tbm no couro liso!  ✨Simplesmente perfeita✨ . . 📍Av. Presidente Vargas, 444 - Ribeirão Preto/sp Acesse nosso site: www.gleire.com.br&quot;</div><div class="bookmark-description">408 likes, 52 comments - gleire.com.br on September 27, 2023: &quot;Sabe aquela sandália que vai impactar e fazer diferença em qualquer produção? É este modelo! E o melhor para as amanhã de salto bai...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/Cxtn6FhtVWq/</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/383951674_303654649031149_6519358677788186045_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=101&amp;_nc_ohc=WliSZPvgpc8Q7kNvgEQTz34&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAjpOoJzOwMNklkqcpLGXVN81NhOmJ1Q8tVRD8kdHVotg&amp;oe=662A3319&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81e7-94d8-d1d5c8b08e50"><a href="https://www.instagram.com/p/C10HdmQvAgJ/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Gleire • Calçados e Bolsas 👠 on Instagram: &quot;Bag Luisa confeccionada em couro legítimo. Para as que amam bolsas com divisórias a bag Luisa é perfeita, com 3 repartições com fechamento em zíper e bolso frontal com fechamento em imã. Sabe aquela bolsa que costumamos chamar de ”falsa pequena”, a bag Luisa é uma dessas. Possui alça fixa de mão e alça tiracolo com regulagem, forro liso de gorgurão. O modelo ideal para se usar em viagens e no dia a dia, use e abuse da versatilidade que a bag Luisa proporciona.  SHOP: www.gleire.com.br  #bolsas #courolegitimo #modafeminina&quot;</div><div class="bookmark-description">1,475 likes, 289 comments - gleire.com.br on January 7, 2024: &quot;Bag Luisa confeccionada em couro legítimo. Para as que amam bolsas com divisórias a bag Luisa é perfeita, com 3 repartições com fech...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C10HdmQvAgJ/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/416878258_891002409186324_4234652083900489782_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=100&amp;_nc_ohc=IUktwjWSCO4Q7kNvgHWIC8P&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBTkTwWZgVozJjVUtzGeKxR7A1NCmqytnD3J8tEDfytDw&amp;oe=662A1BEA&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-815c-965d-e64df70e7c92"><a href="https://www.instagram.com/p/CyhRZ-YNI_U/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Gleire • Calçados e Bolsas 👠 on Instagram: &quot;Dica pra quem não abre mão de um sapato prático, tendência da coleção, estiloso e confortável! Se você é essa pessoa, você tem que conhecer a papete Maia! O fechamento dela é de velcro e temos 3 cores disponíveis neste modelo! Agora conta aqui pra gente nos comentários qual sua cor preferida e se você também ama facilidades na hora de calçar seus sapatos! . . 📍Av. Presidente Vargas, 444 - Ribeirão Preto/Sp 📲www.gleire.com.br&quot;</div><div class="bookmark-description">461 likes, 34 comments - gleire.com.br on October 17, 2023: &quot;Dica pra quem não abre mão de um sapato prático, tendência da coleção, estiloso e confortável! Se você é essa pessoa, você tem ...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CyhRZ-YNI_U/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/403823445_718308250180679_7783170740291194366_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=111&amp;_nc_ohc=9d1a0HSMzbAAb67Uzq9&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfDGK0T5qrFUqO3EGKhK8wu9ga6Ro7_20JIBYttne-Tz9A&amp;oe=662A3079&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8116-b556-f8ff2f0968d2"><a href="https://www.instagram.com/p/CxpI4pxtDTO/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Life Me • Lanches saudáveis 💛 on Instagram: &quot;Uma pergunta que sempre aparece por aqui é se nossos produtos são aptos para celíacos? Simm!!   Nossas delícias são todas sem glúten e sem lactose, livre de contaminação cruzada. Tudo muito bem cuidado para atender vocês. 🧡  Peça pelo nosso site e receba em casa. 🛒&quot;</div><div class="bookmark-description">4,765 likes, 87 comments - lifeme_lifeme on September 25, 2023: &quot;Uma pergunta que sempre aparece por aqui é se nossos produtos são aptos para celíacos? Simm!!   Nossas delícias são todas sem glúte...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CxpI4pxtDTO/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/382557472_1037420690613728_1945183682890629350_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=108&amp;_nc_ohc=GaRNstWZPP4Ab6BPLzP&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCsSLjPB_RqWQ6wRcELI6o5L5mZx6ab8RwBVPSFBQPWeQ&amp;oe=662A1165&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81bf-afb5-d7640c6dbb47"><a href="https://www.instagram.com/p/Cwoa-YqtCsH/?fbclid=IwAR3s4nxU6a0xUvZkojotroFWKOml7-iPKEVCN7mInm6zYOXcF7g1lquIi88" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Life Me • Lanches saudáveis 💛 on Instagram: &quot;Seu café da manhã com aquele pãozinho delicioso, que cabe na dieta!  Fonte de fibras e com sabor e aroma irresistíveis de canela. 🧡🧡  Sem glúten, sem lactose, 100% integral.   Peça pelo site ou se preferir por WhatsApp.&quot;</div><div class="bookmark-description">3,840 likes, 225 comments - lifeme_lifeme on August 31, 2023: &quot;Seu café da manhã com aquele pãozinho delicioso, que cabe na dieta!  Fonte de fibras e com sabor e aroma irresistíveis de canela. �...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/Cwoa-YqtCsH/?fbclid=IwAR3s4nxU6a0xUvZkojotroFWKOml7-iPKEVCN7mInm6zYOXcF7g1lquIi88</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/372940493_676316727709829_6706881937624986307_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=105&amp;_nc_ohc=uQGpXbbCvXwQ7kNvgE7G-vk&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAeWbhPYHXDS5EdfqVum_z6sisrsolxxPphDyAkZosdoQ&amp;oe=662A197B&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8137-8466-cd4a9a57cab5"><a href="https://www.instagram.com/p/CzOweEnN8mk/?fbclid=IwAR2QvA66bUbdqqJKz65IWqR9QCHvvqwWYhVcZu4SVUdrudt_AVmOF879mfY" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Life Me • Lanches saudáveis 💛 on Instagram: &quot;Pastel amado por todos e liberado pela nutri!! Melhor de tudo ,tamanho big e tradicional, dois recheios de frango ou de carne.   Perfeito para aquele lanchinho. 🤩 Sem glúten, sem lactose e assado. 🧡  Peça pelo site e receba em casa. 🛒  #pastelsaudavel #semgluten #semlactose #pastelassado #pasteldefrango #saudavelegostoso #comersemculpa #dietagostosa&quot;</div><div class="bookmark-description">1,909 likes, 50 comments - lifeme_lifeme on November 4, 2023: &quot;Pastel amado por todos e liberado pela nutri!! Melhor de tudo ,tamanho big e tradicional, dois recheios de frango ou de carne.   Perfeito para aquele lanchinho. 🤩 Sem glúten, sem lactose e assado. 🧡  Peça pelo site e receba em casa. 🛒  #pastelsaudavel #semgluten #semlactose #pastelassado #pasteldefrango #saudavelegostoso #comersemculpa #dietagostosa&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CzOweEnN8mk/?fbclid=IwAR2QvA66bUbdqqJKz65IWqR9QCHvvqwWYhVcZu4SVUdrudt_AVmOF879mfY</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/399660555_326151333449166_4740389839407832512_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=106&amp;_nc_ohc=_LwH7LpvjlAQ7kNvgGWPC5I&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAjCQKAT4sN_KQLh7NSDu1wTHl0QfWfJleqBI_QGlUvPg&amp;oe=662A217F&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8101-9802-ccaf176f6384"><a href="https://www.instagram.com/p/Cz02PyStP2v/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Mosque | Confeitaria e Presentes finos on Instagram: &quot;Acesse nosso site www.mosque.com.br ou WhatsApp 37 99833-7007 para um atendimento personalizado.✨&quot;</div><div class="bookmark-description">1,963 likes, 12 comments - mosqueoficial on November 19, 2023: &quot;Acesse nosso site www.mosque.com.br ou WhatsApp 37 99833-7007 para um atendimento personalizado.✨&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/Cz02PyStP2v/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/404338729_330901179671172_7987226961941519025_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=100&amp;_nc_ohc=o7NgKBvyyXUAb6vHCrH&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfC3KlnD2LAz9c87AnLLMzu_6UREtox1Bi6afmUetXNkhQ&amp;oe=662A1556&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81df-a833-eff36c86294c"><a href="https://www.instagram.com/p/Cz02PyStP2v/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Mosque | Confeitaria e Presentes finos on Instagram: &quot;Acesse nosso site www.mosque.com.br ou WhatsApp 37 99833-7007 para um atendimento personalizado.✨&quot;</div><div class="bookmark-description">1,963 likes, 12 comments - mosqueoficial on November 19, 2023: &quot;Acesse nosso site www.mosque.com.br ou WhatsApp 37 99833-7007 para um atendimento personalizado.✨&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/Cz02PyStP2v/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/404338729_330901179671172_7987226961941519025_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=100&amp;_nc_ohc=o7NgKBvyyXUAb6vHCrH&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfC3KlnD2LAz9c87AnLLMzu_6UREtox1Bi6afmUetXNkhQ&amp;oe=662A1556&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8123-8762-db0c838641e8"><a href="https://www.instagram.com/p/C2Nqz0GgrNa/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Mosque | Confeitaria e Presentes finos on Instagram: &quot;Enviamos por Sedex para fora de Belo Horizonte!✨  Você também por viver a experiência gastronômica inesquecível da Mosque ou presentear alguém especial.   Atendimento personalizado via WhatsApp 37 99833-7007 ou acesse nosso site www.mosque.com.br&quot;</div><div class="bookmark-description">1,699 likes, 15 comments - mosqueoficial on January 17, 2024: &quot;Enviamos por Sedex para fora de Belo Horizonte!✨  Você também por viver a experiência gastronômica inesquecível da Mosque ou prese...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C2Nqz0GgrNa/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/419821181_1065781541404751_8294537186764895636_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=111&amp;_nc_ohc=kogqEvgROXgAb5hVVK8&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBexcZUEsaCIr0dkWyZzTqpMg8uBXil_eVrT1kCUT1rSA&amp;oe=662A171C&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-815e-a22b-e0cc94d73398"><a href="https://www.instagram.com/p/CwppYHsgKpD/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">NYTT | athleisure brand on Instagram: &quot;Obrigada, NYTT! Por salvar o meu estilo minimalista 🥹 - @alice_safortes   Imagina receber uma declaração de amor dessa! A NYTT veio para revolucionar a forma como você se veste 🫶🏻&quot;</div><div class="bookmark-description">3,460 likes, 19 comments - nyttconcept on September 1, 2023: &quot;Obrigada, NYTT! Por salvar o meu estilo minimalista 🥹 - @alice_safortes   Imagina receber uma declaração de amor dessa! A NYTT veio ...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CwppYHsgKpD/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/373647901_271542082404896_6007540524846461368_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=108&amp;_nc_ohc=Jvke6FlYLkYAb7n2nvR&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfD_FKb7BqFcvswEP8326NnHhOqOu7Htjr5hAVKEw6vxEw&amp;oe=662A0FB0&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81cb-a41b-da18b5434f08"><a href="https://www.instagram.com/p/C1ZFuufNmd_/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Mateus Sobral on Instagram: &quot;✨Entenda como a cola cirúrgica pode ajudar a termos uma cicatriz fininha !!   🎥 Assista o vídeo e entenda   Dr. Mateus Sobral  Cirurgião Plástico  CRM MG: 58575 RQE: 54173&quot;</div><div class="bookmark-description">1,228 likes, 22 comments - drmateussobral on December 28, 2023: &quot;✨Entenda como a cola cirúrgica pode ajudar a termos uma cicatriz fininha !!   🎥 Assista o vídeo e entenda   Dr. Mateus Sobral  Cir...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C1ZFuufNmd_/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/412693148_189865564154150_8372503763944847269_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=102&amp;_nc_ohc=kr4FJshEdSwAb7D9ajG&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfDyV5md-hcVeZELqeAOXj3nVJqFY5YtRByjNBNHV2_0Tw&amp;oe=662A1E73&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-818e-99e8-df0a6964fac5"><a href="https://www.instagram.com/p/Cx-ZehpNVO0/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Du Blé • Pães de fermentação natural pré assados e congelados on Instagram: &quot;Aqui na Du Blé sempre pensamos com muito carinho em nossos clientes! 🥐🥖  Desde a preparação do produto até a maneira de embalar.  Nossos produtos vão devidamente condicionados em uma caixa de isopor com placas de gelo. 🧊   Mas se descongelarem, não se preocupe!  Nossos produtos uma vez descongelado podem ser congelados novamente!  Acesse no link na Bio e adquira agora mesmo nossa linha SUA FORNADA! 🛒❤️  #padariaemcasa #fermentaçãonatural #sourdough #croissant #suafornada #paesbh #paessp #paesrj #padaria #ciabatta #baguette #duble&quot;</div><div class="bookmark-description">2,483 likes, 51 comments - dublecongelados on October 4, 2023: &quot;Aqui na Du Blé sempre pensamos com muito carinho em nossos clientes! 🥐🥖  Desde a preparação do produto até a maneira de embalar...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/Cx-ZehpNVO0/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/385804555_696154202570757_8486808537239975309_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=qgRmP14llhQQ7kNvgFlIDOk&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCqo8OO7p0LMPPToja4zdmU_la2Fzhud04uePJGTfurXQ&amp;oe=662A32F5&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81e8-8daf-f658fa225ca7"><a href="https://www.instagram.com/p/C12V1Dzt559/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Du Blé • Pães de fermentação natural pré assados e congelados on Instagram: &quot;Tem surgido uma dúvida frequente em nossos clientes 🤨🤔  Como os produtos são embalados 🎁   As baguetes são embaladas juntas? 🥖🤷🏼‍♀️  Fizemos um vídeo para sanar essas dúvidas e mostrar como os produtos são embalados e como são condicionado dentro da caixinha!  Ainda tem alguma dúvida sobre os nossos produtos?  Nos envie uma mensagem via direct ou entre em contato (31) 99673-8479 para um atendimento personalizado  #duble #suafornada #padariaemcasa #frança #fermentaçãonatural #artesanal&quot;</div><div class="bookmark-description">192 likes, 3 comments - dublecongelados on January 8, 2024: &quot;Tem surgido uma dúvida frequente em nossos clientes 🤨🤔  Como os produtos são embalados 🎁   As baguetes são embaladas juntas? ...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C12V1Dzt559/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/418019594_1386531425371549_788785368279079890_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=101&amp;_nc_ohc=r_RyR48FI-EAb7g42eR&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfC_8398je5_0lquQTCtD1rNOCtmAe8KWF4bonAOwB--RQ&amp;oe=662A2A6D&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8125-83d4-f3b2617387c7"><a href="https://www.instagram.com/p/C2PXmkdtkHg/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Blue Rose | Skincare on Instagram: &quot;Primeiro de tudo: pare de cutucar essa espinha!   Você já ouviu falar em microbioma da pele? A nossa pele é composta por milhares de bactérias e, muitas vezes, matar 99,9% delas não vai fazer bem para a saúde da sua pele!  Tudo é questão de equilíbrio. De cuidar da sua pele com gentileza.  Gostou dessas dicas? Já compartilha esse vídeo com os seus amigos que, assim como você, também sofrem com espinhas.  #acne #espinhas #pele #peleoleosaeacneica #serum&quot;</div><div class="bookmark-description">571 likes, 7 comments - bluerosedermo on January 18, 2024: &quot;Primeiro de tudo: pare de cutucar essa espinha!   Você já ouviu falar em microbioma da pele? A nossa pele é composta por milhares de bactérias e, muitas vezes, matar 99,9% delas não vai fazer bem para a saúde da sua pele!  Tudo é questão de equilíbrio. De cuidar da sua pele com gentileza.  Gostou dessas dicas? Já compartilha esse vídeo com os seus amigos que, assim como você, também sofrem com espinhas.  #acne #espinhas #pele #peleoleosaeacneica #serum&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C2PXmkdtkHg/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/419508697_6995341490501752_2518540921543275993_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=104&amp;_nc_ohc=gKUmEOWAowgQ7kNvgG4egXA&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfC02OE0IrxxhxR0YVgPjXbKsAqD3JQmrMyls7zozcJIxg&amp;oe=662A2AAB&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8141-a998-df0c6e0420f6"><a href="https://www.instagram.com/p/C0qA48Mt1Wf/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Blue Rose | Skincare on Instagram: &quot;Eu preciso usar vitamina C no meu skincare? Se você se pergunta isso, assista esse vídeo  e segue a gente para saber tudo sobre skincare!  #vitaminab3 #vitaminac #niacinamida #serumfacial&quot;</div><div class="bookmark-description">1,287 likes, 34 comments - bluerosedermo on December 9, 2023: &quot;Eu preciso usar vitamina C no meu skincare? Se você se pergunta isso, assista esse vídeo  e segue a gente para saber tudo sobre skincar...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C0qA48Mt1Wf/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/409073072_859924112279718_4033342520140349322_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=106&amp;_nc_ohc=IacSv1yknDoAb4UpPtr&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBbUqJdaFY_D213MedYD-3voQBljAad2hyfqCd134nJAA&amp;oe=662A257A&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-819e-94b3-e682a415b722"><a href="https://www.instagram.com/p/C09ctG_N3Ch/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Blue Rose | Skincare on Instagram: &quot;Nem todo produto pode ser usado em qualquer tipo de pele! No vídeo, a Carol dá algumas dicas e sugestões para cuidados com a pele seca, mista e oleosa!  #skincare #pele #cuidadoscomapele&quot;</div><div class="bookmark-description">1,254 likes, 6 comments - bluerosedermo on December 17, 2023: &quot;Nem todo produto pode ser usado em qualquer tipo de pele! No vídeo, a Carol dá algumas dicas e sugestões para cuidados com a pele seca...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C09ctG_N3Ch/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/412631722_728657769205377_2779882712858028792_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=HjbwhDnCiWAQ7kNvgHQ8dM4&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAbZrKdh13Elc-OfS9Q8odGEmKDojEE6ugHnOIMfZwsxg&amp;oe=662A312C&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8185-a19d-c8f85a0b7093"><a href="https://www.instagram.com/p/C2IIXFjNEh2/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Calçados para festa e casual on Instagram: &quot;Conheça a MARRIE JOSEFINE. Como o sonho de fazer um calçado encantador, que você não quer tirar dos pés se tornou uma realidade.  . Neste vídeo, a Kênia, diretora criativa e fundadora da marca conta um pouco dessa história!&quot;</div><div class="bookmark-description">891 likes, 14 comments - marriejosefineloja on January 15, 2024: &quot;Conheça a MARRIE JOSEFINE. Como o sonho de fazer um calçado encantador, que você não quer tirar dos pés se tornou uma realidade.  . ...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C2IIXFjNEh2/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/421015682_403452255454564_9048055303518443146_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=104&amp;_nc_ohc=COY6EAMMJdgAb5c_W5z&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBPxvIqRFQaVpc4Laszwvim2i2Dkg0mfWwK6vIdYfh0-Q&amp;oe=662A2190&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8113-a33f-e2df65b0a789"><a href="https://www.instagram.com/p/C24_zbINUf2/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Calçados para festa e casual on Instagram: &quot;Nosso lançamento mais queridinho: CATHARINE  Na versão rasteira e com salto, fumê e transparente.   Sempre muito confortável! Escolha a sua e aproveite o verão com muito conforto.  www.marriejosefine.com.br&quot;</div><div class="bookmark-description">856 likes, 14 comments - marriejosefineloja on February 3, 2024: &quot;Nosso lançamento mais queridinho: CATHARINE  Na versão rasteira e com salto, fumê e transparente.   Sempre muito confortável! Escolha...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C24_zbINUf2/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/426197726_1478660582712714_5714444686737519271_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=106&amp;_nc_ohc=qOQt97V3hxgAb6hNIkM&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfC2vtpU8Jb_dgcYVuNHjQW_G-4Tma9YBlVr41OQ1Agjvg&amp;oe=662A1148&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81a9-958a-d0634ba7ad92"><a href="https://www.instagram.com/p/C2u9xeGNa8s/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Calçados para festa e casual on Instagram: &quot;Na dúvida de qual sandália ir em um evento casamento?  Assista esse vídeo e confira as escolhas da nossa diretora criativa. ✨  Compre on-line pelo link na bio ou no site www.marriejosefine.com.br&quot;</div><div class="bookmark-description">1,025 likes, 3 comments - marriejosefineloja on January 30, 2024: &quot;Na dúvida de qual sandália ir em um evento casamento?  Assista esse vídeo e confira as escolhas da nossa diretora criativa. ✨  Compr...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C2u9xeGNa8s/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/424601080_751898353183565_1841751833868318177_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=105&amp;_nc_ohc=3K4FSZciLHMQ7kNvgGNGIr2&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfDUlq-Zu2SInrZVMCvCInMIy1esHaWepaMYkZFTbNUDaQ&amp;oe=662A3281&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8104-a71a-e40b0f521997"><a href="https://www.instagram.com/p/CywQEmEt7U-/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Yuri Ventura - Direito Tributário on Instagram: &quot;Você sabe quem herdará seu patrimônio quando você morrer?  Sou Yuri Ventura, advogado tributarista, e sempre posto conteúdos sobre impostos, sucessão e muito mais. Se você se interessa por esses assuntos, siga-me aqui.  No Brasil, as regras definem quem são os herdeiros e o que devem herdar, especialmente os “herdeiros necessários”. Mas você sabia que pode ter mais controle sobre seus bens? Você pode decidir como dividir os 50% destinados a eles.  Seu regime de casamento não exclui seu cônjuge ou companheiro como herdeiro. Para impor suas vontades, é essencial criar um planejamento sucessório. A única forma de garantir que seus bens sejam herdados como deseja.   Compartilhe este vídeo se fez sentido para você!&quot;</div><div class="bookmark-description">993 likes, 25 comments - oyuriventura on October 23, 2023: &quot;Você sabe quem herdará seu patrimônio quando você morrer?  Sou Yuri Ventura, advogado tributarista, e sempre posto conteúdos sobre i...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CywQEmEt7U-/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/394665385_2040520416313278_1814826456642441373_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=106&amp;_nc_ohc=24lR6DhkB9oAb7ABUqg&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCdP9HhyTiLUp5fTnrg9f5862aYSoOSNUexet6iIdIvQA&amp;oe=662A1FC8&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-815e-8497-d4b1b88af5f5"><a href="https://www.instagram.com/p/C0rP_yKNygd/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Yuri Ventura - Direito Tributário on Instagram: &quot;Você se casou no regime de separação total de bens e acredita que seu cônjuge não terá direito a nada em caso de morte?   Se respondeu “sim”, você está completamente errado!   No vídeo, expliquei por que o regime de casamento só se aplica à vida, e na sucessão, seu cônjuge é herdeiro por lei. O planejamento sucessório é essencial para dispor do patrimônio conforme desejado.   Dúvidas? Deixe aqui nos comentários e compartilhe esse vídeo para alertar outros sobre esse equívoco.&quot;</div><div class="bookmark-description">1,409 likes, 60 comments - oyuriventura on December 10, 2023: &quot;Você se casou no regime de separação total de bens e acredita que seu cônjuge não terá direito a nada em caso de morte?   Se respon...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C0rP_yKNygd/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/410995724_1350589388906199_1657361820096987332_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=103&amp;_nc_ohc=k57WomFH2DoAb4OjN2c&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCblPkfrqeSA3qBXSa_qTRF1_kOcv5_2yucrP5b4Obzmg&amp;oe=662A0F3F&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8166-b7b5-e9e69b971e4f"><a href="https://www.instagram.com/p/C2-p4BaNG4X/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">BIANCO | ADORNOS EM MÁRMORE on Instagram: &quot;@anapaulasiebert escolheu as nossas jardineiras em mármore travertino romano, peças que são super versáteis e possibilitam a montagem de uma mesa super elegante e linda!  Quer conhecer mais das nossas peças? Qual peça você quer ver em uma montagem de mesa posta?  Clique agora no link da bio &amp; confira o nosso catálogo completo. Enviamos para todo o Brasil.  #biancocasa #adornoscasa #itensparacasa #homedecor #peçasemmármore #mesaposta&quot;</div><div class="bookmark-description">501 likes, 3 comments - bianco.casa_ on February 5, 2024: &quot;@anapaulasiebert escolheu as nossas jardineiras em mármore travertino romano, peças que são super versáteis e possibilitam a montagem...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C2-p4BaNG4X/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/425144583_2049511152087117_8829897873709844717_n.jpg?stp=dst-jpg_e15_p480x480&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=lSRpbZBIn2kAb7NlL40&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfDrDmvhb3WyhQifWmxNHkmxyWmFH9YPsl1nXrwthE0brQ&amp;oe=662A3110&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81f6-be2d-d43244e8c824"><a href="https://www.instagram.com/p/CmF-G0iDsl2/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">BIANCO | ADORNOS EM MÁRMORE on Instagram: &quot;Os nossos suportes para livros adicionam uma dose de elegância e praticidade para o seu lar.   #biancocasa #adornoscasa #itensparacasa #suportesdelivro #peçasemmármore&quot;</div><div class="bookmark-description">71 likes, 0 comments - bianco.casa_ on December 12, 2022: &quot;Os nossos suportes para livros adicionam uma dose de elegância e praticidade para o seu lar.   #biancocasa #adornoscasa #itensparacasa #...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CmF-G0iDsl2/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/319114356_1257982288081516_5716983223056821787_n.jpg?stp=dst-jpg_e35_s640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=104&amp;_nc_ohc=RNFG-4vGBVkAb4WFOKu&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfDZ0NA3vhqKBz2K5-EH2ftAH5sh6gsZVp_L63eVub69Aw&amp;oe=662A25F5&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81ac-a742-f4bd906dc065"><a href="https://www.instagram.com/p/C5OCcyVumcg/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">TAIJI | moda festa &amp; casual chique on Instagram: &quot;Você já conhece a TAIJI? 👀  Somos uma marca de BH, surgimos do sonho de empreender e do desejo de unir elegância e versatilidade.   Desenvolvemos e produzimos peças autorais para ocasiões especiais que também vão te acompanhar no seu dia a dia 💖  Para fazer parte dessa história e acompanhar tudo de pertinho siga nosso perfil @taiji.store&quot;</div><div class="bookmark-description">213 likes, 21 comments - taiji.store on April 1, 2024: &quot;Você já conhece a TAIJI? 👀  Somos uma marca de BH, surgimos do sonho de empreender e do desejo de unir elegância e versatilidade.  ...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C5OCcyVumcg/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/434991268_1619598361778016_3855460747516264969_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=100&amp;_nc_ohc=XXUxfC7cnqYAb4ujUhZ&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfC1UWcLFsRLhuPFuhSgikjitsppo5VRIsu0oE_FzUS7WA&amp;oe=662A2F1F&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-816d-92f2-d9ff54898584"><a href="https://www.instagram.com/p/C5icyGVOTz-/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Dra. Taiane Nunes Barcellos on Instagram: &quot;Suas pálpebras estão te incomodando?  Essa é uma queixa muito comum aqui no consultório, por isso fiz esse vídeo com as principais queixas e tratamentos.  Agende sua consulta pelo link da Bio! 👁️✨  #Pálpebras #Tratamentos #Consulta&quot;</div><div class="bookmark-description">90 likes, 4 comments - drataianebarcellos on April 5, 2024: &quot;Suas pálpebras estão te incomodando?  Essa é uma queixa muito comum aqui no consultório, por isso fiz esse vídeo com as principais q...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C5icyGVOTz-/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/437772629_1153964665781003_3994566617464833284_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=111&amp;_nc_ohc=kUx3qvN1zLoAb5yJvk8&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfD57RfdJbj1d8ZWUfMkqOssyT_aOw5FBs8d0ZXlbH7KNw&amp;oe=662A0EBB&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8107-b502-efe7b7ea2472"><a href="https://www.instagram.com/p/C45dwUkOanr/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Dra. Taiane Nunes Barcellos on Instagram: &quot;O Ultraformer MPT pode ser utilizado em diversas áreas do corpo, incluindo:  Rosto: o tratamento é indicado para melhorar a firmeza da pele, reduzir rugas e linhas de expressão e promover um efeito lifting facial.  Pescoço: também pode ser aplicado no pescoço, combatendo a flacidez, reduzindo a gordura da papada e melhorando a aparência da pele nesta região.  Corpo: o equipamento pode ser usado para tratar áreas como abdome, coxas, glúteos e braços, reduzindo a flacidez e gordura localizada e melhorando o contorno corporal.  Agende sua sessão do Ultraformer pelo link da Bio.  #ultraformermpt #contornocorporal #tratamentocorporal&quot;</div><div class="bookmark-description">51 likes, 12 comments -  drataianebarcellosMarch 21, 2024 on : &quot;O Ultraformer MPT pode ser utilizado em diversas áreas do corpo, incluindo:  Rosto: o tratamento é indicado para melhorar a firmeza da ...&quot;</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C45dwUkOanr/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/434312141_1373269810042924_8518263127174594046_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=104&amp;_nc_ohc=CwN5a4DyZI0Ab5AsJBn&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAww9nONs39Fjiipk5ADP2h2MG7lKUyM4AWRYJDY-gJdw&amp;oe=66173AD3&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8168-80c3-d557a99f327f"><a href="https://www.instagram.com/p/C4sRQf6OJpi/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Dra. Taiane Nunes Barcellos on Instagram: &quot;Já conhece a tecnologia do ULTRAFORMER MPT?  Neste vídeo vou te contar 5 liftings que conseguimos fazer com este procedimento de uma forma prática e rápida. Agende sua sessão pelo link da Bio.  ultraformermpt #liftingfacial #rejuvenescimento&quot;</div><div class="bookmark-description">89 likes, 13 comments - drataianebarcellos on March 17, 2024: &quot;Já conhece a tecnologia do ULTRAFORMER MPT?  Neste vídeo vou te contar 5 liftings que conseguimos fazer com este procedimento de uma fo...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C4sRQf6OJpi/</div></div><img src="https://scontent-ams2-1.cdninstagram.com/v/t51.29350-15/434044107_1098037008112596_468836511027080199_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent-ams2-1.cdninstagram.com&amp;_nc_cat=100&amp;_nc_ohc=k25Prvb463EAb7JHL1w&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfB67K2ml1fqJ5iyHUaSYdmcuJ67P7KGVh_J1dUp0zpfgQ&amp;oe=662A2EE9&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81f0-84fb-c96b7fa24519"><a href="https://www.instagram.com/p/C388-F5tvqD/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Dra. Taiane Nunes Barcellos on Instagram: &quot;Você tem queixa de um “gordinho” inchado nas pálpebras inferiores??  Saiba que podem ter algumas causas e tratamentos diferentes!!   1. Pode ser um acúmulo de células de gordura que retiramos na cirurgia plástica das pálpebras;   2. Uma hipertrofia (aumento) do músculo orbicular;  3. Festoon (edema) malar.  Assista o vídeo e entenda melhor o que eu sugiro em cada caso para melhora da sua queixa.   #bolsasdegordurapalpebrais #blefaroplastia&quot;</div><div class="bookmark-description">181 likes, 16 comments - drataianebarcellos on February 29, 2024: &quot;Você tem queixa de um “gordinho” inchado nas pálpebras inferiores??  Saiba que podem ter algumas causas e tratamentos diferentes!! ...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C388-F5tvqD/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/431393268_1867705990339656_5254812808254051046_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=100&amp;_nc_ohc=51bilEnEAiEQ7kNvgEaROlE&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCuPm83BJwGUhRS4SETwjV398q-bnXSyB9gsSzY9XiIVQ&amp;oe=662A3135&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8183-a523-cf9def03c6f9"><a href="https://www.instagram.com/p/C5la_KdODhT/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">TAIJI | moda festa &amp; casual chique on Instagram: &quot;Nosso vestido Sophia está de volta ao estoque! Produzido no musseline com recortes estratégicos é sinônimo de leveza: look perfeito para aquele casamento na praia! 🐚  Aproveite as dicas do vídeo e conta pra gente qual o seu próximo evento especial!   Segue o nosso perfil @taiji.store&quot;</div><div class="bookmark-description">1,605 likes, 4 comments - taiji.store on April 10, 2024: &quot;Nosso vestido Sophia está de volta ao estoque! Produzido no musseline com recortes estratégicos é sinônimo de leveza: look perfeito p...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C5la_KdODhT/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/437017250_406115082172846_977900033399162834_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=110&amp;_nc_ohc=Fpf38U_9M-IQ7kNvgHltn19&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfA9jLuaOkXiWuMM82Gpguzq8uKRSEd0U5iG3kKIYNiW6g&amp;oe=662A1902&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81ba-a5d4-d3771572075a"><a href="https://www.instagram.com/p/C5awEyNxpF9/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Gislene Isquierdo / Mentora de Experts on Instagram: &quot;Viralizar pode até parecer bom... Mas se você viralizar com um assunto que não tenha NADA A VER com o que fala... Se você atingir um público que não tem interesse na compra...  adivinha? seu engajamento irá cair... você não cria um relacionamento com sua audiência... e não vende!  CUIDADO!  #falarempublico #posicionamento #oratoria #falarbem&quot;</div><div class="bookmark-description">423 likes, 24 comments - gisleneisquierdo on April 6, 2024: &quot;Viralizar pode até parecer bom... Mas se você viralizar com um assunto que não tenha NADA A VER com o que fala... Se você atingir um ...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C5awEyNxpF9/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/436723722_1608070653098211_1697981936395596591_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=103&amp;_nc_ohc=VHDPYhNqK8gQ7kNvgEESVmD&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfARbvguh4q2HClxC4WGAC-9Vm3EAeFkbZZBqFwr1HqCCg&amp;oe=662A2F11&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8140-ac05-c8cd245fb377"><a href="https://www.instagram.com/p/C5azgQyOBPj/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hyeser Souza | Tráfego Orgânico on Instagram: &quot;Ninguém aguenta receber postagens no direct, é sério!  Isso não vai mudar drasticamente o seu engajamento, confie em mim — na verdade, só fará com que as pessoas facilmente queiram te ignorar.  Ao invés de enviar sua postagem para as pessoas engajarem, experimente melhorar sua produção de conteúdo.  Boas postagens inevitavelmente tem bom engajamento.  Mas se o seu engajamento ainda não é legal, isso significa que suas postagens são ruins.  *Prevejo pessoas repostando isso nos stories para mandar indiretas.&quot;</div><div class="bookmark-description">3,114 likes, 136 comments - hyeser on April 6, 2024: &quot;Ninguém aguenta receber postagens no direct, é sério!  Isso não vai mudar drasticamente o seu engajamento, confie em mim — na verda...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C5azgQyOBPj/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/435511012_946374683460921_2903179571340260401_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=5IX4y_ZgYPMQ7kNvgGGkLyj&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCviGJQmFOEbWS-QwRQy4ylipgA2ctfZMMWV0udi-llqA&amp;oe=662A2063&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8116-a4f5-eb8810c08cd9"><a href="https://www.instagram.com/p/C141cqbsIWX/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">‎Rym  ريم 🌞‎ on Instagram: &quot;Office outfits series - Day 2/10  Marine x Burgundy 🍒  #outfitinspo #styleinspo #officeoutfit #timelessclassic #zapaparis #sezane #bashparis #rivecour #sezanelovers&quot;</div><div class="bookmark-description">57K likes, 462 comments - itsayallavibe on January 9, 2024: &quot;Office outfits series - Day 2/10  Marine x Burgundy 🍒  #outfitinspo #styleinspo #officeoutfit #timelessclassic #zapaparis #sezane #bas...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C141cqbsIWX/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/418046460_1293075798028702_8197364936815226753_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=110&amp;_nc_ohc=YXn44qnKTxwQ7kNvgF09IiF&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCZCcZuVWeqYAXRJsE_IVAqYlxuuSgZGyDggKODaoh_7w&amp;oe=662A3627&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81e8-a8b8-f47f1a8e22ea"><a href="https://www.instagram.com/p/C5I-p2lLNb2/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Almeida Prado Dicas on Instagram: &quot;Organização é vida!  #organizacao #casa #dicascasa #dicacaseira #quarto #cama #casamento #truquesdecasa #casamentos #telefone #instagram #instagood&quot;</div><div class="bookmark-description">440K likes, 3,259 comments - roalmeidaprado on March 30, 2024: &quot;Organização é vida!  #organizacao #casa #dicascasa #dicacaseira #quarto #cama #casamento #truquesdecasa #casamentos #telefone #instagr...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C5I-p2lLNb2/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/434884176_799292245401231_4781934945459109553_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=103&amp;_nc_ohc=TvwQpC8gO38Ab6yRLno&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBTIHVZflHmJbmqJ1xSb2BF4RU6BO6QQkqEUAcruDPClg&amp;oe=662A2B44&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81d2-b5f3-dbe75a5e5501"><a href="https://www.instagram.com/p/C4vaEh6uhn-/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">TAIJI | moda festa &amp; casual chique on Instagram: &quot;Explore os detalhes das nossas calças Taiji e escolha a que melhor se encaixa a você 😍 para cada mulher, uma peça Taiji perfeita!  -para saber mais, clique no perfil @taiji.store&quot;</div><div class="bookmark-description">taiji.store on March 20, 2024: &quot;Explore os detalhes das nossas calças Taiji e escolha a que melhor se encaixa a você 😍 para cada mulher, uma peça Taiji perfeita!  ...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C4vaEh6uhn-/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/434311688_288580834264839_6136354211778449063_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=103&amp;_nc_ohc=Be7MH65uRfgAb5OZ9Bz&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCseS87c1Nk7Yo8fEbEJu7ZhV_2Xcxk2O2g2KhOSGKV3w&amp;oe=662A290A&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81eb-9b80-dcb3cc3d811e"><a href="https://www.instagram.com/p/C3Qej40oQqZ/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Chantelle Hofland on Instagram: &quot;The trainers that have been taking over the internet! @adidas samba’s 🫶   To SHOP these outfits:   ✨ Comment “LINKS” (if you follow me you’ll automatically receive the details in a DM)   ✨ Shop via the link in my bio 🥰   Is this a shoe you like the look of? I love minimal designs in terms of trainers and this is just that! So I’m a fan ♥️ hope you all had a great start to the week!&quot;</div><div class="bookmark-description">25K likes, 365 comments - outfitreport on February 12, 2024: &quot;The trainers that have been taking over the internet! @adidas samba’s 🫶   To SHOP these outfits:   ✨ Comment “LINKS” (if you f...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C3Qej40oQqZ/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/427786630_1450123035884955_6173086622920917510_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=103&amp;_nc_ohc=7lH64bFgcXgAb7TY2gw&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBL820X2oBKqGCn0t8n1eJF7tMu2ZulbRlK2hRkvCzrqA&amp;oe=662A16F6&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8118-8c8d-f486b94ca318"><a href="https://www.instagram.com/p/C4c-IlRLz3g/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Gislene Isquierdo / Mentora de Experts on Instagram: &quot;4 pontos que você PRECISA ter na sua comunicação para vender mais…  Fique atento! Por que se você não souber fazer isso, grandes chances de travar na hora de vender.  Ps: conhece alguém que já travou ou teve essa dificuldade? Compartilhe este vídeo com uma pessoa UAU que precisa destravar 😉  #comunicacao #expert #posicionamento #oratoria&quot;</div><div class="bookmark-description">443 likes, 10 comments - gisleneisquierdo on March 12, 2024: &quot;4 pontos que você PRECISA ter na sua comunicação para vender mais…  Fique atento! Por que se você não souber fazer isso, grandes c...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C4c-IlRLz3g/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/433174309_1852557691861287_8382539259744310106_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=103&amp;_nc_ohc=xGMDPwzdQwcQ7kNvgFXyn1u&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCigMllbxyGsrb-A_Lc3xCgNyUDSdAJ4ZBff9-j0c4uYg&amp;oe=662A2E9D&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f2-8b7d-ec6f1c7fcabb" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ea-b1f8-d92435f48448" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a2-9c63-fa1068a2074b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d3-9a33-fc6711f10e79" class=""><strong>Volte para a página anterior</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81b9-98c9-d06381798207"/></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8156-a618-e30109020ca8"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f5-a605-f48446ab69ab" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

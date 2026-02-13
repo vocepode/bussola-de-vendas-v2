@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
@@ -5,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { KanbanSquare, Calendar, Target } from "lucide-react";
-import { Link } from "wouter";
+import Link from "next/link";
 
 const PROGRESS_COLUMNS = [
   { value: "ideia", label: "💡 Ideia", color: "bg-slate-700" },

@@ -1,0 +1,725 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Marco Zero</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-81c9-bcf6-f1b0f3b8f3c7" class="page sans"><header><img class="page-cover-image" src="Marco%20Zero/12.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://www.notion.so/icons/hourglass_blue.svg"/></div><h1 class="page-title" dir="auto">Marco Zero</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-816c-b53c-db505e847ad6" class="quote-large">Nesta página você vai responder diversas informações sobre o seu negócio e a sua história como empreendedor. Queremos conhecer a fundo todos os aspectos possíveis que te trouxeram até aqui para poder ajudar você e a sua marca a dar um salto daqui pra frente. <br/><br/>Mas antes de seguir caminho para o futuro, vamos olhar primeiro para o passado e o presente.</blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e4-bdbe-f53d3090e856" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8133-a2b9-c2c4bcc12daf" class=""><mark class="highlight-blue">Assista às aulas:</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8124-8c8b-cec11f1f664c"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8141-91b9-c954342b91e9" class="">Para concluir essa etapa você precisa assistir as aulas abaixo.</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81d7-a3e0-c64cc80ec97a" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81df-848b-f8f009fb762e" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-817c-a64b-f93aecf69842"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula “Posição inicial”</strong><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81a5-b214-fb33c4e80241"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/LO02yWL1eG" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/LO02yWL1eG</div></div></a></figure></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-812a-bd8c-c121a4b51697" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-811f-9720-f278449eb563"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula “Descobrindo o seu Norte”</strong><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-812d-9982-fdca5e2f735d"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/gOpzd53PeJ" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/gOpzd53PeJ</div></div></a></figure></div></div></figure></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8171-acee-c69aa5f9ec62"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8171-9118-c51ef7d31574" class=""><mark class="highlight-blue">Aprenda a fazer o exercício!</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-819a-a080-f04df3b4cd20"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8161-9f1d-e5c97ce35c08" class="toggle"><li><details open=""><summary><mark class="highlight-blue_background">Se estiver com dúvidas, veja o vídeo abaixo para ver mais detalhes de como preencher essa página:</mark></summary><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8102-a948-f577a8a70073"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought-dialogue_blue.svg"/></div><div style="width:100%">Tutorial - Preenchendo as Perguntas de Reflexão<div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-812c-9aa7-f1704d5133cc"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/o4ElR2JVOz" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/o4ElR2JVOz</div></div></a></figure></div></div></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81df-91e4-ccd5a5d603b0"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8188-b757-c7f1f08dd68f" class=""><mark class="highlight-blue">Perguntas de reflexão</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-811c-a5e8-e43ac3923536"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d8-b970-c8adacf4cf16" class="">O propósito aqui é saber quem é você de verdade. Aqui não existem respostas erradas. Queremos que responda de peito aberto, trazendo sentimentos, anseios, desejos e o que pensa sobre cada assunto. É um momento de descobrimento para nós, mas talvez seja um redescobrimento para você. </p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8186-96b9-e728b35d8fff" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8166-a996-fef81d2be51e"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Qual a minha história</strong><mark class="highlight-default"><strong> como empresário(a)?</strong></mark><div style="display:contents" dir="auto"><p id="276cb023-eb3b-813b-a124-c08f4787d509" class=""><em><mark class="highlight-gray">Qual é a história da sua empresa/negócio?</mark></em><em><mark class="highlight-brown"> </mark></em><em><mark class="highlight-gray">Como sua empresa começou? O que te motivou a abrir a empresa?</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8123-b0fd-ec6ac44f0bcc"/></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8053-9bf0-ecb0cc14287a" class="">Daniel iniciou sua trajetória empreendedora aos 18 anos, em João Monlevade, organizando festas e eventos. O que começou como uma paixão pela música e pelo convívio com pessoas transformou-se em uma carreira robusta, marcada por ousadia e visão estratégica.</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8068-976d-e0217df1a758" class="">Durante a faculdade de Turismo, mudou-se para Belo Horizonte e abriu seu primeiro escritório no mesmo dia da formatura, em 2005.</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-801c-8110-fb15248a6cba" class="">Nos anos seguintes, sua atuação ganhou escala:</p></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-805c-b872-f5762aad7680" class="bulleted-list"><li style="list-style-type:disc">Criação da Open Comunicação, atendendo clientes privados e multinacionais.</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80ad-8b93-c803e7137c49" class="bulleted-list"><li style="list-style-type:disc">Liderança de <strong>mais de 15.000 eventos em 6 anos</strong>, com uma equipe de mais de 300 pessoas.</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8010-8b77-d07709403f0f" class="bulleted-list"><li style="list-style-type:disc">Destaques: Carnaval de Salvador (2009), Fórmula 1 em São Paulo (2009), Conferência Mundial da ONU (2010), São João da Bahia em 459 cidades, Salão do Automóvel Volkswagen, Réveillon da Provocateur em Punta del Este.</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-805e-8731-edc97a348029" class="bulleted-list"><li style="list-style-type:disc">Experiências internacionais: franquias de boate de NY no Brasil, eventos no Uruguai.</li></ul></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-80bf-bd0b-ea0b67566efe" class="">Em 2015, após mudanças de governo e crises financeiras, perdeu seus negócios e precisou recomeçar do zero. Nesse período, abriu um bar em João Monlevade e, mais tarde, fundou o <strong>Instituto Luz para a Vida</strong>, que atendeu mais de 200 mil pessoas com consultas oftalmológicas gratuitas.</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8001-9dce-c3a8806904c3" class="">Com a pandemia, mergulhou nos estudos de marketing digital e, inspirado em grandes referências, desenvolveu o <strong>Método COMPASS</strong>. Hoje, atua transformando empresas invisíveis em marcas desejadas, com foco em estratégia, posicionamento, conteúdo e vendas.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81d8-ad96-d6789a26981e"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Em quais áreas eu tenho experiência ou conhecimento especializado?</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8143-9f11-f671bf3d4bcc" class=""><em><mark class="highlight-gray">O que você faz e que é bom? Quais dessas coisas você já faz na sua empresa? E em que você é bom além das coisas que faz na sua empresa? Seus produtos ou serviços atendem um tipo específico de cliente que demanda um conhecimento especializado?</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-815a-9208-e52604e11645"/></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8089-88e0-f2c76a175f9b" class="bulleted-list"><li style="list-style-type:disc">Marketing digital (estratégia, funis, conteúdo, performance)</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8011-8156-e330b5ddc09e" class="bulleted-list"><li style="list-style-type:disc">Gestão (financeira, operacional e estratégica)</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80a4-ba72-c97731c2862a" class="bulleted-list"><li style="list-style-type:disc">Vendas (presenciais e digitais)</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8043-9b9f-dd0f22c24fe4" class="bulleted-list"><li style="list-style-type:disc">Eventos (sociais, corporativos e públicos)</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8024-8fdf-d08a34f87a02" class="bulleted-list"><li style="list-style-type:disc">Liderança e desenvolvimento de equipes</li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-812d-9a8f-d4a4383e6ac1"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Quais são as minhas paixões e interesses pessoais?</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8141-8b70-c2059a1123cc" class=""><em><mark class="highlight-gray">O que você mais gosta de fazer? Quais áreas te instigam a aprender mais e se aperfeiçoar?</mark></em></p></div><div style="display:contents" dir="auto"><p id="2a2cb023-eb3b-8007-b6ce-f5624cbff930" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8135-ae27-f3cbee47a0df"/></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8004-ac42-d1002b5c60b1" class="bulleted-list"><li style="list-style-type:disc">Ensinar estratégia, posicionamento, conteúdo e vendas</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8037-be1c-c30fb19c8198" class="bulleted-list"><li style="list-style-type:disc">Ver a transformação de alunos e empresas na prática</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80b7-9e48-ee1160449a6b" class="bulleted-list"><li style="list-style-type:disc">Liderar com verdade, clareza e proximidade</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80bc-81ba-fe6d25c4c4b8" class="bulleted-list"><li style="list-style-type:disc">Usar o digital como ferramenta de liberdade e impacto</li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-811a-895d-de71dc99f3fa"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Qual seu propósito?</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a2-82ad-e583dbce73ed" class=""><em><mark class="highlight-gray">O que faz você acordar de manhã todos os dias e te move para enfrentar seus desafios rumo aos seus sonhos?</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81dc-be73-f086840cee83"/></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8016-bcaf-c52c6fa5acd7" class="">Transformar pessoas, famílias e empresas para que sejam o melhor de si mesmas, com posicionamento autêntico e amoroso, criando conteúdo que atrai, conecta, engaja e vende.</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-80d5-a262-ee2e4df81457" class="">Disposto a perder o cliente para não perder a verdade sempre dizendo o que precisa ser dito, algo raro no mercado atual.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81df-a662-cc2c53736771"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Qual o propósito da empresa/projeto?</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815f-859d-ce2274598bbf" class=""><em><mark class="highlight-gray">Qual a transformação ou solução você oferece para o seu cliente? </mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8194-979e-e6498205fbc5"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8137-b7b0-c60fa1686a25" class="">Ser extensão do propósito do fundador: despertar o poder interno de cada pessoa e negócio, ensinando a utilizá-lo para gerar transformação real, vendas e lucro com verdade.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8112-824d-ce5d1f2e822f"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>O que você vende?</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a8-aef9-f16b4e2cafea" class=""><em><mark class="highlight-gray">Dê mais detalhes sobre o seu produto ou serviço.</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8171-aaa1-e9cab7b64052"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815f-8816-f2796e56ddb2" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-80d9-a60b-fb0db069517f" class=""><strong>Serviços:</strong></p></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8010-a6b8-ed3740de4220" class="bulleted-list"><li style="list-style-type:disc">Mentorias (individual e em grupo)</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80cd-9d26-ebbb979bbb5d" class="bulleted-list"><li style="list-style-type:disc">Consultorias estratégicas</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8013-aa95-edb2f8a154cd" class="bulleted-list"><li style="list-style-type:disc">Assessoria contínua (Programa Compass)</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8064-8f5f-fdbee011b9b9" class="bulleted-list"><li style="list-style-type:disc">Implementação do Método COMPASS</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8052-81ad-d74c759c0ace" class="bulleted-list"><li style="list-style-type:disc">Cursos e Imersões Compass</li></ul></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-800b-a43f-e16dea34aa67" class=""><strong>Transformação entregue:</strong></p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8063-96ce-fe291776303d" class="">Transformar empresas e profissionais invisíveis em negócios respeitados e desejados na internet, com posicionamento claro, estratégia e vendas estruturadas.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8157-9233-fb1091ee021b"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Quem é seu cliente ideal?</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8198-8a73-fd512fa39c44" class=""><em><mark class="highlight-gray">Descreva como se fosse uma pessoa que você conhece muito bem.</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-815f-985c-ce7b7d6354f8"/></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8076-845e-cf0da111a577" class="">Empresários, empreendedores e profissionais liberais.</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-807c-978a-d17c958942ed" class="">Perfil predominante:</p></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80ad-b812-cd3afa97cb1a" class="bulleted-list"><li style="list-style-type:disc">70% mulheres</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8090-8082-e8aac2e3fd91" class="bulleted-list"><li style="list-style-type:disc">Idade entre 30 e 60 anos</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80c1-9c84-e37ae274b71d" class="bulleted-list"><li style="list-style-type:disc">Localização principal: Sudeste</li></ul></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8037-b2b4-f81dafb2fe94" class="">Segmentos mais frequentes:</p></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8042-a2ab-c2a76ad49be6" class="bulleted-list"><li style="list-style-type:disc">Moda</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-809f-bee3-f69ba725e4e2" class="bulleted-list"><li style="list-style-type:disc">Beleza</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80dd-ac47-ec5157748db3" class="bulleted-list"><li style="list-style-type:disc">Alimentação saudável (60%)</li></ul></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8081-a96d-f785c5064a1d" class="">Outros segmentos atendidos:</p></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8065-8f3c-f2cbf9621460" class="bulleted-list"><li style="list-style-type:disc">Medicina</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8061-88ae-ff8808550f3d" class="bulleted-list"><li style="list-style-type:disc">Advocacia</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8062-8d98-e6bfafa32f30" class="bulleted-list"><li style="list-style-type:disc">Serviços especializados</li></ul></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-80a5-b852-cbe0bbd2abcc" class="">Maturidade financeira:</p></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8041-ad4e-dbfdf260598d" class="bulleted-list"><li style="list-style-type:disc">Negócios faturando entre R$ 50 mil e R$ 1 milhão/mês</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8093-8f56-ea02d001d23c" class="bulleted-list"><li style="list-style-type:disc">Renda pessoal acima de R$ 20 mil/mês (profissionais)</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80ee-8d73-feaffff097c4" class="bulleted-list"><li style="list-style-type:disc">Renda dos negócios acima de R$ 30 mil/mês</li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81a8-a2f3-dbd31e36071e"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Como e por quê você é melhor?</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-812c-b209-e760f27e38dc" class=""><em><mark class="highlight-gray">Por que as pessoas deveriam comprar de você e não de um concorrente?</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8148-9f60-e9cc0298d33e"/></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-800b-897d-f4f0a0d26fe5" class="bulleted-list"><li style="list-style-type:disc">Método COMPASS exclusivo e validado</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80ae-8919-cb5a65deb937" class="bulleted-list"><li style="list-style-type:disc">Foco em transformação real, não em métricas vazias</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8092-b65f-fe4be39308bf" class="bulleted-list"><li style="list-style-type:disc">Resultados comprovados em diversos segmentos</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-808a-b6c8-e2d2c79491ba" class="bulleted-list"><li style="list-style-type:disc">Olhar estratégico profundo e personalizado</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80c2-8b96-fba1dc630271" class="bulleted-list"><li style="list-style-type:disc">Postura de sócio: proximidade, verdade e não empurrar serviços</li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8182-a329-fcc5a4f85549"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Como você faz seu cliente se sentir especial?</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81be-8473-d27e74464fb3" class=""><em><mark class="highlight-gray">O que você faz de diferente para que seu cliente se sinta visto, percebido?</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d2-9251-e42f53442544"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8114-a0c9-ea5bc8e692ff" class="">O cliente se sente acompanhado, protegido e respeitado na essência do negócio. Recebe clareza, transparência e verdade, mesmo quando desconfortável, o que gera confiança profunda e diferenciação no mercado.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-817d-a016-e626c66fa9e5"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Qual história seu cliente irá contar sobre você?</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-810f-ab1e-eb12acaa4185" class=""><em><mark class="highlight-gray">Como seu cliente deveria falar sobre você para outra pessoa?</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-818f-a1a6-f7d911fd6672"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-813b-ae9b-e9d9fc4a7303" class="">“Depois de anos com agências e mentores sem resultado, encontrei na Você Pode clareza, estratégia e vendas reais. Daniel fala a verdade — às vezes firme, mas sempre com amor. Hoje meu negócio tem posicionamento autêntico, planejamento claro e lucro consistente.”</p></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81bc-a3ca-c492abaf5962" class="">
+</p></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-814e-bdcf-f03effc1b27c" class="image"><a href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAA1ElEQVR4Ae3bMQ4BURSFYY2xBuwQ7BIkTGxFRj9Oo9RdkXn5TvL3L19u+2ZmZmZmZhVbpH26pFcaJ9IrndMudb/CWadHGiden1bll9MIzqd79SUd0thY20qga4NA50qgoUGgoRJo/NL/V/N+QIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIEyFeEZyXQpUGgUyXQrkGgTSVQl/qGcG5pnkq3Sn0jOMv0k3Vpm05pmNjfsGPalFyOmZmZmdkbSS9cKbtzhxMAAAAASUVORK5CYII="><img style="width:17px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAA1ElEQVR4Ae3bMQ4BURSFYY2xBuwQ7BIkTGxFRj9Oo9RdkXn5TvL3L19u+2ZmZmZmZhVbpH26pFcaJ9IrndMudb/CWadHGiden1bll9MIzqd79SUd0thY20qga4NA50qgoUGgoRJo/NL/V/N+QIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIEyFeEZyXQpUGgUyXQrkGgTSVQl/qGcG5pnkq3Sn0jOMv0k3Vpm05pmNjfsGPalFyOmZmZmdkbSS9cKbtzhxMAAAAASUVORK5CYII="/></a></figure></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8195-8d70-d2e3196415d5" class=""><mark class="highlight-blue">Posição inicial</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-811e-8bff-c4f36c8a42f9"/></div><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-8158-89ec-f3e60ced8bb1" class="quote-large">Este questionário visa permitir que nossa equipe compreenda melhor o seu negócio, possibilitando-nos oferecer orientações mais precisas durante o seu programa de mentoria.<br/><br/>Clique no botão abaixo, leia e responda o questionário. <br/>Depois volte para esta página. </blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8114-af56-ed8679a6a87e" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-811b-83c2-c0070377c3be" class="block-color-blue"><strong>Faça um registro do seu perfil atual!</strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817d-b315-c79b11234877" class="">Uma das coisas importantes do Método 🧭COMPASS é registrar muito bem o ponto de partida e manter todo histórico possível das evoluções da sua marca e presença digital ao longo do tempo. </p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81e8-aa6b-dbcc62a3b989"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-811f-9d27-ee80f5862ddc"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Coloque abaixo uma foto (print) do seu perfil atual</strong><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8141-970f-d3b9eb6f0a8c" class="toggle"><li><details open=""><summary><em><mark class="highlight-gray">Instruções para a imagem</mark></em></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815b-8bf4-cf26aa50557b" class="">Assim como no exemplo a seguir, tire um print que mostre desde o @ do seu perfil até os destaques e outro print com o seu feed atual</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-818c-903b-fda50e06dcd9" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8113-9374-dd992c062873" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81d5-8be3-cf8f303583e7" class="image"><a href="Marco%20Zero/WhatsApp_Image_2024-05-07_at_19.34.54.jpeg"><img style="width:1170px" src="Marco%20Zero/WhatsApp_Image_2024-05-07_at_19.34.54.jpeg"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8127-8225-f307ba620337" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8168-846a-c69de6f408ba" class="image"><a href="Marco%20Zero/WhatsApp_Image_2024-05-07_at_19.33.46.jpeg"><img style="width:286.1875px" src="Marco%20Zero/WhatsApp_Image_2024-05-07_at_19.33.46.jpeg"/></a></figure></div></div></div></div></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-819e-86b5-e622ada6de1c"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-813f-ac56-da24b71af928" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8106-aaeb-dd045c0fc131" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-817b-9f14-d32a2ceb2542" class="image"><a href="Marco%20Zero/WhatsApp_Image_2025-12-18_at_11.27.47.jpeg"><img style="width:298.984375px" src="Marco%20Zero/WhatsApp_Image_2025-12-18_at_11.27.47.jpeg"/></a></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81be-965e-c9019ea7a05d" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8147-9185-d92b0a0072e2" class="image"><a href="Marco%20Zero/WhatsApp_Image_2025-12-18_at_11.27.46.jpeg"><img style="width:298.984375px" src="Marco%20Zero/WhatsApp_Image_2025-12-18_at_11.27.46.jpeg"/></a></figure></div></div></div></div></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c2-bbcf-ee90259a02a3" class="">
+</p></div><div style="display:contents" dir="auto"><h1 id="276cb023-eb3b-810f-a70e-ff25aae08dfb" class=""><mark class="highlight-blue">Checklist Primeiros passos</mark></h1></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8118-8b6b-cb6cd5357e9f"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81bc-a2b6-c13a1cbc7e49" class="">Antes de começar o Norte preencha o checklist abaixo para concluir a introdução à Bússola de Vendas. Certifique-se de só avançar para a próxima etapa depois de concluir todas as tarefas abaixo.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8180-805d-e28e2454c9b9"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81e6-ae7f-f60a214f0f83" class="image"><a href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAA1ElEQVR4Ae3bMQ4BURSFYY2xBuwQ7BIkTGxFRj9Oo9RdkXn5TvL3L19u+2ZmZmZmZhVbpH26pFcaJ9IrndMudb/CWadHGiden1bll9MIzqd79SUd0thY20qga4NA50qgoUGgoRJo/NL/V/N+QIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIEyFeEZyXQpUGgUyXQrkGgTSVQl/qGcG5pnkq3Sn0jOMv0k3Vpm05pmNjfsGPalFyOmZmZmdkbSS9cKbtzhxMAAAAASUVORK5CYII="><img style="width:17px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAA1ElEQVR4Ae3bMQ4BURSFYY2xBuwQ7BIkTGxFRj9Oo9RdkXn5TvL3L19u+2ZmZmZmZhVbpH26pFcaJ9IrndMudb/CWadHGiden1bll9MIzqd79SUd0thY20qga4NA50qgoUGgoRJo/NL/V/N+QIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIEyFeEZyXQpUGgUyXQrkGgTSVQl/qGcG5pnkq3Sn0jOMv0k3Vpm05pmNjfsGPalFyOmZmZmdkbSS9cKbtzhxMAAAAASUVORK5CYII="/></a></figure></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8170-be4e-de1efe078086" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Concluir na Hotmart o Módulo 1; Informações Importantes, Aula Comece Aqui, Aula Mapa da Jornada, Aula Resultados</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8112-ac4e-f4c68ebaa230" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Concluir na Hotmart o Módulo 2; Aula Acesso à Bússola de Vendas, Aula Posição Inicial </span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8138-bb72-fa18bc3dd299" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Concluir na Hotmart a Aula Descobrindo o seu Norte, do Módulo 3;</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-814f-9474-d99e516b6e8b" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Duplicar o template da Bússola de Vendas</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ee-8c7d-fe41960598e0" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Compartilhar o acesso para a Equipe Você Pode+</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c5-b863-d48434964c16" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Seguir o <strong><a href="https://www.instagram.com/vocepode.vendermais/">Instagram exclusivo</a></strong> para alunos do 🧭COMPASS</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ed-b66b-f7974fb5e053" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Responder às <a href="Marco%20Zero%20276cb023eb3b81c9bcf6f1b0f3b8f3c7.html">Perguntas de reflexão</a></span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-819c-8b9e-db5cc4ca980b" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Responder o questionário <a href="../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/An%C3%A1lise%20do%20seu%20neg%C3%B3cio%20276cb023eb3b81c99d44da5da457191e.html">Análise do seu negócio</a></span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8156-90ce-d5f348f7b04d"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81c4-99b7-f58fb40b907a" class="image"><a href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAA1ElEQVR4Ae3bMQ4BURSFYY2xBuwQ7BIkTGxFRj9Oo9RdkXn5TvL3L19u+2ZmZmZmZhVbpH26pFcaJ9IrndMudb/CWadHGiden1bll9MIzqd79SUd0thY20qga4NA50qgoUGgoRJo/NL/V/N+QIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIEyFeEZyXQpUGgUyXQrkGgTSVQl/qGcG5pnkq3Sn0jOMv0k3Vpm05pmNjfsGPalFyOmZmZmdkbSS9cKbtzhxMAAAAASUVORK5CYII="><img style="width:17px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAA1ElEQVR4Ae3bMQ4BURSFYY2xBuwQ7BIkTGxFRj9Oo9RdkXn5TvL3L19u+2ZmZmZmZhVbpH26pFcaJ9IrndMudb/CWadHGiden1bll9MIzqd79SUd0thY20qga4NA50qgoUGgoRJo/NL/V/N+QIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIEyFeEZyXQpUGgUyXQrkGgTSVQl/qGcG5pnkq3Sn0jOMv0k3Vpm05pmNjfsGPalFyOmZmZmdkbSS9cKbtzhxMAAAAASUVORK5CYII="/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-813d-85f9-cfdd4ec624b2" class="image"><a href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAA1ElEQVR4Ae3bMQ4BURSFYY2xBuwQ7BIkTGxFRj9Oo9RdkXn5TvL3L19u+2ZmZmZmZhVbpH26pFcaJ9IrndMudb/CWadHGiden1bll9MIzqd79SUd0thY20qga4NA50qgoUGgoRJo/NL/V/N+QIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIEyFeEZyXQpUGgUyXQrkGgTSVQl/qGcG5pnkq3Sn0jOMv0k3Vpm05pmNjfsGPalFyOmZmZmdkbSS9cKbtzhxMAAAAASUVORK5CYII="><img style="width:17px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAA1ElEQVR4Ae3bMQ4BURSFYY2xBuwQ7BIkTGxFRj9Oo9RdkXn5TvL3L19u+2ZmZmZmZhVbpH26pFcaJ9IrndMudb/CWadHGiden1bll9MIzqd79SUd0thY20qga4NA50qgoUGgoRJo/NL/V/N+QIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIEyFeEZyXQpUGgUyXQrkGgTSVQl/qGcG5pnkq3Sn0jOMv0k3Vpm05pmNjfsGPalFyOmZmZmdkbSS9cKbtzhxMAAAAASUVORK5CYII="/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81fa-b986-fd1010bc7ebe" class="image"><a href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAA1ElEQVR4Ae3bMQ4BURSFYY2xBuwQ7BIkTGxFRj9Oo9RdkXn5TvL3L19u+2ZmZmZmZhVbpH26pFcaJ9IrndMudb/CWadHGiden1bll9MIzqd79SUd0thY20qga4NA50qgoUGgoRJo/NL/V/N+QIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIEyFeEZyXQpUGgUyXQrkGgTSVQl/qGcG5pnkq3Sn0jOMv0k3Vpm05pmNjfsGPalFyOmZmZmdkbSS9cKbtzhxMAAAAASUVORK5CYII="><img style="width:17px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAA1ElEQVR4Ae3bMQ4BURSFYY2xBuwQ7BIkTGxFRj9Oo9RdkXn5TvL3L19u+2ZmZmZmZhVbpH26pFcaJ9IrndMudb/CWadHGiden1bll9MIzqd79SUd0thY20qga4NA50qgoUGgoRJo/NL/V/N+QIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIEyFeEZyXQpUGgUyXQrkGgTSVQl/qGcG5pnkq3Sn0jOMv0k3Vpm05pmNjfsGPalFyOmZmZmdkbSS9cKbtzhxMAAAAASUVORK5CYII="/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8140-b481-f7f8b0fcbd3e" class="image"><a href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAA1ElEQVR4Ae3bMQ4BURSFYY2xBuwQ7BIkTGxFRj9Oo9RdkXn5TvL3L19u+2ZmZmZmZhVbpH26pFcaJ9IrndMudb/CWadHGiden1bll9MIzqd79SUd0thY20qga4NA50qgoUGgoRJo/NL/V/N+QIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIEyFeEZyXQpUGgUyXQrkGgTSVQl/qGcG5pnkq3Sn0jOMv0k3Vpm05pmNjfsGPalFyOmZmZmdkbSS9cKbtzhxMAAAAASUVORK5CYII="><img style="width:17px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAYAAABV7bNHAAAA1ElEQVR4Ae3bMQ4BURSFYY2xBuwQ7BIkTGxFRj9Oo9RdkXn5TvL3L19u+2ZmZmZmZhVbpH26pFcaJ9IrndMudb/CWadHGiden1bll9MIzqd79SUd0thY20qga4NA50qgoUGgoRJo/NL/V/N+QIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIECBAgQIAAAQIEyFeEZyXQpUGgUyXQrkGgTSVQl/qGcG5pnkq3Sn0jOMv0k3Vpm05pmNjfsGPalFyOmZmZmdkbSS9cKbtzhxMAAAAASUVORK5CYII="/></a></figure></div><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-813d-965c-c8ee57892f2e" class="quote-large"><strong>Agora você está pronto para pegar sua bússola e começar de verdade a sua nova jornada!</strong></blockquote></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8151-b87d-d9a63ce51cfe"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d2-8498-f79ab6da01b9" class="">
+</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8100-9498-ff8ec41a56bd" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81df-a8af-e11c6ee6d9c1" style="width:62.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8151-a747-e35cfcfa157b" class=""><strong>Volte para a página anterior</strong></p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8177-9e17-e24bad610767" style="width:37.50000000000001%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8146-a823-eda21e98d1a4" class=""><strong>Avance para a próxima página</strong></p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8172-acc6-cd718b5aeb19"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8148-9c0b-f31aa331a88e" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8185-9ef8-f1492493dbf9" style="width:56.25%" class="column"></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-814d-b9ab-d3179f47bcbb" style="width:43.75%" class="column"></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-815b-bf12-f4fbe67558d2"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811d-aa73-ec6a2e6ada9b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8109-b7d0-ce1f2fe99554" class="">
+</p></div><div style="display:contents" dir="auto"><div style="display:contents" dir="auto"><div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8151-8208-d3a18be30a77"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8129-aab5-f16e8a294db2" class="">Bússola de Vendas desenvolvido por <strong><a href="https://www.notion.so/f8156e7b171a4df68144f6293ae02538?pvs=21">Consultoria Inception</a></strong> para VocêPode Mkt Digital</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f6-bdc6-f5ec39f5a795" class=""><br/>Copyright © Castro Américo Digital – Todos os direitos reservados.<br/>É proibida a reprodução total ou parcial dos conteúdos dessa ferramenta.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8184-a344-d6b2fc8359af" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8117-a316-ccb13abc34ff" class=""><a href="http://vocepodevendermais.com.br">Site</a> l <a href="https://hotmart.com/pt-br/club/vocepode-vendermais/products/3939809">Plataforma de Alunos</a> | <a href="https://www.instagram.com/vocepode.vendermais">Instagram</a></p></div></div></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8131-b5d2-e0069f8c0b22" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

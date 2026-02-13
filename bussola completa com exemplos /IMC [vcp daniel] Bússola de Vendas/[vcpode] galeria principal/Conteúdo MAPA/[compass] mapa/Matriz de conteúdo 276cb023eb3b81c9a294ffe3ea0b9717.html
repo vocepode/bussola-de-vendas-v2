@@ -1,0 +1,728 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Matriz de conteúdo</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-81c9-a294-ffe3ea0b9717" class="page sans"><header><img class="page-cover-image" src="Matriz%20de%20conte%C3%BAdo/26.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://www.notion.so/icons/grid_blue.svg"/></div><h1 class="page-title" dir="auto">Matriz de conteúdo</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-817b-a0c7-f9d4378901b0" class=""><mark class="highlight-blue">Assista às aulas:</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8195-9cbe-c088f283f900"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-814c-bf67-cc0591059cee" class="">Para concluir essa etapa você precisa assistir as aulas abaixo.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-818d-951a-e3e7721774fd"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81df-9a5b-efaff690f951" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8140-86d8-cb24828d9747" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8185-bf77-e5d317beeba8"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula “Criação de Conteúdo”</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8121-a77d-cbe44218bd55"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81f6-9355-f0ea326d78aa"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/kOXbBGmdeW" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/kOXbBGmdeW</div></div></a></figure></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81eb-abc5-dc6fa124bd7c"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula “Planejamento”</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-818b-8b8e-d0e4699741f3"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-816a-a0da-e3b506a5a596"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/b4Klv6k5eX" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/b4Klv6k5eX</div></div></a></figure></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81d5-916a-d42546450d05" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8159-9de8-dd440d89b8a4"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula “Produção de Conteúdo”</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-815f-bc75-f10850442a05"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-818b-888d-db80220c65a8"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/kOXbBGppeW" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/kOXbBGppeW</div></div></a></figure></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8135-9290-f2ef0f4defab"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula “Criatividade e Referências”</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8128-9290-d4d324e8a54f"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81bf-87cd-c8f6a9ddeed6"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/94JlByJb7g" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/94JlByJb7g</div></div></a></figure></div></div></figure></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-814d-9121-f08058758234"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8148-88a3-ef7ab262c5ea"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%"><strong>Conceitos importantes</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8178-a96e-df8411378550"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8115-8162-da550d15a1a6" class=""><strong>Funil de consciência do Método </strong>🧭<strong>COMPASS</strong></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8163-a9b0-e3750bc715a4" class="">De acordo com o Método 🧭COMPASS, o funil de conteúdo é dividido em três principais etapas, cada uma com objetivos específicos para guiar o público-alvo desde o primeiro contato com a marca até a decisão de compra. Aqui está uma explicação de cada etapa:</p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81df-bc74-d0711a87f6fd" class="toggle"><li><details open=""><summary><strong>O que é Topo de Funil (Conscientização e Atração)?</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-814f-bbd8-c8884190eb65" class="">Nesta etapa, o foco é atrair a atenção do público-alvo e aumentar a conscientização sobre a marca, produto ou serviço. O conteúdo deve ser informativo e educativo, abordando problemas gerais ou dúvidas que o público possa ter, sem necessariamente promover diretamente o produto ou serviço.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81fa-b3d3-cf0c1b315230" class="toggle"><li><details open=""><summary><strong>O que é Meio de Funil (Consideração e Engajamento)?</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8114-8ae6-dca6dadc632c" class="">Nesta fase, o objetivo é nutrir o relacionamento com o público que já demonstrou interesse, fornecendo mais informações sobre como seus produtos ou serviços podem resolver os problemas ou atender às necessidades deles. O conteúdo deve ajudar o público a considerar sua marca como uma solução viável.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e0-b761-d3eae2723f8e" class="toggle"><li><details open=""><summary><strong>O que é Fundo de Funil (Decisão e Conversão)?</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8111-808b-fff8ab2da7bf" class="">A última etapa do funil é focada em converter o público interessado em clientes. O conteúdo deve ser direcionado para incentivar a tomada de decisão, destacando as vantagens exclusivas da marca, oferecendo provas sociais e eliminando quaisquer dúvidas ou objeções que possam impedir a conversão.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81c7-9eba-e384bdf13bf6"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8153-9f8d-c215af91fb37" class="">Cada etapa do funil de conteúdo no Método 🧭COMPASS é projetada para guiar suavemente o público através do processo de compra, fornecendo o tipo certo de conteúdo no momento certo, para transformar seguidores e visitantes em clientes fiéis.</p></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f6-a318-e4dd9d8c60b8" class="">
+</p></div><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-81e0-b5f5-fd3d76cdb556" class="quote-large">Agora que você já entendeu o básico sobre conteúdo e funil, vamos para a prática em cada uma das etapas de funil.</blockquote></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-815b-a486-e4badf05ec92" class="collection-content"><h4 class="collection-title">Galeria de funil</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Name</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th></tr></thead><tbody><tr id="276cb023-eb3b-81fd-9695-f3fef60ec717"><td class="cell-title"><a href="Matriz%20de%20conte%C3%BAdo/Galeria%20de%20funil/1%20Conte%C3%BAdos%20de%20C1%20276cb023eb3b81fd9695f3fef60ec717.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/magnet_blue.svg"/>1. Conteúdos de C1</a></td><td class="cell-dXQ\"></td></tr><tr id="276cb023-eb3b-81a1-8954-c73d05062ef1"><td class="cell-title"><a href="Matriz%20de%20conte%C3%BAdo/Galeria%20de%20funil/2%20Conte%C3%BAdos%20de%20C2%20276cb023eb3b81a18954c73d05062ef1.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/gradebook_blue.svg"/>2. Conteúdos de C2</a></td><td class="cell-dXQ\"></td></tr><tr id="276cb023-eb3b-81fb-b0f7-d391b3e6a0e1"><td class="cell-title"><a href="Matriz%20de%20conte%C3%BAdo/Galeria%20de%20funil/3%20Conte%C3%BAdos%20de%20C3%20276cb023eb3b81fbb0f7d391b3e6a0e1.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/skip-forward_blue.svg"/>3. Conteúdos de C3</a></td><td class="cell-dXQ\"></td></tr><tr id="276cb023-eb3b-8166-9909-dd8f76d2ac5a"><td class="cell-title"><a href="Matriz%20de%20conte%C3%BAdo/Galeria%20de%20funil/4%20Geral%20276cb023eb3b81669909dd8f76d2ac5a.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/geography_blue.svg"/>4. Geral</a></td><td class="cell-dXQ\"></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ef-9e62-d2cd4e5c3551"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-814d-8475-c6c0e718a3d2"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/light-bulb_blue.svg"/></div><div style="width:100%"><strong>Não se esqueça!</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8168-b9b9-cc87fbbef1dd"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e4-ab19-f5f421eb829a" class="">Agora que você completou o conteúdo deste pilar, não se esqueça de preencher o checklist que está na página inicial em <a href="../../Conte%C3%BAdo%20MAPA%20276cb023eb3b8145825fc33dc5dd0014.html">Conteúdo | Mapa</a>.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-812b-ad9a-f682c31ac6fd"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8198-9e36-d6e3e72a0eb1" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f5-8d52-fc3b07300307" class="">
+</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8198-96ec-fa3f6e02f8ee" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8188-b7a1-e4e9de5ea92c" style="width:62.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8135-950a-e529764c56b1" class=""><strong>Volte para a página anterior</strong></p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-819e-a782-e7ba60ecffd2" style="width:37.49999999999999%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8189-a974-d3fe988c7198" class=""><strong>Avance para a próxima página</strong></p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8128-bb30-eb51bd0950ce"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-819c-857d-e399e5ed75fc" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8191-bde5-fd4bc6776649" style="width:68.75%" class="column"></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8148-8293-d7a1e8524b62" style="width:31.25%" class="column"></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81e5-a1bb-ce350ba27c13"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8103-aaa8-c95397ccd72e" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-814c-9216-c58b93fbf809" class="">
+</p></div><div style="display:contents" dir="auto"><div style="display:contents" dir="auto"><div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8151-8208-d3a18be30a77"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8129-aab5-f16e8a294db2" class="">Bússola de Vendas desenvolvido por <strong><a href="https://www.notion.so/f8156e7b171a4df68144f6293ae02538?pvs=21">Consultoria Inception</a></strong> para VocêPode Mkt Digital</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f6-bdc6-f5ec39f5a795" class=""><br/>Copyright © Castro Américo Digital – Todos os direitos reservados.<br/>É proibida a reprodução total ou parcial dos conteúdos dessa ferramenta.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8184-a344-d6b2fc8359af" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8117-a316-ccb13abc34ff" class=""><a href="http://vocepodevendermais.com.br">Site</a> l <a href="https://hotmart.com/pt-br/club/vocepode-vendermais/products/3939809">Plataforma de Alunos</a> | <a href="https://www.instagram.com/vocepode.vendermais">Instagram</a></p></div></div></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8119-a108-eecec6c7ac81" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-818a-9c35-cce9b1dd065c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8175-8373-eec2e90dc8cf" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ef-ba89-fac197342b43" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e1-aaf1-c94c03a75187" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81fc-a8ab-eaca40bd3469" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c4-afb4-cf3e4995db2c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8147-a432-f96544598559" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ec-aaaf-f2d6a92ecc92" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

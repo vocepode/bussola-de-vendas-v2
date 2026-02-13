@@ -1,0 +1,723 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Manifesto da Audiência</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2facb023-eb3b-8112-8e3c-c07beb12cdc7" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/alert_blue.svg"/></div><h1 class="page-title" dir="auto"><mark class="highlight-blue"><strong>Manifesto da Audiência</strong></mark></h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-81dc-a3da-e76ec7d3830b"/></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81c2-b885-f3cfa9ae9eff" class="">Esse manifesto não é para o público.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8116-add9-eba1f843835d" class="">É para <strong>você</strong>, estrategicamente.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81bc-aa57-f28f55e922f6" class="">Ele serve para:</p></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-81db-a046-c37f627b7c5b" class="bulleted-list"><li style="list-style-type:disc">alinhar comunicação</li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-8101-94d5-f4610d64a555" class="bulleted-list"><li style="list-style-type:disc">alinhar produto</li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-8107-8b14-fa0daa2c183b" class="bulleted-list"><li style="list-style-type:disc">alinhar decisão</li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-8116-aced-d331ff3b96e6" class="bulleted-list"><li style="list-style-type:disc">alinhar posicionamento</li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-8126-8a55-c476524609aa" class="bulleted-list"><li style="list-style-type:disc">alinhar copy</li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-8107-8ede-e02da7c99663" class="bulleted-list"><li style="list-style-type:disc">evitar desvios</li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-8190-afd8-d367bf89acb6" class="bulleted-list"><li style="list-style-type:disc">manter foco na audiência certa</li></ul></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-814b-8f66-cf12483fd3e1" class="">Ele é a <strong>declaração profunda de quem é a sua audiência, o que ela vive, o que ela sente e por que precisa de você</strong>.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81d3-9e62-da8e10efbae6" class="">Vou escrever no padrão COMPASS:</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-813f-8b95-dd9495ecd12a" class="">forte, direto, verdadeiro e profundamente humano.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8164-ac78-f9df1be0f6ac" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8144-9cf8-e31144900d5f" class="">Um bom manifesto:</p></div><div style="display:contents" dir="auto"><blockquote id="2facb023-eb3b-815b-91dd-d5f574e9c98f" class="quote-large"><strong>inspira, orienta, diferencia, une, repele quem não é para estar perto e atrai exatamente quem precisa da sua verdade.</strong></blockquote></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81bd-b6ca-d07013d5b7ee" class="">
+</p></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-8143-8159-f9610facf4c6" class="toggle"><li><details open=""><summary><em>Exemplo</em></summary><div style="display:contents" dir="auto"><h3 id="2facb023-eb3b-81a3-82f2-db9409282b91" class="">Se você é um fotógrafo especializado em retratos de família, sua frase pode ser algo como: <strong><span style="border-bottom:0.05em solid">&quot;Capturo a essência única de cada família através de retratos autênticos e naturais”</span></strong></h3></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8182-9c04-c2814a2ff89a" class="">Essa frase deve ser o resultado de uma reflexão cuidadosa e detalhada sobre os elementos que compõem a proposta de valor da empresa. Ao formular essa frase, você não apenas ganha clareza sobre o que o torna único, mas também cria um poderoso instrumento de comunicação para atrair seu público-alvo e diferenciar-se no mercado.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-818c-b6cb-c409fcdcf4a6"/></div><div style="display:contents" dir="auto"><h2 id="2facb023-eb3b-81ca-bb0b-c3b032fafa89" class=""><mark class="highlight-blue">Aprenda a fazer o exercício!</mark></h2></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-81dd-8ac1-d5208b6c504b"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-blue_background">Se estiver com dúvidas, veja o vídeo abaixo para ver mais detalhes de como preencher essa página:</mark></summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2facb023-eb3b-8124-ba5b-f8b34a2dd7cd"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought-dialogue_blue.svg"/></div><div style="width:100%"><strong>Tutorial - Preenchendo o Norte - Definição de Proposta de Valor</strong><div style="display:contents" dir="ltr"><figure id="2facb023-eb3b-81e0-b78a-c0f57a83cdab"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/a4R0JnmR7n" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/a4R0JnmR7n</div></div></a></figure></div></div></figure></div></div></details></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-8126-a2c5-efe667063b7f"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="2facb023-eb3b-8191-9fcc-dd2bbec9b823"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/light-bulb_blue.svg"/></div><div style="width:100%"><strong>Aqui estão algumas dicas para abordar essa formulação no quadro acima</strong><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-8186-a0e4-f5800faa0883"/></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-8193-95c0-e8120d0722e7" class="bulleted-list"><li style="list-style-type:disc"></li></ul></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-81f8-9443-e6c990dbc1ab"/></div></div></figure></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81b1-9b1f-c83d7d6ead19" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-81dd-8849-daf7a2f73f6d"/></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81eb-83f3-d77e9d7a1979" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="2facb023-eb3b-8125-be0a-c746995c4f6d"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/orbit_blue.svg"/></div><div style="width:100%"><strong>Meu manifesto</strong><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-81d7-af4c-e80d96d3ccf2"/></div><div style="display:contents" dir="auto"><h1 id="2facb023-eb3b-815a-a049-e5bfb8b9469d" class="">🔥 MANIFESTO DA AUDIÊNCIA — VOCÊPODE</h1></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81b6-a721-d6afc2fa2fb1" class="">Nós não somos iniciantes.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81e7-b93a-fea39e2ed136" class="">Também não somos gurus.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8194-83b4-d755026a2630" class="">Nós construímos nossos negócios <strong>no braço</strong>.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8111-9745-d5506e5ab3b6" class="">Errando, acertando, improvisando, insistindo.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8167-8c3b-cb77a2373bec" class="">O negócio cresceu.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81f8-b743-f06f4eacac87" class="">A agenda encheu.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8122-bcc0-c1add4801c42" class="">O faturamento veio.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8185-9b11-dd55f8a82644" class="">Mas junto veio a dúvida silenciosa:</p></div><div style="display:contents" dir="auto"><blockquote id="2facb023-eb3b-81e2-9db1-d471c5ea4307" class="">“Por que ainda parece tão instável?”</blockquote></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-816d-a264-f67e4e5ec083" class="">A gente aparece.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-811c-b21f-cfcaabe1508b" class="">Produz conteúdo.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81d5-b3cd-ed7cb2f671d4" class="">Faz stories, reels, posts.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81d3-bded-d4c2e9cc6433" class="">Às vezes vende.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8161-a775-d3d6efea5739" class="">Às vezes não.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-811b-b3ab-cc1a88f1faa0" class="">E quando vende, fica a pergunta que ninguém responde:</p></div><div style="display:contents" dir="auto"><blockquote id="2facb023-eb3b-8122-b6dd-e4048f946eb7" class="">“Foi estratégia… ou sorte?”</blockquote></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8171-9d71-cf77231f895a" class="">Já ouvimos que:</p></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-81dd-bdd1-d1ff5a1e21cd" class="bulleted-list"><li style="list-style-type:disc">é só postar mais</li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-8171-a480-c346a4fdd6dc" class="bulleted-list"><li style="list-style-type:disc">é só fazer tráfego</li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-81aa-a1d8-da04bf612f74" class="bulleted-list"><li style="list-style-type:disc">é só seguir a trend</li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-8143-b1ba-cbf2563a1d27" class="bulleted-list"><li style="list-style-type:disc">é só contratar alguém</li></ul></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8113-a200-da36f24030e1" class="">Mas ninguém nos ensinou <strong>a pensar o negócio</strong>.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8132-9b9f-c505b265ace6" class="">Ninguém explicou <strong>o porquê das decisões</strong>.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81f5-b487-fa680fe027b3" class="">Ninguém mostrou <strong>como transformar visibilidade em venda constante</strong>.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81f4-9e63-f3fa06ed43de" class="">Cansamos de promessas.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81e2-8b41-c5e6a4ddc985" class="">Cansamos de agência.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8159-824e-fdb35367eba6" class="">Cansamos de conteúdo que não vira dinheiro.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8123-b7e1-ec1bb767eb99" class="">Não queremos palco.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81da-8fdd-d2d28293722c" class="">Queremos <strong>resultado</strong>.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-818f-b72a-cb67b56904b7" class="">Não queremos viralizar.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-813e-a861-e1cc2619e414" class="">Queremos <strong>vender todos os dias</strong>.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-817b-86ff-e83068294f13" class="">Queremos entender o jogo.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81a1-97c7-f370e1b7106d" class="">Queremos ter clareza.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81db-a8e9-eabaeae03475" class="">Queremos saber exatamente o que estamos fazendo.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8158-b486-df60817c0c46" class="">Não buscamos atalhos.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8199-a54a-ee24b7161589" class="">Buscamos <strong>direção</strong>.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-812c-89e1-e87a81e8c7a8" class="">Porque o problema nunca foi falta de esforço.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8162-9c02-d8d78c0956b2" class="">Foi falta de <strong>método</strong>.</p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8185-bde7-dd583956cb9d" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-813d-9067-d11e25189389"/></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81f6-8ba1-dd0ce9a6baf7" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-814f-9fab-fc8a5ca4ba81" class="">
+</p></div><div style="display:contents" dir="auto"><div id="2facb023-eb3b-8105-9fb8-e48a4f1a04da" class="column-list"><div style="display:contents" dir="auto"><div id="2facb023-eb3b-8148-8086-e2e8db611221" style="width:62.5%" class="column"><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8131-9e53-f86f8c83572d" class=""><strong>Volte para a página anterior</strong></p></div></div></div><div style="display:contents" dir="auto"><div id="2facb023-eb3b-8103-b029-fe1e7549cc76" style="width:37.50000000000001%" class="column"><div style="display:contents" dir="auto"><p id="2facb023-eb3b-812e-962f-e76e7f75bafc" class=""><strong>Avance para a próxima página</strong></p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-81a9-a591-c0b72fb17067"/></div><div style="display:contents" dir="auto"><div id="2facb023-eb3b-81e2-9cdd-fa5e417fb45d" class="column-list"><div style="display:contents" dir="auto"><div id="2facb023-eb3b-81ab-9f6f-dde6b107d90a" style="width:56.25%" class="column"></div></div><div style="display:contents" dir="auto"><div id="2facb023-eb3b-81ef-81ca-d1819d2af4a7" style="width:43.75%" class="column"><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8188-a5c8-d735d642df3c" class="">
+</p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-81e1-850e-df1c453a3631"/></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8158-b3ae-f78cf826aa9e" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81a2-bd7c-dd07e0f26643" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,731 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Princípios da VocêPode</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2e0cb023-eb3b-801e-b1e4-dbcde9cee9be" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/alert_blue.svg"/></div><h1 class="page-title" dir="auto">Princípios da VocêPode</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h2 id="2e0cb023-eb3b-8034-b724-cf3813022fa5" class=""><mark class="highlight-blue">Princípios Operacionais do Método COMPASS</mark></h2></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-8048-a194-e7efccd490a3"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8003-abfa-d476822af74a" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-801f-8fe1-efa1d5458d34" class=""><em>(O “motor” que faz o método ser método)</em></p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8023-8f9c-c9cd1e164b0e" class="">O Método COMPASS não é um conjunto de aulas.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8048-8787-d5eebb099ed1" class="">É um <strong>sistema de decisão estratégica</strong> baseado em princípios inegociáveis.</p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-80eb-aed2-c2eb0ebde43f" class="">Princípio 1 — Diagnóstico antes de ação</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80a1-903c-c9ddc70824c2" class="">Nada é feito sem entender o negócio, o contexto e o momento.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8041-bbf6-f368766d8e68" class="">Executar sem diagnóstico é improviso disfarçado de estratégia.</p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-80a0-8762-c8afc62cad74" class="">Princípio 2 — Posicionamento antes de conteúdo</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8024-9266-fd34eb54d10e" class="">Conteúdo sem posicionamento gera visibilidade confusa.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8035-ae66-d1d61b8f3afe" class="">Primeiro decidimos <strong>quem o negócio é e por que deve ser escolhido</strong>.</p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-8075-8a39-c3716d8cb5a8" class="">Princípio 3 — Conteúdo com intenção comercial</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80a2-a031-de933355428e" class="">Todo conteúdo tem função clara:</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8090-b8e7-f693139366f9" class="">atrair, conduzir, qualificar ou vender.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8016-8d09-f9c3c167018f" class="">Conteúdo sem intenção é distração.</p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-803c-baee-d76f26c8b1c3" class="">Princípio 4 — Estratégia antes de ferramenta</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8081-9765-e049763fa13f" class="">Ferramentas não resolvem falta de clareza.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8076-80e1-ce56b97ddb31" class="">Nenhuma decisão é tomada com base em moda, trend ou hype.</p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-809d-96cc-e78d4cd58f63" class="">Princípio 5 — Venda como métrica-mãe</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80b0-bbbc-f4ed2ce94734" class="">Curtidas, seguidores e alcance não são fim.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8059-ae15-dd62b4d1bdc8" class="">Venda é a métrica que valida a estratégia.</p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-809e-bf6b-e1c821b155a4" class="">Princípio 6 — Clareza gera previsibilidade</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8065-9f05-d4fdbd5a511f" class="">Quanto mais claro o posicionamento e a estratégia,</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8044-a386-facf4db84082" class="">menos o negócio depende de sorte</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80a0-b6a9-d7080e96f091" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-80dc-8c74-d1e93c5af696"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-809b-8e9e-f18ea00ccc02" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="2e0cb023-eb3b-80c7-8656-c1c05b780c93" class=""><mark class="highlight-blue">Posicionamento da Voc6ePode vs Categoria</mark></h2></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-8019-9c1c-c5516ba69f9a"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8001-bd88-f5a92fffd982" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-801f-ac78-e940efc4dd2c" class=""><em>(Matrioska competitiva — onde NÃO competimos)</em></p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80e7-9df3-f864a2f540c4" class="">A VocêPode <strong>não disputa espaço</strong> com:</p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-80a3-afeb-e75f156f6d9a" class="">❌ Agências operacionais</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-800c-8c78-fff4706c7a23" class="">Que executam tarefas sem direção estratégica</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8081-8578-e73233fcfe22" class="">(post, tráfego, design, social media).</p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-8022-a2bf-e5b692031236" class="">❌ Escolas de tráfego ou ferramenta</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-805f-ab39-feedd0c8f5e5" class="">Que ensinam plataformas, mas não ensinam a pensar o negócio.</p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-801d-b848-f1987dacae72" class="">❌ Escolas de copy isolada</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80c2-8167-c8833e11453b" class="">Que prometem conversão sem posicionamento.</p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-808b-be42-ee1b57f15005" class="">❌ Mentorias genéricas</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80fd-aeed-e6eca351fc5c" class="">Que falam de tudo, mas não resolvem venda no dia a dia.</p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-808b-99a9-ee4b01f0c719" class="">❌ “Escolas de Instagram”</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80cf-a4e1-e7edae05a3ed" class="">Que focam em crescimento de perfil, não em crescimento de negócio.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8007-9249-f4be38199b32" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-80f1-8227-faaec29da2ee"/></div><div style="display:contents" dir="auto"><h2 id="2e0cb023-eb3b-8051-bd06-e035233e15f7" class=""><mark class="highlight-blue">Onde a VocêPode compete (e lidera)</mark></h2></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-800b-8e48-e251385065e7"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80d4-9ee6-d8d753a3c299" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80ac-b6e4-cb504d50bbd6" class="">A VocêPode compete em <strong>direção estratégica aplicada à venda</strong>.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8051-aff7-fe270bc343dc" class="">Nosso território é:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80c0-bfdd-ec668f4cbcfb" class="bulleted-list"><li style="list-style-type:disc">decisão</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8095-a4c4-e84a0b6bf64c" class="bulleted-list"><li style="list-style-type:disc">clareza</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8069-b07a-f25b1aaa1082" class="bulleted-list"><li style="list-style-type:disc">posicionamento</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8020-992c-dcedd74b1059" class="bulleted-list"><li style="list-style-type:disc">conteúdo com intenção</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80c8-8717-cbf259a1e4ea" class="bulleted-list"><li style="list-style-type:disc">venda consistente</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80d8-873f-f283f7257ae6" class=""><strong>Não competimos por ferramenta.<br/>Competimos por resultado comercial.</strong></p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8079-982c-c9f853c33003" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-80cd-b7eb-ff90fab3e73f"/></div><div style="display:contents" dir="auto"><h2 id="2e0cb023-eb3b-8079-ad13-c73b00cdffbc" class=""><mark class="highlight-blue">DEFINIÇÃO OFICIAL DE “INVISIBILIDADE” (PADRÃO DA MARCA)</mark></h2></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-8079-bb69-e365b306cc6c"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8067-8a51-ed87607aa879" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-806c-9d5c-cc9ada231902" class="">Na VocêPode, invisibilidade <strong>não é falta de seguidores</strong>.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80f5-a5e0-c93c121b4606" class="">É:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80fe-9ab3-f705880218e7" class="bulleted-list"><li style="list-style-type:disc"><strong>Invisibilidade comercial:</strong><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80fd-88c1-cc159f1e7267" class="">quando as pessoas consomem, mas não escolhem.</p></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80c7-9524-cf7f31e800de" class="bulleted-list"><li style="list-style-type:disc"><strong>Invisibilidade estratégica:</strong><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-803c-8ddc-cd9aa0a31e6d" class="">quando o negócio não é lembrado, nem diferenciado.</p></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8035-acf1-c0de919a6ed5" class="bulleted-list"><li style="list-style-type:disc"><strong>Invisibilidade previsível:</strong><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80e8-bcc4-e75d4daf9177" class="">quando a venda não se repete com consistência.</p></div></li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8041-9920-c1a7a2c03300" class="">👉 É possível ter seguidores, engajamento e ainda assim ser invisível para o faturamento.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80ab-aab0-e6b370888de2" class="">Essa é a invisibilidade que combatemos.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80c4-807d-fceb8bdd4b66" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-807f-bd29-ce91ff2a0d9b"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-808c-a9cd-ef5ced209ab7" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="2e0cb023-eb3b-8006-ac01-f693ac620c9a" class=""><mark class="highlight-blue">REGRAS DO JOGO DA MARCA</mark></h2></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-8077-be28-ecd8e7bf18ec"/></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-8068-842d-da521a3cda4e" class="">(O que a VCP SEMPRE diz e NUNCA diz)</h3></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-80f1-9c51-f091d14dcec9" class="">🟢 A VOCÊPODE SEMPRE DIZ:</h3></div><div style="display:contents" dir="auto"><ol type="1" id="2e0cb023-eb3b-8016-a0e1-d3fa42842e00" class="numbered-list" start="1"><li>Negócios não quebram por falta de esforço, mas por falta de direção.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e0cb023-eb3b-8082-9935-e9e22d256c18" class="numbered-list" start="2"><li>Marketing sem venda é ilusão.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e0cb023-eb3b-80b6-a9a9-c46cdf855df5" class="numbered-list" start="3"><li>Conteúdo é ferramenta, não palco.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e0cb023-eb3b-8008-a9ea-f0bc238c0635" class="numbered-list" start="4"><li>Posicionamento é decisão, não estética.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e0cb023-eb3b-80b2-bde4-f72efb398556" class="numbered-list" start="5"><li>Estratégia vem antes da execução.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e0cb023-eb3b-8048-992d-c3f6ada5dab6" class="numbered-list" start="6"><li>Venda é consequência de clareza.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e0cb023-eb3b-8056-ad0c-ed3a8c239d41" class="numbered-list" start="7"><li>Método reduz improviso.</li></ol></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-80dd-830f-c462af379ad0"/></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-808c-b650-c5b7fc8b1368" class="">🔴 A VOCÊPODE NUNCA DIZ:</h3></div><div style="display:contents" dir="auto"><ol type="1" id="2e0cb023-eb3b-80b5-88b6-ea3a1f98f0c8" class="numbered-list" start="1"><li>“Fórmula garantida”</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e0cb023-eb3b-8055-95b6-d2c51aeaf473" class="numbered-list" start="2"><li>“Em X dias você vai faturar Y”</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e0cb023-eb3b-804c-9b74-e18649ef1d5d" class="numbered-list" start="3"><li>“Viralizar resolve”</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e0cb023-eb3b-80e9-a07e-f7d9c297e16e" class="numbered-list" start="4"><li>“É só postar mais”</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e0cb023-eb3b-80f1-9213-f982694baf97" class="numbered-list" start="5"><li>“Funciona para qualquer negócio”</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e0cb023-eb3b-8094-ba8a-d3424d2a7067" class="numbered-list" start="6"><li>“O algoritmo é o problema”</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="2e0cb023-eb3b-80bc-bc94-ed4079ae3953" class="numbered-list" start="7"><li>“Faça isso sem entender o contexto”</li></ol></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8060-895b-db4f3f5e1ec0" class="">Essas regras <strong>protegem o Norte</strong> no conteúdo, no comercial e no produto.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-807f-a3bf-df272fee4a66" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-806e-a412-efb7a2c322cd"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80c3-885b-d4f96c5418d8" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="2e0cb023-eb3b-8036-91c0-e3db6e669ca3"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/orbit_blue.svg"/></div><div style="width:100%"><strong>ARQUÉTIPOS INTERNOS DA AUDIÊNCIA</strong><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-80b9-8bb0-df6d348a4281"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8002-8fd3-da5e5e123348" class=""><div class="indented"><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8008-a85f-f4ffaac3adec" class=""><em>(Não são personas. São estágios de maturidade)</em></p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-80b8-9f2e-fa38b24b7da1" class="">🧩 Arquétipo 1 — O Improvisador Invisível</h3></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-808f-9b7b-c9ef8f017a20" class="bulleted-list"><li style="list-style-type:disc">Trabalha muito</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8032-a8f5-daf1f231c673" class="bulleted-list"><li style="list-style-type:disc">Aparece pouco ou errado</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-806e-a654-fd659d91dab0" class="bulleted-list"><li style="list-style-type:disc">Não sabe se posicionar</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8060-a1fe-d2d61d04d036" class="bulleted-list"><li style="list-style-type:disc">Conteúdo não gera retorno</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80dd-87fc-db54764fdc33" class="bulleted-list"><li style="list-style-type:disc">Quer começar certo, sem virar refém do digital</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8005-b622-f0bf9baa87d8" class="">👉 Entra pela clareza.</p></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-8031-94d8-e61c5cdbacc9"/></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-809b-8c00-f432c1bef95b" class="">🧩 Arquétipo 2 — O Conteudista Cansado</h3></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80bd-945e-e7b349a7862d" class="bulleted-list"><li style="list-style-type:disc">Aparece</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80b6-990d-e7ae0b8cf80e" class="bulleted-list"><li style="list-style-type:disc">Produz conteúdo</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80b1-afe2-cfdb9d3f0f51" class="bulleted-list"><li style="list-style-type:disc">Engaja às vezes</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8012-a6fc-d0d46a9af32e" class="bulleted-list"><li style="list-style-type:disc">Mas não converte</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80cc-a931-d5c86babd3a6" class="bulleted-list"><li style="list-style-type:disc">Vive tentando melhorar post, não estratégia</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8080-ab8a-f6583c127d7d" class="">👉 Entra pela venda.</p></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-808a-b7bf-eb4d1441b48c"/></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-80fa-a4fa-c18199296977" class="">🧩 Arquétipo 3 — O Empresário Instável</h3></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-805b-bad3-d58a4fc2eb7d" class="bulleted-list"><li style="list-style-type:disc">Já vende</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80d0-95c8-c4ae51efe7e6" class="bulleted-list"><li style="list-style-type:disc">Já tem posicionamento</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80c9-bc9c-da328726751c" class="bulleted-list"><li style="list-style-type:disc">Já tem autoridade</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80d3-b569-efef7f939842" class="bulleted-list"><li style="list-style-type:disc">Mas não tem previsibilidade</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-804d-a6f5-f0687a3912b7" class="bulleted-list"><li style="list-style-type:disc">Depende demais de si mesmo</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8085-89f3-dde705c11c5e" class="">👉 Entra pela estratégia e consistência</p></div></div></p></div></div></figure></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8049-87ad-db4bca01f72f" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-8078-8706-e5f19dd68819"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80c0-859a-e8cfbf3dbd06" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80a4-97f0-dd42bc0bf65e" class="">
+</p></div><div style="display:contents" dir="auto"><div id="2e0cb023-eb3b-8011-a9a7-c9f9ca8a3fe5" class="column-list"><div style="display:contents" dir="auto"><div id="2e0cb023-eb3b-80dc-b565-d7c7cd319d25" style="width:62.5%" class="column"><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80af-9e4d-ef52392af444" class=""><strong>Volte para a página anterior</strong></p></div></div></div><div style="display:contents" dir="auto"><div id="2e0cb023-eb3b-8043-bc85-eb185cc583a4" style="width:37.50000000000001%" class="column"><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8048-8aea-c2664afe464e" class=""><strong>Avance para a próxima página</strong></p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-803a-be5a-dbfff062d290"/></div><div style="display:contents" dir="auto"><div id="2e0cb023-eb3b-80cd-826c-f35ac55c31f7" class="column-list"><div style="display:contents" dir="auto"><div id="2e0cb023-eb3b-805a-a3dd-e483e8811779" style="width:56.25%" class="column"></div></div><div style="display:contents" dir="auto"><div id="2e0cb023-eb3b-80cc-9790-e697c18d923a" style="width:43.75%" class="column"><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80e7-abb3-eeede1f85288" class="">
+</p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-8083-81ff-ea67caa62e4f"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80da-a3df-fff20ed7502c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80cc-9c19-ef9c72dbf384" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

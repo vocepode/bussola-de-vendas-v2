@@ -1,0 +1,724 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Dados</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-81d0-801c-d90aae6f91d9" class="page sans"><header><img class="page-cover-image" src="Dados/28.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chart-donut_blue.svg"/></div><h1 class="page-title" dir="auto">Dados</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f7-b820-d106cea932b7" class="">
+</p></div><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-8186-bff9-f973bdd8b234" class="quote-large">Aqui vamos começar a analisar as métricas das suas redes sociais e começar a entender o que funciona e o que não funciona.</blockquote></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8191-9d2e-f1997d3a75a4" class=""><mark class="highlight-blue">Assista às aulas:</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81eb-ba8e-fbac5d6f354f"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8198-ae5d-eda39e0962c2" class="">Para concluir essa etapa você precisa assistir as aulas abaixo.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8103-8466-c6350e2a3f63"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-814b-935a-c5de34596de8" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8173-95d3-c3664dae6d00" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81c7-9465-e19eaf201d24"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula “Análise de dados &quot;</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8183-88a7-ce484d212a17"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81ca-9c7a-ebb437b5bfc8"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/RONdaKwNeP" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/RONdaKwNeP</div></div></a></figure></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8109-9a53-e540e9d329b7" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8103-a4c5-eceee23a25bc"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula “Análise de desempenho de conteúdo&quot;</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-810d-a363-e38b26146fa0"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81e6-9608-fec4d703d4ac"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/M7GlajwLOw" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/M7GlajwLOw</div></div></a></figure></div></div></figure></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8118-b957-f50ddd9b6c9a"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81f1-8a4f-d076fb15bb1f" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-811f-ab62-da87512f45eb" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8108-a26c-f7099f89d712"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%"><strong>Conceitos importantes</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8121-9131-e52064209b26"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819c-9a6a-d3f6602fea24" class=""><strong>Análise de Crescimento do Perfil no Instagram</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8109-812f-d37bafdd3f54"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81f7-b0b4-fedd59e1c663" class="toggle"><li><details open=""><summary><strong>Crescimento e Variação de Seguidores</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8174-a922-e91a18a532c0" class="">Avaliar a qualidade dos seguidores é crucial, considerando a segmentação em ondas do algoritmo do Instagram, que determina a visibilidade das postagens a diferentes grupos. É importante medir não apenas o número de seguidores, mas também sua retenção e engajamento com o conteúdo.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8107-a546-ddecef912713" class="toggle"><li><details open=""><summary><strong>Visitas ao Perfil</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8108-81ce-c8ed25d18f9b" class="">Esta métrica indica o interesse direto gerado pelo conteúdo. Uma alta taxa de visitas sinaliza que o conteúdo é relevante, possivelmente levando os visitantes a explorar mais sobre a marca ou a realizar ações específicas, como inscrições e compras.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-814a-8511-ff4cfef5184c" class="toggle"><li><details open=""><summary><strong>Cliques no Link</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d5-8584-f5379fcc34bf" class="">Essencial para medir a efetividade do conteúdo em mover os seguidores ao longo do funil de vendas, refletindo diretamente o interesse dos usuários em aprofundar o relacionamento com a marca.</p></div></details></li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-812f-97f0-e97eb33ab3cb"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%"><strong>Conceitos importantes</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8185-8e1b-c33c6ead70a3"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819a-a018-d42f8ff46f97" class=""><strong>Análise de Crescimento do Perfil no Instagram</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8103-b674-ee5f35fd775c"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81b7-b785-cb2a58784732" class="toggle"><li><details open=""><summary><strong>Crescimento e Variação de Seguidores</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8183-b53a-f332d8afc8fb" class="">Avaliar a qualidade dos seguidores é crucial, considerando a segmentação em ondas do algoritmo do Instagram, que determina a visibilidade das postagens a diferentes grupos. É importante medir não apenas o número de seguidores, mas também sua retenção e engajamento com o conteúdo.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8157-bd13-c0a51b4f138d" class="toggle"><li><details open=""><summary><strong>Visitas ao Perfil</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f6-9c34-d63c5b3f2829" class="">Esta métrica indica o interesse direto gerado pelo conteúdo. Uma alta taxa de visitas sinaliza que o conteúdo é relevante, possivelmente levando os visitantes a explorar mais sobre a marca ou a realizar ações específicas, como inscrições e compras.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c5-ae19-c21283a1d41c" class="toggle"><li><details open=""><summary><strong>Cliques no Link</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-814b-a38f-cee75d4a4162" class="">Essencial para medir a efetividade do conteúdo em mover os seguidores ao longo do funil de vendas, refletindo diretamente o interesse dos usuários em aprofundar o relacionamento com a marca.</p></div></details></li></ul></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81a1-a145-e1bd642aaf97" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8180-a298-e0bac42bed42"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%"><strong>Conceitos importantes</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81b6-b736-f5a4550e3c8f"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81af-881e-dc492397e6a8" class=""><strong>Análise de Desempenho de Conteúdo no Instagram</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81e3-b564-cd018b0f9a02"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-812e-8423-e158d5f7c364" class="toggle"><li><details open=""><summary><strong>Conteúdos de Topo de Funil (C1)</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81db-9f77-d56369a4ada2" class="">Métricas de alcance e engajamento, incluindo curtidas, comentários, compartilhamentos, e visualizações de vídeo são essenciais. Estas métricas ajudam a avaliar o sucesso do conteúdo em gerar conscientização e atrair novos seguidores.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8192-8501-f75fafb552e2" class="toggle"><li><details open=""><summary><strong>Conteúdos de Meio de Funil (C2)</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ab-8618-cf1774fb179e" class="">Métricas como tempo de visualização, taxa de cliques em vídeos e carrosséis, e interações profundas (comentários, salvamentos) são críticas para avaliar se o conteúdo está mantendo o interesse e educando o público sobre os produtos ou serviços.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8191-9439-f68ab407b53c" class="toggle"><li><details open=""><summary><strong>Conteúdos de Fundo de Funil (C3)</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8180-9e40-e0706cc5b8e3" class="">Conversões diretas de postagens, como inscrições e compras, são vitais. O foco está em quão efetivamente o conteúdo está convertendo seguidores em clientes</p></div></details></li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8125-88be-d9dccc35b6b5" class="">
+</p></div></div></figure></div></div></div></div></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8186-8a9e-c5bfa8203db2" class=""><mark class="highlight-blue">Aplicando o método 🧭Compass</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81a5-93bc-ee7dfc3ac772"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8155-8103-d818ca397a70" class=""><mark class="highlight-blue">Aprenda a fazer o exercício!</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ef-8ee4-e8172514cb74"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-blue_background">Se estiver com dúvidas, veja o vídeo abaixo para ver mais detalhes de como preencher essa página:</mark></summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8145-91da-e9ed2096c4df"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought-dialogue_blue.svg"/></div><div style="width:100%"><strong>Tutorial - Preenchendo a ROTA - Dados</strong><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-812c-bb3f-f9defdb29b22"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/M7GlajwLOw" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/M7GlajwLOw</div></div></a></figure></div></div></figure></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81bc-aa39-d3f1863e87c2"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-blue">Parte 1 - Fazendo análise histórica do seu Instagram</mark></summary><div class="indented"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f2-8658-d5b625815ca2" class="">Faça uma análise dos seus últimos posts no Instagram. Veja a média de desempenho para cada tipo de conteúdo listado abaixo.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81bb-8d0e-e58cd839489e" class="">C1 → C2 → C3</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8183-858c-dbdc9532ab3f"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8146-8689-cd930addcbf6" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81af-9e8b-fddcdf244f44" style="width:43.75%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-814c-b25b-da863b2000f5"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/orbit_blue.svg"/></div><div style="width:100%"><strong>Carrossel (últimos 5)</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-817d-83a0-e4b98cedd611"/></div><div style="display:contents" dir="ltr"><table id="276cb023-eb3b-81ec-a3ef-deb5d3c17e5d" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8197-8af4-c4473dd4eb45"><th id="o=Y_" class="simple-table-header-color simple-table-header">Parâmetro</th><th id="PwtT" class="simple-table-header-color simple-table-header">Média</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-817e-828a-d5d7bde23ad2"><td id="o=Y_" class="">Curtidas</td><td id="PwtT" class=""></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8104-ad0f-ceecb57111dc"><td id="o=Y_" class="">Comentários</td><td id="PwtT" class=""></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8113-9d25-cebab4b0e52f"><td id="o=Y_" class="">Compartilhamentos</td><td id="PwtT" class=""></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81cc-8354-e1e2e0232e0d"><td id="o=Y_" class="">Salvamentos</td><td id="PwtT" class=""></td></tr></div></tbody></table></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8115-b44e-d5fc42a1f889"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/orbit_blue.svg"/></div><div style="width:100%"><strong>Estáticos (últimos 5) </strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f4-9ebd-d05071d063c1"/></div><div style="display:contents" dir="ltr"><table id="276cb023-eb3b-81fa-b13c-e88fd149ffd5" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8199-8510-c43814b9931e"><th id="o=Y_" class="simple-table-header-color simple-table-header">Parâmetro</th><th id="PwtT" class="simple-table-header-color simple-table-header">Média</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8193-8a08-c5e6c095805c"><td id="o=Y_" class="">Curtidas</td><td id="PwtT" class=""></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8178-a2ca-e7c82a690fee"><td id="o=Y_" class="">Comentários</td><td id="PwtT" class=""></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-819c-9ab6-d46e565fda8c"><td id="o=Y_" class="">Compartilhamentos</td><td id="PwtT" class=""></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8102-9b8e-f8af4f58fdd6"><td id="o=Y_" class="">Salvamentos</td><td id="PwtT" class=""></td></tr></div></tbody></table></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81f4-af58-f866e03ed176" style="width:56.25%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8151-96ed-cbf7569b0f61"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/orbit_blue.svg"/></div><div style="width:100%"><strong>Stories (últimos 7 dias)</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8191-87ad-d34b2c9ac104"/></div><div style="display:contents" dir="ltr"><table id="276cb023-eb3b-812d-bd03-d4809c40192f" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8183-b757-de2b8e79877c"><th id="o=Y_" class="simple-table-header-color simple-table-header">Parâmetro</th><th id="PwtT" class="simple-table-header-color simple-table-header">Média</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8149-8573-c267af1e5de3"><td id="o=Y_" class="">Média de visualizações</td><td id="PwtT" class=""></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81d8-9b86-f09cf7052dfe"><td id="o=Y_" class="">Média de curtidas</td><td id="PwtT" class=""></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8154-8ea5-c0567c9d2a46"><td id="o=Y_" class="">Média de interações</td><td id="PwtT" class=""></td></tr></div></tbody></table></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81d7-8825-d113ef8c6bf2"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/orbit_blue.svg"/></div><div style="width:100%"><strong>Vídeos curtos - reels (últimos 5)</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-813f-8327-d1df0e5a2faa"/></div><div style="display:contents" dir="ltr"><table id="276cb023-eb3b-8166-8bbd-fae392dea2de" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-813f-be73-fc7eaa1bcf7b"><th id="o=Y_" class="simple-table-header-color simple-table-header">Parâmetro</th><th id="PwtT" class="simple-table-header-color simple-table-header">Média</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81f3-af83-f84fccf35185"><td id="o=Y_" class="">Curtidas</td><td id="PwtT" class=""></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8144-995c-e672bbbfa9ec"><td id="o=Y_" class="">Comentários</td><td id="PwtT" class=""></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81bb-8a4a-c105d616932d"><td id="o=Y_" class="">Compartilhamentos</td><td id="PwtT" class=""></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-816e-9386-e6685f807369"><td id="o=Y_" class="">Salvamentos</td><td id="PwtT" class=""></td></tr></div></tbody></table></div></div></figure></div></div></div></div></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-817f-81f9-d122b27864bc"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-blue">Passo 2 - Estatísticas dos seus posts</mark></summary><div class="indented"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8116-bff3-d8a440dd5731" class="">Após publicar seu conteúdo e passar as primeiras 24/48 horas, analise a performance do seu conteúdo e anote na tabela abaixo os dados sobre ele.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819f-8967-d9da2e88e6bf" class="">Analisar pelo menos</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81da-a67e-d01268943d50" class="">Vamos te ajudar a avaliar um pouco melhor esses dados na próxima etapa, mas fique sempre atento aos tipos de conteúdos que performam melhor (para serem replicados) e os que não performaram bem (para não voltar a repetir).</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-814f-84f3-c435004f2705"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8196-9e88-eb180b047128" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81a7-932b-d31e1692906f"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8139-b61b-ebe35b121101" class="">
+</p></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ec-841a-da5c8c67ee28"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-blue">Passo 3 - Classificando seus posts</mark></summary><div class="indented"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81cf-ad68-d0996a8fa284" class="">Agora veja os conteúdos que você já publicou e as métricas que você obteve. Compare com a tabela acima de acordo com o formato do conteúdo.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81c9-8791-f90868f08c6a"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c0-b4bd-f649e874deb6" class="toggle"><li><details open=""><summary><mark class="highlight-gray">Instruções para classificação</mark></summary><div style="display:contents" dir="ltr"><table id="276cb023-eb3b-8142-8825-f0fac4ca2f38" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81a6-b34b-ff77ea5957db"><th id="s@HG" class="simple-table-header-color simple-table-header">Classificação</th><th id="|tSz" class="simple-table-header-color simple-table-header" style="width:532px">Interpretação</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81ce-b811-d4d591f69f49"><td id="s@HG" class="">🚨</td><td id="|tSz" class="" style="width:532px"><strong>Parâmetros se mantiveram, caíram ou não vi diferenças significativas.</strong> Converse com seus mentores para entender o que aconteceu.</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81f9-a2c7-ee1be937f630"><td id="s@HG" class="">⭐️ ou ⭐️⭐️</td><td id="|tSz" class="" style="width:532px"><strong>Aumentou um pouco os parâmetros iniciais.</strong> Precisa melhorar.</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8181-926e-e98164ea891f"><td id="s@HG" class="">⭐️⭐️⭐️</td><td id="|tSz" class="" style="width:532px"><strong>Aumentou consideravelmente,</strong> <strong>um pouco menos da metade das minhas estatísticas anteriores.</strong></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-818c-b2f6-d71a92cd499e"><td id="s@HG" class="">⭐️⭐️⭐️⭐️</td><td id="|tSz" class="" style="width:532px"><strong>Dobrou os parâmetros iniciais.</strong> Foi um ótimo post.</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8184-bf6e-e214eb5e5d0a"><td id="s@HG" class="">⭐️⭐️⭐️⭐️⭐️</td><td id="|tSz" class="" style="width:532px"><strong>Mais que dobrou!</strong> Nunca vi essas estatísticas antes no meu perfil.</td></tr></div></tbody></table></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81b0-a710-ea2a44aa5f9b"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81cb-9fc7-ce0a85f3900d" class="">
+</p></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-815d-94fb-d7c9d7e358cd"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811f-977f-dfb9d612a975" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-816a-a94c-c971c2088d3e" class=""><mark class="highlight-blue">Acompanhando o crescimento do meu Instagram</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8193-8859-efcc6504effc"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8171-87e8-f68e492014a5" class="">Use a tabela abaixo para acompanhar o crescimento mensal de seguidores na sua conta do Instagram. Todo dia 01 de cada mês, anote a quantidade de seguidores que tem no seu perfil. </p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81cb-ab6c-f1e9a1f6f12f"/></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-811b-b4a5-fd9d8e12bb83" class="collection-content"><h4 class="collection-title">Acompanhando. o crescimento do meu instagram</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/view_gray.svg" style="width:14px;height:14px;display:block"/></span>Visitas ao perfil</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/cursor-click_gray.svg" style="width:14px;height:14px;display:block"/></span>Clique no link</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/walk_gray.svg" style="width:14px;height:14px;display:block"/></span>Seguidores no perfil</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Mês</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/arrow-circle-down_gray.svg" style="width:14px;height:14px;display:block"/></span>Ano</th></tr></thead><tbody><tr id="276cb023-eb3b-813c-b532-d119d006691d"><td class="cell-@BlI"></td><td class="cell-wA^i"></td><td class="cell-othA"></td><td class="cell-title"><a href="Dados/Acompanhando%20o%20crescimento%20do%20meu%20instagram/Janeiro%20276cb023eb3b813cb532d119d006691d.html">Janeiro</a></td><td class="cell-t~fr"><span class="selected-value select-value-color-orange">2025</span></td></tr><tr id="276cb023-eb3b-81a2-add0-c9a21e2300ec"><td class="cell-@BlI"></td><td class="cell-wA^i"></td><td class="cell-othA"></td><td class="cell-title"><a href="Dados/Acompanhando%20o%20crescimento%20do%20meu%20instagram/Fevereiro%20276cb023eb3b81a2add0c9a21e2300ec.html">Fevereiro</a></td><td class="cell-t~fr"><span class="selected-value select-value-color-orange">2025</span></td></tr><tr id="276cb023-eb3b-813d-810a-f07be44d5c2f"><td class="cell-@BlI"></td><td class="cell-wA^i"></td><td class="cell-othA"></td><td class="cell-title"><a href="Dados/Acompanhando%20o%20crescimento%20do%20meu%20instagram/Mar%C3%A7o%20276cb023eb3b813d810af07be44d5c2f.html">Março</a></td><td class="cell-t~fr"><span class="selected-value select-value-color-orange">2025</span></td></tr><tr id="276cb023-eb3b-81e0-a40d-d6ab6e2fca49"><td class="cell-@BlI"></td><td class="cell-wA^i"></td><td class="cell-othA"></td><td class="cell-title"><a href="Dados/Acompanhando%20o%20crescimento%20do%20meu%20instagram/Abril%20276cb023eb3b81e0a40dd6ab6e2fca49.html">Abril</a></td><td class="cell-t~fr"><span class="selected-value select-value-color-orange">2025</span></td></tr><tr id="276cb023-eb3b-81d3-bfa6-e5c53a9260f6"><td class="cell-@BlI"></td><td class="cell-wA^i"></td><td class="cell-othA"></td><td class="cell-title"><a href="Dados/Acompanhando%20o%20crescimento%20do%20meu%20instagram/Maio%20276cb023eb3b81d3bfa6e5c53a9260f6.html">Maio</a></td><td class="cell-t~fr"><span class="selected-value select-value-color-orange">2025</span></td></tr><tr id="276cb023-eb3b-816f-8ada-e99550441ef3"><td class="cell-@BlI"></td><td class="cell-wA^i"></td><td class="cell-othA"></td><td class="cell-title"><a href="Dados/Acompanhando%20o%20crescimento%20do%20meu%20instagram/Junho%20276cb023eb3b816f8adae99550441ef3.html">Junho</a></td><td class="cell-t~fr"><span class="selected-value select-value-color-orange">2025</span></td></tr><tr id="276cb023-eb3b-81f9-9fd8-fab945eb0b1f"><td class="cell-@BlI"></td><td class="cell-wA^i"></td><td class="cell-othA"></td><td class="cell-title"><a href="Dados/Acompanhando%20o%20crescimento%20do%20meu%20instagram/Julho%20276cb023eb3b81f99fd8fab945eb0b1f.html">Julho</a></td><td class="cell-t~fr"><span class="selected-value select-value-color-orange">2025</span></td></tr><tr id="276cb023-eb3b-8189-9e32-ca034081c3ba"><td class="cell-@BlI"></td><td class="cell-wA^i"></td><td class="cell-othA"></td><td class="cell-title"><a href="Dados/Acompanhando%20o%20crescimento%20do%20meu%20instagram/Agosto%20276cb023eb3b81899e32ca034081c3ba.html">Agosto</a></td><td class="cell-t~fr"><span class="selected-value select-value-color-orange">2025</span></td></tr><tr id="276cb023-eb3b-8159-b622-f03e66ac499b"><td class="cell-@BlI"></td><td class="cell-wA^i"></td><td class="cell-othA"></td><td class="cell-title"><a href="Dados/Acompanhando%20o%20crescimento%20do%20meu%20instagram/Setembro%20276cb023eb3b8159b622f03e66ac499b.html">Setembro</a></td><td class="cell-t~fr"><span class="selected-value select-value-color-orange">2025</span></td></tr><tr id="276cb023-eb3b-8193-b69b-cd5dcc01d985"><td class="cell-@BlI"></td><td class="cell-wA^i"></td><td class="cell-othA"></td><td class="cell-title"><a href="Dados/Acompanhando%20o%20crescimento%20do%20meu%20instagram/Outubro%20276cb023eb3b8193b69bcd5dcc01d985.html">Outubro</a></td><td class="cell-t~fr"><span class="selected-value select-value-color-orange">2025</span></td></tr><tr id="276cb023-eb3b-8146-a977-fd2f31bd86f3"><td class="cell-@BlI"></td><td class="cell-wA^i"></td><td class="cell-othA"></td><td class="cell-title"><a href="Dados/Acompanhando%20o%20crescimento%20do%20meu%20instagram/Novembro%20276cb023eb3b8146a977fd2f31bd86f3.html">Novembro</a></td><td class="cell-t~fr"><span class="selected-value select-value-color-orange">2025</span></td></tr><tr id="276cb023-eb3b-81d6-a39b-fc3afbf16a51"><td class="cell-@BlI"></td><td class="cell-wA^i"></td><td class="cell-othA"></td><td class="cell-title"><a href="Dados/Acompanhando%20o%20crescimento%20do%20meu%20instagram/Dezembro%20276cb023eb3b81d6a39bfc3afbf16a51.html">Dezembro</a></td><td class="cell-t~fr"><span class="selected-value select-value-color-orange">2025</span></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8110-9b04-d564dfb4afe3"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8127-b4f2-c96e46d3ab29" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815f-a488-e73eb74e56b6" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8198-9e8d-db4e8584cdca" class=""><strong>Navegue entre os conteúdos</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-816b-b43d-e0d754157fbb"/></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-814a-b1c4-c217ef619d69"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8135-9ae8-f76c173d65f9" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8102-ae4a-ce2e85d3e686" class="">
+</p></div><div style="display:contents" dir="auto"><div style="display:contents" dir="auto"><div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8151-8208-d3a18be30a77"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8129-aab5-f16e8a294db2" class="">Bússola de Vendas desenvolvido por <strong><a href="https://www.notion.so/f8156e7b171a4df68144f6293ae02538?pvs=21">Consultoria Inception</a></strong> para VocêPode Mkt Digital</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f6-bdc6-f5ec39f5a795" class=""><br/>Copyright © Castro Américo Digital – Todos os direitos reservados.<br/>É proibida a reprodução total ou parcial dos conteúdos dessa ferramenta.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8184-a344-d6b2fc8359af" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8117-a316-ccb13abc34ff" class=""><a href="http://vocepodevendermais.com.br">Site</a> l <a href="https://hotmart.com/pt-br/club/vocepode-vendermais/products/3939809">Plataforma de Alunos</a> | <a href="https://www.instagram.com/vocepode.vendermais">Instagram</a></p></div></div></div></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

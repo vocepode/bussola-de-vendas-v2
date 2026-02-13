@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
@@ -8,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Lightbulb, Filter } from "lucide-react";
 import { toast } from "sonner";
-import { Link } from "wouter";
+import Link from "next/link";
 
 const TOPICS = [
   { value: "dicas", label: "Dicas" },

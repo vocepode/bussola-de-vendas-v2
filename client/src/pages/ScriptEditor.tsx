@@ -1,5 +1,6 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { useRoute, useLocation } from "wouter";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, Save, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const STRATEGIES = [
   { value: "vendas", label: "Vendas" },
@@ -48,10 +50,9 @@ const PLATFORMS = [
   { value: "linkedin", label: "LinkedIn" },
 ];
 
-export default function ScriptEditor() {
-  const [, params] = useRoute("/roteiro/:ideaId");
-  const [, navigate] = useLocation();
-  const ideaId = params?.ideaId ? parseInt(params.ideaId) : null;
+export default function ScriptEditor({ ideaId }: { ideaId: string }) {
+  const router = useRouter();
+  const parsedIdeaId = ideaId ? parseInt(ideaId) : null;
 
   const [strategy, setStrategy] = useState<string>("");
   const [funnelGoal, setFunnelGoal] = useState<string>("");
@@ -63,13 +64,13 @@ export default function ScriptEditor() {
   const [scriptFields, setScriptFields] = useState<Record<string, any>>({});
 
   const { data: idea, isLoading: loadingIdea } = trpc.contentIdeas.getById.useQuery(
-    { id: ideaId! },
-    { enabled: !!ideaId }
+    { id: parsedIdeaId! },
+    { enabled: !!parsedIdeaId }
   );
 
   const { data: existingScript, isLoading: loadingScript } = trpc.contentScripts.getByIdeaId.useQuery(
-    { contentIdeaId: ideaId! },
-    { enabled: !!ideaId }
+    { contentIdeaId: parsedIdeaId! },
+    { enabled: !!parsedIdeaId }
   );
 
   const utils = trpc.useUtils();
@@ -79,7 +80,7 @@ export default function ScriptEditor() {
       toast.success("Roteiro criado!", {
         description: "Seu roteiro foi salvo com sucesso.",
       });
-      utils.contentScripts.getByIdeaId.invalidate({ contentIdeaId: ideaId! });
+      utils.contentScripts.getByIdeaId.invalidate({ contentIdeaId: parsedIdeaId! });
     },
     onError: (error) => {
       toast.error("Erro ao criar roteiro", {
@@ -93,7 +94,7 @@ export default function ScriptEditor() {
       toast.success("Roteiro atualizado!", {
         description: "Suas alterações foram salvas.",
       });
-      utils.contentScripts.getByIdeaId.invalidate({ contentIdeaId: ideaId! });
+      utils.contentScripts.getByIdeaId.invalidate({ contentIdeaId: parsedIdeaId! });
     },
     onError: (error) => {
       toast.error("Erro ao atualizar roteiro", {
@@ -115,10 +116,10 @@ export default function ScriptEditor() {
   }, [existingScript]);
 
   const handleSave = () => {
-    if (!ideaId) return;
+    if (!parsedIdeaId) return;
 
     const data = {
-      contentIdeaId: ideaId,
+      contentIdeaId: parsedIdeaId,
       strategy: strategy as any,
       funnelGoal: funnelGoal as any,
       progressStatus: progressStatus as any,
@@ -146,7 +147,7 @@ export default function ScriptEditor() {
     );
   };
 
-  if (!ideaId) {
+  if (!parsedIdeaId) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
         <p className="text-white">ID da ideia não fornecido</p>
@@ -318,7 +319,7 @@ export default function ScriptEditor() {
         <div className="mb-8">
           <Button
             variant="outline"
-            onClick={() => navigate("/ideias")}
+            onClick={() => router.push("/ideias")}
             className="mb-4 border-slate-700 text-slate-300 hover:bg-slate-800"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />

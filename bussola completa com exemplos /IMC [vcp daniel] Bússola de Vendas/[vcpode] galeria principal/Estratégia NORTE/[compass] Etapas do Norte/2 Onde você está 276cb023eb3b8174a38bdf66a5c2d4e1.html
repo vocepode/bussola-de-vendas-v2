@@ -1,0 +1,723 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>2. Onde você está?</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-8174-a38b-df66a5c2d4e1" class="page sans"><header><img class="page-cover-image" src="2%20Onde%20voc%C3%AA%20est%C3%A1/26.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://www.notion.so/icons/checklist_blue.svg"/></div><h1 class="page-title" dir="auto">2. Onde você está?</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-8134-a236-fea38a10c21f" class="quote-large">Nosso objetivo aqui é te ajudar a posicionar sua empresa dentro de 4 categorias, que vão do mais abrangente ao mais específico: Mercado, Nicho, Subnicho e Segmento.</blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ec-8c43-e6d008ae638e" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-816c-8c77-d956850339b0" class=""><mark class="highlight-blue">Assista à aula:</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81a8-b9be-cdaeff26d0c1"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8169-a30c-e92b4d3f54b5" class="">Para concluir essa etapa você precisa assistir as aulas abaixo.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8127-b962-eb0e4ce76adf"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81d0-9501-df6a178c3956"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Assista a aula sobre “Onde você está?&quot;</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f5-9505-ec5deff53584"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8182-b7f3-d46e69da824a"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/V73vldJle3" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/V73vldJle3</div></div></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ee-93bd-da684a50a42c"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8173-8426-d79e84703232" class="block-color-default">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81a4-a54d-f82112fe7fbe"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%"><strong>Conceitos importantes</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ca-9cc6-e94be34ee785"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ca-8cdf-e6a2ff8f6e25" class="">O Método 🧭COMPASS define Mercado, Nicho, Subnicho e Segmento de maneira estruturada para ajudar negócios a se posicionarem corretamente e alcançarem seu público-alvo de forma eficaz.</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81e7-8749-cf83241359bc" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81a3-9c3f-d7c0a95e8c25" style="width:100%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8184-bc4f-c4f3b41d853d" class="toggle"><li><details open=""><summary><strong>O que é Mercado?</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8196-9a1f-f4e9671ce628" class="">Refere-se à área ampla de atuação onde a empresa ou empreendedor decide entrar. É o espaço geral de interesse que abrange uma grande variedade de consumidores com necessidades ou desejos semelhantes. Exemplos de mercado incluem saúde, educação, tecnologia, moda, entre outros. O mercado é o nível mais alto e amplo de classificação.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8192-bb25-f37168671257" class="toggle"><li><details open=""><summary><strong>O que é Subnicho?</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8198-b998-d23e6ad7078d" class="">O subnicho é uma divisão ainda mais específica dentro de um nicho. Ele permite um foco ainda maior em um segmento particular de consumidores que têm necessidades muito específicas. O subnicho ajuda a direcionar ainda mais a oferta de produtos ou serviços, tornando a comunicação e o marketing mais diretos e personalizados. Por exemplo, dentro do nicho de nutrição para atletas, um subnicho pode ser a nutrição para maratonistas.</p></div></details></li></ul></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81aa-810f-f8e996a23ec2" style="width:100%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8195-b2b2-f48b72a5f83d" class="toggle"><li><details open=""><summary><strong>O que é Nicho?</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-813e-ac76-e22960349219" class="">Dentro de um mercado, o nicho é uma parte mais específica que atende a um grupo particular de pessoas ou empresas com necessidades, interesses ou problemas específicos. O nicho é mais focado do que o mercado e permite que os negócios se especializem em atender às demandas de um público mais definido. Por exemplo, dentro do mercado de saúde, um nicho pode ser a nutrição para atletas.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8141-8b29-c5c010b2dfa3" class="toggle"><li><details open=""><summary><strong>O que é Segmento?</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81fa-a613-c5f818af6723" class="">O segmento refere-se à classificação dos consumidores dentro de um subnicho com base em características demográficas, psicográficas, comportamentais ou outras variáveis específicas. O segmento permite que os negócios identifiquem e compreendam melhor seu público-alvo, adaptando suas estratégias de marketing e oferta de produtos ou serviços para atender às necessidades e desejos específicos desse grupo. Por exemplo, dentro do subnicho de nutrição para maratonistas, um segmento pode ser maratonistas femininas na faixa dos 30 anos que buscam melhorar seu desempenho.</p></div></details></li></ul></div></div></div></div></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f7-a55a-dd84f7e31f9e"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8144-a6f1-f97fb48050d7" class=""><mark class="highlight-blue">Aprenda a fazer o exercício!</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8175-abeb-c06b82f14ced"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-blue_background">Se estiver com dúvidas, veja o vídeo abaixo para ver mais detalhes de como preencher essa página:</mark></summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8195-bbb6-fcd699379006"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought-dialogue_blue.svg"/></div><div style="width:100%"><strong>Tutorial - Preenchendo o Norte - Onde você está?</strong><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-818e-a046-f8c5a2d0a525"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/2OMPDgmx76" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/2OMPDgmx76</div></div></a></figure></div></div></figure></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f5-a88e-e8ce27f82ab6"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e1-8691-d26898e389e7" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81e6-b208-d534d376897c" class=""><mark class="highlight-blue">Definindo sua posição</mark></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8180-b1ae-cdc2b8467c04" class="">Hora de colocar a mão na massa e usar o que aprendeu na aula para definir mercado, nicho, subnicho e segmento da sua empresa. Leia as instruções abaixo e se tiver dúvidas assista nosso vídeo tutorial com mais detalhes de como preencher a página.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8128-9598-d65d92ca92a4"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81b9-9c10-e08e3838abc0" class="toggle"><li><details open=""><summary><mark class="highlight-gray">Instruções do preenchimento da tabela</mark></summary><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8199-a0d9-cc181d08ff37" class="bulleted-list"><li style="list-style-type:disc">Na primeira coluna escreva o nome da sua empresa.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ec-a957-fffa2db2ce1c" class="bulleted-list"><li style="list-style-type:disc">Na segunda coluna escreva qual o seu mercado. </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81dd-b426-ff28a9b2c6e7" class="bulleted-list"><li style="list-style-type:disc">Na terceira coluna escreva qual o seu nicho.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ac-a597-f7679b63101b" class="bulleted-list"><li style="list-style-type:disc">Na quarta coluna escreva os seus subnichos.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-816b-86f6-fbdb86e15dda" class="bulleted-list"><li style="list-style-type:disc">Na quinta coluna escreva qual o seu segmento.</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-811e-8ba2-cb4cd731055d" class="toggle"><li><details open=""><summary><em><mark class="highlight-blue_background">Exemplos</mark></em></summary><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81c9-b791-f6aa21004151" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8172-a7b1-f1d828286460" style="width:100%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-814b-949b-c778298440b2"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chess-pawn_blue.svg"/></div><div style="width:100%"><strong>Exemplo 1</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d0-b3c8-c30c01950c16"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8174-86ae-d8c5f05bf237" class=""><strong>Mercado →</strong> Alimentação </p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ca-87c1-ceae7484352d" class=""><strong>Nicho →</strong> Alimentação saudável</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-813d-a0b4-f722faa230d3" class=""><strong>Subnichos →</strong> Lanches saudáveis</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f6-995b-e149944d2134" class=""><strong>Segmento →</strong> Sem glúten e sem lactose</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81f7-9cbb-eb2a3d520e94"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chess-pawn_blue.svg"/></div><div style="width:100%"><strong>Exemplo 3</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-813c-903d-cd516851c26e"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81eb-acbc-fd558695e4bc" class=""><strong>Mercado</strong> → Moda</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ef-98b5-cf314235f8e8" class=""><strong>Nicho</strong> → Fitness</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f1-8e13-c42ed4ca2492" class=""><strong>Subnichos</strong> → Esportiva e casual</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8180-b723-d20db9c48640" class=""><strong>Segmento</strong> → Peças versáteis para ginástica e uso diário</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8146-bec7-d1389cb27371"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chess-pawn_blue.svg"/></div><div style="width:100%"><strong>Exemplo 5</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81e7-ba82-de19a66a605b"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8162-90ac-f8300808f260" class=""><strong>Mercado</strong> → Recursos humanos e contratação</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8119-a576-d3bac23eac12" class=""><strong>Nicho </strong>→ Contratações estratégicas</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-810d-81e4-df04d9aab1ab" class=""><strong>Subnichos </strong>→ Recrutamento para startups de tecnologia</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8176-8b75-d12248c42fda" class=""><strong>Segmento </strong>→ Posições de liderança e desenvolvimento de equipe</p></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-818e-bbb9-e7f791a99ec9" style="width:100%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81db-8cf3-de8ad49c07e7"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chess-pawn_blue.svg"/></div><div style="width:100%"><strong>Exemplo 2</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8165-b4f1-f7e461cde518"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811d-b9f6-e111afa76da4" class=""><strong>Mercado →</strong> Moda e Beleza</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e9-9fe8-d96558fb6a05" class=""><strong>Nicho →</strong> Maquiagem</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8152-86f5-d95f2313ce27" class=""><strong>Subnichos →</strong>  Maquiagem cremosa</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f4-924f-df389711b9d9" class=""><strong>Segmento →</strong> Produtos multifuncionais</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81db-a734-c75c05dddd14"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chess-pawn_blue.svg"/></div><div style="width:100%"><strong>Exemplo 4</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8177-877d-f028bbd93c52"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a3-94ad-cd275019bc40" class=""><strong>Mercado </strong>→ Noivas</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815f-8675-cd0845ecf165" class=""><strong>Nicho </strong>→ Vestidos de noiva</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8129-b3c8-e1efa1b15c5b" class=""><strong>Subnichos </strong>→ Consultoria e curadoria para escolha do vestido</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81b5-9a3c-dd48f9379dcd" class=""><strong>Segmento </strong>→ Venda, aluguel e customização</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8142-b365-f8a72f731c50"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chess-pawn_blue.svg"/></div><div style="width:100%"><strong>Exemplo 6</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ca-9cf0-c0c434401971"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ab-92e7-efc401497e3c" class=""><strong>Mercado </strong>→ Marketing digital</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-816b-9a40-dfe028010c2f" class=""><strong>Nicho </strong>→ Estratégia, conteúdo e performance</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a5-ad5c-df7e79134b31" class=""><strong>Sub-nichos</strong> → Consultoria e mentoria para negócios físicos</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-816a-a27d-ca261b756404" class=""><strong>Segmento </strong>→ Negócios que faturam pelo menos 50k/mês </p></div></div></figure></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8107-8a01-fcab62607d7f"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8186-9e9b-f442c3105731" class="">
+</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81fc-8508-d659e1dc57b7"/></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-81e4-a81f-ce9437f17dd2" class="collection-content"><h4 class="collection-title">Ferramenta de {avaliação} | Norte (1)</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Sua empresa</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/library_gray.svg" style="width:14px;height:14px;display:block"/></span>Mercado</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/bullseye_gray.svg" style="width:14px;height:14px;display:block"/></span>Nicho</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/subtask_gray.svg" style="width:14px;height:14px;display:block"/></span>Subnicho</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/directional-sign_gray.svg" style="width:14px;height:14px;display:block"/></span>Segmento</th></tr></thead><tbody><tr id="276cb023-eb3b-816b-b6f9-c996fbc4f5d8"><td class="cell-title"><a href="2%20Onde%20voc%C3%AA%20est%C3%A1/Ferramenta%20de%20%7Bavalia%C3%A7%C3%A3o%7D%20Norte%20(1)/Voc%C3%AAPode%20276cb023eb3b816bb6f9c996fbc4f5d8.html">VocêPode</a></td><td class="cell-w]zi"><strong>Negócios</strong></td><td class="cell-X?d\"><strong>Crescimento Estratégico de Negócios<br/></strong></td><td class="cell-xfAX"><strong>Posicionamento, Conteúdo e Vendas com Previsibilidade</strong><br/><strong><br/></strong></td><td class="cell-y&gt;n=">Empresários e profissionais, principalmente mulheres, de serviços, saúde, comércio, moda, varejo e negócios digitais com operação real, faturando entre <strong>R$ 20k e R$ 500k/mês</strong>.</td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81b0-a7df-de9a9bf4f005"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-8165-816a-fd5cee5ede24" class=""><mark class="highlight-blue">Agora você vai preencher com os seus concorrentes. </mark></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d4-81d3-d1e775a03d9c" class="">Os concorrentes abaixo, foram escolhidos no marco zero na , preencha agora os dados de mercado, nicho, subnicho e segmento.</p></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-8194-b5d3-e6b6a5838484" class="collection-content"><h4 class="collection-title">Tabela de concorrentes</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Concorrente</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/library_gray.svg" style="width:14px;height:14px;display:block"/></span>Mercado</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/bullseye_gray.svg" style="width:14px;height:14px;display:block"/></span>Nicho</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/subtask_gray.svg" style="width:14px;height:14px;display:block"/></span>Subnicho</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/directional-sign_gray.svg" style="width:14px;height:14px;display:block"/></span>Segmento</th></tr></thead><tbody><tr id="2d8cb023-eb3b-8067-ba46-f24d66e1e2cc"><td class="cell-title"><a href="../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Tabela%20de%20concorrentes/G4%20Educa%C3%A7%C3%A3o%202d8cb023eb3b8067ba46f24d66e1e2cc.html">G4 Educação</a></td><td class="cell-otWJ"></td><td class="cell-o]`i"></td><td class="cell-XbjN"></td><td class="cell-eZsH"></td></tr><tr id="276cb023-eb3b-813b-b7d8-d6f037708d36"><td class="cell-title"><a href="../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Tabela%20de%20concorrentes/Rafael%20Kiso%20276cb023eb3b813bb7d8d6f037708d36.html">Rafael Kiso</a></td><td class="cell-otWJ"></td><td class="cell-o]`i"></td><td class="cell-XbjN"></td><td class="cell-eZsH"></td></tr><tr id="276cb023-eb3b-8154-b86e-e2383427fe28"><td class="cell-title"><a href="../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Tabela%20de%20concorrentes/Rapha%20Falc%C3%A3o%20276cb023eb3b8154b86ee2383427fe28.html">Rapha Falcão</a></td><td class="cell-otWJ"></td><td class="cell-o]`i"></td><td class="cell-XbjN"></td><td class="cell-eZsH"></td></tr><tr id="276cb023-eb3b-8109-b9d7-fa04c26ae0b5"><td class="cell-title"><a href="../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Tabela%20de%20concorrentes/Rejane%20Toigo%20276cb023eb3b8109b9d7fa04c26ae0b5.html">Rejane Toigo</a></td><td class="cell-otWJ"></td><td class="cell-o]`i"></td><td class="cell-XbjN"></td><td class="cell-eZsH"></td></tr><tr id="276cb023-eb3b-81bf-b8dd-d1c9d19667ea"><td class="cell-title"><a href="../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Tabela%20de%20concorrentes/Vinci%20Society%20276cb023eb3b81bfb8ddd1c9d19667ea.html">Vinci Society</a></td><td class="cell-otWJ"></td><td class="cell-o]`i"></td><td class="cell-XbjN"></td><td class="cell-eZsH"></td></tr><tr id="276cb023-eb3b-8199-9747-f2bcae1efcd1"><td class="cell-title"><a href="../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Tabela%20de%20concorrentes/Willian%20Celso%20276cb023eb3b81999747f2bcae1efcd1.html">Willian Celso</a></td><td class="cell-otWJ"></td><td class="cell-o]`i"></td><td class="cell-XbjN"></td><td class="cell-eZsH"></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8153-a252-d657a0e75028"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8182-9cfc-cd597f9ce553" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8106-b162-f96d6f7116ea" class="">
+</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-810d-ace8-e6f6cdf05cdb" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8177-9a8e-d1466f48c74d" style="width:62.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819e-893c-e45c165ef6d3" class=""><strong>Volte para a página anterior</strong></p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81d5-a5e0-ecc0a698edae" style="width:37.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f8-9562-f0fd653bd958" class=""><strong>Avance para a próxima página</strong></p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8162-8999-f22207ae425d"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-819f-83d4-fb2bc326f248" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8191-88da-ea8181261994" style="width:62.5%" class="column"></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-814c-8211-c8f95476dbb2" style="width:37.50000000000001%" class="column"></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8137-b883-ec3e0f9a74e2"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8132-9263-f0f7d4813d91" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ae-bd3c-c4c376f6b2c5" class="">
+</p></div><div style="display:contents" dir="auto"><div style="display:contents" dir="auto"><div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8151-8208-d3a18be30a77"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8129-aab5-f16e8a294db2" class="">Bússola de Vendas desenvolvido por <strong><a href="https://www.notion.so/f8156e7b171a4df68144f6293ae02538?pvs=21">Consultoria Inception</a></strong> para VocêPode Mkt Digital</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f6-bdc6-f5ec39f5a795" class=""><br/>Copyright © Castro Américo Digital – Todos os direitos reservados.<br/>É proibida a reprodução total ou parcial dos conteúdos dessa ferramenta.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8184-a344-d6b2fc8359af" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8117-a316-ccb13abc34ff" class=""><a href="http://vocepodevendermais.com.br">Site</a> l <a href="https://hotmart.com/pt-br/club/vocepode-vendermais/products/3939809">Plataforma de Alunos</a> | <a href="https://www.instagram.com/vocepode.vendermais">Instagram</a></p></div></div></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817f-9848-e9d788e33440" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

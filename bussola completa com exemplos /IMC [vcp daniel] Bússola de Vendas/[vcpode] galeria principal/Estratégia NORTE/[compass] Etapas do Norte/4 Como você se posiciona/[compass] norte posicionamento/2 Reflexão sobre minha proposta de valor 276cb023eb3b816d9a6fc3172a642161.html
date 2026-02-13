@@ -1,0 +1,724 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>2. Reflexão sobre minha proposta de valor</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-816d-9a6f-c3172a642161" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought_blue.svg"/></div><h1 class="page-title" dir="auto">2. Reflexão sobre minha proposta de valor</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-819b-8cf2-f899f137ebbb" class=""><mark class="highlight-blue"><strong>O que é Proposta de valor</strong></mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8142-9048-d89ea6633417"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a3-bfd8-d6b93435a692" class="">O Método 🧭COMPASS define <strong>proposta de valor como a promessa clara e convincente </strong>que uma<strong> </strong>marca faz aos seus clientes. É o motivo principal pelo qual um cliente deve escolher uma marca em detrimento de outra. A proposta de valor concentra-se em:</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e3-876d-e4bc25bccf58" class="">
+</p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-816c-bd20-cc4d9384ea46" class="bulleted-list"><li style="list-style-type:disc"><strong>Benefícios Claros:</strong> Especificar os benefícios tangíveis e intangíveis que os clientes recebem ao usar o produto ou serviço, focando no valor agregado e na experiência que oferece.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8113-916a-f7aef5e8c961" class="bulleted-list"><li style="list-style-type:disc"><strong>Diferenciação:</strong> Destacar o que torna a oferta única no mercado, enfatizando características, qualidades ou serviços que se distinguem da concorrência.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8140-a1e5-e742c2b2f987" class="bulleted-list"><li style="list-style-type:disc"><strong>Relevância</strong>: Garantir que a proposta de valor atenda diretamente às necessidades, desejos e desafios do público-alvo, tornando-a altamente relevante para eles.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e8-9f25-d95b59e20bdc" class="bulleted-list"><li style="list-style-type:disc"><strong>Comunicação Eficaz</strong>: Apresentar a proposta de valor de forma clara, concisa e atraente, facilitando a compreensão imediata do valor oferecido.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c0-8524-f74f5d2c536c" class="bulleted-list"><li style="list-style-type:disc"><strong>Alinhamento com a Percepção do Cliente:</strong> A proposta de valor deve refletir não apenas a visão da empresa, mas também alinhar-se com a percepção e expectativas dos clientes, reforçando a confiança e a lealdade à marca.</li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ef-a732-f5c552dab57c"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-81b5-a11e-c67fcfcc4ac7" class=""><mark class="highlight-blue">Aprenda a fazer o exercício! </mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8171-a6be-d8a045f6098c"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-blue_background">Se estiver com dúvidas, veja o vídeo abaixo para ver mais detalhes de como preencher essa página:</mark></summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81e6-95ed-f16a7a3a0755"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought-dialogue_blue.svg"/></div><div style="width:100%"><strong>Tutorial - Preenchendo o NORTE - Reflexão sobre minha proposta de valor</strong><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-819f-a995-e71e7eb53827"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/Me1lZwJX4Y" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/Me1lZwJX4Y</div></div></a></figure></div></div></figure></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ae-a6fb-e96944b4571d"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-8101-9b75-d51f60f6e64c" class=""><mark class="highlight-blue">Sobre a sua proposta de valor atual</mark></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ae-86a3-e47fe84b05e6" class="">Aqui queremos respostas mais longas e detalhadas de cada pergunta, mesmo que você já tenha respondido algo parecido no Marco Zero.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8120-8717-e83ed73de48d"/></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-813e-bcbb-d45cf65e8e14"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Quais são os valores essenciais que norteiam minha empresa e o que nos motiva a seguir em frente todos os dias? Esta pergunta ajuda a identificar a missão e os valores fundamentais da empresa, que são a base da proposta de valor.</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81da-a762-ce1743c51c7a" class=""><em><mark class="highlight-gray">Responda identificando os princípios fundamentais que guiam as ações e decisões da empresa. Reflita sobre o propósito maior que impulsiona a equipe e como isso se traduz em benefícios para os clientes.</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81be-be18-c57e78ce37f5"/></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-801a-a242-de66a9d339a2" class="">Os valores essenciais da VocêPode são verdade, clareza, responsabilidade extrema, resultado real, respeito ao negócio e maturidade empresarial.</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-809d-a945-d068bc757f0e" class="">Somos movidos pela convicção de que negócios não quebram por falta de esforço, mas por falta de direção.</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8042-8e3c-eab2589d8247" class="">Existimos para devolver ao empresário o poder de decidir com clareza.</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-80ca-b021-f67351da0210" class="">Seguimos porque acreditamos que marketing, gestão e vendas são ferramentas de crescimento real — quando usadas com método, estratégia e verdade.</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8058-89e2-eb27e7c72476" class="">Nosso propósito é proteger o empresário, mesmo quando a verdade é desconfortável.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81d3-ad5d-de5bf9a712c0"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Como minha empresa transforma a vida dos clientes? Focar nas transformações reais proporcionadas aos clientes ajuda a destacar o impacto emocional e prático da sua oferta.</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8161-b3b3-e5c70cc14155" class=""><em><mark class="highlight-gray">Descreva as mudanças positivas que seus produtos ou serviços geram na vida dos clientes. Foque em resultados tangíveis e emocionais, utilizando exemplos específicos ou histórias de sucesso.</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8136-b7e9-f94ce87cb2f9"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80ec-b87b-e0989742429a" class="">A VocêPode transforma <strong>esforço em estratégia</strong>.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8065-b4fa-d8a92af02d2a" class="">Transformamos empresários que:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8073-a8a1-ce90e2488ed8" class="bulleted-list"><li style="list-style-type:disc">produzem conteúdo sem retorno</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80c7-9a1b-c6776f345e64" class="bulleted-list"><li style="list-style-type:disc">vendem de forma instável</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-802d-b9f1-c262f3613f92" class="bulleted-list"><li style="list-style-type:disc">se sentem confusos sobre o que comunicar</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80e2-a471-ca9ac5e96d11" class="">em empresários que:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8036-9f5f-f7210344d84e" class="bulleted-list"><li style="list-style-type:disc">se posicionam com clareza</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8061-b3a7-eef30c0a7cf4" class="bulleted-list"><li style="list-style-type:disc">criam conteúdo com intenção de venda</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-802b-a8c5-c6e98112001a" class="bulleted-list"><li style="list-style-type:disc">entendem seu processo comercial</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80df-9170-f09ae0acecea" class="bulleted-list"><li style="list-style-type:disc">vendem com mais consistência e previsibilidade</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80fd-8882-d87ad5d1ac8a" class="">Na prática, o cliente deixa de “tentar marketing” e passa a <strong>operar vendas com lógica</strong>.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8094-b942-ede99d940d92" class="">Emocionalmente, a transformação é profunda:</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8001-8155-f827cf4641c8" class="">o cliente sai da ansiedade, da insegurança e da sensação de estar sempre improvisando — e entra em um estado de <strong>controle, confiança e clareza sobre o caminho de crescimento</strong>.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8114-aba4-c4145f95dd0b"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Quais características únicas e diferenciadoras meu produto/serviço possui em comparação aos concorrentes? Identificar o que torna sua oferta especial e única no mercado é crucial para definir uma proposta de valor convincente.</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8167-be1c-ef14e4ad7818" class=""><em><mark class="highlight-gray">Enumere os aspectos exclusivos do seu produto ou serviço que o destacam no mercado. Pense em funcionalidades, qualidade, experiência do usuário ou qualquer outro fator que ofereça um valor adicional.</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-819c-9026-fc4262787b72"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80a5-9f2a-f81edcf03691" class="">O principal diferencial da VocêPode é o <strong>Método COMPASS</strong>, um sistema proprietário criado a partir da prática com negócios reais — não de lançamentos, fórmulas ou promessas de internet.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80ab-b3d9-cd541d165244" class="">Nós não vendemos tráfego, posts ou hacks.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8095-b19b-dbd280d8e665" class="">Vendemos <strong>direção estratégica aplicada à venda</strong>.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8045-9f9d-c9e3770f034d" class="">Outros diferenciais claros:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-807c-9167-c85fded02879" class="bulleted-list"><li style="list-style-type:disc">Especialidade em posicionamento estratégico e conteúdo que vende</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80d5-8400-c7c324f65b2d" class="bulleted-list"><li style="list-style-type:disc">Postura de sócio estratégico, não de fornecedor</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80ae-bf65-f15ff305d97b" class="bulleted-list"><li style="list-style-type:disc">Proximidade direta com o fundador e com quem toma decisão</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80a9-98c1-df8f644f2cbd" class="bulleted-list"><li style="list-style-type:disc">Integração real entre posicionamento, conteúdo e vendas</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80ba-bb2d-d8f1c51ba456" class="bulleted-list"><li style="list-style-type:disc">Ferramentas próprias de IA aplicadas à clareza e à decisão (não à estética)</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8021-8e84-fe0d9fdfa902" class="bulleted-list"><li style="list-style-type:disc">Diagnóstico antes de qualquer ação</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8008-81c2-dab421e55aaf" class="bulleted-list"><li style="list-style-type:disc">Recusa consciente de clientes fora do perfil</li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81b4-b08e-e6669557f76e"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Como quero que os clientes se sintam ao interagirem com minha marca e ao utilizarem meu produto/serviço? Esta pergunta destaca a importância da experiência do cliente e o impacto emocional desejado.</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8143-aeb2-ce72696388fa" class=""><em><mark class="highlight-gray">Visualize e descreva as emoções e sentimentos que deseja evocar nos clientes durante e após o uso do seu produto ou serviço. Isso pode incluir segurança, satisfação, alegria, entre outros.</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-811e-a429-f68742f1685a"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80a2-9ef4-fd32e1a43f4f" class="">Queremos que nossos clientes se sintam <strong>seguros, respeitados e confiantes</strong>.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80f9-9d6f-f5de269218cf" class="">Seguros por finalmente entenderem o jogo das vendas.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80de-a38a-f1b9613a0505" class="">Respeitados por não serem tratados como leigos ou números.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-801f-9576-e891037049de" class="">Confiantes por saberem que existe um método, uma lógica e uma direção clara.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8009-be90-df297ef6bad8" class="">A experiência com a VocêPode deve gerar a sensação de:</p></div><div style="display:contents" dir="auto"><blockquote id="2e0cb023-eb3b-8096-98de-c23145d0c542" class="">“Agora eu sei exatamente o que estou fazendo para vender.”<div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8014-8392-e92529596299" class="">“Agora meu esforço faz sentido.”</p></div></blockquote></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8161-bf30-cfb65770bc87"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Quais problemas específicos meu produto/serviço resolve e quais desejos ele atende? Compreender claramente os problemas e desejos dos clientes permite criar uma proposta de valor que ressoe com suas necessidades.</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-812a-bfe6-c0d85e49793d" class=""><em><mark class="highlight-gray">Identifique claramente os desafios enfrentados pelos seus clientes e como seu produto/serviço oferece soluções eficazes. Relacione essas soluções aos desejos ou necessidades subjacentes dos clientes.</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81e9-9fd2-cb4d96a33a38"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80d8-8293-f06406b78189" class="">Resolvemos principalmente:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80e2-8737-fc0c8e8b8330" class="bulleted-list"><li style="list-style-type:disc">Posicionamento confuso</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8036-a914-fccbb9f64bc5" class="bulleted-list"><li style="list-style-type:disc">Conteúdo que não gera venda</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8074-90f5-cf69a1d13b6c" class="bulleted-list"><li style="list-style-type:disc">Vendas instáveis</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80a3-9ece-d30f95c70ba3" class="bulleted-list"><li style="list-style-type:disc">Dependência de indicação ou sorte</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-806e-acd8-d60e6c2dd283" class="bulleted-list"><li style="list-style-type:disc">Marketing sem função comercial</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-803b-8249-e7048583b0ff" class="bulleted-list"><li style="list-style-type:disc">Falta de clareza estratégica</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80b0-8cae-f5ef149b137e" class="bulleted-list"><li style="list-style-type:disc">Insegurança na tomada de decisão</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-802b-b341-cbd806174ed0" class="">Atendemos desejos como:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80dc-825d-f0e4b510020f" class="bulleted-list"><li style="list-style-type:disc">Vender com mais consistência</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-809d-ba6f-d70feeec9c79" class="bulleted-list"><li style="list-style-type:disc">Ter clareza do que comunicar</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8004-ad83-cfa53abfbbf6" class="bulleted-list"><li style="list-style-type:disc">Transformar conteúdo em venda</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80f8-92ae-e3cf29626708" class="bulleted-list"><li style="list-style-type:disc">Construir autoridade real</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80d6-a6a4-f36dbf956be9" class="bulleted-list"><li style="list-style-type:disc">Ter previsibilidade comercial</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8019-a548-f7f3b22d439b" class="bulleted-list"><li style="list-style-type:disc">Crescer sem improviso</li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81c4-9071-ed6f193542e1"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Por que clientes deveriam escolher minha empresa em vez de outras opções disponíveis no mercado? Refletir sobre o diferencial competitivo ajuda a fortalecer a proposta de valor, destacando o que faz sua oferta ser a melhor escolha.</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8124-ab5a-d5a8f3eaf038" class=""><em><mark class="highlight-gray">Argumente o valor único que sua empresa traz aos clientes, destacando o que a torna a melhor escolha. Isso pode incluir qualidade superior, atendimento ao cliente excepcional, inovação ou custo-benefício.</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8124-9653-edc8197163c3"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80cd-9037-fefd33bcdd9b" class="">Porque a VocêPode <strong>não vende atalhos — vende estrutura de pensamento</strong>.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8027-a174-d12ae72fb203" class="">Não vende palco.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-800a-acca-d642b2a69a4d" class="">Não vende hype.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80fb-9965-c3cca0984dc1" class="">Não vende promessa vazia.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-808d-9164-c72e26744039" class="">Enquanto o mercado empurra ferramentas, a VocêPode ensina o empresário a <strong>pensar estrategicamente sobre posicionamento, conteúdo e vendas</strong>.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8073-9166-ca53128752be" class="">Quem escolhe a VocêPode não quer parecer grande.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8048-900d-c087736e5551" class="">Quer <strong>vender melhor</strong>.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80ec-9f1c-d28c4fa422d4" class="">Quer jogar o jogo certo — e jogar para ganhar.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8150-90bb-e1b0db0e8e82"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Quais são as principais objeções que meus clientes potenciais podem ter e como meu produto/serviço as supera? Antecipar e abordar objeções comuns ajuda a construir confiança e a tornar a proposta de valor mais persuasiva.</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8116-9390-f80e3a13b905" class=""><em><mark class="highlight-gray">Liste as possíveis resistências ou dúvidas que os clientes possam ter e explique como seu produto/serviço aborda e resolve essas questões.</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81c2-abd3-c5959fc5e9b6"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8044-9200-e5f006422259" class="">Objeções comuns:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-806e-b6a9-e62d3f04ac33" class="bulleted-list"><li style="list-style-type:disc">“Já tentei marketing e não funcionou.”</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-808b-a2b8-ded1d662c41b" class="bulleted-list"><li style="list-style-type:disc">“Não tenho tempo.”</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8059-bf46-d67ac069388d" class="bulleted-list"><li style="list-style-type:disc">“Meu negócio é diferente.”</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80d9-a09d-facde9464ad6" class="bulleted-list"><li style="list-style-type:disc">“Tenho poucos seguidores.”</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-805b-828e-cba84cdaaf15" class="bulleted-list"><li style="list-style-type:disc">“Tenho medo de investir e não ter retorno.”</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80ef-93a1-e6b1ef9998d2" class="bulleted-list"><li style="list-style-type:disc">“Eu até vendo, mas não com consistência.”</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80d9-92ac-f670de9553d5" class="">Superamos essas objeções com:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8073-bb70-f1d71dc432a2" class="bulleted-list"><li style="list-style-type:disc">Método validado em negócios reais</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-806f-a473-cc1a78d99da2" class="bulleted-list"><li style="list-style-type:disc">Estratégia antes de execução</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8015-9399-ed02ee03f3ab" class="bulleted-list"><li style="list-style-type:disc">Aplicação prática</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8085-aa5f-d7528f744d6b" class="bulleted-list"><li style="list-style-type:disc">Casos reais e contextualizados</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8086-9f3b-dbf18f79fea1" class="bulleted-list"><li style="list-style-type:disc">Diagnóstico profundo</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80d7-9e8e-d62e6f9ad5dc" class="bulleted-list"><li style="list-style-type:disc">Acompanhamento próximo</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-804c-ba5d-c7a4316d2a8a" class="">Não pedimos fé. <strong>Entregamos prova.</strong></p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-818c-a40b-e4e92263107a"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Como posso demonstrar a eficácia e os benefícios do meu produto/serviço através de histórias de sucesso de clientes? Usar histórias reais de sucesso aumenta a credibilidade e mostra a aplicação prática da sua proposta de valor.</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-810f-8897-d7d2ea2b128f" class="block-color-gray"><em>Use casos reais e depoimentos de clientes satisfeitos para ilustrar como seu produto/serviço proporcionou resultados positivos, reforçando sua eficácia e valor.</em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-819d-97c9-f8a11ec9aa65"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8063-bbcc-dd41372c87a8" class="">Demonstramos através de:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-808d-bb66-e79c41bd9c6f" class="bulleted-list"><li style="list-style-type:disc">Estudos de caso completos</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8068-8b1b-fce64e8f6744" class="bulleted-list"><li style="list-style-type:disc">Antes e depois de posicionamento e conteúdo</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-800c-98f7-f577a2960138" class="bulleted-list"><li style="list-style-type:disc">Bastidores de decisões estratégicas</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-800f-9c7b-fbf8e6bb0ef4" class="bulleted-list"><li style="list-style-type:disc">Depoimentos com contexto</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8030-8900-e57a5e7d2bbd" class="bulleted-list"><li style="list-style-type:disc">Números que importam: vendas, consistência, previsibilidade</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-805a-924a-f03840cd5cb2" class="">Na VocêPode, <strong>prova não é anexo — é parte do método</strong>.</p></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-80fd-ada7-c91dc6a69222"/></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-817e-8529-c7ffa31009e1"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Quais ações e práticas minha empresa adota para garantir a entrega da promessa feita aos clientes? Esta pergunta enfatiza a importância da consistência e da confiabilidade na entrega da proposta de valor.</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8170-a321-e2194387adc7" class="block-color-gray"><em>Descreva os processos, políticas e padrões de qualidade que sua empresa implementa para assegurar que os compromissos com os clientes sejam cumpridos.</em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-816a-965c-e0fdc47a935d"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80e5-8047-c8124873a0b2" class="">Garantimos a entrega por meio de:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8055-b1c9-f20c9dfd208e" class="bulleted-list"><li style="list-style-type:disc">Diagnóstico antes de qualquer estratégia</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80e1-8e9f-ed97451ad0ae" class="bulleted-list"><li style="list-style-type:disc">Aplicação rigorosa do Método COMPASS</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8021-b8ba-d73071485e54" class="bulleted-list"><li style="list-style-type:disc">Clareza de expectativa desde o início</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8042-8e99-da14d550aab6" class="bulleted-list"><li style="list-style-type:disc">Direção estratégica contínua</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80d6-afcf-dbc3edf96663" class="bulleted-list"><li style="list-style-type:disc">Recusa consciente de clientes fora do perfil</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8009-a711-c217bfa91b6b" class="">Preferimos dizer “não” a prometer algo que não funcione.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-812d-afa5-d84c8c7f710d"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Como minha proposta de valor se alinha com as tendências atuais do mercado e as expectativas futuras dos clientes? Garantir que a proposta de valor esteja alinhada com as tendências e expectativas futuras assegura a relevância e a longevidade da marca no mercado.</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e6-ba41-ec72123cafdc" class="block-color-gray"><em>Descreva os processos, políticas e padrões de qualidade que sua empresa implementa no dia a dia para assegurar que os compromissos com os clientes sejam cumpridos.</em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f0-930c-fed78ce790ee"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80f6-8485-dc5382d16a22" class="">O mercado caminha para:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8095-84a7-eb6997d7b2fd" class="bulleted-list"><li style="list-style-type:disc">Menos estética e mais estratégia</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80d9-bac2-eeb3239a6df3" class="bulleted-list"><li style="list-style-type:disc">Menos hype e mais verdade</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8019-89f3-e3fce3889809" class="bulleted-list"><li style="list-style-type:disc">Menos ferramentas soltas e mais lógica de venda</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8026-91d2-d9507f01999f" class="bulleted-list"><li style="list-style-type:disc">Mais uso consciente de IA</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80af-a9de-e6a8f0ea4156" class="bulleted-list"><li style="list-style-type:disc">Mais previsibilidade comercial</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8026-8754-d6eac8a0382d" class="">A VocêPode já opera nesse futuro, porque sempre falou de <strong>direção, posicionamento e venda</strong>, enquanto o mercado falava de aparência.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81fa-963b-f783d9b4ae37"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Quais são as características negativas ou práticas que minha empresa se compromete a evitar para manter a integridade e a confiança dos clientes? Esta pergunta ajuda a definir limites éticos e de qualidade para a empresa, garantindo uma base sólida de confiança com os clientes.</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ae-99db-d4cbf001d8b7" class=""><em><mark class="highlight-gray">Reflita sobre práticas de mercado que você considera inaceitáveis e comprometa-se a não adotá-las, reforçando a ética e a confiabilidade da sua marca.</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81b6-8530-c406ec5bc00f"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80c1-995d-c95d4c13433b" class="">A VocêPode se compromete a não:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8054-af9a-fb62039821de" class="bulleted-list"><li style="list-style-type:disc">Vender promessas irreais</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8028-92f0-c16eefcfd051" class="bulleted-list"><li style="list-style-type:disc">Trabalhar sem diagnóstico</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80a6-9b8d-fdb3f4ddf745" class="bulleted-list"><li style="list-style-type:disc">Empurrar serviços desnecessários</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80c1-b06c-cbb7685cbf5c" class="bulleted-list"><li style="list-style-type:disc">Usar métricas de vaidade</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80fa-8096-dc58d0613b77" class="bulleted-list"><li style="list-style-type:disc">Tratar clientes como números</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80f2-9692-e4d73ca1d2ae" class="bulleted-list"><li style="list-style-type:disc">Romantizar marketing sem venda</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8088-98d5-e821e8f16faa" class="">Integridade é inegociável.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81dd-b178-f856318b620d"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Que qualidades e valores eu desejo que sejam associados à minha marca, refletindo a essência e a missão da empresa? Identificar as qualidades desejadas ajuda a moldar a percepção pública da marca e a fortalecer a conexão com o público.</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a5-8761-f4686966e953" class="block-color-gray"><em>Escolha qualidades e valores que você quer que definam sua marca aos olhos do público e explique como esses elementos são incorporados em suas operações e comunicações.</em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8172-9b84-eda0ebf54f67"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8020-b40f-dc81d4add9ec" class="">Queremos ser associados a:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8025-8eb1-d55ea1617e71" class="bulleted-list"><li style="list-style-type:disc">Verdade</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80d9-9b0a-c2c32bf6041b" class="bulleted-list"><li style="list-style-type:disc">Clareza</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8041-b5c7-d241da8ba8c5" class="bulleted-list"><li style="list-style-type:disc">Estratégia</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80b6-a9f0-cee07d78ea24" class="bulleted-list"><li style="list-style-type:disc">Autoridade</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80c1-a9b5-e5f2e63b315e" class="bulleted-list"><li style="list-style-type:disc">Responsabilidade</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8052-866c-c87d20813d6b" class="bulleted-list"><li style="list-style-type:disc">Solidez</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-802a-8a1e-e737378f1b64" class="bulleted-list"><li style="list-style-type:disc">Profissionalismo</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-809b-b1c5-e6ffd25fcf45" class="bulleted-list"><li style="list-style-type:disc">Resultado real</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-800a-9a28-cb30938e0b6b" class="">A VocêPode não é barulhenta.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-802a-9499-ced900c13393" class="">Ela é <strong>consistente</strong>.</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81b4-8bfb-d4178bb7ffda"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Como desejo que os clientes e o público em geral se sintam ao interagirem com minha empresa, desde o primeiro contato até a experiência pós-compra? Esta pergunta enfatiza a importância de criar experiências positivas e memoráveis em todas as etapas da jornada do cliente.</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817d-b359-ff896307d668" class="block-color-gray"><em>Projete a jornada ideal do cliente com sua marca, desde a descoberta até o suporte pós-venda, e descreva as emoções e experiências que você quer proporcionar em cada etapa.</em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ed-88d6-eb7e4e717310"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-801a-800f-e647b04e6c5f" class="">Desde o primeiro contato até o pós-venda, queremos que o cliente sinta:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-801b-8545-c3a4944741d3" class="bulleted-list"><li style="list-style-type:disc">Confiança</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80f9-b684-e65e2b8a36e4" class="bulleted-list"><li style="list-style-type:disc">Direção</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80f7-a11b-f9cbec57f46b" class="bulleted-list"><li style="list-style-type:disc">Segurança</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8058-a5bc-e3bb1d82b34d" class="bulleted-list"><li style="list-style-type:disc">Evolução constante</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-804a-b49a-da1ced583883" class="">E, principalmente:</p></div><div style="display:contents" dir="auto"><blockquote id="2e0cb023-eb3b-80e1-9358-f3ec3e9fec3e" class="">“Eu não estou sozinho.<div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-803e-8a56-db1b73df6d4d" class="">Eu tenho um método.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-809b-ac4d-e10d6477c222" class="">Eu tenho um caminho.”</p></div></blockquote></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8182-9b9b-d5255d8c90c0"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8102-af6c-c3f7401b2702" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-8162-bd4b-c2383a2c2d72" class=""><mark class="highlight-blue">Use as repostas das reflexões do exercício anterior para te ajudar a preencher este quadro</mark></h3></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f9-9265-daca7097520b"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c6-bbe4-f2323cead94a" class="">Ao responder essas perguntas, você terá uma clareza significativa sobre os valores fundamentais da marca, os benefícios tangíveis e intangíveis que seus produtos ou serviços oferecem, os diferenciais em relação aos concorrentes e as qualidades únicas que definem a marca que permite construir uma proposta de valor sólida e comunicar de forma eficaz o que torna sua oferta especial e por que os clientes deveriam escolhê-los.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81cd-8678-ea8a52d55c16"/></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-8198-89b1-fae27b2817b9" class="collection-content"><h4 class="collection-title">Refletindo proposta de valor | Minha marca</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Name</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th></tr></thead><tbody><tr id="276cb023-eb3b-81d7-aa18-c00e1df6f1f1"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Verdade%20276cb023eb3b81d7aa18c00e1df6f1f1.html">Verdade</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Valores</span></td></tr><tr id="276cb023-eb3b-8137-bb41-d5e6eed272b7"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Clareza%20276cb023eb3b8137bb41d5e6eed272b7.html">Clareza</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Valores</span></td></tr><tr id="2cdcb023-eb3b-800d-9aee-ce3e796775d9"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Responsabilidade%20Extrema%202cdcb023eb3b800d9aeece3e796775d9.html">Responsabilidade Extrema</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Valores</span></td></tr><tr id="2cdcb023-eb3b-80ec-9333-c12806bc3eb6"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Resultado%20Real%202cdcb023eb3b80ec9333c12806bc3eb6.html">Resultado Real</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Valores</span></td></tr><tr id="2cdcb023-eb3b-8046-af69-f6ef5f8b1a7a"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Respeito%20ao%20Neg%C3%B3cio%20e%20ao%20Empres%C3%A1rio%202cdcb023eb3b8046af69f6ef5f8b1a7a.html">Respeito ao Negócio e ao Empresário</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Valores</span></td></tr><tr id="2cdcb023-eb3b-8043-9d51-ff3c173b49dc"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Maturidade%20Empresarial%202cdcb023eb3b80439d51ff3c173b49dc.html">Maturidade Empresarial </a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Valores</span></td></tr><tr id="276cb023-eb3b-818c-aec5-dd7637a1ed6f"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Seguran%C3%A7a%20para%20decidir%20276cb023eb3b818caec5dd7637a1ed6f.html">Segurança para decidir</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios intangíveis</span></td></tr><tr id="276cb023-eb3b-8133-96ba-fd50d467884c"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Confian%C3%A7a%20na%20pr%C3%B3pria%20capacidade%20de%20liderar%20276cb023eb3b813396bafd50d467884c.html">Confiança na própria capacidade de liderar</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios intangíveis</span></td></tr><tr id="2cdcb023-eb3b-809a-8dc1-def09ffa3583"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Paz%20mental%202cdcb023eb3b809a8dc1def09ffa3583.html">Paz mental</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios intangíveis</span></td></tr><tr id="2cdcb023-eb3b-806e-ac2d-eb3ff5dcd269"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Sensa%C3%A7%C3%A3o%20de%20controle%202cdcb023eb3b806eac2deb3ff5dcd269.html">Sensação de controle</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios intangíveis</span></td></tr><tr id="2cdcb023-eb3b-80ee-914b-fb977a8cc8d8"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Orgulho%20e%20valoriza%C3%A7%C3%A3o%202cdcb023eb3b80ee914bfb977a8cc8d8.html">Orgulho e valorização</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios intangíveis</span></td></tr><tr id="2cdcb023-eb3b-8073-acb6-f862faa4ccd4"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Esperan%C3%A7a%20no%20futuro%202cdcb023eb3b8073acb6f862faa4ccd4.html">Esperança no futuro</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios intangíveis</span></td></tr><tr id="2cdcb023-eb3b-8052-a046-cd5b49174f4d"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Autonomia%202cdcb023eb3b8052a046cd5b49174f4d.html">Autonomia</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios intangíveis</span></td></tr><tr id="2cdcb023-eb3b-802e-a66a-d5d9f78e8856"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Autoridade%20real%202cdcb023eb3b802ea66ad5d9f78e8856.html">Autoridade real</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios intangíveis</span></td></tr><tr id="2cdcb023-eb3b-80a7-88fa-ff2c5eeadceb"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Liberdade%20(de%20tempo%20e%20financeira)%202cdcb023eb3b80a788faff2c5eeadceb.html">Liberdade (de tempo e financeira)</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios intangíveis</span></td></tr><tr id="2cdcb023-eb3b-8046-9e93-ec5a0f5cb277"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Maturidade%20empresarial%202cdcb023eb3b80469e93ec5a0f5cb277.html">Maturidade empresarial</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios intangíveis</span></td></tr><tr id="276cb023-eb3b-81c3-a6af-c7882c510e8f"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Vendas%20previs%C3%ADveis%20276cb023eb3b81c3a6afc7882c510e8f.html">Vendas previsíveis</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios Tangíveis</span></td></tr><tr id="276cb023-eb3b-811e-931d-dbaa398071db"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Estrat%C3%A9gia%20clara%20e%20aplic%C3%A1vel%20276cb023eb3b811e931ddbaa398071db.html">Estratégia clara e aplicável</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios Tangíveis</span></td></tr><tr id="2cdcb023-eb3b-807c-9dc1-ebfeb9c26213"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Opera%C3%A7%C3%A3o%20organizada%20e%20profissional%202cdcb023eb3b807c9dc1ebfeb9c26213.html">Operação organizada e profissional</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios Tangíveis</span></td></tr><tr id="2cdcb023-eb3b-80e9-85f3-d6140eb8d094"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Posicionamento%20estrat%C3%A9gico%20que%20atrai%20e%20converte%202cdcb023eb3b80e985f3d6140eb8d094.html">Posicionamento estratégico que atrai e converte</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios Tangíveis</span></td></tr><tr id="2cdcb023-eb3b-805c-a31e-cec52b11f04c"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Marketing%20com%20fun%C3%A7%C3%A3o%20de%20venda%202cdcb023eb3b805ca31ecec52b11f04c.html">Marketing com função de venda</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios Tangíveis</span></td></tr><tr id="2cdcb023-eb3b-8009-90fb-fb65a94f174e"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Time%20comercial%20estruturado%202cdcb023eb3b800990fbfb65a94f174e.html">Time comercial estruturado</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios Tangíveis</span></td></tr><tr id="2cdcb023-eb3b-80d7-9b78-f65fad29c8b7"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Gest%C3%A3o%20clara%20e%20decis%C3%B5es%20baseadas%20em%20dados%202cdcb023eb3b80d79b78f65fad29c8b7.html">Gestão clara e decisões baseadas em dados</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios Tangíveis</span></td></tr><tr id="2cdcb023-eb3b-800c-a761-e51cf0938ac3"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Uso%20inteligente%20de%20IA%20e%20automa%C3%A7%C3%A3o%202cdcb023eb3b800ca761e51cf0938ac3.html">Uso inteligente de IA e automação</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios Tangíveis</span></td></tr><tr id="2cdcb023-eb3b-8085-9326-fc82904e29ce"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Planejamento%20e%20metas%20com%20acompanhamento%20real%202cdcb023eb3b80859326fc82904e29ce.html">Planejamento e metas com acompanhamento real</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios Tangíveis</span></td></tr><tr id="2cdcb023-eb3b-8057-9c3e-e5545ac02585"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Crescimento%20escal%C3%A1vel%202cdcb023eb3b80579c3ee5545ac02585.html">Crescimento escalável</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Benefícios Tangíveis</span></td></tr><tr id="276cb023-eb3b-81f6-a1f3-ca0590773330"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/M%C3%A9todo%20COMPASS%20276cb023eb3b81f6a1f3ca0590773330.html">Método COMPASS</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Diferenciais</span></td></tr><tr id="276cb023-eb3b-810f-8897-d59553c928a2"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Postura%20de%20s%C3%B3cio%20estrat%C3%A9gico%20276cb023eb3b810f8897d59553c928a2.html">Postura de sócio estratégico </a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Diferenciais</span></td></tr><tr id="2cdcb023-eb3b-80fb-8ba2-d00a3a648e95"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Proximidade%20do%20fundador%202cdcb023eb3b80fb8ba2d00a3a648e95.html">Proximidade do fundador </a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Diferenciais</span></td></tr><tr id="2cdcb023-eb3b-8055-98af-f7328cc8c558"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Integra%C3%A7%C3%A3o%20total%202cdcb023eb3b805598aff7328cc8c558.html">Integração total </a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Diferenciais</span></td></tr><tr id="2cdcb023-eb3b-8098-862c-e225e523a31f"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Verdade%20acima%20de%20vendas%202cdcb023eb3b8098862ce225e523a31f.html">Verdade acima de vendas </a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Diferenciais</span></td></tr><tr id="2cdcb023-eb3b-8075-a167-e6b9a93eb695"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/IA%20aplicada%20ao%20lucro%202cdcb023eb3b8075a167e6b9a93eb695.html">IA aplicada ao lucro</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Diferenciais</span></td></tr><tr id="276cb023-eb3b-81e2-af98-ec3fd80334a3"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Estrat%C3%A9gica%20276cb023eb3b81e2af98ec3fd80334a3.html">Estratégica</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Qualidades da marca</span></td></tr><tr id="276cb023-eb3b-8147-b2c1-d60353ddbc20"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Direta%20276cb023eb3b8147b2c1d60353ddbc20.html">Direta</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Qualidades da marca</span></td></tr><tr id="2cdcb023-eb3b-8021-80ba-f12056c07741"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/S%C3%B3lida%202cdcb023eb3b802180baf12056c07741.html">Sólida</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Qualidades da marca</span></td></tr><tr id="2cdcb023-eb3b-807a-989b-ee7186a84f19"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Confi%C3%A1vel%202cdcb023eb3b807a989bee7186a84f19.html">Confiável</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Qualidades da marca</span></td></tr><tr id="2cdcb023-eb3b-80b6-b048-e66580394e71"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Profissional%202cdcb023eb3b80b6b048e66580394e71.html">Profissional</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Qualidades da marca</span></td></tr><tr id="2cdcb023-eb3b-80a5-8ecb-ed082e88d6f8"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Madura%202cdcb023eb3b80a58ecbed082e88d6f8.html">Madura</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Qualidades da marca</span></td></tr><tr id="2cdcb023-eb3b-8043-8f7d-d5f22e630424"><td class="cell-title"><a href="2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor/Refletindo%20proposta%20de%20valor%20Minha%20marca/Transformadora%202cdcb023eb3b80438f7dd5f22e630424.html">Transformadora</a></td><td class="cell-Artp"><span class="selected-value select-value-color-green">Qualidades da marca</span></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8141-b34a-d00cb05dfa53" class="">
+</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8157-84d0-e9ddfcccab95" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81a5-98f4-c68034eda40c" style="width:62.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8119-bb13-f88da6adb87b" class=""><strong>Volte para a página anterior</strong></p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8168-a519-cd549bbcfd2e" style="width:37.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ae-b890-f8a7b0cc2a28" class=""><strong>Avance para a próxima página</strong></p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81dc-9ab2-e2f3f2add0eb"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81cc-8860-c9d98a701ae2" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81ad-b602-e65dfb37a469" style="width:68.75%" class="column"></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81ea-8f19-c7ec50909a50" style="width:31.250000000000007%" class="column"></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8142-8d0b-cae55dd43fb6"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81cd-8d0b-fe70d00f9e31" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81db-8c05-e30f7e9bea2e" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8034-a63a-e3e5de272581" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8006-ae32-cf4271a388c1" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-80ec-b1b6-e1b7c16925be" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8058-8cd7-e117d4e60880" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-80e1-bbc7-f84ec580058f" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-804a-9f66-c14eb8a88d50" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

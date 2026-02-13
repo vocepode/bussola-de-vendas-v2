@@ -1,0 +1,723 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>1. Diagnóstico</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2facb023-eb3b-8036-baf6-ea9647bee8c8" class="page sans"><header><img class="page-cover-image" src="1%20Diagn%C3%B3stico/Capas_Notion_(800_x_400_px).png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://www.notion.so/icons/public_blue.svg"/></div><h1 class="page-title" dir="auto">1. Diagnóstico</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><blockquote id="2facb023-eb3b-81d4-b024-db8b60768d11" class="quote-large">Definir uma persona é fundamental para garantir que suas estratégias de negócio sejam direcionadas, relevantes e eficazes, ajudando a alcançar e engajar o público-alvo de maneira mais eficiente.</blockquote></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8193-b8a3-c42a07b7727a" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="2facb023-eb3b-81bc-82d9-dd53a9a48191" class=""><mark class="highlight-blue">Assista à aula:</mark></h2></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-8190-ae72-e6a4703d4492"/></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-812f-8a88-f9bbaf47dace" class="">Para concluir essa etapa você precisa assistir a aula abaixo.</p></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-8158-b42b-e1a9afc9fe3b"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2facb023-eb3b-810c-8eb6-c44a7c8ac859"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Assista a aula sobre “Persona”</strong><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-816a-b1f4-e2e9451d7f49"/></div><div style="display:contents" dir="ltr"><figure id="2facb023-eb3b-81d6-a694-c8632f4a7308"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/EOgz6brq76" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/EOgz6brq76</div></div></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-815f-bdb0-f6c9247dfa07"/></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81ed-8001-d6e73336ebc7" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="2facb023-eb3b-81f9-bcd6-dbb8c1626037"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%"><strong>Conceitos importantes</strong><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-814c-8088-caff2231656d"/></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81f7-b1ad-c9059afa22e7" class="">No Método 🧭COMPASS, a definição e análise de persona são etapas fundamentais para assegurar que as estratégias de marketing digital sejam eficientes e direcionadas. Uma persona é uma representação semifictícia do cliente ideal, construída a partir de dados reais sobre comportamento e características demográficas, além de inferências sobre suas histórias pessoais, motivações e preocupações.</p></div><div style="display:contents" dir="auto"><div id="2facb023-eb3b-8187-877c-d57a0205e346" class="column-list"><div style="display:contents" dir="auto"><div id="2facb023-eb3b-8130-9581-cf173255b91a" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-81ad-882f-ef9ab7851a91" class="toggle"><li><details open=""><summary><strong>Dados Demográficos</strong></summary><div style="display:contents" dir="auto"><p id="2facb023-eb3b-814a-88a9-d50daacd3e95" class="">Idade, gênero, localização, nível de educação e faixa de renda fornecem uma base para entender quem é a persona.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8199-8212-c1b170302b1c" class=""><em><mark class="highlight-gray">Colete informações básicas sobre sua audiência ideal, como idade, gênero, localização, nível de educação e faixa de renda.</mark></em></p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-81b1-af46-c1b9f93484c0" class="toggle"><li><details open=""><summary><strong>Comportamento Online</strong></summary><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8107-bcb1-c29e564be863" class="">Identifica onde a persona passa tempo na internet e suas preferências de conteúdo, orientando onde e como alcançá-la.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8177-b3b4-c2d62f3ef760" class=""><em><mark class="highlight-gray">Identifique os canais digitais (redes sociais, blogs, fóruns) onde sua persona passa mais tempo e o tipo de conteúdo que ela consome.</mark></em></p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-819b-8d61-d46e06528183" class="toggle"><li><details open=""><summary><strong>Objetivos e Desafios</strong></summary><div style="display:contents" dir="auto"><p id="2facb023-eb3b-813b-90d9-cf33db5dc4fb" class="">Compreender os objetivos e desafios da persona permite criar conteúdo e ofertas que atendam diretamente às suas necessidades.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81fc-99ed-dabdfe03752e" class=""><em><mark class="highlight-gray">Liste os principais objetivos profissionais ou pessoais da sua persona e os desafios que ela enfrenta para alcançá-los.</mark></em></p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-815d-87ba-fe66a09c9cf6" class="toggle"><li><details open=""><summary><strong>Valores e Medos</strong></summary><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81cd-9674-d8d053a01812" class="">Saber o que é importante para a persona e seus medos ajuda a criar mensagens que ressoem emocionalmente.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-812d-87e1-e2f96a96cad7" class=""><em><mark class="highlight-gray">Descreva o que é mais importante para sua persona e os medos ou preocupações que ela tem relacionados ao seu nicho de mercado.</mark></em></p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-8111-a45e-e89204ef80db" class="toggle"><li><details open=""><summary><strong>Fontes de Informação</strong></summary><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81d3-982b-df7000e9ed44" class="">Entender de onde a persona obtém informações influencia a estratégia de conteúdo e abordagem de marketing.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81ca-9e06-ce4eff6445b0" class=""><em><mark class="highlight-gray">Determine de onde sua persona obtém informações confiáveis, como sites específicos, influenciadores ou publicações.</mark></em></p></div></details></li></ul></div></div></div><div style="display:contents" dir="auto"><div id="2facb023-eb3b-81f3-842f-e0dcc543814c" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-8187-a306-e0b2fafa5ae8" class="toggle"><li><details open=""><summary><strong>Objeções</strong></summary><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8158-aa9f-d0ee4f8df988" class="">Conhecer as razões pelas quais a persona pode hesitar em comprar permite abordá-las diretamente na comunicação.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8156-be51-c405b165b5ab" class=""><em><mark class="highlight-gray">Anote as principais razões pelas quais sua persona pode hesitar em comprar seu produto ou serviço  e prepare argumentos para superá-las.</mark></em></p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-810d-b3c8-df6c037eeef6" class="toggle"><li><details open=""><summary><strong>Comportamento de Compra</strong></summary><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8109-ae6f-d2e2361f3b72" class="">Entender como a persona toma decisões de compra, incluindo o processo de pesquisa e os fatores que influenciam sua escolha.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81dd-bd0f-d3e9c7fe2355" class=""><em><mark class="highlight-gray">Descreva o processo de decisão de compra da sua persona, incluindo etapas de pesquisa e fatores decisivos.</mark></em></p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-81a4-b6e8-fadffa923d35" class="toggle"><li><details open=""><summary><strong>Dores</strong></summary><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81d3-965a-c94d8d18a21c" class="">Identificar as principais dores e problemas que a persona enfrenta e que seu produto ou serviço pode resolver.</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-819e-a128-d22b43409bcc" class=""><em><mark class="highlight-gray">Identifique problemas específicos que sua persona enfrenta e que seu produto ou serviço pode resolver.</mark></em></p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-813a-9a06-fc38d03a6f37" class="toggle"><li><details open=""><summary><strong>Desejos</strong></summary><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8176-bf8c-fcaa7b4303b3" class="">Reconhecer os desejos e aspirações da persona e como seu negócio pode ajudá-la a alcançá-los. </p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81ee-bfe0-f81c084363a2" class=""><em><mark class="highlight-gray">Especifique os desejos e aspirações da sua persona e como seu negócio pode ajudá-la a alcançá-los.</mark></em></p></div></details></li></ul></div></div></div></div></div></div></figure></div><div style="display:contents" dir="auto"><h2 id="2facb023-eb3b-81cb-8046-c485ab098b10" class=""><mark class="highlight-blue">Aprenda a fazer o exercício!</mark></h2></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-81a6-94cd-dce6eee702af"/></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81ee-860e-cf9d087f0b24" class="">Para concluir essa etapa você precisa assistir as aulas abaixo.</p></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-blue_background">Se estiver com dúvidas, veja o vídeo abaixo para ver mais detalhes de como preencher essa página:</mark></summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2facb023-eb3b-813f-96ef-e3725db602cb"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought-dialogue_blue.svg"/></div><div style="width:100%"><strong>Tutorial - Preenchendo o Norte - Persona</strong><div style="display:contents" dir="ltr"><figure id="2facb023-eb3b-81f4-a1d8-e337e16f6d1f"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/146a5vJyOd" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/146a5vJyOd</div></div></a></figure></div></div></figure></div></div></details></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-8127-b5d7-cc667222f0d8"/></div><div style="display:contents" dir="auto"><h2 id="2facb023-eb3b-81ab-81b9-d82e581a63f1" class=""><mark class="highlight-blue">Definição da Persona</mark></h2></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-8102-ac91-fc7641f3c9a6"/></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-811a-ab05-dfcb7655e2da" class="toggle"><li><details open=""><summary><mark class="highlight-gray">Instruções do preenchimento da tabela</mark></summary><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8171-b180-c7eb110e7c1e" class="">Abaixo você deve preencher os dados sobre a sua persona. </p></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-8183-a491-f22c85b3dbaa" class="bulleted-list"><li style="list-style-type:disc">Nas colunas <strong>Dados demográficos</strong> e <strong>Comportamento</strong>, substitua o texto de instrução pela informação equivalente ao cartão<div style="display:contents" dir="auto"><p id="2facb023-eb3b-81ec-a9c3-ea800d360c20" class=""><em>Exemplo:</em><div class="indented"><div style="display:contents" dir="ltr"><figure id="2facb023-eb3b-818f-ae5c-e1a533b1f44b" class="image"><a href="3%20Para%20quem%20voc%C3%AA%20vende/Captura_de_Tela_2024-03-26_as_06.02.18.png"><img style="width:281px" src="3%20Para%20quem%20voc%C3%AA%20vende/Captura_de_Tela_2024-03-26_as_06.02.18.png"/></a></figure></div></div></p></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2facb023-eb3b-81e2-9ac8-e195853c203a" class="bulleted-list"><li style="list-style-type:disc">Nas colunas <strong>Desejos, Dores, Objeções e Sentimentos</strong>, substitua o texto em negrito pela informação. Cada card deve conter uma informação. Para criar mais cards naquela coluna, clicar no botão “+Novo”.</li></ul></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-8188-8cc4-fe3a404dd68b"/></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81b7-b6c2-fcadde380fd4" class=""><mark class="highlight-blue_background"><strong>Nas colunas Desejos, Dores e Objeções, colocar pelo menos 20 itens cada</strong></mark></p></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-8130-b747-d66e5b35f5d2"/></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81f6-a082-e2a0fbb3788b" class="">
+</p></div><div style="display:contents" dir="ltr"><div id="2facb023-eb3b-818f-b48c-e1aec0f03184" class="collection-content"><h4 class="collection-title">[Escreva aqui o nome da sua persona]</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Name</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>Informação</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Categoria</th></tr></thead><tbody><tr id="2facb023-eb3b-81a2-8893-d0eb982985cc"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Valor%201%202facb023eb3b81a28893d0eb982985cc.html">Valor 1</a></td><td class="cell-my}m">Escreva aqui um valor da sua persona</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2facb023-eb3b-81e6-9fe8-d16ab7774725"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Interesses%202facb023eb3b81e69fe8d16ab7774725.html">Interesses</a></td><td class="cell-my}m">• <strong>Moda e bem-estar</strong> (se cuidar, se vestir bem, se sentir “à altura” do negócio)<br/>• <strong>Leitura de livros de negócios, biografias e desenvolvimento pessoal</strong><br/>• <strong>Consumo de conteúdo sobre liderança, carreira e empreendedorismo</strong><br/>• <strong>Participar de eventos, imersões e encontros de networking</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-orange">Comportamento Online</span></td></tr><tr id="2facb023-eb3b-81a4-aa47-eddf3c8228bd"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%201%202facb023eb3b81a4aa47eddf3c8228bd.html">Objetivo 1</a></td><td class="cell-my}m">Vender todos os dias</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2facb023-eb3b-81b3-a826-cff70d7f3ce8"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%202%202facb023eb3b81b3a826cff70d7f3ce8.html">Objetivo 2</a></td><td class="cell-my}m">Ter previsibilidade mínima de vendas</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2facb023-eb3b-8136-8ce8-fac613735fab"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%203%202facb023eb3b81368ce8fac613735fab.html">Objetivo 3</a></td><td class="cell-my}m">Parar de improvisar marketing e conteúdo</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2facb023-eb3b-8141-88d8-fbb5eb1215fc"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%204%202facb023eb3b814188d8fbb5eb1215fc.html">Objetivo 4</a></td><td class="cell-my}m">Saber exatamente o que comunicar</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2facb023-eb3b-8157-9c2a-d2d2c9c1cc3e"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%205%202facb023eb3b81579c2ad2d2c9c1cc3e.html">Objetivo 5</a></td><td class="cell-my}m">Ser visto como autoridade no seu segmento</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2facb023-eb3b-817e-ac12-f57150efd727"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%206%202facb023eb3b817eac12f57150efd727.html">Objetivo 6</a></td><td class="cell-my}m">Atrair clientes certos (não qualquer cliente)</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2facb023-eb3b-81b1-b72b-dff9c52a7087"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%207%202facb023eb3b81b1b72bdff9c52a7087.html">Objetivo 7</a></td><td class="cell-my}m">Transformar conteúdo em venda</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2facb023-eb3b-81e1-a08c-daa23d1c6b69"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%208%202facb023eb3b81e1a08cdaa23d1c6b69.html">Objetivo 8</a></td><td class="cell-my}m">Crescer sem se esgotar</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2facb023-eb3b-81b0-9acf-cd2a0cb90700"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%209%202facb023eb3b81b09acfcd2a0cb90700.html">Objetivo 9</a></td><td class="cell-my}m">Sentir que o negócio “faz sentido”</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2facb023-eb3b-8126-8d6a-d89609531c98"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%2010%202facb023eb3b81268d6ad89609531c98.html">Objetivo 10</a></td><td class="cell-my}m">Ter clareza de próximo passo</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2facb023-eb3b-81dc-8530-df691e9f18c8"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%2011%202facb023eb3b81dc8530df691e9f18c8.html">Objetivo 11</a></td><td class="cell-my}m">Ter controle sobre o crescimento</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2facb023-eb3b-8147-beba-e9121c7c21b4"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%201%202facb023eb3b8147bebae9121c7c21b4.html">Desafio 1</a></td><td class="cell-my}m">Conteúdo sem função clara</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2facb023-eb3b-81f7-bc27-d81d8f199045"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%202%202facb023eb3b81f7bc27d81d8f199045.html">Desafio 2</a></td><td class="cell-my}m">Posicionamento confuso ou genérico</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2facb023-eb3b-81e2-a17a-e78d6100f12f"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%203%202facb023eb3b81e2a17ae78d6100f12f.html">Desafio 3</a></td><td class="cell-my}m">Comunicação que não diferencia</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2facb023-eb3b-819c-becb-cb941f3c1445"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%204%202facb023eb3b819cbecbcb941f3c1445.html">Desafio 4</a></td><td class="cell-my}m">Marketing desconectado de vendas</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2facb023-eb3b-8120-b89d-d583c659cbd1"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%205%202facb023eb3b8120b89dd583c659cbd1.html">Desafio 5</a></td><td class="cell-my}m">Vendas instáveis</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2facb023-eb3b-8103-9107-cec79bbe8fde"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%206%202facb023eb3b81039107cec79bbe8fde.html">Desafio 6</a></td><td class="cell-my}m">Falta de rotina comercial</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2facb023-eb3b-8122-a5ea-fdf7cd774bef"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%207%202facb023eb3b8122a5eafdf7cd774bef.html">Desafio 7</a></td><td class="cell-my}m">Dificuldade de transformar visibilidade em faturamento</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2facb023-eb3b-8166-a16c-c55d08c35523"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%208%202facb023eb3b8166a16cc55d08c35523.html">Desafio 8</a></td><td class="cell-my}m">Esforço alto para retorno baixo</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2facb023-eb3b-8154-9c25-cc53b9a5ecd0"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%209%202facb023eb3b81549c25cc53b9a5ecd0.html">Desafio 9 </a></td><td class="cell-my}m">Falta de método para decidir</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2facb023-eb3b-8167-94f5-efbc8999f4e6"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%2010%202facb023eb3b816794f5efbc8999f4e6.html">Desafio 10</a></td><td class="cell-my}m">Sensação constante de tentativa e erro</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2facb023-eb3b-818b-9357-e3e2224c7043"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%2011%202facb023eb3b818b9357e3e2224c7043.html">Desafio 11</a></td><td class="cell-my}m">Time que não performa</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2facb023-eb3b-8110-ab7d-f4199c150091"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%2012%202facb023eb3b8110ab7df4199c150091.html">Desafio 12</a></td><td class="cell-my}m">Negócio dependente 100% do dono</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2facb023-eb3b-815f-a939-c2dfe1ba8b29"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Fonte%201%202facb023eb3b815fa939c2dfe1ba8b29.html">Fonte 1</a></td><td class="cell-my}m"><strong>Redes Sociais (mas de forma mais seletiva)</strong><br/>• Instagram (perfis de negócios, gestão, vendas, estratégia)<br/>• YouTube (aulas, entrevistas, análises mais longas)<br/>• LinkedIn (para quem está mais madura e busca conteúdo de gestão)<strong><br/></strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-blue">Fontes de Informação</span></td></tr><tr id="2facb023-eb3b-81f7-a783-fe52bff77167"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Fonte%202%202facb023eb3b81f7a783fe52bff77167.html">Fonte 2</a></td><td class="cell-my}m"><strong>Conteúdo Profundo</strong><br/>• Podcasts de negócios, gestão, vendas e empreendedorismo<br/>• Entrevistas com donos de empresas reais<br/>• Palestras de eventos (G4, StartSe, HSM, etc. – como referência mental, não como cópia)</td><td class="cell-:CJZ"><span class="selected-value select-value-color-blue">Fontes de Informação</span></td></tr><tr id="2facb023-eb3b-8150-b11e-c299a417798b"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Fonte%203%202facb023eb3b8150b11ec299a417798b.html">Fonte 3</a></td><td class="cell-my}m"><strong>Formações e Mentorias</strong><br/>• Mentorias e programas de negócios que ela já fez<br/>• Cursos de gestão, vendas, liderança, marketing, finanças<br/>• Lives e aulas abertas de players que ela respeita</td><td class="cell-:CJZ"><span class="selected-value select-value-color-blue">Fontes de Informação</span></td></tr><tr id="2facb023-eb3b-811f-9d77-cfc4d0da82ef"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Fonte%204%202facb023eb3b811f9d77cfc4d0da82ef.html">Fonte 4</a></td><td class="cell-my}m"><strong>Redes de Relacionamento</strong><br/>• Grupos de empresárias (WhatsApp/Telegram)<br/>• Associações de classe, grupos de networking, núcleos de empreendedores<br/>• Amigas empreendedoras que “trocam dor” e indicação</td><td class="cell-:CJZ"><span class="selected-value select-value-color-blue">Fontes de Informação</span></td></tr><tr id="2facb023-eb3b-816b-88a7-fdc74fefc989"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Fonte%205%202facb023eb3b816b88a7fdc74fefc989.html">Fonte 5</a></td><td class="cell-my}m"><strong>Leitura</strong><br/>• Livros de negócios, marketing, finanças e liderança<br/>• Artigos e newsletters de players que ela respeita</td><td class="cell-:CJZ"><span class="selected-value select-value-color-blue">Fontes de Informação</span></td></tr><tr id="2facb023-eb3b-813c-b78d-dd5714429e97"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Hobbies%202facb023eb3b813cb78ddd5714429e97.html">Hobbies</a></td><td class="cell-my}m"><br/>Desenvolvimento pessoal<br/>Conteúdo de negócios diariamente<br/>Estilo de vida saudável<br/>Moda, estética e bem-estar<br/>Viagens e experiências Gastronomia<br/>Organização e estética do ambiente<br/>Valorização de tempo e qualidade de vida</td><td class="cell-:CJZ"><span class="selected-value select-value-color-orange">Comportamento Online</span></td></tr><tr id="2facb023-eb3b-81d2-8db9-f2097349a023"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Comportamento%20de%20compra%202facb023eb3b81d28db9f2097349a023.html">Comportamento de compra</a></td><td class="cell-my}m">Já investiu em marketing e se frustrouJá contratou agência que não entregou nadaJá fez cursos rasosJá tentou fazer sozinhoEstá disposto a pagar mais por método + direção + acompanhamentoValoriza proximidade com o mentorConfia em narrativa verdadeira, não hype</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Comportamento de Compra</span></td></tr><tr id="2facb023-eb3b-81ce-b07b-f4cce427beed"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Principais%20buscas%202facb023eb3b81ceb07bf4cce427beed.html">Principais buscas</a></td><td class="cell-my}m">Como crescer com previsibilidade<br/>Como estruturar um time comercial<br/>Como escalar operações<br/>Como organizar empresa para crescer<br/>Como deixar de depender do dono<br/>Como implantar processos<br/>Como integrar marketing + vendas + gestão<br/>Como ter lucro todos os meses<br/>Como criar cultura e time de alta performance</td><td class="cell-:CJZ"><span class="selected-value select-value-color-orange">Comportamento Online</span></td></tr><tr id="2facb023-eb3b-814f-912b-ff7592320bd8"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Prefer%C3%AAncias%20de%20conte%C3%BAdo%202facb023eb3b814f912bff7592320bd8.html">Preferências de conteúdo</a></td><td class="cell-my}m"><br/>• Estratégia clara e aplicada<br/>• Bastidores de decisões reais<br/>• Processos e frameworks<br/>• Análises de negócios reais<br/>• Estudos de caso profundos<br/>• Conteúdo que conecta marketing, gestão e vendas<br/>• Verdade dura, mas útil<br/>• Aulas de raciocínio estratégico<br/>• Conteúdo que os faça pensar como donos<br/>Eles <strong>não querem</strong>:<br/>• dicas de conteúdo<br/>• trends<br/>• tutoriais de Instagram</td><td class="cell-:CJZ"><span class="selected-value select-value-color-orange">Comportamento Online</span></td></tr><tr id="2facb023-eb3b-81df-ac1b-e08fecfb1677"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Idade%202facb023eb3b81dfac1be08fecfb1677.html">Idade</a></td><td class="cell-my}m">28 a 55 anos</td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2facb023-eb3b-8190-949d-f30663e385dd"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/G%C3%AAnero%202facb023eb3b8190949df30663e385dd.html">Gênero</a></td><td class="cell-my}m">70% mulheres</td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2facb023-eb3b-81a2-9bde-ecc452087527"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Localiza%C3%A7%C3%A3o%202facb023eb3b81a29bdeecc452087527.html">Localização</a></td><td class="cell-my}m"><strong>Sudeste e Sul do Brasil</strong><br/>(SP, RJ, MG, PR e capitais + interior economicamente ativo)</td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2facb023-eb3b-816a-9c90-f99f3dc9fd37"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/N%C3%ADvel%20de%20educa%C3%A7%C3%A3o%202facb023eb3b816a9c90f99f3dc9fd37.html">Nível de educação</a></td><td class="cell-my}m">Superior completo ou em andamento; muitas com pós, cursos ou especializações.</td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2facb023-eb3b-811b-8c6f-e24382a6899a"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tipo%20de%20neg%C3%B3cio%202facb023eb3b811b8c6fe24382a6899a.html">Tipo de negócio</a></td><td class="cell-my}m">Serviços, <br/>Profissionais liberais<br/>Saúde<br/>Moda, varejo e comércio<br/>Educação e especialidades</td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2facb023-eb3b-8118-8717-e1a3b9365dde"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Faixa%20de%20renda%202facb023eb3b81188717e1a3b9365dde.html">Faixa de renda</a></td><td class="cell-my}m">A partir de <strong>R$ 30k/mês</strong>Com maior concentração entre <strong>R$ 50k e R$ 500k/mês</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2facb023-eb3b-810d-a02d-da13faeb06b6"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Estrutura%202facb023eb3b810da02dda13faeb06b6.html">Estrutura</a></td><td class="cell-my}m">Negócios pequenos e médios<br/><strong>1 a 10 colaboradores</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2facb023-eb3b-81e3-baec-ca49946164e0"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tempo%20de%20neg%C3%B3cio%202facb023eb3b81e3baecca49946164e0.html">Tempo de negócio</a></td><td class="cell-my}m"><strong>1 a 10 anos<br/></strong>Não são iniciantes absolutos</td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2facb023-eb3b-8155-a39c-e24bf331fdee"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Psicografia%202facb023eb3b8155a39ce24bf331fdee.html">Psicografia</a></td><td class="cell-my}m">Cresceram <strong>no improviso<br/></strong>O negócio “funciona”, mas <strong>não é previsível<br/></strong>Trabalham muito mais do que deveriam<br/>Sentem que o negócio depende demais deles<br/>Já investiram em marketing, mas sem clareza<br/>Já tentaram produzir conteúdo, mas sem estratégia<br/>Viveram frustrações com:<br/>• agências<br/>• social medias<br/>• promessas vaziasSão céticos com “marketing milagroso”Têm medo de:<br/>• continuar tentando sem saber se está certo<br/>• investir de novo e errarProcuram:<br/>• seriedade<br/>• método<br/>• clareza<br/>• direção<br/>Querem crescer, mas <strong>não querem virar reféns do digital</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2facb023-eb3b-8115-ba3e-db06697c2ea9"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Quem%20n%C3%A3o%20%C3%A9%202facb023eb3b8115ba3edb06697c2ea9.html">Quem não é</a></td><td class="cell-my}m">Quem quer viralizar<br/>Quem busca fórmula rápida<br/>Quem está começando do zero<br/>Quem não tem negócio real<br/>Quem quer apenas aprender reels, tráfego ou hacks<br/>Quem terceiriza responsabilidade<br/>Quem não aceita verdade, método e profundidade<br/>Quem quer palco, não venda</td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2facb023-eb3b-8198-9437-c8269630defa"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%20Central%202facb023eb3b81989437c8269630defa.html">Desejo Central</a></td><td class="cell-my}m">Vender com clareza, estratégia e previsibilidade sem depender de sorte, improviso ou promessas vazias.</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="2facb023-eb3b-818d-86d6-fb9c9a0f8808"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%202facb023eb3b818d86d6fb9c9a0f8808.html">Desejo </a></td><td class="cell-my}m">Segurança</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="2facb023-eb3b-81b8-a3af-d174ea4da62d"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%202%202facb023eb3b81b8a3afd174ea4da62d.html">Desejo 2</a></td><td class="cell-my}m">Clareza</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="2facb023-eb3b-81fe-8b0d-f19a2856b7ad"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%203%202facb023eb3b81fe8b0df19a2856b7ad.html">Desejo 3</a></td><td class="cell-my}m">Consistência</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="2facb023-eb3b-8193-8a58-de0d226080f6"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%204%202facb023eb3b81938a58de0d226080f6.html">Desejo 4</a></td><td class="cell-my}m">Respeito</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="2facb023-eb3b-81d5-ac2d-e0b76ce8364c"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%205%202facb023eb3b81d5ac2de0b76ce8364c.html">Desejo 5</a></td><td class="cell-my}m">Autoridade</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="2facb023-eb3b-812c-8cf7-f7af8ba4e1cf"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%206%202facb023eb3b812c8cf7f7af8ba4e1cf.html">Desejo 6</a></td><td class="cell-my}m">Previsibilidade</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="2facb023-eb3b-81e0-bbf1-e054667cf87f"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%207%202facb023eb3b81e0bbf1e054667cf87f.html">Desejo 7</a></td><td class="cell-my}m">Lucro real</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="2facb023-eb3b-8112-97fa-c632e47ca300"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%208%202facb023eb3b811297fac632e47ca300.html">Desejo 8</a></td><td class="cell-my}m">Orgulho do próprio negócio</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="2facb023-eb3b-81ff-bbe8-fce0ff3f3e66"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%209%202facb023eb3b81ffbbe8fce0ff3f3e66.html">Desejo 9</a></td><td class="cell-my}m">Autonomia</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="2facb023-eb3b-818c-9290-f0d31eec74a5"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%2010%202facb023eb3b818c9290f0d31eec74a5.html">Desejo 10</a></td><td class="cell-my}m">Liberdade de tempo</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="2facb023-eb3b-8144-ab1e-ce7f3e5acecb"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%2011%202facb023eb3b8144ab1ece7f3e5acecb.html">Desejo 11</a></td><td class="cell-my}m">Crescimento sustentável</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="2facb023-eb3b-8190-9144-c65b473dac1e"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%20Central%202facb023eb3b81909144c65b473dac1e.html">Dor Central</a></td><td class="cell-my}m">Eu trabalho, apareço, produzo conteúdo e até vendo mas tudo ainda depende de improviso e não é previsível.”</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2facb023-eb3b-8128-92da-fc9eaccf7259"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%201%202facb023eb3b812892dafc9eaccf7259.html">Dor 1 </a></td><td class="cell-my}m">Vendas instáveis</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2facb023-eb3b-817f-86c5-ce630f4347dc"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%202%202facb023eb3b817f86c5ce630f4347dc.html">Dor 2</a></td><td class="cell-my}m">Falta de estratégia</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2facb023-eb3b-8159-8124-c39503553ceb"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%203%202facb023eb3b81598124c39503553ceb.html">Dor 3</a></td><td class="cell-my}m">Falta de previsibilidade</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2facb023-eb3b-81aa-822d-f0a3bb79c6a3"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%204%202facb023eb3b81aa822df0a3bb79c6a3.html">Dor 4</a></td><td class="cell-my}m">Rotina caótica</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2facb023-eb3b-8120-b834-edae3f3a641a"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%205%202facb023eb3b8120b834edae3f3a641a.html">Dor 5</a></td><td class="cell-my}m">Time desorganizado</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2facb023-eb3b-8106-b745-d14d5739d788"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%206%202facb023eb3b8106b745d14d5739d788.html">Dor 6</a></td><td class="cell-my}m">Marketing solto</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2facb023-eb3b-81eb-b186-f4a04fd2231a"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%207%202facb023eb3b81ebb186f4a04fd2231a.html">Dor 7</a></td><td class="cell-my}m">Gestão inexistente</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2facb023-eb3b-8156-a62f-dae92fabc89a"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%208%202facb023eb3b8156a62fdae92fabc89a.html">Dor 8</a></td><td class="cell-my}m">Faturamento oscilante</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2facb023-eb3b-813b-b4f7-f477cf5e82e7"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%209%202facb023eb3b813bb4f7f477cf5e82e7.html">Dor 9</a></td><td class="cell-my}m">Falta de controle</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2facb023-eb3b-8126-a3af-c74c3773735a"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%2010%202facb023eb3b8126a3afc74c3773735a.html">Dor 10</a></td><td class="cell-my}m">Falta de clareza</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2facb023-eb3b-8170-b9ac-d4653381e606"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%2011%202facb023eb3b8170b9acd4653381e606.html">Dor 11</a></td><td class="cell-my}m">Falta de tempo</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2facb023-eb3b-816c-85f6-d7278fa32aee"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%201%202facb023eb3b816c85f6d7278fa32aee.html">Objeção 1</a></td><td class="cell-my}m"><strong>“Eu já investi em marketing/mentoria e me frustrei.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="2facb023-eb3b-8181-a27b-db30616e14b3"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%202%202facb023eb3b8181a27bdb30616e14b3.html">Objeção 2</a></td><td class="cell-my}m"><strong>“Eu não tenho tempo para mais um programa.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="2facb023-eb3b-81b6-80c8-e0642fe757eb"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%203%202facb023eb3b81b680c8e0642fe757eb.html">Objeção 3</a></td><td class="cell-my}m"><strong>“Meu negócio é muito específico, não sei se funciona para mim.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="2facb023-eb3b-8134-a0c9-c79d6e64e810"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%204%202facb023eb3b8134a0c9c79d6e64e810.html">Objeção 4</a></td><td class="cell-my}m"><strong>“Hoje eu já vendo bem, não sei se realmente preciso disso agora.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="2facb023-eb3b-812e-b0af-fd92026bdb73"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%205%202facb023eb3b812eb0affd92026bdb73.html">Objeção 5</a></td><td class="cell-my}m"><strong>“Tenho medo de não conseguir implementar com a equipe que tenho.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="2facb023-eb3b-810f-9371-e621881ce4e3"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%206%202facb023eb3b810f9371e621881ce4e3.html">Objeção 6</a></td><td class="cell-my}m"><strong>“Meu problema não é marketing, é gente/processo/gestão.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="2facb023-eb3b-819c-b974-d1438e6d719a"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%207%202facb023eb3b819cb974d1438e6d719a.html">Objeção 7</a></td><td class="cell-my}m"><strong>“É um investimento alto, preciso ter certeza que vai voltar.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="2facb023-eb3b-81a4-8fff-c67783d83271"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%208%202facb023eb3b81a48fffc67783d83271.html">Objeção 8</a></td><td class="cell-my}m"><strong>“Tenho trauma de agência/consultor que prometeu e sumiu.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="2facb023-eb3b-8164-87b5-df3cc5dafe32"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%209%202facb023eb3b816487b5df3cc5dafe32.html">Objeção 9</a></td><td class="cell-my}m"><strong>“Não sei se estou no estágio certo do negócio para isso.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="2facb023-eb3b-81da-b79c-f27350cfe81a"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%2010%202facb023eb3b81dab79cf27350cfe81a.html">Objeção 10</a></td><td class="cell-my}m"><strong>“Tenho medo de crescer e perder o controle/qualidade.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="2facb023-eb3b-813a-bec8-f31756721e8e"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Valor%202%202facb023eb3b813abec8f31756721e8e.html">Valor 2</a></td><td class="cell-my}m">Escreva aqui um valor da sua persona</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2facb023-eb3b-81f4-bfcf-c0111b43986b"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%201%202facb023eb3b81f4bfcfc0111b43986b.html">Medo 1</a></td><td class="cell-my}m">Investir novamente e não ter retorno</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2facb023-eb3b-81b6-a2ad-eb7e88b4199c"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%202%202facb023eb3b81b6a2adeb7e88b4199c.html">Medo 2</a></td><td class="cell-my}m">Investir novamente e não ter retorno</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2facb023-eb3b-8109-8cc6-d711edbad797"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%203%202facb023eb3b81098cc6d711edbad797.html">Medo 3</a></td><td class="cell-my}m">Crescer errado e quebrar depois</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2facb023-eb3b-8182-8dd8-ec7b091608ae"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%204%202facb023eb3b81828dd8ec7b091608ae.html">Medo 4</a></td><td class="cell-my}m">Perder relevância no mercado</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2facb023-eb3b-8122-9044-c89c309c4983"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%205%202facb023eb3b81229044c89c309c4983.html">Medo 5</a></td><td class="cell-my}m">Ser ultrapassado por concorrentes mais estratégicos</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2facb023-eb3b-8128-bacb-e3bf8620033d"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%206%202facb023eb3b8128bacbe3bf8620033d.html">Medo 6</a></td><td class="cell-my}m">Ficar preso ao operacional para sempre</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2facb023-eb3b-8101-8db6-c6835c2973d1"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%207%202facb023eb3b81018db6c6835c2973d1.html">Medo 7</a></td><td class="cell-my}m">Nunca saber se está “fazendo certo”</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2facb023-eb3b-8146-b3a0-c122ff587cea"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%208%202facb023eb3b8146b3a0c122ff587cea.html">Medo 8</a></td><td class="cell-my}m">Depender eternamente de indicações</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2facb023-eb3b-81ca-8e9e-e5c00795fae1"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%209%202facb023eb3b81ca8e9ee5c00795fae1.html">Medo 9</a></td><td class="cell-my}m"><br/>Se expor no digital e não ser levado a sério</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2facb023-eb3b-81c4-b814-e6222d6033a3"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%201%202facb023eb3b81c4b814e6222d6033a3.html">Trava 1</a></td><td class="cell-my}m">Posicionamento confuso</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2facb023-eb3b-811d-b13c-ca4d0a6382b7"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%202%202facb023eb3b811db13cca4d0a6382b7.html">Trava 2</a></td><td class="cell-my}m">Conteúdo sem intenção estratégica</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2facb023-eb3b-8133-9031-ffce16b76b9e"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%203%202facb023eb3b81339031ffce16b76b9e.html">Trava 3</a></td><td class="cell-my}m">Falta de clareza comercial</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2facb023-eb3b-8185-aec4-d9f72ef2819d"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%204%202facb023eb3b8185aec4d9f72ef2819d.html">Trava 4</a></td><td class="cell-my}m">Falta de método de decisão</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2facb023-eb3b-8198-b83c-e818cb262cab"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%205%202facb023eb3b8198b83ce818cb262cab.html">Trava 5</a></td><td class="cell-my}m">Marketing desconectado de vendas</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2facb023-eb3b-81e4-9627-fa7d1af59592"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%206%202facb023eb3b81e49627fa7d1af59592.html">Trava 6</a></td><td class="cell-my}m">Falta de estrutura mínima de venda</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2facb023-eb3b-8161-aa25-c16d6f98c8e4"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%207%202facb023eb3b8161aa25c16d6f98c8e4.html">Trava 7</a></td><td class="cell-my}m">Dependência excessiva do dono</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2facb023-eb3b-8163-bb03-cdaf49665303"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%208%202facb023eb3b8163bb03cdaf49665303.html">Trava 8</a></td><td class="cell-my}m">Medo de errar novamente</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2facb023-eb3b-8150-a85b-f2496173f5d6"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%209%202facb023eb3b8150a85bf2496173f5d6.html">Trava 9</a></td><td class="cell-my}m">Excesso de informação e pouca direção</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2facb023-eb3b-81fc-9432-de2f43351963"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tens%C3%A3o%201%202facb023eb3b81fc9432de2f43351963.html">Tensão 1</a></td><td class="cell-my}m">Aparece → mas não converte</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Tensões reais</span></td></tr><tr id="2facb023-eb3b-8189-97f1-fc158a6683b6"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tens%C3%A3o%202%202facb023eb3b818997f1fc158a6683b6.html">Tensão 2</a></td><td class="cell-my}m">Vende → mas não sabe repetir</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Tensões reais</span></td></tr><tr id="2facb023-eb3b-817f-ae95-cae1978f517c"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tens%C3%A3o%203%202facb023eb3b817fae95cae1978f517c.html">Tensão 3</a></td><td class="cell-my}m">Cresce → mas fica mais cansado</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Tensões reais</span></td></tr><tr id="2facb023-eb3b-81d0-a737-c4b56fa9b1a4"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tens%C3%A3o%204%202facb023eb3b81d0a737c4b56fa9b1a4.html">Tensão 4</a></td><td class="cell-my}m">Investe → mas não se sente seguro</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Tensões reais</span></td></tr><tr id="2facb023-eb3b-8153-ac52-cb283b9f4329"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tens%C3%A3o%205%202facb023eb3b8153ac52cb283b9f4329.html">Tensão 5</a></td><td class="cell-my}m">Aprende → mas não aplica com clareza</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Tensões reais</span></td></tr><tr id="2facb023-eb3b-8135-afc8-cb4f7bbde977"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tens%C3%A3o%206%202facb023eb3b8135afc8cb4f7bbde977.html">Tensão 6</a></td><td class="cell-my}m">Testa → mas não tem método</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Tensões reais</span></td></tr><tr id="2facb023-eb3b-812c-8395-f8c59cdbc321"><td class="cell-title"><a href="1%20Diagn%C3%B3stico/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tens%C3%A3o%207%202facb023eb3b812c8395f8c59cdbc321.html">Tensão 7</a></td><td class="cell-my}m">Quer crescer → mas não quer errar de novo</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Tensões reais</span></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8162-b9ea-dd0b8017a9c0" class="">
+</p></div><div style="display:contents" dir="auto"><div id="2facb023-eb3b-8130-b457-ebd3f32a024f" class="column-list"><div style="display:contents" dir="auto"><div id="2facb023-eb3b-816a-bf62-dadbbad86131" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="2facb023-eb3b-8112-8e3c-c07beb12cdc7" class="link-to-page"><a href="1%20Diagn%C3%B3stico/Manifesto%20da%20Audi%C3%AAncia%202facb023eb3b81128e3cc07beb12cdc7.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/alert_blue.svg"/>Manifesto da Audiência</a></figure></div></div></div><div style="display:contents" dir="auto"><div id="2facb023-eb3b-8170-ad1e-e5afc1f062e7" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure id="2facb023-eb3b-8115-814a-d2fd06d845b5" class="link-to-page"><a href="1%20Diagn%C3%B3stico/Mapa%20de%20Tens%C3%A3o%202facb023eb3b8115814ad2fd06d845b5.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/alert_blue.svg"/>Mapa de Tensão</a></figure></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-81e9-a1ea-cb9e25870fc1"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="2facb023-eb3b-8164-9196-e33fbcd3e141"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/light-bulb_blue.svg"/></div><div style="width:100%"><strong>Não se esqueça!</strong><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-8185-9865-fb95fd4ac870"/></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81cc-99b2-e29f557635b4" class="">Agora que você completou o conteúdo desta etapa, não se esqueça de preencher o checklist que está na página inicial em <a href="../../Estrat%C3%A9gia%20NORTE%20276cb023eb3b8112b09eee73edc454e1.html">Estratégia | Norte</a>.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-8173-a684-e595fcf4a177"/></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-819e-9328-f741c059c7fe" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8183-81fd-cb91674f8974" class="">
+</p></div><div style="display:contents" dir="auto"><div id="2facb023-eb3b-810e-a01d-d9b3d8028837" class="column-list"><div style="display:contents" dir="auto"><div id="2facb023-eb3b-8113-9da5-f8402d16b8fe" style="width:62.5%" class="column"><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8137-ac42-e9857c27e904" class=""><strong>Volte para a página anterior</strong></p></div></div></div><div style="display:contents" dir="auto"><div id="2facb023-eb3b-8148-8309-e6bc192ed843" style="width:37.5%" class="column"><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8175-a5a9-e32d3ace6d25" class=""><strong>Avance para a próxima página</strong></p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-8170-b363-fb080a5d014e"/></div><div style="display:contents" dir="auto"><div id="2facb023-eb3b-81cf-b12b-f91fd52b505f" class="column-list"><div style="display:contents" dir="auto"><div id="2facb023-eb3b-81ef-99d5-de5f280f9305" style="width:68.75%" class="column"></div></div><div style="display:contents" dir="auto"><div id="2facb023-eb3b-81fd-8460-e06e1b247ac9" style="width:31.25%" class="column"></div></div></div></div><div style="display:contents" dir="auto"><hr id="2facb023-eb3b-8172-84af-eea24095e27b"/></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-81d2-9224-ec31e2d9347f" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8133-a697-dca66da25393" class="">
+</p></div><div style="display:contents" dir="auto"><div style="display:contents" dir="auto"><div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8151-8208-d3a18be30a77"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8129-aab5-f16e8a294db2" class="">Bússola de Vendas desenvolvido por <strong><a href="https://www.notion.so/f8156e7b171a4df68144f6293ae02538?pvs=21">Consultoria Inception</a></strong> para VocêPode Mkt Digital</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f6-bdc6-f5ec39f5a795" class=""><br/>Copyright © Castro Américo Digital – Todos os direitos reservados.<br/>É proibida a reprodução total ou parcial dos conteúdos dessa ferramenta.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8184-a344-d6b2fc8359af" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8117-a316-ccb13abc34ff" class=""><a href="http://vocepodevendermais.com.br">Site</a> l <a href="https://hotmart.com/pt-br/club/vocepode-vendermais/products/3939809">Plataforma de Alunos</a> | <a href="https://www.instagram.com/vocepode.vendermais">Instagram</a></p></div></div></div></div><div style="display:contents" dir="auto"><p id="2facb023-eb3b-8185-97ed-c3fb9c7994fa" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

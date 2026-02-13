@@ -1,0 +1,718 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Como saber se meu posicionamento está certo?</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2f2cb023-eb3b-80be-aa86-d134d3c95c79" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/phone_blue.svg"/></div><h1 class="page-title" dir="auto">Como saber se meu posicionamento está certo?</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-date"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/calendar_gray.svg" style="width:14px;height:14px;display:block"/></span>Deadline Planejamento</th><td><time>@23/01/2026</time></td></tr><tr class="property-row property-row-select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/compass_gray.svg" style="width:14px;height:14px;display:block"/></span>Tópicos de Conteúdo</th><td><span class="selected-value select-value-color-yellow">Perguntas Comuns</span></td></tr><tr class="property-row property-row-relation"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/flag-checkered_gray.svg" style="width:14px;height:14px;display:block"/></span>Tema</th><td><a href="../Temas%20New/Posicionamento%20276cb023eb3b81aaa3fee8d3df8b48f5.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/flag-checkered_blue.svg"/>Posicionamento</a></td></tr><tr class="property-row property-row-select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/arrow-circle-down_gray.svg" style="width:14px;height:14px;display:block"/></span>Estratégia</th><td><span class="selected-value select-value-color-red">Atração</span></td></tr><tr class="property-row property-row-relation"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/arrow-northeast_gray.svg" style="width:14px;height:14px;display:block"/></span>Laddering | Minha marca</th><td><a href="../../%5Bvcpode%5D%20galeria%20principal/Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/4%20Como%20voc%C3%AA%20se%20posiciona/%5Bcompass%5D%20norte%20posicionamento/1%20Laddering/LADDERING%20Minha%20marca/Especialidade%20em%20posicionamento%20estrat%C3%A9gico%20276cb023eb3b8198a9ecfa69a377abc3.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-up-basic_purple.svg"/>Especialidade em posicionamento estratégico</a>, <a href="../../%5Bvcpode%5D%20galeria%20principal/Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/4%20Como%20voc%C3%AA%20se%20posiciona/%5Bcompass%5D%20norte%20posicionamento/1%20Laddering/LADDERING%20Minha%20marca/Orgulho%20do%20posicionamento%202cdcb023eb3b80e8a314ddd39ca08c07.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Orgulho do posicionamento</a>, <a href="../../%5Bvcpode%5D%20galeria%20principal/Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/4%20Como%20voc%C3%AA%20se%20posiciona/%5Bcompass%5D%20norte%20posicionamento/1%20Laddering/LADDERING%20Minha%20marca/Organizar%20a%20comunica%C3%A7%C3%A3o%20do%20neg%C3%B3cio%20276cb023eb3b81eab42cf7552d881989.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Organizar a comunicação do negócio</a></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/tornado_gray.svg" style="width:14px;height:14px;display:block"/></span>Funil</th><td><span class="selected-value select-value-color-yellow">C1 - Topo</span></td></tr><tr class="property-row property-row-select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/arrow-circle-down_gray.svg" style="width:14px;height:14px;display:block"/></span>Meta do Funil</th><td><span class="selected-value select-value-color-orange">C1 - Seguidores</span></td></tr><tr class="property-row property-row-status"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/burst_gray.svg" style="width:14px;height:14px;display:block"/></span>Progresso Matriz</th><td><span class="status-value select-value-color-blue"><div class="status-dot status-dot-color-blue"></div>Planejando Roteiro</span></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Formato de conteúdo</th><td><span class="selected-value select-value-color-yellow">Video curto</span></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Plataforma</th><td><span class="selected-value select-value-color-purple">Instagram</span><span class="selected-value select-value-color-brown">TikTok</span><span class="selected-value select-value-color-blue">Youtube</span></td></tr><tr class="property-row property-row-date"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/calendar_gray.svg" style="width:14px;height:14px;display:block"/></span>Deadline Conteúdo</th><td><time>@31/01/2026</time></td></tr><tr class="property-row property-row-date"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/calendar_gray.svg" style="width:14px;height:14px;display:block"/></span>Data do Post</th><td><time>@01/02/2026</time></td></tr><tr class="property-row property-row-checkbox"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/checkmark-square_gray.svg" style="width:14px;height:14px;display:block"/></span>Impulsionar</th><td><div class="checkbox checkbox-off"></div></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-8021-a63e-eb51102c4259" class="">dor: rotina caótica<br/>desejo: autoridade</p></div><div style="display:contents" dir="auto"><div id="2f2cb023-eb3b-8089-bee4-e51805d1dd22" class="column-list"><div style="display:contents" dir="auto"><div id="2f2cb023-eb3b-804d-b69e-c3d29444360e" style="width:33.333333333333336%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="2f2cb023-eb3b-80b2-9d32-f7a2be412e70"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/target_blue.svg"/></div><div style="width:100%"><strong>Objetivo do Vídeo</strong><div style="display:contents" dir="auto"><hr id="2f2cb023-eb3b-8023-b3be-fd61b9c53b82"/></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-80f9-be53-d33848e1feeb" class="">Gerar conexão e atrair a persona.</p></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="2f2cb023-eb3b-8062-bb39-c3f83fbef31d" style="width:33.333333333333336%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="2f2cb023-eb3b-8075-8ba4-d7a996303962"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/clock_blue.svg"/></div><div style="width:100%"><strong>Tempo do Vídeo</strong><div style="display:contents" dir="auto"><hr id="2f2cb023-eb3b-8067-8b56-f5b41db9a45b"/></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-809f-9927-f3aa889461a6" class="">Duração ideal: 59 a 90 segundos.</p></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="2f2cb023-eb3b-8011-8b53-dc0bdf5f45c5" style="width:33.33333333333333%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="2f2cb023-eb3b-80ea-9ff8-e8607c28925a"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/heart_blue.svg"/></div><div style="width:100%"><strong>Sentimentos para explorar</strong><div style="display:contents" dir="auto"><hr id="2f2cb023-eb3b-80fa-899f-dda4824ca69b"/></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-8046-840b-f90ca629ce1f" class=""><mark class="highlight-gray">Dores &amp; Desejos</mark></p></div></div></figure></div></div></div></div></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="2f2cb023-eb3b-804c-ba5c-fc59d299d605"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%">Como escrever meu Roteiro<div style="display:contents" dir="auto"><hr id="2f2cb023-eb3b-80e4-9117-c082e2256e9c"/></div><div style="display:contents" dir="auto"><ul id="2f2cb023-eb3b-8057-9d2e-d765a95e9f3d" class="toggle"><li><details open=""><summary>Instruções</summary><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-80ef-a787-ea0eff83e9b2" class=""><mark class="highlight-default"><strong>Capa</strong></mark><mark class="highlight-default"><br/>Use uma imagem ou frame que represente o tema do vídeo.</mark></p></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-8065-81de-dfda483350fe" class=""><mark class="highlight-default"><strong>Headline</strong></mark><mark class="highlight-default"><br/>Uma frase que resume o conteúdo, gerando curiosidade e despertando a vontade de consumir. (Após o vídeo pronto, faça uma nova reflexão sobre a headline).</mark></p></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-8003-90b5-ee0c586aa124" class=""><mark class="highlight-default"><strong>Gancho</strong></mark><mark class="highlight-default"><br/>Aqui você precisa trabalhar a introdução do vídeo, é o que vai prender a atenção da persona. Pode ser uma pergunta , uma afirmação ou um efeito sonoro ou visual.</mark></p></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-8047-b453-ecdeb653fa5e" class=""><mark class="highlight-default"><strong>Apresentação</strong></mark></p></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-80d7-92e6-c7c1d58f052f" class=""><mark class="highlight-default">Este formato de conteúdo foca principalmente em pessoas que não te conhecem, faça uma breve apresentação e reforce a proposta de valor, finalize conectando com o conteúdo.</mark></p></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-80c8-82b0-c18c6e606a6f" class=""><mark class="highlight-default"><strong>Conteúdo</strong></mark><mark class="highlight-default"><br/>Identifique uma dor ou desejo especifico da persona, apresente esse sentimento falando sobre causa e efeito e como ela pode vencer, superar ou alcançar o que quer. Use visual e textos para reforçar a mensagem, mantendo a clareza e sendo intencional.</mark></p></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-8009-99b4-cb7c4a9234b0" class=""><mark class="highlight-default"><strong>Fechamento</strong></mark><mark class="highlight-default"><br/>Agora é hora de fechar a história,  uma conclusão que vai deixar um gostinho de quero mais. Sua chamada de ação (CTA) deve sugerir que ela siga o perfil para saber mais sobre como você pode ajudar a superar (dor) alcançar (desejo) através da sua proposta de valor.</mark></p></div></details></li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="2f2cb023-eb3b-80b8-88c3-fe6d74b7c992"/></div><div style="display:contents" dir="auto"><h3 id="2f2cb023-eb3b-80bd-a23e-e2f6c5b08e91" class="">Roteiro</h3></div><div style="display:contents" dir="auto"><hr id="2f2cb023-eb3b-804e-8e9c-dfd0d3195ec1"/></div><div style="display:contents" dir="ltr"><table id="2f2cb023-eb3b-803c-8002-c065b12432e3" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="2f2cb023-eb3b-80b9-bb55-fd6cfeb7afb2"><th id="qpXY" class="simple-table-header-color simple-table-header">Capa </th><td id="Bv?s" class="" style="width:584.991455078125px">frame do vídeo</td></tr></div><div style="display:contents" dir="ltr"><tr id="2f2cb023-eb3b-8097-9b07-f6a518d2ee71"><th id="qpXY" class="simple-table-header-color simple-table-header">Headline</th><td id="Bv?s" class="" style="width:584.991455078125px">Se fosse claro, não precisava explicar tanto</td></tr></div><div style="display:contents" dir="ltr"><tr id="2f2cb023-eb3b-8068-974b-d726ceb78ce1"><th id="qpXY" class="simple-table-header-color simple-table-header">Gancho</th><td id="Bv?s" class="" style="width:584.991455078125px">Se o seu posicionamento fosse claro, você não precisaria explicar tanto</td></tr></div><div style="display:contents" dir="ltr"><tr id="2f2cb023-eb3b-800e-9270-c0c27d8fd4d0"><th id="qpXY" class="simple-table-header-color simple-table-header">Apresentação</th><td id="Bv?s" class="" style="width:584.991455078125px">Eu sou o Daniel, estrategista da VocêPode.<br/>A gente ajuda empresários a saírem do improviso e venderem com mais clareza e previsibilidade.</td></tr></div><div style="display:contents" dir="ltr"><tr id="2f2cb023-eb3b-80e0-a3df-d23cce4dda42"><th id="qpXY" class="simple-table-header-color simple-table-header">Conteúdo</th><td id="Bv?s" class="" style="width:584.991455078125px">Se você vive explicando o que faz — o tempo todo — tem algo errado no seu posicionamento.Posicionamento bom é percebido rápido.<br/>O cliente certo olha e pensa:<br/>“Isso é pra mim. Essa pessoa resolve o que eu preciso.”Três sinais de que o seu posicionamento está funcionando:Deixa claro quem você éMostra pra quem você falaE por que vale pagar por vocêSem isso, a comunicação vira esforço desperdiçado.<br/>E você atrai as pessoas erradas, vive ajustando proposta, muda o conteúdo toda semana…<br/>Resultado? Rotina caótica, venda instável e pouca autoridade.</td></tr></div><div style="display:contents" dir="ltr"><tr id="2f2cb023-eb3b-805d-9507-fcc10f3a55f5"><th id="qpXY" class="simple-table-header-color simple-table-header">Fechamento</th><td id="Bv?s" class="" style="width:584.991455078125px"><strong>Se isso fez sentido, compartilha com alguém que vive se explicando.</strong><br/>Pode ser o ponto de virada pra ele.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-8076-8713-d164d5e5dcc0" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="2f2cb023-eb3b-8022-9073-f47f1fd19f14" class="">Texto legenda</h3></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-8023-9e2b-ecf13c6c0a78" class="">A legenda deve reforçar a mensagem do vídeo, oferecendo informações adicionais ou um resumo e repita o CTA na legenda.</p></div><div style="display:contents" dir="auto"><hr id="2f2cb023-eb3b-80c4-bc6e-e7e78ce22a76"/></div><div style="display:contents" dir="auto"><ul id="2f2cb023-eb3b-80ee-94af-e2a967ba2e32" class="bulleted-list"><li style="list-style-type:disc"><strong>Escreva aqui sua legenda</strong></li></ul></div><div style="display:contents" dir="auto"><p id="0cdfb6ac-d3ba-462c-a69b-cce1a071cbc9" class="">Se você sente que vive tendo que explicar o que faz…</p></div><div style="display:contents" dir="auto"><p id="1a2fce61-cc1c-4809-9ff3-c7a7c93c1feb" class="">O problema pode não ser seu público.</p></div><div style="display:contents" dir="auto"><p id="a3603408-0651-4f0d-b979-3c2c073c07ac" class="">Pode ser o seu posicionamento.</p></div><div style="display:contents" dir="auto"><p id="112915be-9d4d-4ce4-980e-8ff4b112f173" class="">Posicionamento certo organiza a comunicação, atrai o cliente certo e diminui a sua ansiedade.</p></div><div style="display:contents" dir="auto"><p id="6c40b6b0-1174-4a7f-ad01-7663fe681cfd" class="">O errado… te faz parecer mais um.</p></div><div style="display:contents" dir="auto"><p id="ae148679-973c-4450-9dc8-0f79621f87ed" class="">🎯 3 sinais de posicionamento claro:</p></div><div style="display:contents" dir="auto"><ol type="1" id="80921110-1d0c-4e0b-9089-0fd9b567e184" class="numbered-list" start="1"><li>Quem você é</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="9b63920a-63e0-4fee-adb3-938edb443584" class="numbered-list" start="2"><li>Pra quem você fala</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="8145de7c-8703-4744-94e5-8fd37625459a" class="numbered-list" start="3"><li>Por que escolher você</li></ol></div><div style="display:contents" dir="auto"><p id="021fd7d4-01be-48ab-ba55-f88ddd59a877" class="">Se isso fez sentido, compartilha com alguém que vive se explicando.</p></div><div style="display:contents" dir="auto"><p id="7c31c766-d9cf-4efe-9be5-c7d0b27a0b4c" class="">#posicionamentoestratégico #negóciosreais #conteúdocomintenção #vocepode</p></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-8092-a349-ea186441968f" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="2f2cb023-eb3b-801e-8746-e396212f55c6" class="">Thumb do vídeo </h3></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-8051-b82a-f6a0470b53c2" class="">Adicione aqui a capa do vídeo com a headline</p></div><div style="display:contents" dir="auto"><hr id="2f2cb023-eb3b-80cb-ba4a-dd6f907ab4c7"/></div><div style="display:contents" dir="ltr"><figure id="2f2cb023-eb3b-80f1-aaec-ea9516518f04" class="image"><a href="https://www.notion.so"><img src="https://www.notion.so"/></a></figure></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-80e6-81f4-ee2864271002" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-805c-b76a-db52c81c32c9" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="2f2cb023-eb3b-80ee-8469-c2031360ccbb" class="">Avaliação - após a publicação</h3></div><div style="display:contents" dir="auto"><hr id="2f2cb023-eb3b-8056-b581-eeb491070fbd"/></div><div style="display:contents" dir="auto"><ul id="2f2cb023-eb3b-80dd-a053-e58932b83c75" class="toggle"><li><details open=""><summary>Como analisar</summary><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-8091-8d3a-def8dc787d38" class=""><strong>O que foi Bom: </strong>Após analisar as métricas da publicação, descreva aqui o que você considera que foi positivo nessa publicação. Você pode descrever tema, alguma frase de impacto, algo que chamou atenção do publico, se foi o design que impactou positivamente, horário da publicação. Enfim, tudo que você considerou que foi positivo<br/><br/><strong>O que foi ruim:</strong> Aqui você deve descrever os pontos que não foram bons ou que não deram certo nesta publicação. Um tema que não chamou atenção, frases que não converteram bem, o público ficou confuso, o design não estava bem elaborado, o horário de publicação não foi bom, o engajamento foi fraco com a pergunta feita no post. Tudo que não  deu certo e você precisa melhorar ou evitar em próximos posts.<br/></p></div></details></li></ul></div><div style="display:contents" dir="auto"><div id="2f2cb023-eb3b-80e7-a37a-dd4fca9c7527" class="column-list"><div style="display:contents" dir="auto"><div id="2f2cb023-eb3b-8068-b7c3-d0dcf14c013d" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="2f2cb023-eb3b-80d5-9ca2-f2ed45c45d2f"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/emoji_blue.svg"/></div><div style="width:100%"><strong>O que foi bom</strong><div style="display:contents" dir="auto"><hr id="2f2cb023-eb3b-803e-a994-c42a6d125ab8"/></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-8062-8336-e776f3ce7dd4" class="">Escreva aqui</p></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="2f2cb023-eb3b-80d0-8d7a-f06914e95c99" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="2f2cb023-eb3b-80b1-8a97-d2bde724975d"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/emoji-disappointed_blue.svg"/></div><div style="width:100%"><strong>O que foi ruim</strong><div style="display:contents" dir="auto"><hr id="2f2cb023-eb3b-8049-a28f-f0baa3744a92"/></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-801c-ab70-f4ccbe0c1e44" class="">Escreva aqui</p></div></div></figure></div></div></div></div></div><div style="display:contents" dir="auto"><h3 id="2f2cb023-eb3b-806c-b307-f42848c6f5d2" class=""><strong>Dicas para o Formato</strong></h3></div><div style="display:contents" dir="auto"><hr id="2f2cb023-eb3b-807a-b7bb-ef9b4f97d673"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="2f2cb023-eb3b-80de-8ff2-c063e8c18e89"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/light-bulb_blue.svg"/></div><div style="width:100%"><strong>Autenticidade</strong>: Mostre sua personalidade ou a essência da marca de forma genuína.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="2f2cb023-eb3b-8050-b6e5-dae7ba4c9a97"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/light-bulb_blue.svg"/></div><div style="width:100%"><strong>Qualidade Visual e Áudio</strong>: Priorize boa iluminação, som claro e uma edição limpa.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="2f2cb023-eb3b-8044-b3e8-e3361db042cf"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/light-bulb_blue.svg"/></div><div style="width:100%"><strong>Engajamento</strong>: Encoraje interações fazendo perguntas ou propondo desafios.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="2f2cb023-eb3b-80c7-98de-c056b7237450"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/light-bulb_blue.svg"/></div><div style="width:100%"><strong>Teste e Aprenda</strong>: Experimente diferentes abordagens e monitore o desempenho para ajustar sua estratégia conforme necessário.</div></figure></div><div style="display:contents" dir="auto"><hr id="2f2cb023-eb3b-80be-a350-f79a4962185b"/></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-809c-a9b7-e16a2d48f7fb" class="">
+</p></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-8095-a5b7-e50c176be6e1" class=""><strong>Referências</strong></p></div><div style="display:contents" dir="auto"><p id="2f2cb023-eb3b-802e-a8c5-e4694c1a7fe4" class="">Coloque aqui os links de referencias que você usou para fazer o vídeo.</p></div><div style="display:contents" dir="auto"><hr id="2f2cb023-eb3b-80e9-97bc-de86bf0cae6a"/></div><div style="display:contents" dir="auto"><ul id="2f2cb023-eb3b-80fc-a8c7-e670e78be653" class="bulleted-list"><li style="list-style-type:disc">link com marcador</li></ul></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

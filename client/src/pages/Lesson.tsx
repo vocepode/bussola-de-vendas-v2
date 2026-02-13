@@ -1,3 +1,5 @@
+"use client";
+
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,18 +8,17 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { trpc } from "@/lib/trpc";
+import { NotionBlocksRenderer } from "@/components/notion/NotionBlocksRenderer";
 import { 
-  ArrowLeft, CheckCircle2, Loader2, Send, FileUp, AlertCircle 
+  ArrowLeft, CheckCircle2, Loader2, Send, FileUp 
 } from "lucide-react";
-import { Link, useParams, useLocation } from "wouter";
+import Link from "next/link";
 import { getLoginUrl } from "@/const";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export default function Lesson() {
-  const { id } = useParams<{ id: string }>();
-  const [, setLocation] = useLocation();
-  const { isAuthenticated, loading: authLoading, user } = useAuth();
+export default function Lesson({ id }: { id: string }) {
+  const { isAuthenticated, loading: authLoading } = useAuth();
   const lessonId = parseInt(id || "0");
 
   const [answer, setAnswer] = useState("");
@@ -27,11 +28,6 @@ export default function Lesson() {
   const { data: lesson, isLoading: lessonLoading } = trpc.lessons.getById.useQuery(
     { lessonId },
     { enabled: lessonId > 0 }
-  );
-
-  const { data: module } = trpc.modules.getBySlug.useQuery(
-    { slug: "" }, // Will need to get module from lesson
-    { enabled: false }
   );
 
   const { data: exercises } = trpc.exercises.listByLesson.useQuery(
@@ -135,6 +131,8 @@ export default function Lesson() {
   }
 
   const isCompleted = lessonProgress?.status === "completed";
+  const contentBlocks = (lesson as any)?.contentBlocks;
+  const hasBlocks = Array.isArray(contentBlocks) && contentBlocks.length > 0;
 
   return (
     <div className="min-h-screen bg-background">
@@ -184,10 +182,16 @@ export default function Lesson() {
         )}
 
         {/* Text Content */}
-        {lesson.content && lesson.contentType === "text" && (
+        {lesson.contentType === "text" && (hasBlocks || lesson.content) && (
           <Card>
-            <CardContent className="prose prose-slate max-w-none pt-6">
-              <div dangerouslySetInnerHTML={{ __html: lesson.content }} />
+            <CardContent className="pt-6">
+              {hasBlocks ? (
+                <NotionBlocksRenderer blocks={contentBlocks} />
+              ) : lesson.content ? (
+                <div className="prose prose-slate max-w-none">
+                  <div dangerouslySetInnerHTML={{ __html: lesson.content }} />
+                </div>
+              ) : null}
             </CardContent>
           </Card>
         )}
@@ -200,12 +204,23 @@ export default function Lesson() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {JSON.parse(lesson.content).items?.map((item: string, index: number) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-muted-foreground" />
-                    <span>{item}</span>
-                  </div>
-                ))}
+                {(() => {
+                  try {
+                    const parsed = JSON.parse(lesson.content ?? "{}") as { items?: string[] };
+                    return (parsed.items ?? []).map((item: string, index: number) => (
+                      <div key={index} className="flex items-center gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-muted-foreground" />
+                        <span>{item}</span>
+                      </div>
+                    ));
+                  } catch {
+                    return (
+                      <div className="text-sm text-muted-foreground">
+                        Checklist em formato inválido.
+                      </div>
+                    );
+                  }
+                })()}
               </div>
             </CardContent>
           </Card>

@@ -1,28 +1,32 @@
-import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 import type { User } from "../../drizzle/schema";
-import { sdk } from "./sdk";
+import { COOKIE_NAME } from "@shared/const";
+import { parse as parseCookieHeader } from "cookie";
+import * as db from "../db";
 
 export type TrpcContext = {
-  req: CreateExpressContextOptions["req"];
-  res: CreateExpressContextOptions["res"];
+  req: Request;
   user: User | null;
 };
 
 export async function createContext(
-  opts: CreateExpressContextOptions
+  opts: { req: Request }
 ): Promise<TrpcContext> {
-  let user: User | null = null;
-
-  try {
-    user = await sdk.authenticateRequest(opts.req);
-  } catch (error) {
-    // Authentication is optional for public procedures.
-    user = null;
-  }
+  const cookieHeader = opts.req.headers.get("cookie") ?? undefined;
+  const cookies = cookieHeader ? parseCookieHeader(cookieHeader) : {};
+  const token = cookies[COOKIE_NAME];
+  const user = await (async () => {
+    if (!token) return null;
+    try {
+      return await db.getUserBySessionToken(token);
+    } catch (error) {
+      // Se o banco estiver temporariamente indisponível, não derruba o app inteiro com 500 em /auth.me.
+      console.warn("[auth] Falha ao resolver sessão:", error);
+      return null;
+    }
+  })();
 
   return {
     req: opts.req,
-    res: opts.res,
     user,
   };
 }

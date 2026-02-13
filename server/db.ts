@@ -1,98 +1,137 @@
-import { eq, and, desc, asc, isNull } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
+import { eq, and, desc, asc, isNull, inArray } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+import { setDefaultResultOrder, lookup } from "node:dns/promises";
+import { isIP } from "node:net";
 import { 
-  InsertUser, users, modules, lessons, exercises, submissions, 
+  InsertUser, users, sessions, modules, sections, lessons, lessonUserState, exercises, submissions, 
   lessonProgress, moduleProgress, badges, userBadges, resources,
-  Module, Lesson, Exercise, Submission, ModuleProgress, LessonProgress,
+  Module, Section, Lesson, LessonUserState, Exercise, Submission, ModuleProgress, LessonProgress,
   contentIdeas, contentScripts, ContentIdea, ContentScript, InsertContentIdea, InsertContentScript
 } from "../drizzle/schema";
-import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
+let _sql: postgres.Sql | null = null;
+let _dnsOrderConfigured = false;
+
+function ensureDnsIpv4First() {
+  if (_dnsOrderConfigured) return;
+  _dnsOrderConfigured = true;
+  // Em algumas redes, o DNS retorna IPv6 primeiro e a conexão com o Supabase pode falhar (ECONNREFUSED).
+  // Isso força o Node a preferir IPv4 quando ambos existirem.
+  try {
+    setDefaultResultOrder("ipv4first");
+  } catch {
+    // Ignora em runtimes que não suportam.
+  }
+}
+
+/** Extrai host e port da URL (tudo após o último @ até a primeira / ou ?). */
+function extractHostFromUrl(databaseUrl: string): { host: string; port: string } | null {
+  const at = databaseUrl.lastIndexOf("@");
+  if (at === -1) return null;
+  const afterAt = databaseUrl.slice(at + 1);
+  const m = afterAt.match(/^([^:\s]+):(\d+)/);
+  if (!m) return null;
+  return { host: m[1].trim(), port: m[2] };
+}
+
+/** Substitui o host na URL pelo IP IPv4 resolvido (evita ECONNREFUSED em IPv6). */
+async function databaseUrlWithIpv4(databaseUrl: string): Promise<string> {
+  const extracted = extractHostFromUrl(databaseUrl);
+  if (!extracted || !extracted.host) {
+    console.warn("[db] Não foi possível extrair host da DATABASE_URL (formato esperado: ...@host:port/...)");
+    return databaseUrl;
+  }
+  if (isIP(extracted.host) !== 0) return databaseUrl;
+  try {
+    const { address } = await lookup(extracted.host, { family: 4 });
+    const safeHost = extracted.host.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return databaseUrl.replace(new RegExp(`@${safeHost}:${extracted.port}`, "g"), `@${address}:${extracted.port}`);
+  } catch (e) {
+    console.warn("[db] Resolução IPv4 falhou para", extracted.host, "-", (e as Error).message);
+    return databaseUrl;
+  }
+}
 
 export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
-    try {
-      _db = drizzle(process.env.DATABASE_URL);
-    } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
-      _db = null;
-    }
+  if (_db) return _db;
+  const databaseUrl = process.env.DATABASE_URL;
+  if (!databaseUrl) return null;
+
+  try {
+    ensureDnsIpv4First();
+    const resolvedUrl = await databaseUrlWithIpv4(databaseUrl);
+    _sql = postgres(resolvedUrl, {
+      prepare: false,
+    });
+    _db = drizzle(_sql);
+  } catch (error) {
+    console.warn("[Database] Failed to connect:", error);
+    _db = null;
+    _sql = null;
   }
   return _db;
 }
 
 // ========== USER MANAGEMENT ==========
 
-export async function upsertUser(user: InsertUser): Promise<void> {
-  if (!user.openId) {
-    throw new Error("User openId is required for upsert");
-  }
-
+export async function createUser(user: InsertUser): Promise<number> {
   const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot upsert user: database not available");
-    return;
-  }
+  if (!db) throw new Error("Database not available");
 
-  try {
-    const values: InsertUser = {
-      openId: user.openId,
-    };
-    const updateSet: Record<string, unknown> = {};
-
-    const textFields = ["name", "email", "loginMethod"] as const;
-    type TextField = (typeof textFields)[number];
-
-    const assignNullable = (field: TextField) => {
-      const value = user[field];
-      if (value === undefined) return;
-      const normalized = value ?? null;
-      values[field] = normalized;
-      updateSet[field] = normalized;
-    };
-
-    textFields.forEach(assignNullable);
-
-    if (user.lastSignedIn !== undefined) {
-      values.lastSignedIn = user.lastSignedIn;
-      updateSet.lastSignedIn = user.lastSignedIn;
-    }
-    if (user.role !== undefined) {
-      values.role = user.role;
-      updateSet.role = user.role;
-    } else if (user.openId === ENV.ownerOpenId) {
-      values.role = 'admin';
-      updateSet.role = 'admin';
-    }
-
-    if (!values.lastSignedIn) {
-      values.lastSignedIn = new Date();
-    }
-
-    if (Object.keys(updateSet).length === 0) {
-      updateSet.lastSignedIn = new Date();
-    }
-
-    await db.insert(users).values(values).onDuplicateKeyUpdate({
-      set: updateSet,
-    });
-  } catch (error) {
-    console.error("[Database] Failed to upsert user:", error);
-    throw error;
-  }
+  const [row] = await db
+    .insert(users)
+    .values({ ...user, updatedAt: new Date(), lastSignedIn: new Date() })
+    .returning({ id: users.id });
+  if (!row) throw new Error("Failed to create user");
+  return row.id;
 }
 
-export async function getUserByOpenId(openId: string) {
+export async function getUserByEmail(email: string) {
   const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get user: database not available");
-    return undefined;
-  }
+  if (!db) return undefined;
+  const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  return result[0];
+}
 
-  const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
+export async function getUserById(userId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+  const result = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+  return result[0];
+}
 
-  return result.length > 0 ? result[0] : undefined;
+export async function createSession(data: {
+  userId: number;
+  token: string;
+  expiresAt: Date;
+}) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.insert(sessions).values(data);
+}
+
+export async function deleteSession(token: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(sessions).where(eq(sessions.token, token));
+}
+
+export async function getUserBySessionToken(token: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db
+    .select({ user: users, session: sessions })
+    .from(sessions)
+    .innerJoin(users, eq(sessions.userId, users.id))
+    .where(eq(sessions.token, token))
+    .limit(1);
+
+  const row = result[0];
+  if (!row) return null;
+  if (row.session.expiresAt.getTime() < Date.now()) return null;
+  return row.user;
 }
 
 // ========== MODULES ==========
@@ -112,6 +151,46 @@ export async function getModuleBySlug(slug: string): Promise<Module | undefined>
   return result[0];
 }
 
+/** Cria o módulo se não existir; retorna o módulo (existente ou recém-criado). */
+export async function ensureModule(params: {
+  slug: string;
+  title: string;
+  orderIndex: number;
+  description?: string | null;
+}): Promise<Module> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const existing = await getModuleBySlug(params.slug);
+  if (existing) return existing;
+
+  const [row] = await db
+    .insert(modules)
+    .values({
+      slug: params.slug,
+      title: params.title,
+      description: params.description ?? null,
+      orderIndex: params.orderIndex,
+      isActive: true,
+    })
+    .returning();
+  if (!row) throw new Error("Failed to create module");
+  return row as Module;
+}
+
+// ========== SECTIONS ==========
+
+export async function getSectionsByModuleId(moduleId: number): Promise<Section[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return await db
+    .select()
+    .from(sections)
+    .where(eq(sections.moduleId, moduleId))
+    .orderBy(asc(sections.orderIndex), asc(sections.id));
+}
+
 // ========== LESSONS ==========
 
 export async function getLessonsByModuleId(moduleId: number): Promise<Lesson[]> {
@@ -123,12 +202,221 @@ export async function getLessonsByModuleId(moduleId: number): Promise<Lesson[]> 
     .orderBy(asc(lessons.orderIndex));
 }
 
+export async function ensureWorkspaceLessons(params: {
+  moduleId: number;
+  lessons: Array<{
+    slug: string;
+    title: string;
+    orderIndex: number;
+    description?: string | null;
+  }>;
+}): Promise<Lesson[]> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const existing = await db.select().from(lessons).where(eq(lessons.moduleId, params.moduleId));
+  const existingBySlug = new Map(existing.map((l) => [l.slug, l]));
+
+  const toInsert = params.lessons.filter((l) => !existingBySlug.has(l.slug));
+  if (toInsert.length) {
+    await db.insert(lessons).values(
+      toInsert.map((l) => ({
+        moduleId: params.moduleId,
+        sectionId: null,
+        slug: l.slug,
+        title: l.title,
+        description: l.description ?? null,
+        contentType: "exercise" as const,
+        content: null,
+        contentHtmlRaw: null,
+        contentBlocks: null,
+        videoUrl: null,
+        orderIndex: l.orderIndex,
+        durationMinutes: null,
+        isActive: true,
+      }))
+    );
+  }
+
+  // Retorna a lista atual (inclui as recém-criadas)
+  return await getLessonsByModuleId(params.moduleId);
+}
+
+export async function getLessonsByModuleIdForTree(moduleId: number): Promise<Lesson[]> {
+  const db = await getDb();
+  if (!db) return [];
+
+  return await db
+    .select()
+    .from(lessons)
+    .where(and(eq(lessons.moduleId, moduleId), eq(lessons.isActive, true)))
+    .orderBy(asc(lessons.sectionId), asc(lessons.orderIndex), asc(lessons.id));
+}
+
 export async function getLessonById(lessonId: number): Promise<Lesson | undefined> {
   const db = await getDb();
   if (!db) return undefined;
   
   const result = await db.select().from(lessons).where(eq(lessons.id, lessonId)).limit(1);
   return result[0];
+}
+
+// ========== LESSON USER STATE (draft/completed) ==========
+
+export async function getLessonUserState(userId: number, lessonId: number): Promise<LessonUserState | null> {
+  const db = await getDb();
+  if (!db) return null;
+
+  const result = await db
+    .select()
+    .from(lessonUserState)
+    .where(and(eq(lessonUserState.userId, userId), eq(lessonUserState.lessonId, lessonId)))
+    .limit(1);
+  return result[0] ?? null;
+}
+
+export async function upsertLessonUserDraft(params: {
+  userId: number;
+  lessonId: number;
+  patch: Record<string, unknown>;
+}): Promise<{ status: "draft" | "completed"; data: Record<string, unknown>; updatedAt: Date }> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const existing = await getLessonUserState(params.userId, params.lessonId);
+  const nextData = {
+    ...(existing?.data ?? {}),
+    ...(params.patch ?? {}),
+  };
+
+  if (!existing) {
+    const [row] = await db
+      .insert(lessonUserState)
+      .values({
+        userId: params.userId,
+        lessonId: params.lessonId,
+        data: nextData,
+        status: "draft",
+        updatedAt: new Date(),
+      })
+      .returning({
+        status: lessonUserState.status,
+        data: lessonUserState.data,
+        updatedAt: lessonUserState.updatedAt,
+      });
+    if (!row) throw new Error("Failed to create lesson user state");
+    return row as any;
+  }
+
+  const [row] = await db
+    .update(lessonUserState)
+    .set({
+      data: nextData,
+      status: "draft",
+      updatedAt: new Date(),
+    })
+    .where(eq(lessonUserState.id, existing.id))
+    .returning({
+      status: lessonUserState.status,
+      data: lessonUserState.data,
+      updatedAt: lessonUserState.updatedAt,
+    });
+  if (!row) throw new Error("Failed to update lesson user state");
+  return row as any;
+}
+
+export async function completeLessonUserState(params: { userId: number; lessonId: number }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const [row] = await db
+    .insert(lessonUserState)
+    .values({
+      userId: params.userId,
+      lessonId: params.lessonId,
+      data: {},
+      status: "completed",
+      updatedAt: new Date(),
+    })
+    .onConflictDoUpdate({
+      target: [lessonUserState.userId, lessonUserState.lessonId],
+      set: { status: "completed", updatedAt: new Date() },
+    })
+    .returning({
+      status: lessonUserState.status,
+      updatedAt: lessonUserState.updatedAt,
+    });
+
+  if (!row) throw new Error("Failed to complete lesson user state");
+  return row;
+}
+
+export async function resetLessonUserState(params: { userId: number; lessonId: number }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const [row] = await db
+    .insert(lessonUserState)
+    .values({
+      userId: params.userId,
+      lessonId: params.lessonId,
+      data: {},
+      status: "draft",
+      updatedAt: new Date(),
+    })
+    .onConflictDoUpdate({
+      target: [lessonUserState.userId, lessonUserState.lessonId],
+      set: { data: {}, status: "draft", updatedAt: new Date() },
+    })
+    .returning({
+      status: lessonUserState.status,
+      updatedAt: lessonUserState.updatedAt,
+    });
+
+  if (!row) throw new Error("Failed to reset lesson user state");
+  return row;
+}
+
+/** Progresso do workspace: conta quantas lições do módulo estão com status "completed" em lessonUserState. */
+export async function getWorkspaceProgressByModule(
+  userId: number,
+  moduleId: number
+): Promise<{ completed: number; total: number; percentage: number }> {
+  const db = await getDb();
+  if (!db) return { completed: 0, total: 0, percentage: 0 };
+
+  const moduleLessons = await getLessonsByModuleId(moduleId);
+  const total = moduleLessons.length;
+  if (total === 0) return { completed: 0, total: 0, percentage: 0 };
+
+  const completedRows = await db
+    .select({ lessonId: lessonUserState.lessonId })
+    .from(lessonUserState)
+    .where(
+      and(
+        eq(lessonUserState.userId, userId),
+        eq(lessonUserState.status, "completed"),
+        inArray(lessonUserState.lessonId, moduleLessons.map((l) => l.id))
+      )
+    );
+  const completed = completedRows.length;
+  const percentage = Math.round((completed / total) * 100);
+  return { completed, total, percentage };
+}
+
+/** Retorna todos os lessonUserState do usuário para as lições indicadas (para montar PDF de todas as etapas). */
+export async function getLessonUserStatesByLessonIds(
+  userId: number,
+  lessonIds: number[]
+): Promise<LessonUserState[]> {
+  const db = await getDb();
+  if (!db) return [];
+  if (lessonIds.length === 0) return [];
+
+  return await db
+    .select()
+    .from(lessonUserState)
+    .where(and(eq(lessonUserState.userId, userId), inArray(lessonUserState.lessonId, lessonIds)));
 }
 
 // ========== EXERCISES ==========
@@ -159,15 +447,19 @@ export async function createSubmission(data: {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   
-  const [result] = await db.insert(submissions).values({
-    userId: data.userId,
-    exerciseId: data.exerciseId,
-    answer: data.answer,
-    fileUrl: data.fileUrl,
-    status: "submitted",
-  });
-  
-  return result.insertId;
+  const [row] = await db
+    .insert(submissions)
+    .values({
+      userId: data.userId,
+      exerciseId: data.exerciseId,
+      answer: data.answer,
+      fileUrl: data.fileUrl,
+      status: "submitted",
+    })
+    .returning({ id: submissions.id });
+
+  if (!row) throw new Error("Failed to create submission");
+  return row.id;
 }
 
 export async function getUserSubmissions(userId: number): Promise<Submission[]> {
@@ -368,8 +660,15 @@ export async function createContentIdea(idea: InsertContentIdea) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   
-  const [result] = await db.insert(contentIdeas).values(idea);
-  return result.insertId;
+  const [row] = await db
+    .insert(contentIdeas)
+    .values({
+      ...idea,
+      updatedAt: new Date(),
+    })
+    .returning({ id: contentIdeas.id });
+  if (!row) throw new Error("Failed to create content idea");
+  return row.id;
 }
 
 /**
@@ -418,7 +717,7 @@ export async function updateContentIdea(id: number, userId: number, data: Partia
   
   await db
     .update(contentIdeas)
-    .set(data)
+    .set({ ...data, updatedAt: new Date() })
     .where(and(eq(contentIdeas.id, id), eq(contentIdeas.userId, userId)));
 }
 
@@ -429,8 +728,15 @@ export async function createContentScript(script: InsertContentScript) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   
-  const [result] = await db.insert(contentScripts).values(script);
-  return result.insertId;
+  const [row] = await db
+    .insert(contentScripts)
+    .values({
+      ...script,
+      updatedAt: new Date(),
+    })
+    .returning({ id: contentScripts.id });
+  if (!row) throw new Error("Failed to create content script");
+  return row.id;
 }
 
 /**
@@ -461,7 +767,7 @@ export async function updateContentScript(id: number, userId: number, data: Part
   
   await db
     .update(contentScripts)
-    .set(data)
+    .set({ ...data, updatedAt: new Date() })
     .where(and(eq(contentScripts.id, id), eq(contentScripts.userId, userId)));
 }
 

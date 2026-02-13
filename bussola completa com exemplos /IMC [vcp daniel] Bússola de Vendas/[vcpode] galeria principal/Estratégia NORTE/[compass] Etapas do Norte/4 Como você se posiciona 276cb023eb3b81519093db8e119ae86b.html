@@ -1,0 +1,722 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>4. Como você se posiciona?</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-8151-9093-db8e119ae86b" class="page sans"><header><img class="page-cover-image" src="4%20Como%20voc%C3%AA%20se%20posiciona/27.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://www.notion.so/icons/map-pin-alternate_blue.svg"/></div><h1 class="page-title" dir="auto">4. Como você se posiciona?</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-8178-b7c8-f7ec9aad783f" class="quote-large">Vamos mergulhar mais fundo no seu negócio e descobrir como você quer ser percebido pelos seus clientes e confrontar esse desejo com a realidade atual. Queremos descobrir também o que torna sua empresa única, o que te diferencia dos demais e que tipo de negócio você quer ter.</blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8182-8819-f138cba96966" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-819d-8623-f17ff7f86606" class=""><mark class="highlight-blue">Assista às aulas:</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ea-82d3-fccba76766d7"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-816c-b5b7-e1684072bdb2" class="">Para concluir essa etapa você precisa assistir as aulas abaixo.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8197-ba80-e98c8051b344"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8117-82f7-f8ec5c8ab024" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81b2-80ec-e5718152f7eb" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8114-89b4-cc1db1b326ec"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula “Laddering”</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-817b-ab1b-dbba1c685a48"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8198-a0d9-d2682be7dda2"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/RO9x5a6M7P" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/RO9x5a6M7P</div></div></a></figure></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81ed-b073-d7add2e7f7b5" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-812f-87e9-e47d1bca5de1"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula “Proposta de Valor”</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8178-bd82-e3d11ccfd86f"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81b1-b071-dab0645be0a1"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/K4kzYjaZOY" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/K4kzYjaZOY</div></div></a></figure></div></div></figure></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8149-aee8-ebdb84b47ea4"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81de-b443-d37f78ae3195" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8139-915d-c922c63f3d21"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%"><strong>Conceitos importantes</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-819d-8aff-d971ad89d519"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-811a-bb1f-e72862c5ffbd" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-814d-b81e-da4778ce1b86" style="width:100%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ad-8906-e624c9caecbd" class="toggle"><li><details open=""><summary><strong>Atributos</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817f-8884-d3348b14a756" class="">São as características tangíveis ou intangíveis de um produto ou serviço. No Laddering, começamos identificando esses atributos para entender o que o produto oferece fisicamente ou em termos de funcionalidade. Por exemplo, um lanche saudável pode ter atributos como &quot;sem glúten&quot; e &quot;sem lactose”.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8104-9d23-eb276785785a" class="toggle"><li><details open=""><summary><strong>Benefícios emocionais</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81b8-9db4-c43e618debd3" class="">São as experiências emocionais ou psicológicas que os consumidores obtêm ao usar o produto ou serviço. O Laddering então explora como os benefícios funcionais afetam emocionalmente os consumidores. Para o lanche saudável, os benefícios emocionais podem ser &quot;sentir-se bem com as escolhas alimentares&quot; e &quot;ter paz de espírito sabendo que está consumindo alimentos saudáveis&quot;.</p></div></details></li></ul></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8196-b26f-ca4be04d5b83" style="width:100%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81d1-96b1-fc409d718d7a" class="toggle"><li><details open=""><summary><strong>Benefícios funcionais</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e2-bde4-d55f1aa3578c" class="">Refere-se às vantagens práticas ou utilitárias que os atributos do produto proporcionam ao consumidor. O Laddering avança para conectar os atributos de marca aos benefícios funcionais que eles entregam. No exemplo do lanche saudável, os benefícios funcionais podem incluir &quot;facilita a digestão&quot; e &quot;reduz o risco de reações alérgicas&quot;.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8158-b150-cd143e33ecbc" class="toggle"><li><details open=""><summary><strong>Essência</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8137-89c8-f1481c89ea28" class="">O valor fundamental e o significado subjacente à marca que conecta emocionalmente com o público. A essência da marca é o núcleo da identidade da marca, refletindo sua missão, visão e valores, e é o que a diferencia no mercado. A essência &quot;Viver de Forma Saudável e Consciente&quot; reflete o compromisso da marca de alimentação saudável em apoiar os consumidores em sua jornada para uma vida mais saudável, equilibrada e plena, alinhando-se com os valores essenciais de saúde, bem-estar e consciência ambiental e nutricional.</p></div></details></li></ul></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8120-839f-f84fc50cf959"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8190-af9e-cb134af93a1a" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8175-8d0c-d9ff493bb2aa" style="width:200.00000000000009%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81fd-a7a3-f11c4186cb82" class="toggle"><li><details open=""><summary><strong>Posicionamento</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8163-8d29-de65c77b1975" class="">É a maneira como uma marca, produto ou serviço é percebido em relação aos seus concorrentes no mercado. É uma estratégia intencional para destacar o que torna uma oferta única e atrativa para um segmento particular de mercado. O posicionamento é frequentemente expresso através de declarações de posicionamento, que articulam o valor único e diferenciado da oferta</p></div></details></li></ul></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-816d-b3ae-e0889162949f" style="width:100.00000000000003%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8158-b288-dce87b90e8a3" class="toggle"><li><details open=""><summary><strong>Proposta de valor</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a1-bacf-cd1a020dd4de" class="">A <strong>proposição de valor</strong> de um produto, ou seja, o diferencial único que a empresa oferece para resolver uma necessidade dos compradores-alvo, em relação aos seus competidores (ponto de diferença);</p></div></details></li></ul></div></div></div></div></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-818d-80cb-ccc3c423ffe4"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81fe-8908-e63c1c42ff82" class="toggle"><li><details open=""><summary><strong>Exemplo de posicionamento para você se inspirar</strong></summary><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81a8-ae6c-e0985c9dd0f0" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-812f-b793-c5909e275f44" style="width:200.00000000000009%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-815b-a1eb-e97dc3ecc6fb"><div style="font-size:1.5em"><span class="icon">✍🏽</span></div><div style="width:100%"><mark class="highlight-default"><strong>Exemplo da caneta BIC</strong></mark><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819a-9eb9-d29c5e12b373" class=""><mark class="highlight-default">A caneta onipresente, presente em todos os momentos da sua vida, da assinatura de um contrato importante à assinatura do seu casamento, que começou com uma cantada escrita em um guardanapo de bar. A caneta BIC é extraordinariamente barata e se orgulha de fazer parte da sua vida extraordinária.</mark></p></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81be-bf25-e6ca6619dd71" style="width:100.00000000000003%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8133-a2bc-c2957d632157"><div style="font-size:1.5em"><span class="icon">🖋️</span></div><div style="width:100%"><strong>Exemplo da caneta Montblanc</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81cd-abf1-ffdcb7cc5973" class="">Para aqueles que desejam presentear pessoas únicas em momentos únicos, a Montblanc é a caneta certa para celebrar as conquistas da vida.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811e-9a90-f7b5aa37da59" class="">
+</p></div></div></figure></div></div></div></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-810e-a72e-d4246c751cd9" class="block-color-blue_background"> <strong>Análise: </strong></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-810f-a0ea-fccfe07a21b5" class="">A BIC escreve. A Montblanc celebra. A BIC está sempre presente. A Montblanc estreia na sua vida em um ponto de virada. As duas ficam na nossa cabeça e no nosso imaginário. São marcas da mesma categoria, mas com segmentações diferentes.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d4-9fc4-f725170f86e5"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e9-9e66-d69ee14c22b4" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-814b-afd2-c63723951341" class=""><strong>Abaixo você preencherá três quadros de atividades para que, ao final, saia com sua proposta de valor definida. Entre em cada um deles e faça as atividades propostas:</strong></p></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-81b4-9e96-cdc1b19185a8" class="collection-content"><h4 class="collection-title">[compass] norte/posicionamento</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Name</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th></tr></thead><tbody><tr id="276cb023-eb3b-8184-89cd-f749538c3575"><td class="cell-title"><a href="4%20Como%20voc%C3%AA%20se%20posiciona/%5Bcompass%5D%20norte%20posicionamento/1%20Laddering%20276cb023eb3b818489cdf749538c3575.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/stairs_blue.svg"/>1. Laddering</a></td><td class="cell-Gqd:"></td></tr><tr id="276cb023-eb3b-816d-9a6f-c3172a642161"><td class="cell-title"><a href="4%20Como%20voc%C3%AA%20se%20posiciona/%5Bcompass%5D%20norte%20posicionamento/2%20Reflex%C3%A3o%20sobre%20minha%20proposta%20de%20valor%20276cb023eb3b816d9a6fc3172a642161.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought_blue.svg"/>2. Reflexão sobre minha proposta de valor</a></td><td class="cell-Gqd:"></td></tr><tr id="276cb023-eb3b-81ce-8cdc-f4492cd57593"><td class="cell-title"><a href="4%20Como%20voc%C3%AA%20se%20posiciona/%5Bcompass%5D%20norte%20posicionamento/3%20Defini%C3%A7%C3%A3o%20da%20minha%20proposta%20de%20valor%20276cb023eb3b81ce8cdcf4492cd57593.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/hammer_blue.svg"/>3. Definição da minha proposta de valor</a></td><td class="cell-Gqd:"></td></tr><tr id="2cdcb023-eb3b-804e-bcb3-e6818b01e8b4"><td class="cell-title"><a href="4%20Como%20voc%C3%AA%20se%20posiciona/%5Bcompass%5D%20norte%20posicionamento/4%20Manifesto%20da%20Empresa%202cdcb023eb3b804ebcb3e6818b01e8b4.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/alert_blue.svg"/>4. Manifesto da Empresa</a></td><td class="cell-Gqd:"></td></tr><tr id="2e0cb023-eb3b-801e-b1e4-dbcde9cee9be"><td class="cell-title"><a href="4%20Como%20voc%C3%AA%20se%20posiciona/%5Bcompass%5D%20norte%20posicionamento/Princ%C3%ADpios%20da%20Voc%C3%AAPode%202e0cb023eb3b801eb1e4dbcde9cee9be.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/alert_blue.svg"/>Princípios da VocêPode</a></td><td class="cell-Gqd:"></td></tr><tr id="2cdcb023-eb3b-8065-afa1-e72863073389"><td class="cell-title"><a href="4%20Como%20voc%C3%AA%20se%20posiciona/%5Bcompass%5D%20norte%20posicionamento/Sem%20t%C3%ADtulo%202cdcb023eb3b8065afa1e72863073389.html">Sem título</a></td><td class="cell-Gqd:"></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81cc-a254-d948e1ffd83c"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8132-b3da-e14dc153ac16" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81b9-842b-eae70f0e3ca2" class="">
+</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81d5-bab7-e6b7ff998eb7" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81ea-8a0b-e26c93db7fc7" style="width:62.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8122-8b4a-d9e60dde207d" class=""><strong>Volte para a página anterior</strong></p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81ed-b1d9-ca6e863b186b" style="width:37.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81b4-a1fc-c6fc043a2f67" class=""><strong>Avance para a próxima página</strong></p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-816b-af25-f67842bf04bb"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81fe-9f06-fe99a637caec" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-815e-b86c-fdc12fd97868" style="width:68.75%" class="column"></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-810c-806a-dc77250c7c0c" style="width:31.250000000000007%" class="column"></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f4-9970-e4cbe10b9ae5"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-818c-b664-eb7b7b08fa8c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d8-b5be-f6c80b04c389" class="">
+</p></div><div style="display:contents" dir="auto"><div style="display:contents" dir="auto"><div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8151-8208-d3a18be30a77"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8129-aab5-f16e8a294db2" class="">Bússola de Vendas desenvolvido por <strong><a href="https://www.notion.so/f8156e7b171a4df68144f6293ae02538?pvs=21">Consultoria Inception</a></strong> para VocêPode Mkt Digital</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f6-bdc6-f5ec39f5a795" class=""><br/>Copyright © Castro Américo Digital – Todos os direitos reservados.<br/>É proibida a reprodução total ou parcial dos conteúdos dessa ferramenta.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8184-a344-d6b2fc8359af" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8117-a316-ccb13abc34ff" class=""><a href="http://vocepodevendermais.com.br">Site</a> l <a href="https://hotmart.com/pt-br/club/vocepode-vendermais/products/3939809">Plataforma de Alunos</a> | <a href="https://www.instagram.com/vocepode.vendermais">Instagram</a></p></div></div></div></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

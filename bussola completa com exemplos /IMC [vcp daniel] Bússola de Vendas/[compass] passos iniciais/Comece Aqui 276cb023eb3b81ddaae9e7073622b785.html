@@ -1,0 +1,733 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Comece Aqui </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-81dd-aae9-e7073622b785" class="page sans"><header><img class="page-cover-image" src="Comece%20Aqui/9.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://www.notion.so/icons/playback-play_blue.svg"/></div><h1 class="page-title" dir="auto">Comece Aqui </h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-8198-a5b7-db031165fdd9" class="quote-large">Aqui estão as principais informações que você precisa para dar os primeiros passos da sua jornada.</blockquote></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-81a6-867b-dcab257423d5" class=""><mark class="highlight-blue">Assista às aulas:</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8159-87be-c979a827f872"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ad-afbd-d5788eabc639" class="">Para concluir essa etapa você precisa assistir as aulas abaixo.</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81c6-9e70-e746efcc1438" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8109-9602-ff19ce59dbf4" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-815e-860c-f8ce9ebc2dec"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula “Informações importantes”</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8169-89f5-db35b7bd0e9b"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8197-ac40-d7a6913bc2ac"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/k45DoBjROl" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/k45DoBjROl</div></div></a></figure></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8119-bdff-c1632884935c" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81df-9c5c-cec855931fd7"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula “Comece por aqui”</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d3-b7ca-e870474b694b"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8128-85c3-d72dd8fa63da"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/m7YZvBrQO6" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/m7YZvBrQO6</div></div></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815b-b754-d0fc35ec9ba1" class="">
+</p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81fe-81d8-c363841c18cc"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8122-8359-eab8eefd9f7f" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81b3-b543-dab8333e8574" style="width:50.000000000000014%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81cd-9cc3-c064026deaf1"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula “Mapa da Jornada”</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-810e-9e12-e80227ba0dcb"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81fa-b387-d9ec008042dc"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/BeZ9Rvpb4w" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/BeZ9Rvpb4w</div></div></a></figure></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8195-9a8c-d4d4ae73ad2e" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8135-8a3f-f6bae668e68c"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula “Acesso à Bússola de Vendas”</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8138-825d-c2a4b6de224e"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8149-9a01-f8852dca1637"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/146a5vXbOd" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/146a5vXbOd</div></div></a></figure></div></div></figure></div></div></div></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8195-9237-ef04ff00b46f" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-81cf-9d7d-e3a9392d5613" class=""><mark class="highlight-blue"><strong>Como utilizar a Bússola de Vendas?</strong></mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81a6-9048-f1398be238e5"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c9-a28c-f60ff87a2095" class="">Para utilizar nosso sistema de implementação de forma completa, você precisa duplicar este template e compartilhar o acesso da sua cópia com o time da Você Pode+. Faça isso seguindo o passo a passo abaixo:</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-810a-a72a-ce80de68a113" class="">
+</p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8193-b2da-d8598eb6b344" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Criando minha conta no Notion</strong></summary><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8146-9a64-f3a3784c4180"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81b0-9d2d-e22b6783f956" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8155-a856-f11811562e65" style="width:43.75%" class="column"><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81b8-a816-ec1293799403" class="numbered-list" start="1"><li>Acesse o site de cadastro <a href="https://www.notion.so/signup">aqui</a>. Você verá essa página. Poderá escolher a forma de cadastro que desejar, mas sugerimos que faça a que está indicada na imagem ao lado (dentro do retângulo vermelho).</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8198-8362-d50d879ae711" class="numbered-list" start="2"><li>Digite seu e-mail e clique em continuar. </li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81eb-a7d1-ee58b188c9f8" class="numbered-list" start="3"><li>No campo seguinte insira uma senha e clique em continuar com senha</li></ol></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81e5-84aa-c99654557454" style="width:56.25%" class="column"><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8115-8086-f4683460e619" class="image"><a href="Comece%20Aqui/notion1.png"><img style="width:240px" src="Comece%20Aqui/notion1.png"/></a></figure></div></div></div></div></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81d7-bb07-c05847cd2c46" class="bulleted-list"><li style="list-style-type:disc">Após o cadastro, você pode acessar pelo navegador ou baixar o aplicativo no seu <a href="https://www.notion.so/pt-br/download">computador</a>.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-816c-baf7-cd7d87d510b4" class="bulleted-list"><li style="list-style-type:disc"><strong>Sugerimos</strong> que baixe o aplicativo de computador para ter mais praticidade e agilidade durante o uso.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81a2-ab5e-e538414bcf1b" class="bulleted-list"><li style="list-style-type:disc">Você receberá o link do template da mentoria na Hotmart.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81bf-b6d6-dd02b47d7a05" class="bulleted-list"><li style="list-style-type:disc">Duplique o template acessado para poder editá-lo. Siga as instruções a seguir para duplicar o template.&quot;</li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8173-8770-c444ae667040" class="">
+</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f9-9e67-c4af250c38d1"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8122-be8a-c9f6073e7791" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Como duplicar este template</strong></summary><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-817b-82ef-d99833e2d2c6" class="numbered-list" start="1"><li>Clicando no link do Notion você poderá ser direcionado para a página inicial do Notion da Mentoria. Basta clicar nele.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-810f-a242-de2896ebfe52" class="numbered-list" start="2"><li>Ao clicar no link do Notion, você encontrará a página do template. No canto superior à direita, o ícone com os 2 quadrados é a opção de <em><strong>“Duplicar”.</strong></em> <strong>Clique nele. </strong><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-818a-84b3-e841495a1cb4" class="image"><a href="Comece%20Aqui/Untitled.png"><img style="width:239px" src="Comece%20Aqui/Untitled.png"/></a></figure></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81bb-ac4d-ceda137f9d61" class="numbered-list" start="2"><li>Nesse momento poderão abrir 3 opções de tela: <div style="display:contents" dir="auto"><ol type="a" id="276cb023-eb3b-8173-93f5-d469919da190" class="numbered-list" start="1"><li>Fazer o “<em>Log in</em>” ou “<em>criar uma conta</em>”. <br/>Se você já usa o Notion, faça seu login, e se ainda não usa, crie a sua conta. </li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="276cb023-eb3b-8103-810f-c4d54d1d7474" class="numbered-list" start="2"><li>Caso já tenha feito o <em>log in</em> anteriormente <strong>e só possui 1 espaço de trabalho</strong> no Notion, ele irá ou <strong>duplicar automaticamente</strong> e você já estará com seu template <strong>pronto para receber suas alterações. </strong></li></ol></div><div style="display:contents" dir="auto"><ol type="a" id="276cb023-eb3b-8196-a6dc-e3184a31ff27" class="numbered-list" start="3"><li>Caso você tenha mais de uma área de trabalho no Notion ele irá perguntar para qual espaço de trabalho (<em><strong>”workspace”</strong></em>) você gostaria de duplicar. Clique no que deseja, e ele irá ser duplicado para o espaço escolhido. </li></ol></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81da-aab2-df9fb87b923d" class="numbered-list" start="3"><li><strong>Pronto!</strong> Você irá voltar para o template, mas dessa vez ele <strong>já faz parte da sua conta</strong> e está liberado para ser explorado e editado a vontade. Uma vez que você o duplica, ele será seu para sempre. </li></ol></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ed-b4ab-fd2049a941fa"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8117-92ba-d166327d4f2b" class="block-color-blue_background toggle"><li><details open=""><summary><strong>Como compartilhar este template</strong></summary><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-814d-8b63-e6920546d65e"/></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ab-9b63-c5d536288e78" class="numbered-list" start="1"><li>Com o seu novo template aberto na <a href="../../IMC%20%5Bvcp%20daniel%5D%20B%C3%BAssola%20de%20Vendas%20276cb023eb3b8008b6afc4579e66fae3.html">página inicial</a>, procure o botão <em><strong>“Compartilhar”</strong></em> no canto superior direito e clique nele.<br/><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81b7-b7cd-e0f3082a40c8" class="image"><a href="Comece%20Aqui/notion4.png"><img style="width:287px" src="Comece%20Aqui/notion4.png"/></a></figure></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81aa-af31-e50f2e1c5204" class="numbered-list" start="2"><li>Abrirá uma pequena janela com um espaço para inserir o e-mail.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81bb-91a9-cca22ba0cbe3" class="numbered-list" start="3"><li>Insira o e-mail <a href="mailto:suporte@vocepodevendermais.com.br">suporte@vocepodevendermais.com.br</a><br/><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8100-b041-f3e5905f832e" class="image"><a href="Comece%20Aqui/notion2.png"><img style="width:512px" src="Comece%20Aqui/notion2.png"/></a></figure></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-811c-832a-cc2a0c355e34" class="numbered-list" start="4"><li>Assim que você digitar o e-mail, dentro dessa mesma caixa de texto aparecerá as opções de liberação de acesso. Certifique-se de deixar em <em><strong>“Acesso completo”</strong></em>.<br/><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81ed-9b84-f7f842851df4" class="image"><a href="Comece%20Aqui/notion3.png"><img style="width:513px" src="Comece%20Aqui/notion3.png"/></a></figure></div></li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8152-8e24-f66950edfaac" class="numbered-list" start="5"><li>Agora clique no botão azul ao lado <em><strong>“Convidar”.</strong></em></li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e0-b715-fb26e804017a" class="">
+</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ba-a0fd-fe5d9298b552"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a6-994f-d08113abcb92" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8172-b1d1-fcf75358981b" class=""><mark class="highlight-blue">Legendas importantes</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8151-a485-fb89458077aa"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81be-9a17-c8529647e150" class="">Você vai encontrar estes ícones ao longo de todo este material. Veja abaixo quais são e o que eles significam. </p></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8175-b758-c97902c83545"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Prática, mão na massa, execução! </strong>Quando ver esse ícone, você precisará escrever algo, preencher alguma ferramenta ou responder perguntas. </div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81fc-8ba8-faa1c85662da"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Aula gravada</strong>. Você deverá assistir à aula referente a esta etapa para continuar. </div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-814e-b234-ffcec83369a4"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought-dialogue_blue.svg"/></div><div style="width:100%"><strong>Tutorial sobre como preencher a ferramenta.</strong> Caso esteja com dúvidas, esse vídeo vai te ajudar na execução da atividade na ferramenta.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81ac-a1d5-c1ce8ade99ad"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%"><strong>Conceitos importantes. </strong>Explicamos um pouco mais da parte teórica de determinado tema.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81fc-9074-d5c138515010"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/orbit_blue.svg"/></div><div style="width:100%"><strong>Meu negócio. </strong>Quando algum quadro for para ser respondido sobre seu negócio, as tabelas e as instruções terão esse símbolo.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81c9-bdf9-ee600b88ac7a"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/playback-next_blue.svg"/></div><div style="width:100%"><strong>Próximo passo. </strong>Você já completou a atividade, mas ainda precisa ficar de olho e completar a missão de fato.</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-816e-80a5-db2f19d95b5c"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/light-bulb_blue.svg"/></div><div style="width:100%"><strong>Dicas. </strong>Sempre que formos te dar uma dica, você verá este símbolo</div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81dd-9c6c-caf63704ec68"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/looped-square_blue.svg"/></div><div style="width:100%"><strong>Templates, para você estudar e servir de base. </strong>Não são conteúdos para você editar ou escrever em cima, mas para você usar como modelo em outras atividades.</div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8156-831e-f5c6a6dab799" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8176-b8cb-ddaf453a7fd2" class=""><mark class="highlight-blue">Comunidade de Alunos da Formação Compass</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8129-94a5-d46ff76d3ac9"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-811c-ab8a-feab852b055f"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-right-basic_blue.svg"/></div><div style="width:100%"><strong>Grupo de WhatsApp</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8151-8ef7-d57b5aba190c"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81fe-afa4-f4ebec3760d2" class="">Esta é nossa comunidade de alunos da Formação, onde você estará conectado com nossa equipe e outros alunos para trocar conhecimentos, tirar dúvidas e obter suporte.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8191-9442-c12e333f6ad9"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8104-a623-dcb4b2ccb1ba" class=""><strong>Como usar?</strong> </p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c5-aec6-cd2e9112644d" class="bulleted-list"><li style="list-style-type:disc">Basta ter o aplicativo em seu celular.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8148-bd70-f11f541c9852" class="bulleted-list"><li style="list-style-type:disc">Aqui está o <a href="https://chat.whatsapp.com/Hc73NuhdTZrCkB4EzUDCtR">link da Comunidade Formação Compass</a>. </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-813d-b63b-d4d4a8c02311" class="bulleted-list"><li style="list-style-type:disc">Clique no link acima e confirme sua entrada no grupo.</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817f-9dad-e9d6c6537b5b" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-81b6-ac60-c59d4c1f0d92" class=""><mark class="highlight-blue">FAQ e Suporte</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8107-8eb4-ff2a86dab868"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-811f-9202-e2321e3a476e" class="toggle"><li><details open=""><summary><strong>Por quanto tempo terei acesso as aulas e ao Notion?</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81b9-a7fa-e390f9f6743d" class="">Você terá acesso às aulas gravadas na plataforma da Hotmart por <strong>1 ano a partir da sua compra</strong>. Com relação ao template do Notion, assim que você duplicar para o seu espaço de trabalho no Notion, ele será seu e você terá acesso vitalício aos conteúdos que preencher. </p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81b9-b3a9-e6d32329f45d" class="">
+</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8176-83ac-e7a7fca62d6c"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81cb-b8ce-c0acf1d563e4" class="toggle"><li><details open=""><summary><strong>Tenho uma sugestão. Por onde posso enviar?</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815e-bab9-ef10ccfd5034" class="">Você pode relatar seu problema ou enviar sua sugestão para o e-mail do nosso suporte: <a href="mailto:suporte@vocepodevendermais.com.br">suporte@vocepodevendermais.com.br</a>. </p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8188-ba4a-e39bec0c3c07" class="">
+</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8133-b12f-ce9fc0ca2a40"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8145-8d36-e3c9a2b16fcf" class="toggle"><li><details open=""><summary><strong>Estou com problema de acesso nas plataformas ou Notion. Com quem posso resolver?</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8173-8e59-c11692bcff3c" class="">Você pode entrar em contato com o suporte através do e-mail <strong><a href="mailto:suporte@vocepodevendermais.com.br">suporte@vocepodevendermais.com.br</a></strong><strong> </strong>ou pelo nosso <a href="https://wa.me/5531991043073">Whatsapp</a>.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d4-aa3f-e1a9226807c0" class="">Nosso suporte funciona de segunda à sexta, das 09h às 18h, exceto feriados. A estimativa de resposta é de até 24h.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81cc-934b-f0f3ace61427" class="">
+</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8145-accf-e5c89ebe3298"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8113-9ed2-eb45acc6461a" class="toggle"><li><details open=""><summary><strong>Tive um problema com meu Notion. Como posso duplicar ele novamente?</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-818b-8410-f3bf3391425a" class="">Caso vocês esteja participando da nossa formação , você tem acesso a ferramenta base no <strong>Módulo 2, na aula: Acesso à Bússola de Vendas”. </strong>Você pode acessar <a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/3939809/content/a4Rj8m634n">clicando aqui</a>. Lembrando que você já deve estar com seu acesso na nossa Plataforma de alunos para acessar</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811b-9fbf-cf5b2ae9a90b" class="">Se você é aluno da nossa mentoria individual, entre em contato com nosso suporte</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8101-80b0-c97267f39197"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c8-993a-e547d687d159" class="toggle"><li><details open=""><summary><strong>Tenho dúvidas quanto à metodologia ou conteúdo. Com quem converso?</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e1-bd54-e21af0a3a91b" class="">As dúvidas podem ser esclarecidas nas aulas ao vivo, comentários nas aulas na plataforma da Hotmart e com nosso suporte através do nosso e-mail <a href="mailto:suporte@vocepodevendermais.com.br">suporte@vocepodevendermais.com.br</a> ou <a href="https://wa.me/5531991043073">Whatsapp</a>.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8144-9de5-e56dbd938753" class="">Nosso suporte funciona de segunda à sexta, das 09h às 18h, exceto feriados. A estimativa de resposta é de até 24h.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811a-bc8c-e6d9de22c0e3" class="">
+</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8186-b68a-fc0cbe9958ba"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e8-8d6c-c3d7c5552a8b" class="toggle"><li><details open=""><summary><strong>Por quanto tempo funciona o Suporte?</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d3-be13-de3dcd11c40a" class="">O suporte estará disponível aos alunos durante o 1 ano.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8134-947f-d4c6d94f5317" class="">
+</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-817a-b732-d8920e6f2c5e"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8188-966a-c0ce080dfbcd" class="toggle"><li><details open=""><summary><strong>Quais serviços a Você Pode+ oferece que podem me ajudar?</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8138-8440-e3e39355ddda" class="">A VocêPode é uma empresa focada em marketing digital para negócios físicos. Utilizamos o método COMPASS, focado em estratégia, conteúdo e performance para desenvolver uma bússola personalizada para cada projeto, alcançando assim os resultados esperados.<br/>Nossos serviços são: Assessoria Mensal, Implementação, Consultoria, Mentoria Individual e Mentoria em grupo.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a8-bbd0-f3d7d5b7536d" class="">Entre em contato para outros serviços através do e-mail <a href="mailto:vocepode@vocepode.pro">vocepode@vocepode.pro</a>.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8194-89a1-dc00c6ab582d" class="">
+</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-814a-8c94-fba8dc673b98"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811a-8142-c26867f4b1bb" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8194-a9ab-ee6da7dbc263" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8138-bd9e-f2bef063f20a" class="block-color-default"><strong>Avance para a próxima página</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ba-85c5-cc688c7de059"/></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8154-b4b6-eca0d308defd"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8181-8bc2-c7877a93da18" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f5-9b1c-ca502fef62dd" class="">
+</p></div><div style="display:contents" dir="auto"><div style="display:contents" dir="auto"><div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8151-8208-d3a18be30a77"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8129-aab5-f16e8a294db2" class="">Bússola de Vendas desenvolvido por <strong><a href="https://www.notion.so/f8156e7b171a4df68144f6293ae02538?pvs=21">Consultoria Inception</a></strong> para VocêPode Mkt Digital</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f6-bdc6-f5ec39f5a795" class=""><br/>Copyright © Castro Américo Digital – Todos os direitos reservados.<br/>É proibida a reprodução total ou parcial dos conteúdos dessa ferramenta.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8184-a344-d6b2fc8359af" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8117-a316-ccb13abc34ff" class=""><a href="http://vocepodevendermais.com.br">Site</a> l <a href="https://hotmart.com/pt-br/club/vocepode-vendermais/products/3939809">Plataforma de Alunos</a> | <a href="https://www.instagram.com/vocepode.vendermais">Instagram</a></p></div></div></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-814a-be70-e256b1f9a418" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

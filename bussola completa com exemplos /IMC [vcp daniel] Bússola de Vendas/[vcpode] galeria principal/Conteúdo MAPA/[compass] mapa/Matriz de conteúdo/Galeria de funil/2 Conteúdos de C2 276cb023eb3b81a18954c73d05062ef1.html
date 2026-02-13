@@ -1,0 +1,717 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>2. Conteúdos de C2</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-81a1-8954-c73d05062ef1" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/gradebook_blue.svg"/></div><h1 class="page-title" dir="auto">2. Conteúdos de C2</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8139-84ce-d6d4c1f27fa0"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/light-bulb_blue.svg"/></div><div style="width:100%">O Conteúdo C2 <strong>é essencial para elevar a autoridade da marca e criar um relacionamento sólido com a audiência</strong>. Este conteúdo é projetado para <strong>aumentar a consciência sobre a solução oferecida, quebrar objeções de forma inteligente e demonstrar especificidade e intelectualidade</strong>. O foco está em criar um conteúdo viciante que mantenha a audiência engajada e ansiosa por mais.</div></figure></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81b3-8146-c34ead8071ce" class="block-color-purple"><mark class="highlight-blue">Quais conteúdos devem ser criados em C2</mark></h3></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81cb-8015-e3671076e3f4"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8131-837d-de1299445ae1" class=""><strong>O Conteúdo C2</strong> é uma ferramenta poderosa, <strong>essencial para marcas que buscam não apenas informar, mas também educar e construir uma base de seguidores leais e engajados</strong>. Ao implementar estrategicamente esse tipo de conteúdo, <strong>as marcas podem elevar sua autoridade no mercado, quebrar objeções de forma eficaz e guiar o público-alvo através da jornada de compra com confiança e credibilidade.</strong></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a1-824c-df720e3e6180" class=""><strong>Formatos:</strong></p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8145-9b18-fb18f7429266" class="bulleted-list"><li style="list-style-type:disc"><strong>Carrosséis:</strong> Recomendamos carrosséis de 7 a 10 telas no Instagram, com a primeira tela sendo uma capa atraente, a segunda uma contra capa com título diferente da capa, e a última tela um vídeo curto  ou motion com uma chamada de ação (CTA) poderosa. Os cards internos devem entregar conteúdo relevante e cumprir os objetivos estabelecidos, mantendo a audiência engajada até o final.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-812d-8a64-f02da68c88bb" class="bulleted-list"><li style="list-style-type:disc"><strong>Vídeos:</strong> Vídeos de 2 a 5 minutos devem ter uma capa que chame atenção, uma headline que desperte curiosidade e uma chamada forte nos primeiros 4 segundos. O conteúdo do vídeo deve ser informativo e relevante, elevando a expectativa do espectador até o final.</li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f1-a964-fb7b364d673c"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8188-9003-e4e8da2994f6" class=""><strong>Temas e Objetivos:</strong></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c2-877b-d3399616b64b" class="">O conteúdo deve abordar objeções comuns, demonstrar o produto ou serviço em ação, descrevendo seus atributos, benefícios funcionais e emocionais. O objetivo é trazer consciência e autoridade, mostrando ao público que ainda há muito a aprender.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819e-a5ae-e1dab35af393" class=""><strong>Chamadas de Ação (CTAs):</strong></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-812a-8185-f01a11a16d7b" class="">Priorizamos CTAs que incentivem ações de engajamento, como comentar, salvar ou compartilhar, além de ações que direcionam o público para inscrições em grupos especiais, listas VIP, brindes, cupons, etc. Essas ações visam aumentar a interação com a marca e aprofundar o relacionamento com o público.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81a1-8702-f28d12731c22"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8135-9553-c3f0e4c67f50" class="">Manter uma consistência na entrega do conteúdo C2 ajuda a estabelecer expectativas com a audiência e reforça a percepção da marca como uma autoridade confiável em seu nicho.</p></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81e7-8943-e25e049108d7"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/light-bulb_blue.svg"/></div><div style="width:100%">Para você entender melhor, deixamos algumas referências pra em <a href="../../../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Banco%20de%20exemplos/Exemplos%20de%20C2%20276cb023eb3b8131a1bdc6f197aa5b25.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/gradebook_blue.svg"/>Exemplos de C2</a> </div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81bf-a5fe-c2cd6cbce5e3"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8147-b9b3-cb8be39ea127" class=""><mark class="highlight-blue">Aprenda a fazer o exercício!</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8117-b6a3-cef553e6d891"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-blue_background">Se estiver com dúvidas, veja o vídeo abaixo para ver mais detalhes de como preencher essa página:</mark></summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-810c-9c35-fc178a32e0ed"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought-dialogue_blue.svg"/></div><div style="width:100%"><strong>Tutorial - Preenchendo o MAPA - Conteúdo C2</strong><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-817d-86eb-c379297e04ce"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/V7ydJwjoeJ" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/V7ydJwjoeJ</div></div></a></figure></div></div></figure></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8137-b351-db96347e2d5d"/></div><div style="display:contents" dir="auto"><h1 id="276cb023-eb3b-811b-a61a-fac6c52ab839" class=""><mark class="highlight-blue">Hora de aplicar!</mark></h1></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8132-b570-d7b655b7c6c9"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81aa-9b04-d9825f7c5168" class=""><mark class="highlight-blue">Criação de conteúdo C2</mark></h3></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-811e-bd2b-eb80a49c70b9"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-816c-9d26-e04b62de4ce4" class="">Você já preencheu as ideias na etapa anterior! Agora é hora de estruturá-las de fato em conteúdos.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-816d-9cd5-e47b1c3a91f5" class="">Abaixo você vai encontrar preenchidas as ideias que listou na etapa de <a href="../../Estrat%C3%A9gia%20de%20conte%C3%BAdo/Atividades%20Estrategia%20de%20conteudo%20(mapa)/2%20Ideias%20de%20conte%C3%BAdo%20276cb023eb3b8126a49fd7643c529fc8.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/light-bulb_blue.svg"/>2. Ideias de conteúdo</a> </p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8158-8708-e787295fea39" class="">Arraste as ideias que deseja começar a produzir para a coluna seguinte (<mark class="highlight-red_background">A fazer</mark><mark class="highlight-default">) e depois para as demais colunas, conforme for avançando na produção do conteúdo.</mark></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-818d-b71b-ef2e4495ac29"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81b3-97d1-f4f2b4a6c0ed" class="toggle"><li><details open=""><summary><mark class="highlight-gray">Instruções do preenchimento da tabela</mark></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8151-b4d4-e5c3114f13c2" class="">Ao clicar na sua ideia, no início da página, preencher os detalhes a respeito de etapas do <strong>funil, datas e prazos. </strong>Na parte inferior da página, você encontra algumas <strong>opções de templates</strong> prontos. Selecione um deles de acordo com o formato do conteúdo que está criando.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-811e-a4c4-f5f6f37dee56"/></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-81d9-b62e-f0d3f63a8c12" class="collection-content"><h4 class="collection-title">Conteúdo | IMC New</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/alert_gray.svg" style="width:14px;height:14px;display:block"/></span>Ideia de Conteúdo </th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/compass_gray.svg" style="width:14px;height:14px;display:block"/></span>Tópicos de Conteúdo</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/flag-checkered_gray.svg" style="width:14px;height:14px;display:block"/></span>Tema</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/tornado_gray.svg" style="width:14px;height:14px;display:block"/></span>Funil</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/arrow-circle-down_gray.svg" style="width:14px;height:14px;display:block"/></span>Meta do Funil</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/burst_gray.svg" style="width:14px;height:14px;display:block"/></span>Progresso Matriz</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Formato de conteúdo</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/calendar_gray.svg" style="width:14px;height:14px;display:block"/></span>Deadline Planejamento</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/calendar_gray.svg" style="width:14px;height:14px;display:block"/></span>Deadline Conteúdo</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/calendar_gray.svg" style="width:14px;height:14px;display:block"/></span>Data do Post</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/link_gray.svg" style="width:14px;height:14px;display:block"/></span>Link do post</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/arrow-circle-down_gray.svg" style="width:14px;height:14px;display:block"/></span>Classificação</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/clock_gray.svg" style="width:14px;height:14px;display:block"/></span>Create date</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/arrow-circle-down_gray.svg" style="width:14px;height:14px;display:block"/></span>Estratégia</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/checkmark-square_gray.svg" style="width:14px;height:14px;display:block"/></span>Impulsionar</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/arrow-northeast_gray.svg" style="width:14px;height:14px;display:block"/></span>Laddering | Minha marca</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Plataforma</th></tr></thead><tbody><tr id="276cb023-eb3b-814b-9201-c5692f5b346a"><td class="cell-title"><a href="../../../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Conte%C3%BAdo%20IMC%20New/Quem%20sou%20eu%20276cb023eb3b814b9201c5692f5b346a.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/preview_blue.svg"/>Quem sou eu</a></td><td class="cell-voeF"><span class="selected-value select-value-color-blue">Histórias</span></td><td class="cell-`P|k"></td><td class="cell-`xBh"><span class="selected-value select-value-color-blue">C2 - Meio</span></td><td class="cell-eRXi"><span class="selected-value select-value-color-red">C2 - Inspirar</span></td><td class="cell-wGUa"><span class="status-value select-value-color-gray"><div class="status-dot status-dot-color-gray"></div>Ideia</span></td><td class="cell-mNB@"><span class="selected-value select-value-color-default">Video</span></td><td class="cell-^Qw{"></td><td class="cell-}rP["></td><td class="cell-pHMU"></td><td class="cell-U|oE"></td><td class="cell-FmCO"></td><td class="cell-fj{C"><time>@22 de setembro de 2025 09:23</time></td><td class="cell-^hc{"><span class="selected-value select-value-color-default">Autoridade</span></td><td class="cell-&lt;}wt"><div class="checkbox checkbox-off"></div></td><td class="cell-rOfv"></td><td class="cell-h&gt;`["><span class="selected-value select-value-color-purple">Instagram</span><span class="selected-value select-value-color-brown">TikTok</span><span class="selected-value select-value-color-blue">Youtube</span></td></tr><tr id="276cb023-eb3b-8151-a411-c14a02ddba3d"><td class="cell-title"><a href="../../../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Conte%C3%BAdo%20IMC%20New/Diferencial%20da%20Marca%20276cb023eb3b8151a411c14a02ddba3d.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/preview_blue.svg"/>Diferencial da Marca</a></td><td class="cell-voeF"><span class="selected-value select-value-color-yellow">Perguntas Comuns</span></td><td class="cell-`P|k"></td><td class="cell-`xBh"><span class="selected-value select-value-color-blue">C2 - Meio</span></td><td class="cell-eRXi"><span class="selected-value select-value-color-brown">C2 - Autoridade</span></td><td class="cell-wGUa"><span class="status-value select-value-color-gray"><div class="status-dot status-dot-color-gray"></div>Ideia</span></td><td class="cell-mNB@"><span class="selected-value select-value-color-purple">Carrossel</span><span class="selected-value select-value-color-default">Video</span></td><td class="cell-^Qw{"></td><td class="cell-}rP["></td><td class="cell-pHMU"></td><td class="cell-U|oE"></td><td class="cell-FmCO"></td><td class="cell-fj{C"><time>@22 de setembro de 2025 09:23</time></td><td class="cell-^hc{"><span class="selected-value select-value-color-default">Autoridade</span></td><td class="cell-&lt;}wt"><div class="checkbox checkbox-off"></div></td><td class="cell-rOfv"></td><td class="cell-h&gt;`["><span class="selected-value select-value-color-purple">Instagram</span><span class="selected-value select-value-color-brown">TikTok</span><span class="selected-value select-value-color-blue">Youtube</span></td></tr><tr id="2f2cb023-eb3b-80fe-98a5-eec24ce152e3"><td class="cell-title"><a href="../../../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Conte%C3%BAdo%20IMC%20New/Posicionar%20como%20generalista%20%C3%A9%20o%20que%20te%20faz%20parecer%202f2cb023eb3b80fe98a5eec24ce152e3.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/camera-roll-portrait_blue.svg"/>Posicionar como generalista é o que te faz parecer iniciante</a></td><td class="cell-voeF"><span class="selected-value select-value-color-red">Erros Comuns</span></td><td class="cell-`P|k"><a href="../../../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Temas%20New/Posicionamento%20276cb023eb3b81aaa3fee8d3df8b48f5.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/flag-checkered_blue.svg"/>Posicionamento</a></td><td class="cell-`xBh"><span class="selected-value select-value-color-blue">C2 - Meio</span></td><td class="cell-eRXi"></td><td class="cell-wGUa"><span class="status-value select-value-color-gray"><div class="status-dot status-dot-color-gray"></div>Ideia</span></td><td class="cell-mNB@"></td><td class="cell-^Qw{"></td><td class="cell-}rP["></td><td class="cell-pHMU"></td><td class="cell-U|oE"></td><td class="cell-FmCO"></td><td class="cell-fj{C"><time>@23 de janeiro de 2026 23:17</time></td><td class="cell-^hc{"></td><td class="cell-&lt;}wt"><div class="checkbox checkbox-off"></div></td><td class="cell-rOfv"></td><td class="cell-h&gt;`["></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815b-8847-d4c2152818bd" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81be-9028-f970ceda8ba4"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8147-bfa4-f7f023fe2d7e" class=""><mark class="highlight-blue"><strong>Reveja abaixo os dados da sua persona para te ajudar a criar os conteúdos</strong></mark></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8162-bec6-f42a69935f93"/></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-8136-b318-fe3c7c81baad" class="collection-content"><h4 class="collection-title">[Escreva aqui o nome da sua persona]</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Name</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/description_gray.svg" style="width:14px;height:14px;display:block"/></span>Informação</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Categoria</th></tr></thead><tbody><tr id="276cb023-eb3b-81cb-a633-fc15aac4413d"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Valor%201%20276cb023eb3b81cba633fc15aac4413d.html">Valor 1</a></td><td class="cell-my}m">Escreva aqui um valor da sua persona</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="276cb023-eb3b-8196-aa1d-f425e33a22a8"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Interesses%20276cb023eb3b8196aa1df425e33a22a8.html">Interesses</a></td><td class="cell-my}m">• <strong>Moda e bem-estar</strong> (se cuidar, se vestir bem, se sentir “à altura” do negócio)<br/>• <strong>Leitura de livros de negócios, biografias e desenvolvimento pessoal</strong><br/>• <strong>Consumo de conteúdo sobre liderança, carreira e empreendedorismo</strong><br/>• <strong>Participar de eventos, imersões e encontros de networking</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-orange">Comportamento Online</span></td></tr><tr id="276cb023-eb3b-81cf-9dd8-fdb2be23de97"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%201%20276cb023eb3b81cf9dd8fdb2be23de97.html">Objetivo 1</a></td><td class="cell-my}m">Vender todos os dias</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="276cb023-eb3b-8145-bc58-c848302d3aaf"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%202%20276cb023eb3b8145bc58c848302d3aaf.html">Objetivo 2</a></td><td class="cell-my}m">Ter previsibilidade mínima de vendas</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="276cb023-eb3b-8123-a177-cfef3bbaa690"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%201%20276cb023eb3b8123a177cfef3bbaa690.html">Desafio 1</a></td><td class="cell-my}m">Conteúdo sem função clara</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="276cb023-eb3b-817c-af44-ff38125f5b66"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%202%20276cb023eb3b817caf44ff38125f5b66.html">Desafio 2</a></td><td class="cell-my}m">Posicionamento confuso ou genérico</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="276cb023-eb3b-818f-b69a-f6c36129c5e5"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Fonte%201%20276cb023eb3b818fb69af6c36129c5e5.html">Fonte 1</a></td><td class="cell-my}m"><strong>Redes Sociais (mas de forma mais seletiva)</strong><br/>• Instagram (perfis de negócios, gestão, vendas, estratégia)<br/>• YouTube (aulas, entrevistas, análises mais longas)<br/>• LinkedIn (para quem está mais madura e busca conteúdo de gestão)<strong><br/></strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-blue">Fontes de Informação</span></td></tr><tr id="276cb023-eb3b-810b-b543-cad6a1d2b4d6"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Fonte%202%20276cb023eb3b810bb543cad6a1d2b4d6.html">Fonte 2</a></td><td class="cell-my}m"><strong>Conteúdo Profundo</strong><br/>• Podcasts de negócios, gestão, vendas e empreendedorismo<br/>• Entrevistas com donos de empresas reais<br/>• Palestras de eventos (G4, StartSe, HSM, etc. – como referência mental, não como cópia)</td><td class="cell-:CJZ"><span class="selected-value select-value-color-blue">Fontes de Informação</span></td></tr><tr id="276cb023-eb3b-8144-af05-d44326146431"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Hobbies%20276cb023eb3b8144af05d44326146431.html">Hobbies</a></td><td class="cell-my}m"><br/>Desenvolvimento pessoal<br/>Conteúdo de negócios diariamente<br/>Estilo de vida saudável<br/>Moda, estética e bem-estar<br/>Viagens e experiências Gastronomia<br/>Organização e estética do ambiente<br/>Valorização de tempo e qualidade de vida</td><td class="cell-:CJZ"><span class="selected-value select-value-color-orange">Comportamento Online</span></td></tr><tr id="276cb023-eb3b-81b3-baa0-c216af5b466e"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Comportamento%20de%20compra%20276cb023eb3b81b3baa0c216af5b466e.html">Comportamento de compra</a></td><td class="cell-my}m">Já investiu em marketing e se frustrouJá contratou agência que não entregou nadaJá fez cursos rasosJá tentou fazer sozinhoEstá disposto a pagar mais por método + direção + acompanhamentoValoriza proximidade com o mentorConfia em narrativa verdadeira, não hype</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Comportamento de Compra</span></td></tr><tr id="276cb023-eb3b-816c-b023-df4a3ec41576"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Principais%20buscas%20276cb023eb3b816cb023df4a3ec41576.html">Principais buscas</a></td><td class="cell-my}m">Como crescer com previsibilidade<br/>Como estruturar um time comercial<br/>Como escalar operações<br/>Como organizar empresa para crescer<br/>Como deixar de depender do dono<br/>Como implantar processos<br/>Como integrar marketing + vendas + gestão<br/>Como ter lucro todos os meses<br/>Como criar cultura e time de alta performance</td><td class="cell-:CJZ"><span class="selected-value select-value-color-orange">Comportamento Online</span></td></tr><tr id="276cb023-eb3b-8176-ae62-c74734d144dd"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Prefer%C3%AAncias%20de%20conte%C3%BAdo%20276cb023eb3b8176ae62c74734d144dd.html">Preferências de conteúdo</a></td><td class="cell-my}m"><br/>• Estratégia clara e aplicada<br/>• Bastidores de decisões reais<br/>• Processos e frameworks<br/>• Análises de negócios reais<br/>• Estudos de caso profundos<br/>• Conteúdo que conecta marketing, gestão e vendas<br/>• Verdade dura, mas útil<br/>• Aulas de raciocínio estratégico<br/>• Conteúdo que os faça pensar como donos<br/>Eles <strong>não querem</strong>:<br/>• dicas de conteúdo<br/>• trends<br/>• tutoriais de Instagram</td><td class="cell-:CJZ"><span class="selected-value select-value-color-orange">Comportamento Online</span></td></tr><tr id="276cb023-eb3b-8107-a28b-f3bcc7abb54a"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Idade%20276cb023eb3b8107a28bf3bcc7abb54a.html">Idade</a></td><td class="cell-my}m">28 a 55 anos</td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="276cb023-eb3b-81e9-8c93-cad48f4d44e2"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/G%C3%AAnero%20276cb023eb3b81e98c93cad48f4d44e2.html">Gênero</a></td><td class="cell-my}m">70% mulheres</td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="276cb023-eb3b-8136-b776-d194065259de"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Localiza%C3%A7%C3%A3o%20276cb023eb3b8136b776d194065259de.html">Localização</a></td><td class="cell-my}m"><strong>Sudeste e Sul do Brasil</strong><br/>(SP, RJ, MG, PR e capitais + interior economicamente ativo)</td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="276cb023-eb3b-81e3-a390-d33bbc0f7ede"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/N%C3%ADvel%20de%20educa%C3%A7%C3%A3o%20276cb023eb3b81e3a390d33bbc0f7ede.html">Nível de educação</a></td><td class="cell-my}m">Superior completo ou em andamento; muitas com pós, cursos ou especializações.</td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="276cb023-eb3b-8141-90a1-c542279e8468"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Faixa%20de%20renda%20276cb023eb3b814190a1c542279e8468.html">Faixa de renda</a></td><td class="cell-my}m">A partir de <strong>R$ 30k/mês</strong>Com maior concentração entre <strong>R$ 50k e R$ 500k/mês</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="276cb023-eb3b-815d-aab4-c18e2147d50a"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%20Central%20276cb023eb3b815daab4c18e2147d50a.html">Desejo Central</a></td><td class="cell-my}m">Vender com clareza, estratégia e previsibilidade sem depender de sorte, improviso ou promessas vazias.</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="276cb023-eb3b-8182-b1c0-e6707e1ac2d6"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%202%20276cb023eb3b8182b1c0e6707e1ac2d6.html">Desejo 2</a></td><td class="cell-my}m">Clareza</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="276cb023-eb3b-8135-b166-d8ff4bd2d83e"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%203%20276cb023eb3b8135b166d8ff4bd2d83e.html">Desejo 3</a></td><td class="cell-my}m">Consistência</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="276cb023-eb3b-81b1-be2e-fc9080585001"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%204%20276cb023eb3b81b1be2efc9080585001.html">Desejo 4</a></td><td class="cell-my}m">Respeito</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="276cb023-eb3b-817d-a5f8-c2dea3958361"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%20Central%20276cb023eb3b817da5f8c2dea3958361.html">Dor Central</a></td><td class="cell-my}m">Eu trabalho, apareço, produzo conteúdo e até vendo mas tudo ainda depende de improviso e não é previsível.”</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="276cb023-eb3b-8192-97db-d1a792f1842f"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%202%20276cb023eb3b819297dbd1a792f1842f.html">Dor 2</a></td><td class="cell-my}m">Falta de estratégia</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="276cb023-eb3b-8100-9dc7-e91e7507d671"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%201%20276cb023eb3b81009dc7e91e7507d671.html">Objeção 1</a></td><td class="cell-my}m"><strong>“Eu já investi em marketing/mentoria e me frustrei.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="276cb023-eb3b-81c6-b2dd-ca63b31c6f55"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%202%20276cb023eb3b81c6b2ddca63b31c6f55.html">Objeção 2</a></td><td class="cell-my}m"><strong>“Eu não tenho tempo para mais um programa.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="276cb023-eb3b-8186-a15b-f85a277db5fe"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Valor%202%20276cb023eb3b8186a15bf85a277db5fe.html">Valor 2</a></td><td class="cell-my}m">Escreva aqui um valor da sua persona</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="276cb023-eb3b-81f4-b50b-ff76bc3ddc73"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%201%20276cb023eb3b81f4b50bff76bc3ddc73.html">Medo 1</a></td><td class="cell-my}m">Investir novamente e não ter retorno</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="276cb023-eb3b-81e7-9dfa-dca2ad9df3c3"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%202%20276cb023eb3b81e79dfadca2ad9df3c3.html">Medo 2</a></td><td class="cell-my}m">Investir novamente e não ter retorno</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="276cb023-eb3b-810e-b528-e1ea44a9ed76"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%208%20276cb023eb3b810eb528e1ea44a9ed76.html">Desejo 8</a></td><td class="cell-my}m">Orgulho do próprio negócio</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="276cb023-eb3b-811c-8cdd-f050c6046039"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%207%20276cb023eb3b811c8cddf050c6046039.html">Desejo 7</a></td><td class="cell-my}m">Lucro real</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="276cb023-eb3b-811d-b5b8-d7916db67bd4"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%209%20276cb023eb3b811db5b8d7916db67bd4.html">Desejo 9</a></td><td class="cell-my}m">Autonomia</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="276cb023-eb3b-8152-9eec-d9bf25648c47"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%203%20276cb023eb3b81529eecd9bf25648c47.html">Objeção 3</a></td><td class="cell-my}m"><strong>“Meu negócio é muito específico, não sei se funciona para mim.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="276cb023-eb3b-8179-bc80-eda6ce0c951c"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%205%20276cb023eb3b8179bc80eda6ce0c951c.html">Objeção 5</a></td><td class="cell-my}m"><strong>“Tenho medo de não conseguir implementar com a equipe que tenho.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="276cb023-eb3b-817e-821b-edcf4cf9a6cc"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%203%20276cb023eb3b817e821bedcf4cf9a6cc.html">Dor 3</a></td><td class="cell-my}m">Falta de previsibilidade</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="276cb023-eb3b-81e4-8235-cd3decdeaa99"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%207%20276cb023eb3b81e48235cd3decdeaa99.html">Objeção 7</a></td><td class="cell-my}m"><strong>“É um investimento alto, preciso ter certeza que vai voltar.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="276cb023-eb3b-8101-89cd-f959f75f7019"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%2010%20276cb023eb3b810189cdf959f75f7019.html">Dor 10</a></td><td class="cell-my}m">Falta de clareza</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="276cb023-eb3b-811e-b034-cf39ddff858e"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%207%20276cb023eb3b811eb034cf39ddff858e.html">Dor 7</a></td><td class="cell-my}m">Gestão inexistente</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="276cb023-eb3b-8197-bc7e-e2ae66e27695"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%208%20276cb023eb3b8197bc7ee2ae66e27695.html">Dor 8</a></td><td class="cell-my}m">Faturamento oscilante</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="276cb023-eb3b-81a3-a518-c9e0ab246ae2"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%204%20276cb023eb3b81a3a518c9e0ab246ae2.html">Objeção 4</a></td><td class="cell-my}m"><strong>“Hoje eu já vendo bem, não sei se realmente preciso disso agora.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="276cb023-eb3b-81b0-8479-d980ad399d5e"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%209%20276cb023eb3b81b08479d980ad399d5e.html">Dor 9</a></td><td class="cell-my}m">Falta de controle</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="276cb023-eb3b-81d5-8baf-c395608ecd28"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%206%20276cb023eb3b81d58bafc395608ecd28.html">Desejo 6</a></td><td class="cell-my}m">Previsibilidade</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="276cb023-eb3b-81e3-86cd-ea684b9a4507"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%205%20276cb023eb3b81e386cdea684b9a4507.html">Dor 5</a></td><td class="cell-my}m">Time desorganizado</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="276cb023-eb3b-81e4-9f53-e2f98bcd3e0a"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%206%20276cb023eb3b81e49f53e2f98bcd3e0a.html">Objeção 6</a></td><td class="cell-my}m"><strong>“Meu problema não é marketing, é gente/processo/gestão.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="276cb023-eb3b-81f5-96ef-eadc4c027d10"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%2010%20276cb023eb3b81f596efeadc4c027d10.html">Desejo 10</a></td><td class="cell-my}m">Liberdade de tempo</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="276cb023-eb3b-8118-b660-e9d476063266"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%2010%20276cb023eb3b8118b660e9d476063266.html">Objeção 10</a></td><td class="cell-my}m"><strong>“Tenho medo de crescer e perder o controle/qualidade.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="276cb023-eb3b-8164-bf7a-cbd33592c044"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%205%20276cb023eb3b8164bf7acbd33592c044.html">Desejo 5</a></td><td class="cell-my}m">Autoridade</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="276cb023-eb3b-8193-aae7-c9b75feea513"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%209%20276cb023eb3b8193aae7c9b75feea513.html">Objeção 9</a></td><td class="cell-my}m"><strong>“Não sei se estou no estágio certo do negócio para isso.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="276cb023-eb3b-8195-8781-e120bba77e28"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%206%20276cb023eb3b81958781e120bba77e28.html">Dor 6</a></td><td class="cell-my}m">Marketing solto</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="276cb023-eb3b-81be-a093-c65a3f92bac5"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Obje%C3%A7%C3%A3o%208%20276cb023eb3b81bea093c65a3f92bac5.html">Objeção 8</a></td><td class="cell-my}m"><strong>“Tenho trauma de agência/consultor que prometeu e sumiu.”</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-default">Objeções</span></td></tr><tr id="276cb023-eb3b-81d9-9adc-f2e7b4a9b083"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%204%20276cb023eb3b81d99adcf2e7b4a9b083.html">Dor 4</a></td><td class="cell-my}m">Rotina caótica</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2cdcb023-eb3b-8072-9466-f60bcf4d3bfe"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Psicografia%202cdcb023eb3b80729466f60bcf4d3bfe.html">Psicografia</a></td><td class="cell-my}m">Cresceram <strong>no improviso<br/></strong>O negócio “funciona”, mas <strong>não é previsível<br/></strong>Trabalham muito mais do que deveriam<br/>Sentem que o negócio depende demais deles<br/>Já investiram em marketing, mas sem clareza<br/>Já tentaram produzir conteúdo, mas sem estratégia<br/>Viveram frustrações com:<br/>• agências<br/>• social medias<br/>• promessas vaziasSão céticos com “marketing milagroso”Têm medo de:<br/>• continuar tentando sem saber se está certo<br/>• investir de novo e errarProcuram:<br/>• seriedade<br/>• método<br/>• clareza<br/>• direção<br/>Querem crescer, mas <strong>não querem virar reféns do digital</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2cdcb023-eb3b-8014-bd87-c4a40441688b"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%203%202cdcb023eb3b8014bd87c4a40441688b.html">Objetivo 3</a></td><td class="cell-my}m">Parar de improvisar marketing e conteúdo</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2cdcb023-eb3b-803e-9960-c1d91ad58c38"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%204%202cdcb023eb3b803e9960c1d91ad58c38.html">Objetivo 4</a></td><td class="cell-my}m">Saber exatamente o que comunicar</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2cdcb023-eb3b-804a-91ed-d013f8eb25ae"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%205%202cdcb023eb3b804a91edd013f8eb25ae.html">Objetivo 5</a></td><td class="cell-my}m">Ser visto como autoridade no seu segmento</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2cdcb023-eb3b-80c7-ae44-ca9dec038f2a"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%206%202cdcb023eb3b80c7ae44ca9dec038f2a.html">Objetivo 6</a></td><td class="cell-my}m">Atrair clientes certos (não qualquer cliente)</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2cdcb023-eb3b-8003-bc9d-cec0be7dca3c"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%207%202cdcb023eb3b8003bc9dcec0be7dca3c.html">Objetivo 7</a></td><td class="cell-my}m">Transformar conteúdo em venda</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2cdcb023-eb3b-8025-a597-e7be69835582"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%208%202cdcb023eb3b8025a597e7be69835582.html">Objetivo 8</a></td><td class="cell-my}m">Crescer sem se esgotar</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2cdcb023-eb3b-80a2-bed3-fea34d1c0788"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%209%202cdcb023eb3b80a2bed3fea34d1c0788.html">Objetivo 9</a></td><td class="cell-my}m">Sentir que o negócio “faz sentido”</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2cdcb023-eb3b-8032-84e1-eded5b0a20ec"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%2010%202cdcb023eb3b803284e1eded5b0a20ec.html">Objetivo 10</a></td><td class="cell-my}m">Ter clareza de próximo passo</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2cdcb023-eb3b-8015-be8f-e211304a2a40"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Objetivo%2011%202cdcb023eb3b8015be8fe211304a2a40.html">Objetivo 11</a></td><td class="cell-my}m">Ter controle sobre o crescimento</td><td class="cell-:CJZ"><span class="selected-value select-value-color-brown">Objetivos</span></td></tr><tr id="2cdcb023-eb3b-80c6-a0d3-d3da93a20ba8"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%203%202cdcb023eb3b80c6a0d3d3da93a20ba8.html">Desafio 3</a></td><td class="cell-my}m">Comunicação que não diferencia</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2cdcb023-eb3b-809c-a267-ecaafd7e213e"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%204%202cdcb023eb3b809ca267ecaafd7e213e.html">Desafio 4</a></td><td class="cell-my}m">Marketing desconectado de vendas</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2cdcb023-eb3b-8058-ac9e-d66d9c3e3b24"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%205%202cdcb023eb3b8058ac9ed66d9c3e3b24.html">Desafio 5</a></td><td class="cell-my}m">Vendas instáveis</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2cdcb023-eb3b-80b5-85e6-f850dd9b98ab"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%206%202cdcb023eb3b80b585e6f850dd9b98ab.html">Desafio 6</a></td><td class="cell-my}m">Falta de rotina comercial</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2cdcb023-eb3b-8082-9640-e15d84200b68"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%207%202cdcb023eb3b80829640e15d84200b68.html">Desafio 7</a></td><td class="cell-my}m">Dificuldade de transformar visibilidade em faturamento</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2cdcb023-eb3b-80b6-be6a-e8c73e17dbe2"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%208%202cdcb023eb3b80b6be6ae8c73e17dbe2.html">Desafio 8</a></td><td class="cell-my}m">Esforço alto para retorno baixo</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2cdcb023-eb3b-8015-87a1-ef30ba6d3e69"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%209%202cdcb023eb3b801587a1ef30ba6d3e69.html">Desafio 9 </a></td><td class="cell-my}m">Falta de método para decidir</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2cdcb023-eb3b-8029-ab91-dbb6dc64e979"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%2010%202cdcb023eb3b8029ab91dbb6dc64e979.html">Desafio 10</a></td><td class="cell-my}m">Sensação constante de tentativa e erro</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2cdcb023-eb3b-8075-a333-f786b351c3b6"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%2011%202cdcb023eb3b8075a333f786b351c3b6.html">Desafio 11</a></td><td class="cell-my}m">Time que não performa</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2cdcb023-eb3b-808b-ad24-db79cdbc47c9"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desafio%2012%202cdcb023eb3b808bad24db79cdbc47c9.html">Desafio 12</a></td><td class="cell-my}m">Negócio dependente 100% do dono</td><td class="cell-:CJZ"><span class="selected-value select-value-color-gray">Desafios</span></td></tr><tr id="2cdcb023-eb3b-8065-b248-dc148861b635"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%2011%202cdcb023eb3b8065b248dc148861b635.html">Desejo 11</a></td><td class="cell-my}m">Crescimento sustentável</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="2cdcb023-eb3b-8063-a6e3-d78b37196de1"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%2011%202cdcb023eb3b8063a6e3d78b37196de1.html">Dor 11</a></td><td class="cell-my}m">Falta de tempo</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2cdcb023-eb3b-80f1-b4d1-c1f964d014af"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%203%202cdcb023eb3b80f1b4d1c1f964d014af.html">Medo 3</a></td><td class="cell-my}m">Crescer errado e quebrar depois</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2cdcb023-eb3b-80c7-86ab-c0b3d2eca82b"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%204%202cdcb023eb3b80c786abc0b3d2eca82b.html">Medo 4</a></td><td class="cell-my}m">Perder relevância no mercado</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2cdcb023-eb3b-807e-b734-efe7037e69fc"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%205%202cdcb023eb3b807eb734efe7037e69fc.html">Medo 5</a></td><td class="cell-my}m">Ser ultrapassado por concorrentes mais estratégicos</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2cdcb023-eb3b-8094-bd4a-db0fc17576eb"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%206%202cdcb023eb3b8094bd4adb0fc17576eb.html">Medo 6</a></td><td class="cell-my}m">Ficar preso ao operacional para sempre</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2cdcb023-eb3b-80b1-88b7-c597e1b7b515"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%207%202cdcb023eb3b80b188b7c597e1b7b515.html">Medo 7</a></td><td class="cell-my}m">Nunca saber se está “fazendo certo”</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2cdcb023-eb3b-802e-8a50-c8deb7a04c32"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%208%202cdcb023eb3b802e8a50c8deb7a04c32.html">Medo 8</a></td><td class="cell-my}m">Depender eternamente de indicações</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2cdcb023-eb3b-8062-abab-ff7a113d6cc3"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Quem%20n%C3%A3o%20%C3%A9%202cdcb023eb3b8062ababff7a113d6cc3.html">Quem não é</a></td><td class="cell-my}m">Quem quer viralizar<br/>Quem busca fórmula rápida<br/>Quem está começando do zero<br/>Quem não tem negócio real<br/>Quem quer apenas aprender reels, tráfego ou hacks<br/>Quem terceiriza responsabilidade<br/>Quem não aceita verdade, método e profundidade<br/>Quem quer palco, não venda</td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2cdcb023-eb3b-80fc-b8d4-ff8df0782ea0"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Fonte%203%202cdcb023eb3b80fcb8d4ff8df0782ea0.html">Fonte 3</a></td><td class="cell-my}m"><strong>Formações e Mentorias</strong><br/>• Mentorias e programas de negócios que ela já fez<br/>• Cursos de gestão, vendas, liderança, marketing, finanças<br/>• Lives e aulas abertas de players que ela respeita</td><td class="cell-:CJZ"><span class="selected-value select-value-color-blue">Fontes de Informação</span></td></tr><tr id="2cdcb023-eb3b-8099-abba-edda143cd072"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Fonte%204%202cdcb023eb3b8099abbaedda143cd072.html">Fonte 4</a></td><td class="cell-my}m"><strong>Redes de Relacionamento</strong><br/>• Grupos de empresárias (WhatsApp/Telegram)<br/>• Associações de classe, grupos de networking, núcleos de empreendedores<br/>• Amigas empreendedoras que “trocam dor” e indicação</td><td class="cell-:CJZ"><span class="selected-value select-value-color-blue">Fontes de Informação</span></td></tr><tr id="2cdcb023-eb3b-809c-b176-f6f0fabbe7db"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Fonte%205%202cdcb023eb3b809cb176f6f0fabbe7db.html">Fonte 5</a></td><td class="cell-my}m"><strong>Leitura</strong><br/>• Livros de negócios, marketing, finanças e liderança<br/>• Artigos e newsletters de players que ela respeita</td><td class="cell-:CJZ"><span class="selected-value select-value-color-blue">Fontes de Informação</span></td></tr><tr id="2cdcb023-eb3b-802a-930b-edb4fa2f2b9d"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Dor%201%202cdcb023eb3b802a930bedb4fa2f2b9d.html">Dor 1 </a></td><td class="cell-my}m">Vendas instáveis</td><td class="cell-:CJZ"><span class="selected-value select-value-color-red">Dores</span></td></tr><tr id="2cdcb023-eb3b-800c-822d-c5b305f9a9b4"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Desejo%202cdcb023eb3b800c822dc5b305f9a9b4.html">Desejo </a></td><td class="cell-my}m">Segurança</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Desejos</span></td></tr><tr id="2e0cb023-eb3b-809a-b93f-fe5f4024d832"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tipo%20de%20neg%C3%B3cio%202e0cb023eb3b809ab93ffe5f4024d832.html">Tipo de negócio</a></td><td class="cell-my}m">Serviços, <br/>Profissionais liberais<br/>Saúde<br/>Moda, varejo e comércio<br/>Educação e especialidades</td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2e0cb023-eb3b-8092-a933-c58acde738d7"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Estrutura%202e0cb023eb3b8092a933c58acde738d7.html">Estrutura</a></td><td class="cell-my}m">Negócios pequenos e médios<br/><strong>1 a 10 colaboradores</strong></td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2e0cb023-eb3b-8029-8b1a-ffb600b42f03"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tempo%20de%20neg%C3%B3cio%202e0cb023eb3b80298b1affb600b42f03.html">Tempo de negócio</a></td><td class="cell-my}m"><strong>1 a 10 anos<br/></strong>Não são iniciantes absolutos</td><td class="cell-:CJZ"><span class="selected-value select-value-color-green">Dados Demográficos</span></td></tr><tr id="2e0cb023-eb3b-8016-aba3-e2dc58b88683"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Medo%209%202e0cb023eb3b8016aba3e2dc58b88683.html">Medo 9</a></td><td class="cell-my}m"><br/>Se expor no digital e não ser levado a sério</td><td class="cell-:CJZ"><span class="selected-value select-value-color-pink">Valores e Medos</span></td></tr><tr id="2e0cb023-eb3b-80fd-8866-e085a844115c"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%201%202e0cb023eb3b80fd8866e085a844115c.html">Trava 1</a></td><td class="cell-my}m">Posicionamento confuso</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2e0cb023-eb3b-8002-88ff-cd9da873c479"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%202%202e0cb023eb3b800288ffcd9da873c479.html">Trava 2</a></td><td class="cell-my}m">Conteúdo sem intenção estratégica</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2e0cb023-eb3b-8041-a41a-ea771b4a7758"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%203%202e0cb023eb3b8041a41aea771b4a7758.html">Trava 3</a></td><td class="cell-my}m">Falta de clareza comercial</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2e0cb023-eb3b-808b-ad52-c5ea9f2282e7"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%204%202e0cb023eb3b808bad52c5ea9f2282e7.html">Trava 4</a></td><td class="cell-my}m">Falta de método de decisão</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2e0cb023-eb3b-80c3-a6a1-c9700c04e981"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%205%202e0cb023eb3b80c3a6a1c9700c04e981.html">Trava 5</a></td><td class="cell-my}m">Marketing desconectado de vendas</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2e0cb023-eb3b-8018-a7c2-d6e15062ec09"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%206%202e0cb023eb3b8018a7c2d6e15062ec09.html">Trava 6</a></td><td class="cell-my}m">Falta de estrutura mínima de venda</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2e0cb023-eb3b-8050-b570-fa3225603871"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%207%202e0cb023eb3b8050b570fa3225603871.html">Trava 7</a></td><td class="cell-my}m">Dependência excessiva do dono</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2e0cb023-eb3b-8020-a878-c9afc4d4860f"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%208%202e0cb023eb3b8020a878c9afc4d4860f.html">Trava 8</a></td><td class="cell-my}m">Medo de errar novamente</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2e0cb023-eb3b-804d-8c74-d8217dffa8b3"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Trava%209%202e0cb023eb3b804d8c74d8217dffa8b3.html">Trava 9</a></td><td class="cell-my}m">Excesso de informação e pouca direção</td><td class="cell-:CJZ"><span class="selected-value select-value-color-yellow">Travas principais</span></td></tr><tr id="2e0cb023-eb3b-8060-ad1a-c4df75b9aad4"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tens%C3%A3o%201%202e0cb023eb3b8060ad1ac4df75b9aad4.html">Tensão 1</a></td><td class="cell-my}m">Aparece → mas não converte</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Tensões reais</span></td></tr><tr id="2e0cb023-eb3b-8003-8e59-fcc656d837bd"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tens%C3%A3o%202%202e0cb023eb3b80038e59fcc656d837bd.html">Tensão 2</a></td><td class="cell-my}m">Vende → mas não sabe repetir</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Tensões reais</span></td></tr><tr id="2e0cb023-eb3b-80c2-8aa1-e6bb3b761068"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tens%C3%A3o%203%202e0cb023eb3b80c28aa1e6bb3b761068.html">Tensão 3</a></td><td class="cell-my}m">Cresce → mas fica mais cansado</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Tensões reais</span></td></tr><tr id="2e0cb023-eb3b-8074-9cde-d1234c743691"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tens%C3%A3o%204%202e0cb023eb3b80749cded1234c743691.html">Tensão 4</a></td><td class="cell-my}m">Investe → mas não se sente seguro</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Tensões reais</span></td></tr><tr id="2e0cb023-eb3b-8087-8171-f94daeaa066d"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tens%C3%A3o%205%202e0cb023eb3b80878171f94daeaa066d.html">Tensão 5</a></td><td class="cell-my}m">Aprende → mas não aplica com clareza</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Tensões reais</span></td></tr><tr id="2e0cb023-eb3b-800e-bd17-cead33c93fca"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tens%C3%A3o%206%202e0cb023eb3b800ebd17cead33c93fca.html">Tensão 6</a></td><td class="cell-my}m">Testa → mas não tem método</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Tensões reais</span></td></tr><tr id="2e0cb023-eb3b-80f4-83e6-dc5d338071d1"><td class="cell-title"><a href="../../../../Estrat%C3%A9gia%20NORTE/%5Bcompass%5D%20Etapas%20do%20Norte/3%20Para%20quem%20voc%C3%AA%20vende/%5BEscreva%20aqui%20o%20nome%20da%20sua%20persona%5D/Tens%C3%A3o%207%202e0cb023eb3b80f483e6dc5d338071d1.html">Tensão 7</a></td><td class="cell-my}m">Quer crescer → mas não quer errar de novo</td><td class="cell-:CJZ"><span class="selected-value select-value-color-purple">Tensões reais</span></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f6-aa78-ec6b04934705" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8191-89cc-fb1116c619cd"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81b0-a524-dbe880792518" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8100-94d0-c8147a70f01b" class="">
+</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8143-9250-f5092e77e669" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-810f-b4ae-fba732f8100a" style="width:62.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819d-a277-fcd348aa5dc5" class=""><strong>Volte para a página anterior</strong></p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81d8-bec6-cf6bf432c468" style="width:37.49999999999999%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8194-abe0-e50e6e5bdd69" class=""><strong>Avance para a próxima página</strong></p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-817e-8730-fe3fa62e26cc"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8167-9a3b-d15ddc15c91a" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-813c-8dca-e273bc8e1d72" style="width:62.5%" class="column"></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8145-84ee-cc60e74e0cbd" style="width:37.49999999999999%" class="column"></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8142-9895-e1cff2f567a0"/></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

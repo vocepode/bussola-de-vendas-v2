@@ -1,0 +1,727 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Frases de Autoridade</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-81f4-8c74-ffef8d1d386e" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chess-queen_blue.svg"/></div><h1 class="page-title" dir="auto">Frases de Autoridade</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-8189-8d25-c062257af4e3" class="quote-large">Demonstrar sua autoridade e credibilidade é essencial. Use a BIO para destacar suas qualificações, experiências, prêmios ou reconhecimentos que comprovem sua expertise e sucesso no seu campo de atuação.<br/>Aqui estão exemplos de frases de autoridade que você pode adaptar para sua bio do Instagram além de dicas para conteúdos.</blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81bb-b457-cb77fbe66fcd" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8187-b716-ce38bd793058" class=""><strong>Alimentação Saudável</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81f4-971a-c45960ec17a6" class="numbered-list" start="1"><li>&quot;Nutricionista premiada, especialista em dietas balanceadas.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81a1-b692-e9088c4d574c" class="numbered-list" start="2"><li>&quot;Mais de 10 anos transformando vidas através da alimentação.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81b6-90df-e7fe2e3ae859" class="numbered-list" start="3"><li>&quot;Palestrante em eventos nacionais sobre nutrição e bem-estar.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8164-86b3-e6046dcfc579" class="numbered-list" start="4"><li>&quot;Colaboradora de revistas renomadas em saúde e alimentação.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ef-8126-c2a63ad6ad2e" class="numbered-list" start="5"><li>&quot;Criadora do método revolucionário de perda de peso saudável.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-818c-881b-d72cc508d47a" class="numbered-list" start="6"><li>&quot;Consultora de restaurantes para criação de menus saudáveis.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81b3-a810-f9d525b2dc37" class="numbered-list" start="7"><li>&quot;Certificada em dietas especiais: vegana, sem glúten, low carb.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8154-95c5-de97d8d9c139" class="numbered-list" start="8"><li>&quot;Workshops e cursos online com milhares de alunos satisfeitos.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ff-8ac4-d278dbffd7e5" class="numbered-list" start="9"><li>&quot;Parcerias com academias para planos alimentares integrados.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8111-b0d7-c73f33bb5c34" class="numbered-list" start="10"><li>&quot;Reconhecida por resultados duradouros e sem efeito sanfona.&quot;</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a6-9bdb-e677e477f720" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8159-9f7c-c7c826841385" class=""><strong>Dicas para Autoridade</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8117-924d-e07731dd1e7a" class="numbered-list" start="1"><li>Compartilhe certificações e formações.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8171-8155-df333ee2a42c" class="numbered-list" start="2"><li>Publique depoimentos e casos de sucesso.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-810e-99d6-e728bdeb232e" class="numbered-list" start="3"><li>Escreva artigos e colunas em veículos de comunicação.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-810d-916f-d131e1613e53" class="numbered-list" start="4"><li>Participe de eventos e palestras como especialista.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81f0-b188-d8b6b6628b7d" class="numbered-list" start="5"><li>Mostre parcerias com marcas e instituições renomadas.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8193-9c7a-da776a193a87" class="numbered-list" start="6"><li>Ofereça conteúdo educativo e informativo regularmente.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8162-b0bf-d7986b0954f8" class="numbered-list" start="7"><li>Realize lives e webinars sobre temas relevantes.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8114-b3d7-e874f323b239" class="numbered-list" start="8"><li>Apresente estudos de caso e resultados mensuráveis.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81cf-944f-f22c3c6d2aca" class="numbered-list" start="9"><li>Destaque prêmios e reconhecimentos na área.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ff-b96c-f6560e006234" class="numbered-list" start="10"><li>Mantenha-se atualizado e compartilhe novidades do setor.</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817a-b4a2-e01579c11f67" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-816b-9628-dde76944690c" class=""><strong>Moda</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81b5-a81c-d088c2b5b8db" class="numbered-list" start="1"><li>&quot;Estilista reconhecida por inovação em design sustentável.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-818c-8406-eb93175dc67e" class="numbered-list" start="2"><li>&quot;Mais de 15 anos na vanguarda das tendências de moda.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8149-973d-ca191732590e" class="numbered-list" start="3"><li>&quot;Jurada em competições de design de moda nacionais.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81cb-93b1-fb1291c77c52" class="numbered-list" start="4"><li>&quot;Consultora de estilo para celebridades e influenciadores.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8188-9bc2-e5fa2747e664" class="numbered-list" start="5"><li>&quot;Cursos de moda com milhares de alunos formados.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8102-a2c5-d34fef3ce1c6" class="numbered-list" start="6"><li>&quot;Parcerias com marcas internacionais de tecidos ecológicos.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8127-a736-f9d306cbad9c" class="numbered-list" start="7"><li>&quot;Palestras sobre o futuro da moda em eventos globais.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81e2-a162-fb678e08973c" class="numbered-list" start="8"><li>&quot;Publicações em revistas de moda de prestígio.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8138-920a-f3a39543210f" class="numbered-list" start="9"><li>&quot;Desfiles em semanas de moda importantes pelo mundo.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-817d-8e36-ca5c43d3659c" class="numbered-list" start="10"><li>&quot;Criadora de uma linha exclusiva de acessórios veganos.&quot;</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8170-af3e-cae7bdfff46e" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817b-92dd-d783e68fd715" class=""><strong>Dicas para Autoridade</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8188-bb92-fb5610e77c4b" class="numbered-list" start="1"><li>Mostre seu portfólio e coleções passadas.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8179-a39f-e1d63cec0e42" class="numbered-list" start="2"><li>Compartilhe bastidores de desfiles e eventos.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-815f-9975-ef651d7c53c7" class="numbered-list" start="3"><li>Ofereça dicas de estilo baseadas em sua experiência.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8143-aa9e-fa1eb8b2eca4" class="numbered-list" start="4"><li>Realize workshops e cursos de moda online.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8133-9c37-cd4015c03883" class="numbered-list" start="5"><li>Participe como convidada em podcasts e entrevistas.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ce-ace1-d241724d3eb1" class="numbered-list" start="6"><li>Colabore com marcas e designers renomados.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-814c-9943-f7bd072bc63f" class="numbered-list" start="7"><li>Publique artigos sobre tendências e sustentabilidade.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-811c-86d3-f7d0cc4a609d" class="numbered-list" start="8"><li>Use redes sociais para mostrar seu processo criativo.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8171-919d-c3dd6bbfc1cd" class="numbered-list" start="9"><li>Apresente prêmios e reconhecimentos na área.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8128-a4f7-db4d85c1f6a7" class="numbered-list" start="10"><li>Mantenha-se atualizada e compartilhe insights do setor.</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81be-9bab-d7f75be2a067" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81dd-a400-e2817633d507" class=""><strong>Sapatos</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81d2-81e5-d59232318439" class="numbered-list" start="1"><li>&quot;Designer de sapatos com prêmios internacionais.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81b6-91c2-e2bd6192b2c0" class="numbered-list" start="2"><li>&quot;Especialista em calçados confortáveis e estilosos.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ab-866d-e8235f2ad845" class="numbered-list" start="3"><li>&quot;Colaborações com marcas de luxo e designers renomados.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8175-ad93-fda8b8c616dd" class="numbered-list" start="4"><li>&quot;Palestrante sobre inovação em design de calçados.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ef-9aac-e626a7e827b2" class="numbered-list" start="5"><li>&quot;Artigos publicados em revistas especializadas em moda.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-815c-8441-e4c6875f316a" class="numbered-list" start="6"><li>&quot;Workshops sobre a arte de criar sapatos únicos.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8110-9c71-d34050ad86d4" class="numbered-list" start="7"><li>&quot;Consultoria para marcas em busca de tendências de calçados.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8192-adc8-c6e22db7fd84" class="numbered-list" start="8"><li>&quot;Desenvolvedor de tecnologias para conforto dos pés.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81e8-9d43-c597d8ea8d39" class="numbered-list" start="9"><li>&quot;Curador de exposições sobre a história do calçado.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8109-9f93-cd27885d2ede" class="numbered-list" start="10"><li>&quot;Criador de uma linha exclusiva de sapatos veganos.&quot;</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-810a-b228-d95d1cb8d9bf" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815a-982d-e056bd1c5ead" class=""><strong>Dicas para Autoridade</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8128-835d-fe1ef9cda054" class="numbered-list" start="1"><li>Mostre o processo de design e fabricação dos sapatos.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81b4-bd1b-e5625770bac1" class="numbered-list" start="2"><li>Compartilhe histórias por trás de coleções icônicas.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8158-af1f-c74bb81c96b4" class="numbered-list" start="3"><li>Ofereça dicas de cuidados e manutenção de calçados.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8195-be2c-d48ff8d96249" class="numbered-list" start="4"><li>Realize eventos e lançamentos exclusivos online.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81b9-8faa-e21af5d4cea6" class="numbered-list" start="5"><li>Participe de feiras e exposições de calçados.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ac-8b75-c747a69a287f" class="numbered-list" start="6"><li>Colabore com influenciadores para reviews de produtos.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-814c-bc1e-d874a2462797" class="numbered-list" start="7"><li>Publique conteúdo educativo sobre tendências de sapatos.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81a4-96d1-f0fac6f19c45" class="numbered-list" start="8"><li>Use redes sociais para destacar inovações e tecnologias.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-816e-9c20-f2578d1ff913" class="numbered-list" start="9"><li>Apresente prêmios e reconhecimentos na área de calçados.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ba-b21e-fcec53dca15c" class="numbered-list" start="10"><li>Mantenha-se atualizado e compartilhe novidades do setor.</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81eb-b5cc-f72ea9a3c21d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81bc-b1c8-c5f23e089990" class=""><strong>Maquiagem</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8104-a5c1-cdf390e053da" class="numbered-list" start="1"><li>&quot;Maquiadora premiada com foco em técnicas naturais.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ad-a335-d9b7cf0df484" class="numbered-list" start="2"><li>&quot;Especialista em maquiagem para todos os tons de pele.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8149-baf2-d1a46dcdb094" class="numbered-list" start="3"><li>&quot;Colaborações com marcas de cosméticos de renome.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81a6-8f09-c97750a7ce1c" class="numbered-list" start="4"><li>&quot;Palestrante sobre tendências de beleza em eventos globais.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-811e-b783-fa089ab7ecf0" class="numbered-list" start="5"><li>&quot;Artigos sobre dicas de maquiagem em revistas especializadas.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8145-9404-d6d9b4d8fd20" class="numbered-list" start="6"><li>&quot;Cursos online de automaquiagem com milhares de alunas.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81e3-bce3-d7d245c861f1" class="numbered-list" start="7"><li>&quot;Consultoria de imagem e maquiagem para celebridades.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-814e-bf54-f7c45655031f" class="numbered-list" start="8"><li>&quot;Desenvolvedora de uma linha de maquiagem vegana.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-811b-9c41-f8e7b69f865c" class="numbered-list" start="9"><li>&quot;Curadora de conteúdo em canais de beleza no YouTube.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81a7-9d80-e89642c7e7b8" class="numbered-list" start="10"><li>&quot;Reconhecida por técnicas inovadoras em maquiagem.&quot;</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e4-a7dd-e4fa71b3e05c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8157-8052-d0ae65c13e81" class=""><strong>Dicas para Autoridade</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81cd-9784-cceccb00b763" class="numbered-list" start="1"><li>Mostre o portfólio com trabalhos em diferentes estilos de maquiagem.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8124-b9af-de3a4170a649" class="numbered-list" start="2"><li>Compartilhe bastidores de sessões de maquiagem e eventos.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81f1-bb6f-e97f595cb3b1" class="numbered-list" start="3"><li>Ofereça dicas de maquiagem baseadas em sua experiência profissional.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-816b-a9a0-cd45a872624c" class="numbered-list" start="4"><li>Realize tutoriais e cursos de maquiagem online.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81c8-8e3f-d91077ebc557" class="numbered-list" start="5"><li>Participe como convidada em podcasts e entrevistas sobre beleza.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8103-abdc-d8395f012d72" class="numbered-list" start="6"><li>Colabore com marcas e influenciadores no segmento de maquiagem.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8140-8279-c92b739add6c" class="numbered-list" start="7"><li>Publique artigos sobre técnicas e tendências de maquiagem.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81e1-9132-f00bf56b8cf9" class="numbered-list" start="8"><li>Use redes sociais para mostrar seu processo criativo e dicas rápidas.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-819f-978d-cb5887bd49e2" class="numbered-list" start="9"><li>Apresente prêmios e reconhecimentos na área de maquiagem.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8135-8d8e-f58a13c9218c" class="numbered-list" start="10"><li>Mantenha-se atualizada e compartilhe novidades do setor de beleza.</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817b-b1a8-c2bee1685426" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f3-ade4-f85e9d835a03" class=""><strong>Advogados e Consultores</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-815a-9ea0-f5479542f755" class="numbered-list" start="1"><li>&quot;Advogado especializado com reconhecimento nacional.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8119-8445-d1afaf97c657" class="numbered-list" start="2"><li>&quot;Consultor de negócios com vasta experiência em crescimento empresarial.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-812e-ac8b-e3f8a30a8300" class="numbered-list" start="3"><li>&quot;Palestrante em eventos jurídicos e de consultoria de renome.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81e9-bb7a-c00edde6c3df" class="numbered-list" start="4"><li>&quot;Artigos publicados em revistas jurídicas e de negócios.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8137-9860-dd246d7c7445" class="numbered-list" start="5"><li>&quot;Cursos online de direito e consultoria com alta avaliação.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81e4-8e6d-f9f1e4faacb0" class="numbered-list" start="6"><li>&quot;Consultoria para empresas Fortune 500 e startups inovadoras.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81eb-8866-fd272f503a2a" class="numbered-list" start="7"><li>&quot;Desenvolvedor de estratégias jurídicas e empresariais vencedoras.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8166-819e-ef918453b1ff" class="numbered-list" start="8"><li>&quot;Reconhecido por soluções criativas em casos complexos.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81db-92c2-d86f2c2be9b8" class="numbered-list" start="9"><li>&quot;Colaborador em projetos de lei e reformas empresariais.&quot;</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8152-8d70-cd59b3693802" class="numbered-list" start="10"><li>&quot;Criador de metodologias de consultoria que transformam negócios.&quot;</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8158-8095-e3c1a7cd3ae4" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81cf-88e6-d9113d58d5f2" class=""><strong>Dicas para Autoridade</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81df-8c3d-d1ffe3b6fd20" class="numbered-list" start="1"><li>Mostre casos de sucesso e resultados alcançados para clientes.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81e4-8be6-fba7be35bf90" class="numbered-list" start="2"><li>Compartilhe conhecimento através de artigos e publicações.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8195-b3fb-c5fd6d39bfa1" class="numbered-list" start="3"><li>Ofereça webinars e cursos online sobre temas jurídicos e de negócios.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8176-9c59-ef432a312e09" class="numbered-list" start="4"><li>Participe como especialista em painéis e conferências.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-818c-940a-d2d813e187de" class="numbered-list" start="5"><li>Colabore com instituições e organizações renomadas.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-819e-ad4e-f3629976ac78" class="numbered-list" start="6"><li>Use redes sociais para compartilhar dicas e insights profissionais.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8129-9185-d2701ee1b74c" class="numbered-list" start="7"><li>Apresente prêmios e reconhecimentos na área jurídica e de consultoria.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8178-aba7-c840e1461297" class="numbered-list" start="8"><li>Mantenha-se atualizado e compartilhe novidades do setor.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81be-8a23-ec7cfc1f9f24" class="numbered-list" start="9"><li>Realize consultorias gratuitas ou sessões de Q&amp;A para engajar o público.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-816e-aad9-d81400606cbf" class="numbered-list" start="10"><li>Destaque a importância da ética e da transparência no trabalho.</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817f-9cf2-d7eb2d03fe7a" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811d-af91-d60fe41469f6" class=""><strong>Frases de autoridade gerais</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8134-97c6-c0d2b7414ed1" class="numbered-list" start="1"><li>XX negócios criados.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8145-a3f8-c7fcaf390683" class="numbered-list" start="2"><li>XX pessoas transformadas pelo método.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81dd-b51f-eea857787ae1" class="numbered-list" start="3"><li>+ de XX clientes no mundo todo.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81f0-8b67-fb4605326fdb" class="numbered-list" start="4"><li>Especialista em [sua área de atuação].</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ac-a682-de653bc86474" class="numbered-list" start="5"><li>Líder em [sua indústria].</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81b8-9970-cbf338b66278" class="numbered-list" start="6"><li>Empreendedor de sucesso.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8160-8c0c-c4643955f403" class="numbered-list" start="7"><li>Mentor experiente.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81b5-817d-e23aba07ac71" class="numbered-list" start="8"><li>Palestrante motivacional.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-814e-9c95-f73c4f52e26a" class="numbered-list" start="9"><li>Escritor premiado.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ff-a9cd-d2db0d671fb9" class="numbered-list" start="10"><li>Fundador de [nome da sua empresa].</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81c4-a4f5-dc7097a66b85" class="numbered-list" start="11"><li>CEO de [nome da sua empresa].</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-813c-9bce-fb4b4ea2d4cd" class="numbered-list" start="12"><li>Especialista em marketing digital.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81d8-b7da-d63dd18c8030" class="numbered-list" start="13"><li>Consultor de negócios.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81df-be70-e14ac6715f9f" class="numbered-list" start="14"><li>Especialista em finanças.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8125-9c9d-e34cfd355e25" class="numbered-list" start="15"><li>Estrategista de marca.</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81fe-8dd8-c361f6bb43c4" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8181-8a1c-f3da400e38ed" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-818e-ba80-e2fe9faebdb7" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8157-b8ec-d51d888b84b2" class=""><strong>Navegue entre os conteúdos</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-810a-9daa-d49137a6f4e2"/></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8174-bcb0-e95bc53d7e5b"/></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

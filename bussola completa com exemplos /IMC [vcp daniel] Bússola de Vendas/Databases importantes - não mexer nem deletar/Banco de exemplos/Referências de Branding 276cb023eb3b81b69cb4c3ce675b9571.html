@@ -1,0 +1,721 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Referências de Branding</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-81b6-9cb4-c3ce675b9571" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/storm_blue.svg"/></div><h1 class="page-title" dir="auto">Referências de Branding</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-812f-b790-c2f12a9c62a3" class="quote-large">Essas referências que a Equipe VocêPode considera muito relevantes em cada categoria indicada. São exemplos de boas práticas, ideias bem executadas e como o que foi feito pode ajudar a você ter ideias do que é possível fazer com seu conteúdo.</blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8141-87e8-c3ed2a2e2a39" class="">
+</p></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-8133-b50f-f0b817b2a0cc" class="collection-content"><h4 class="collection-title">Categorias de branding</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Name</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th></tr></thead><tbody><tr id="276cb023-eb3b-81a6-ad3c-c0bbeaa32a4c"><td class="cell-title"><a href="Refer%C3%AAncias%20de%20Branding/Categorias%20de%20branding/Est%C3%A9tica%20276cb023eb3b81a6ad3cc0bbeaa32a4c.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/binoculars_blue.svg"/>Estética</a></td><td class="cell-Hg&lt;U"></td></tr><tr id="276cb023-eb3b-81ba-92a7-e89b61f83d87"><td class="cell-title"><a href="Refer%C3%AAncias%20de%20Branding/Categorias%20de%20branding/Linguagem%20276cb023eb3b81ba92a7e89b61f83d87.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/subtitles_blue.svg"/>Linguagem</a></td><td class="cell-Hg&lt;U"></td></tr><tr id="276cb023-eb3b-8151-bdd4-f90ebc74467b"><td class="cell-title"><a href="Refer%C3%AAncias%20de%20Branding/Categorias%20de%20branding/Edi%C3%A7%C3%A3o%20276cb023eb3b8151bdd4f90ebc74467b.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie_blue.svg"/>Edição</a></td><td class="cell-Hg&lt;U"></td></tr><tr id="276cb023-eb3b-815f-95e1-ee230f4a355c"><td class="cell-title"><a href="Refer%C3%AAncias%20de%20Branding/Categorias%20de%20branding/Trilha%20Som%20276cb023eb3b815f95e1ee230f4a355c.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/volume-high_blue.svg"/>Trilha/Som</a></td><td class="cell-Hg&lt;U"></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ee-827e-e83298d6d4de" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-818f-92ac-ea66fb016e21" class="">Bônus</h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81b8-ba71-c88699dafff8"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-812a-8dd8-dea6df9d5cf3" class="">Como material bônus, separamos perfis de marcas, pessoas e serviços que fazem um ótimo trabalho reunindo conteúdo, design e estratégia, além de uma seção recheada de tutoriais para te ajudar a melhorar sua produção de conteúdo</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ec-945c-f69346d0b48e" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81e0-a649-c4e27b775a73" class="block-color-blue_background"><strong>Branding</strong></h3></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81c1-9506-ec27b17fc39d"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8141-bd6b-c53095480da1"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chess-pawn_blue.svg"/></div><div style="width:100%"><strong>Mailchimp </strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81c7-9925-e0d21d088944"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8140-8c30-f2b26b242993"><a href="https://www.instagram.com/mailchimp/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Instagram (@mailchimp)</div><div class="bookmark-description">Instagram photos and videos</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/mailchimp/</div></div><img src="https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/306469039_1349787869169124_1384490360059521005_n.jpg?stp=dst-jpg_s100x100&amp;_nc_cat=1&amp;ccb=1-7&amp;_nc_sid=3fd06f&amp;_nc_ohc=_stLXi38-EYAb6aJo9W&amp;_nc_ht=scontent-iad3-1.cdninstagram.com&amp;oh=00_AfDyVGO05TPxwU3EomE5Mouh5oOTx4MUIQRpt9tEPCIkJQ&amp;oe=661900EE" class="bookmark-image"/></a></figure></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81dc-8e1f-e5a7ad25cd1d"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chess-pawn_blue.svg"/></div><div style="width:100%"><strong>Riachuelo</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81af-b763-f87ec5258c4d"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81c8-920f-fc2317489d33"><a href="https://www.instagram.com/riachuelo/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Instagram (@riachuelo)</div><div class="bookmark-description">Instagram photos and videos</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/riachuelo/</div></div><img src="https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/258567037_1012040922689102_7276737570873842464_n.jpg?stp=dst-jpg_s100x100&amp;_nc_cat=1&amp;ccb=1-7&amp;_nc_sid=3fd06f&amp;_nc_ohc=BQnS5GzMqK4Q7kNvgENwrlg&amp;_nc_ht=scontent-iad3-1.cdninstagram.com&amp;oh=00_AYBvNLETCiqInLVbHClMmfJud7007bVnmhDpm8D9lFPLcQ&amp;oe=66454ABD" class="bookmark-image"/></a></figure></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8186-b84f-f0a4a9d06d3f"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chess-pawn_blue.svg"/></div><div style="width:100%"><strong>Nubank</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81fa-b814-d6e4a7a03eb5"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8166-85ee-c21327e43743"><a href="https://www.instagram.com/nubank/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Instagram (@nubank)</div><div class="bookmark-description">Instagram photos and videos</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/nubank/</div></div><img src="https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/324089383_1107918419880288_2067674984575890345_n.jpg?stp=dst-jpg_s100x100&amp;_nc_cat=1&amp;ccb=1-7&amp;_nc_sid=3fd06f&amp;_nc_ohc=j67uVOADVK8Q7kNvgFlsS5i&amp;_nc_ht=scontent-iad3-1.cdninstagram.com&amp;oh=00_AYAcPFSplnokyReYWVK-gi5KDgIr2dw_y9yan66p6gsyHg&amp;oe=66454CBA" class="bookmark-image"/></a></figure></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81db-b569-ccbe6c0bd767"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chess-pawn_blue.svg"/></div><div style="width:100%"><strong>Paulo Cuenca</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-814a-ae15-ff51a1fd5657"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81a5-b316-c331233cd796"><a href="https://www.instagram.com/paulocuenca/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Instagram (@paulocuenca)</div><div class="bookmark-description">Instagram photos and videos</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/paulocuenca/</div></div><img src="https://scontent-iad3-1.cdninstagram.com/v/t51.2885-19/357733474_209545932051810_4008243585781598434_n.jpg?stp=dst-jpg_s100x100&amp;_nc_cat=1&amp;ccb=1-7&amp;_nc_sid=3fd06f&amp;_nc_ohc=rqOCBJfV_BEAX873zAv&amp;_nc_ht=scontent-iad3-1.cdninstagram.com&amp;oh=00_AfDf6Xzl53-ERidua8eBG1Wnv-N08yd3Iq4RVOxZul1U2Q&amp;oe=65FADB2B" class="bookmark-image"/></a></figure></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81a9-bcba-e6357715e049"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chess-pawn_blue.svg"/></div><div style="width:100%"><strong>Hyeser</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8169-8fa8-f10b3d16f552"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81e4-bd8b-d068e120a40e"><a href="https://www.instagram.com/hyeser/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Instagram (@hyeser)</div><div class="bookmark-description">Instagram photos and videos</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/hyeser/</div></div><img src="https://scontent-iad3-2.cdninstagram.com/v/t51.2885-19/309578972_152249687137739_883118916730421650_n.jpg?stp=dst-jpg_s100x100&amp;_nc_cat=1&amp;ccb=1-7&amp;_nc_sid=3fd06f&amp;_nc_ohc=3S1OXZq9clEAb59Hqjt&amp;_nc_ht=scontent-iad3-2.cdninstagram.com&amp;oh=00_AfDru46QatFpb2qoD2_5btAgcEtErwnI4DBIfdvQ0t5tqg&amp;oe=6620D59F" class="bookmark-image"/></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8102-96af-c13789206042" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81c9-92bf-d1fa27e43b76" class="block-color-blue_background"><strong>Tutoriais</strong></h3></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-810a-92ef-e18afa4bfe73"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8178-86d9-d8e07fc6ad2c" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.instagram.com/reel/C5mRMpRO6VQ">Uso de ângulos de câmera</a></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81d1-80ad-dab7433014a6" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.instagram.com/p/C4qL1RVOsDj/">Dicas para gravar com celular</a> </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8144-9655-c06615850454" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.instagram.com/p/C4f4O6lulVj/">Colorização de cinema usando CapCut</a> </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81d0-9165-c37cd34e0a6b" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.instagram.com/p/C3_C9V7O-kc/">Como fazer efeito de stop motion</a> </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8180-afa2-d47229a2c22a" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.instagram.com/p/CzMA6tYOYR8/">(Enquadramento) Entendendo a regra dos terços</a> </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81f1-a094-efb39dea2f8c" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.instagram.com/p/CvifQFfMwjN/">Técnicas simples para vídeos de produto</a>  </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8178-8ffe-d68f3cc68032" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.instagram.com/p/C5J4Uz6OGZ2/">Como fazer efeito Time Lapse no CapCut</a>  </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ee-9396-f232e9d2d6e0" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.instagram.com/p/C4jPXwqOCyp/">Dicas para melhorar seus vídeos com celular</a>  </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8152-93eb-e38e0f12c9c7" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.tiktok.com/@seoud.me/video/7306631463905037611">Fazendo objetos aparecerem atrás de você no CapCut</a>  </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-810e-89ff-d6222b7afe46" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.tiktok.com/@rgraphics607/video/7212798830725713154">Uso criativo de texto no vídeo</a>  </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8154-9269-f7727a3645e2" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.tiktok.com/@euluizfotografo/video/7325440859753794822">Dicas para melhorar a cor dos vídeos</a> </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8146-a3e2-ed53bdfdad91" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.tiktok.com/@vicgaibar/video/7218551303755042054">Passo a Passo de vídeo usando TimeLapse</a> </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8111-9721-df1d84197fec" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.tiktok.com/@sinmisimsim/video/7080239774925311278">Como melhorar a qualidade dos seus vídeos</a> </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81dc-8db2-fd4b62889b12" class="bulleted-list"><li style="list-style-type:disc"><a href="https://www.tiktok.com/@invibefilms/video/7253206162160569605">Dicas de movimentação de câmera</a> </li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8119-b47c-eda9575ddc51" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8163-893f-c70be0a7ea7c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8189-8ad7-e28d5d3021a8" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-812b-9d5d-d71196353eb5" class=""><strong>Volte para a página anterior</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-810d-a08e-cdee7fd4a30a"/></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81a7-bbeb-e3a2455b38a0"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819f-8812-da8334d31086" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,724 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Lista de Benefícios Emocionais</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-81f9-9a1e-df498a9c7414" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/heart_blue.svg"/></div><h1 class="page-title" dir="auto">Lista de Benefícios Emocionais</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-81ac-a593-c79f063ae3a7" class="quote-large">Benefícios emocionais refletem como o uso do produto ou serviço faz o consumidor se sentir é a forma de conectar-se emocionalmente com o público-alvo para criar lealdade à marca. Aqui estão exemplos de frases de benefícios emocionais em alguns nichos e outros gerais</blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81bc-8032-ec351d45e256" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8154-a587-fe9825265bd8" class=""><strong>Alimentação Saudável</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81cd-8d57-c97a1ee87805" class="numbered-list" start="1"><li>Aumento da autoestima</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-810b-9ff7-cfa0b32d01a9" class="numbered-list" start="2"><li>Sensação de cuidado pessoal</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-814d-8d41-dbd32d921474" class="numbered-list" start="3"><li>Conexão com a natureza</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-812f-b58b-ce2dd2f1bff1" class="numbered-list" start="4"><li>Orgulho de escolhas saudáveis</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ec-8c22-d221794987c2" class="numbered-list" start="5"><li>Sentir-se bem consigo mesmo</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8115-9448-c8745509a3f1" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ad-81cc-cc951a415934" class=""><strong>Moda</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8180-990b-dfc2b7fcae7d" class="numbered-list" start="1"><li>Expressão da identidade pessoal</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81c8-ba1e-c71cfb6858d2" class="numbered-list" start="2"><li>Sensação de pertencimento a uma comunidade</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-814f-b229-d27f57cfe405" class="numbered-list" start="3"><li>Confiança no visual</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ab-8304-ec918cf0015d" class="numbered-list" start="4"><li>Alegria ao vestir peças que amamos</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8142-bb67-c75968c7cc5a" class="numbered-list" start="5"><li>Sentimento de exclusividade</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-816e-ba79-c612827811fb" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c7-9238-c890c8f874d2" class=""><strong>Sapatos</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81d1-bf15-c72655e88a1e" class="numbered-list" start="1"><li>Satisfação com o conforto</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-810f-8201-d89f50423a7e" class="numbered-list" start="2"><li>Sentimento de investimento em si mesmo</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8126-993b-c13b34cb0b35" class="numbered-list" start="3"><li>Alegria ao praticar esportes</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8168-b76a-d259cb7a5c4c" class="numbered-list" start="4"><li>Segurança em cada passo</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8195-88c9-e11cf7bf3748" class="numbered-list" start="5"><li>Confiança ao se mover</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-813e-9188-d8f69fcc3441" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817a-8bba-ce01c71a07fc" class=""><strong>Maquiagem</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8140-b6c4-fff65021ee69" class="numbered-list" start="1"><li>Sensação de beleza aprimorada</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8154-a9cd-ee5d9f3b3da6" class="numbered-list" start="2"><li>Felicidade ao se olhar no espelho</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8170-a6ab-eeabd5fa1d28" class="numbered-list" start="3"><li>Conexão com a autoexpressão</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8122-8bd2-d96820a4996a" class="numbered-list" start="4"><li>Satisfação com a contribuição ambiental</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8115-a097-c109b9a449f9" class="numbered-list" start="5"><li>Empoderamento pessoal</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d2-a3a7-cf4244bebd63" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-810c-a4f5-eab4751603f9" class=""><strong>Advogados e Consultores</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81d7-a68d-e0c90bb41590" class="numbered-list" start="1"><li>Confiança na tomada de decisões</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8134-9a54-d729a556f79c" class="numbered-list" start="2"><li>Alívio do estresse e da ansiedade</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8140-909d-d5fd1f3c5034" class="numbered-list" start="3"><li>Sentimento de estar em boas mãos</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81a0-ac73-f238aa50bcd0" class="numbered-list" start="4"><li>Gratidão pela orientação profissional</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8126-a3c7-e2d8f55f42ef" class="numbered-list" start="5"><li>Paz de espírito</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8192-9a4c-cd32bb23231d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8108-a8bb-ee4a84579bc5" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811d-b21a-ea927b1750bf" class=""><strong>Benefícios emocionais gerais</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81b5-9b59-f20b3b065c89" class="numbered-list" start="1"><li>Sentimento de pertencimento</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-818f-8d8a-c73d84d80914" class="numbered-list" start="2"><li>Conexão emocional</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8166-a346-e7b52f1fb566" class="numbered-list" start="3"><li>Satisfação pessoal</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-811d-8f33-c82124a753e4" class="numbered-list" start="4"><li>Tranquilidade</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-819e-bdfa-cfc8891e59f4" class="numbered-list" start="5"><li>Empatia</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81fc-9c95-f3eb13ed0aa3" class="numbered-list" start="6"><li>Sentimento de segurança</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-817e-9ee4-f6f3076c5c93" class="numbered-list" start="7"><li>Gratidão</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8193-9588-d2964b0776fe" class="numbered-list" start="8"><li>Inspiração</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8198-b18e-c87234355c6d" class="numbered-list" start="9"><li>Sentimento de realização</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8147-a4fa-ffe0e259f50a" class="numbered-list" start="10"><li>Felicidade</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8115-aadd-f713c759ef56" class="numbered-list" start="11"><li>Sensação de conforto</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-819a-8096-c704e449a83c" class="numbered-list" start="12"><li>Sentimento de admiração</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ef-8635-d38fefc39ed4" class="numbered-list" start="13"><li>Sentimento de orgulho</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8158-9ec8-c3326b7884a0" class="numbered-list" start="14"><li>Sensação de relaxamento</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8174-a835-d92d79c2e9f0" class="numbered-list" start="15"><li>Sensação de liberdade</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-816f-975c-e45e3de8ad2a" class="numbered-list" start="16"><li>Sentimento de esperança</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8136-bca4-cd6c20944405" class="numbered-list" start="17"><li>Sentimento de confiança</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8120-a412-d3580737aa79" class="numbered-list" start="18"><li>Sentimento de amor</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81df-ac27-c3371367d467" class="numbered-list" start="19"><li>Sentimento de alegria</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-818d-89f0-cd69d51f8b1c" class="numbered-list" start="20"><li>Sentimento de bem-estar</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8106-a9d6-fc40c05fea2a" class="numbered-list" start="21"><li>Sentimento de gratificação</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-811e-aa30-dc1c90320768" class="numbered-list" start="22"><li>Sensação de encantamento</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81bb-ab7d-da8b15bcbf34" class="numbered-list" start="23"><li>Sentimento de fascínio</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81b0-8351-de17461d48a8" class="numbered-list" start="24"><li>Sentimento de entusiasmo</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-811e-b9f7-f186a41266dd" class="numbered-list" start="25"><li>Sentimento de nostalgia</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8178-bb17-f88f3f0d3efb" class="numbered-list" start="26"><li>Sensação de empoderamento</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8112-847d-e9d36840565e" class="numbered-list" start="27"><li>Sentimento de excitação</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8120-ba55-ec7c1b6ee444" class="numbered-list" start="28"><li>Sensação de admiração</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-814c-9f13-eb4a1a715290" class="numbered-list" start="29"><li>Sentimento de encorajamento</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-815c-ac02-c53381155477" class="numbered-list" start="30"><li>Sensação de conforto</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81c9-9d56-c636fff82a30" class="numbered-list" start="31"><li>Sentimento de pertencimento</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81f5-b792-fac3ee6d2af8" class="numbered-list" start="32"><li>Sentimento de alívio</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81ae-8722-e5d2d882efaa" class="numbered-list" start="33"><li>Sentimento de aceitação</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-819c-adde-d4ab072963a4" class="numbered-list" start="34"><li>Sensação de rejuvenescimento</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-817b-aaaa-f2d50cbddef6" class="numbered-list" start="35"><li>Sentimento de motivação</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81c8-8a0d-d186a5bf7d1b" class="numbered-list" start="36"><li>Sentimento de otimismo</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81b8-bb35-d5e4dfb0e267" class="numbered-list" start="37"><li>Sensação de paz interior</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-813d-ad0d-e27c83118079" class="numbered-list" start="38"><li>Sentimento de autoconfiança</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81db-b366-ddaa579a8ad1" class="numbered-list" start="39"><li>Sentimento de reconhecimento</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81f2-b0dd-e0d31398e6eb" class="numbered-list" start="40"><li>Sentimento de surpresa</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-810f-a8b3-d7729a1e2d91" class="numbered-list" start="41"><li>Sensação de serenidade</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81bf-9ae3-c80794985a23" class="numbered-list" start="42"><li>Sentimento de transcendência</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8184-af0a-f6a42a6c81e8" class="numbered-list" start="43"><li>Sensação de realização pessoal</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81cb-8810-e5e3acf3a767" class="numbered-list" start="44"><li>Sentimento de empolgação</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8193-833a-c90d17f36bf6" class="numbered-list" start="45"><li>Sentimento de união</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-817a-98cc-d794a73073c3" class="numbered-list" start="46"><li>Sensação de respeito</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81d8-98ab-d67ac2742c57" class="numbered-list" start="47"><li>Sentimento de pertencimento à comunidade</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8177-9cc4-e30172f5c238" class="numbered-list" start="48"><li>Sensação de familiaridade</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81e2-81dd-ffaa959c653d" class="numbered-list" start="49"><li>Sentimento de afeto</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8117-8e44-e4dad80b3ef4" class="numbered-list" start="50"><li>Sentimento de conexão espiritual</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81b7-94e7-c76483ba397e" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8113-a7b7-ef9882a4bc11" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8183-ae9e-fd9eca9a0b13" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81fb-839c-f22f932eb17c" class=""><strong>Volte para a página anterior</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81e6-8c11-caad4505a6b1"/></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8176-a2c8-e23888407447"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c6-8af1-ecb80386c51d" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

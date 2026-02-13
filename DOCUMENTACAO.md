@@ -52,6 +52,10 @@ A **Bússola de Vendas** é uma plataforma educacional completa desenvolvida par
    - Templates e materiais de apoio
    - Links úteis e ferramentas
 
+## Configuração e execução
+
+Para instalar dependências, configurar o `.env` e rodar o projeto, veja **[SETUP.md](./SETUP.md)**.
+
 ## Arquitetura Técnica
 
 ### Stack Tecnológico

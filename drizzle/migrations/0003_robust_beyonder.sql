@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "lesson_user_state_user_lesson_unique" ON "lessonUserState" USING btree ("userId","lessonId");

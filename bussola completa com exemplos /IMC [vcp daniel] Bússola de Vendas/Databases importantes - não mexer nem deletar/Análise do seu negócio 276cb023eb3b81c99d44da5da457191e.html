@@ -1,0 +1,721 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Análise do seu negócio</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-81c9-9d44-da5da457191e" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/search_blue.svg"/></div><h1 class="page-title" dir="auto">Análise do seu negócio</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8133-b585-e1e937c32a97" class="">Por favor, responda a <strong>todas as perguntas</strong> abaixo.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d6-9a57-d2691da627b1"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-819d-b50f-f882a2adeaa6" class=""><mark class="highlight-blue">Aprenda a fazer o exercício!</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8129-aa85-d589a6fee702"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8184-91c8-f13217324c8d" class="toggle"><li><details open=""><summary><mark class="highlight-blue_background">Se estiver com dúvidas, veja o vídeo abaixo para ver mais detalhes de como preencher essa página:</mark></summary><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-814c-8020-e302816249e8"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought-dialogue_blue.svg"/></div><div style="width:100%"><strong>Tutorial - Preenchendo a Análise do seu negócio</strong><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81fd-9aa2-e19322529173"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/M7qW6gMv4x" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/M7qW6gMv4x</div></div></a></figure></div></div></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81a7-970f-e63d7452ce37"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81d4-912d-f251fecc1a6e" class=""><strong>Posição inicial</strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8122-9ac1-d3502bf9cd13" class=""><em><mark class="highlight-gray">Esse é o momento de registrar a sua história, um passo muito importante na sua jornada. Precisamos saber onde você está hoje e é preciso muita sinceridade, pois com essas informações podemos ter clareza  de como realizar o que você deseja para a sua empresa.</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81ce-ad97-c176ae73333b"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8009-8294-f32e02af4fd7" class="">A empresa está em processo de reestruturação. Houve o encerramento do tráfego pago e o foco total passou a ser o Método COMPASS.</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8071-bfb3-c6c234796031" class="">Apesar de histórico sólido, houve queda brusca no faturamento recente e aumento de churn, exigindo reconstrução estratégica, fortalecimento de posicionamento e previsibilidade de receita.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81af-9e04-c483af13b269"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-8175-a55b-ff642bf560af" class="">Texto de apresentação</h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8122-8cda-e8a7879b49ca" class=""><em><mark class="highlight-gray">Fale sobre sua empresa, o que ela faz, quais são seus valores, missão e visão.</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8145-b6f9-e707004caee3"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-805a-86ab-e65af71aadc5" class="">A Você Pode é uma empresa de estratégia e marketing que ajuda negócios físicos e profissionais a se posicionarem com verdade no digital, gerando vendas e lucro real.</p></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-8016-b7cb-c72e5c1d9a78" class="">Fundada por Daniel, empreendedor com mais de 20 anos de experiência em negócios, eventos, gestão e marketing, a empresa criou o Método COMPASS para transformar empresas invisíveis em marcas desejadas, através de estratégia, posicionamento, conteúdo e vendas.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-814f-af03-d9f8397430b2"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81ae-8c21-d4026eca15c9" class=""><strong>Análise de mercado</strong> </h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8107-95d5-e6deea5305fa" class=""><em><mark class="highlight-gray">A análise de mercado é essencial para entender as dinâmicas do seu setor, identificar tendências e reconhecer o público-alvo. Ela permite adaptar estratégias para atender às demandas específicas.</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81d6-9b27-ec3a928e2d75"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%">Mercado de marketing digital e educação em crescimento, porém saturado de promessas vazias. Existe oportunidade clara para diferenciação através de posicionamento honesto, foco em negócios físicos e entrega de resultado real.</div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81cf-8bd9-fcd15c445c6f"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-8147-8a37-eeda9153d610" class=""><strong>Cite 5 empresas do mesmo nicho</strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d5-93d7-f15b30a3e975" class=""><em><mark class="highlight-gray">Liste empresas que você se inspira.</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-811c-9ae1-d695ac8d2830"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%">Gary Vee<div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81b3-92a0-d5ff55273347"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ce-8bcc-e8891a5c2b20" class="">Alex Hormozi</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d8-a9da-f7e792763a2f"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e2-9ee8-cf3ade1a2181" class="">Brands Decoded</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d9-9991-c69645406d0a"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8105-a0e6-d1e7b9e6a1bf" class="">Paulo Cuenca</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8106-b38c-d87793426a64"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811b-b900-e7430d356dea" class="">Leandro Ladeira</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f7-aab7-d6234e562318"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-8165-9276-c327601cde70" class=""><strong>Cite 5 concorrentes</strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8157-bd40-e39cf74f1de6" class=""><em><mark class="highlight-gray">Liste as empresas, projetos ou negócios que são seus concorrentes.</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-817a-b613-fcf357912362"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Empresas concorrentes (diretos ou indiretos)</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-816d-91b7-d40a5e49bc70"/></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-81bd-b7ab-e9402477cfac" class="collection-content"><h4 class="collection-title">Tabela de concorrentes</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Concorrente</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/link_gray.svg" style="width:14px;height:14px;display:block"/></span>Site</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/camera_gray.svg" style="width:14px;height:14px;display:block"/></span>Instagram</th></tr></thead><tbody><tr id="276cb023-eb3b-8199-9747-f2bcae1efcd1"><td class="cell-title"><a href="Tabela%20de%20concorrentes/Willian%20Celso%20276cb023eb3b81999747f2bcae1efcd1.html">Willian Celso</a></td><td class="cell-fFA`"></td><td class="cell-JhYw"><a href="https://www.instagram.com/williancelso/" class="url-value">https://www.instagram.com/williancelso/</a></td></tr><tr id="276cb023-eb3b-8154-b86e-e2383427fe28"><td class="cell-title"><a href="Tabela%20de%20concorrentes/Rapha%20Falc%C3%A3o%20276cb023eb3b8154b86ee2383427fe28.html">Rapha Falcão</a></td><td class="cell-fFA`"></td><td class="cell-JhYw"><a href="https://www.instagram.com/raphafalcaof/" class="url-value">https://www.instagram.com/raphafalcaof/</a></td></tr><tr id="276cb023-eb3b-81bf-b8dd-d1c9d19667ea"><td class="cell-title"><a href="Tabela%20de%20concorrentes/Vinci%20Society%20276cb023eb3b81bfb8ddd1c9d19667ea.html">Vinci Society</a></td><td class="cell-fFA`"></td><td class="cell-JhYw"><a href="https://www.instagram.com/vinci.society/" class="url-value">https://www.instagram.com/vinci.society/</a></td></tr><tr id="276cb023-eb3b-8109-b9d7-fa04c26ae0b5"><td class="cell-title"><a href="Tabela%20de%20concorrentes/Rejane%20Toigo%20276cb023eb3b8109b9d7fa04c26ae0b5.html">Rejane Toigo</a></td><td class="cell-fFA`"></td><td class="cell-JhYw"><a href="https://www.instagram.com/likemkt/" class="url-value">https://www.instagram.com/likemkt/</a></td></tr><tr id="276cb023-eb3b-813b-b7d8-d6f037708d36"><td class="cell-title"><a href="Tabela%20de%20concorrentes/Rafael%20Kiso%20276cb023eb3b813bb7d8d6f037708d36.html">Rafael Kiso</a></td><td class="cell-fFA`"></td><td class="cell-JhYw"><a href="https://www.instagram.com/rafaelkiso/" class="url-value">https://www.instagram.com/rafaelkiso/</a></td></tr><tr id="2d8cb023-eb3b-8067-ba46-f24d66e1e2cc"><td class="cell-title"><a href="Tabela%20de%20concorrentes/G4%20Educa%C3%A7%C3%A3o%202d8cb023eb3b8067ba46f24d66e1e2cc.html">G4 Educação</a></td><td class="cell-fFA`"></td><td class="cell-JhYw"><a href="https://www.instagram.com/g4educacao/" class="url-value">https://www.instagram.com/g4educacao/</a></td></tr></tbody></table><br/><br/></div></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-814f-97f9-d870a29c52b9"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-8131-a101-cf9233e694ab" class=""><strong>Seus principais produtos/serviços</strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811b-a1f6-d7b1307af6a2" class=""><em><mark class="highlight-gray">Lista quais são seus principais produtos e/ou serviços.</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8124-b8ae-d2b87961ee04"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80b0-84b5-d653d9a4d50a" class="bulleted-list"><li style="list-style-type:disc">Mentoria Compass Individual</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-807d-9ddf-fa772fd28d1a" class="bulleted-list"><li style="list-style-type:disc">Programa Compass (assessoria)</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80e3-b72d-ee3216996c8b" class="bulleted-list"><li style="list-style-type:disc">Consultorias estratégicas</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8063-9d9e-d162460c9092" class="bulleted-list"><li style="list-style-type:disc">Mentorias em grupo</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80e9-9da1-e1b5e2078acc" class="bulleted-list"><li style="list-style-type:disc">Cursos e imersões</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8147-9935-ff827b027336"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-8175-a593-f8a12eaa5e61" class=""><strong>Dentro desses produtos/serviços, qual é o mais lucrativo?</strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ae-a084-cbbe60bdc95a" class=""><em><mark class="highlight-gray">Liste por ordem de lucratividade, o que dá o maior lucro primeiro e assim sucessivamente.</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-818b-b1bd-cc10ad27d4db"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80e2-8bfa-e82dd25d41b6" class="bulleted-list"><li style="list-style-type:disc">Mentoria Compass Individual</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80a4-90e1-f97ef76d0abb" class="bulleted-list"><li style="list-style-type:disc">Programa Compass (assessoria)</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8068-92f8-f3a72684037b" class="bulleted-list"><li style="list-style-type:disc">Consultorias estratégicas</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80e7-acaa-fb3d106d566f" class="bulleted-list"><li style="list-style-type:disc">Mentorias em grupo</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-802a-8826-c31814993862" class="bulleted-list"><li style="list-style-type:disc">Cursos e imersões</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-819c-bc64-f74d96934c4d"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81d8-bdf6-f4263b7787d0" class=""><mark class="highlight-default"><strong>Em quais plataformas você está presente?</strong></mark></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c4-914c-e7c8e201bf8b" class="block-color-gray"><em>Indique quais das plataformas abaixo você possui e coloque os links de seus perfis onde você está presente.</em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81c1-a24e-ccbe023f2a17"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Plataformas</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8137-9dde-fd2108151bb3"/></div><div style="display:contents" dir="ltr"><table id="276cb023-eb3b-81f1-9e74-dcab2d0b11ff" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81b8-bc85-efcf748de608"><th id="Ywgp" class="simple-table-header-color simple-table-header" style="width:276.375px">Plataforma</th><th id="Ny{f" class="simple-table-header-color simple-table-header" style="width:555px">Link</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8135-8a77-df95f8464be0"><td id="Ywgp" class="" style="width:276.375px"><strong>Perfil no Instagram</strong></td><td id="Ny{f" class="" style="width:555px">www.instagram.com/vcp.vocepode</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8125-963f-f60e61208ae8"><td id="Ywgp" class="" style="width:276.375px"><strong>Perfil no Google meu Negocio </strong></td><td id="Ny{f" class="" style="width:555px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81f1-becc-f39558ff60a0"><td id="Ywgp" class="" style="width:276.375px"><strong>Página no Facebook </strong></td><td id="Ny{f" class="" style="width:555px">www.facebook.com/vcp.vocepode</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8104-9c59-fa96b93330b1"><td id="Ywgp" class="" style="width:276.375px"><strong>Página no Linkedin</strong></td><td id="Ny{f" class="" style="width:555px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81a1-a358-c9192ba3149d"><td id="Ywgp" class="" style="width:276.375px"><strong>Perfil no Pinterest</strong></td><td id="Ny{f" class="" style="width:555px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-816c-a4cc-f916c888db58"><td id="Ywgp" class="" style="width:276.375px"><strong>Perfil no TikTok </strong></td><td id="Ny{f" class="" style="width:555px">www.tiktok.com/vcp.vocepode</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-811b-a2bb-e97af0c135b0"><td id="Ywgp" class="" style="width:276.375px"><strong>Perfil no X (Twitter) </strong></td><td id="Ny{f" class="" style="width:555px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-815d-b20b-cde9342e033b"><td id="Ywgp" class="" style="width:276.375px"><strong>Canal no Youtube </strong></td><td id="Ny{f" class="" style="width:555px">www.youtube.com/vcp.vocepode</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81f7-94e5-ecdaed465d5d"><td id="Ywgp" class="" style="width:276.375px"><strong>Landing page </strong></td><td id="Ny{f" class="" style="width:555px">www.vocepodevendermais.com.br</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81c7-9546-fa6fb339db2a"><td id="Ywgp" class="" style="width:276.375px"><strong>E-commerce </strong></td><td id="Ny{f" class="" style="width:555px"></td></tr></div></tbody></table></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8185-af05-c25e8fdc61d8"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-81eb-9bd1-c6b652864b8c" class=""><strong>Dados demográficos do seu público</strong></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f0-a852-d6cae552892e"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-8112-b9e9-f7f1b91d72fb" class=""><strong>Em relação ao seu público alvo, que compra hoje seus produtos, ele é:</strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81be-bebb-dd3fa8f9cf9b" class=""><em><mark class="highlight-gray">De qual região o seu público alvo faz parte?</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-818e-91ba-df42dbdd0b03"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Público</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8124-a1c3-f991e6497022"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8139-9541-c81f32d82599" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Local (no seu bairro ou na sua cidade)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81d3-8386-dfd1d355abcf" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Regional (abrange mais cidades ou estados próximos ao seu)</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8101-99cb-c2d49a037bd2" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Nacional (você vende para todo o país)</span><div class="indented"></div></li></ul></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8186-9ddc-e7af1b1fc01d"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81bf-89a3-fcf43757aa9f" class="">Qual a faixa etária?</h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a9-b0e8-daf8301bf94f" class=""><em><mark class="highlight-gray">Indique todas as faixas que sua empresa atende. Pode marcar mais de uma.</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81b3-b0a0-c6dfb298f70f"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Público </strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8179-a322-c0ac60a0f5ea"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c8-8213-f8b45f4ddd41" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">18 a 24 anos</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81db-99c8-f2b9d657950c" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">25 a 34 anos</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81df-a23e-cfb20edb8a38" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">35 a 44 anos</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8139-9d4c-ecb533b5328e" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">45 a 54 anos</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81bf-8f63-d0013af9d2f8" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">55 a 64 anos</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ea-9017-e10ebb4e7a46" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Mais de 65 anos</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-816a-8a03-f25f9b64e7b8"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8196-b737-dc8a4d9dd5b7" class=""><strong>E qual a principal?</strong></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8106-8954-dcf0544f6a80" class=""><em>Escreva aqui</em></p></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80eb-85f3-cca7ed2c1562" class="bulleted-list"><li style="list-style-type:disc">Faixa etária principal: 30 a 60 anos</li></ul></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-80f0-9250-c28f48bee6e2" class="">
+</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81b8-83ec-e1fd163729a2"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81ed-9fe6-efd45fba8257" class=""><strong>Qual o gênero?</strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81bc-b604-f544fd199df5" class=""><em><mark class="highlight-gray">Indique qual é o gênero predominante do seu público alvo. Se tiver informações sobre porcentagens acrescente também. Quanto mais detalhes, melhor.</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81e7-b8d8-fa7a1544aedd"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Público</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8161-8cfc-e1d2f4baca47"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-817e-987e-ee0e8fdccad7" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Homem</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-814c-85ab-f669c45d84a5" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Mulher</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-816b-8a0a-d45710083a43" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Ambos</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-807f-b185-e81f8ad6fa2a" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Gênero: 70% mulheres</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><p id="2cdcb023-eb3b-801d-a322-fec04f0d23f3" class="">
+</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81e3-bb8c-ed5d06bfd622"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81e1-b785-c2622f216660" class=""><strong>Renda individual e familiar</strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8111-8d77-ea903390850c" class=""><em><mark class="highlight-gray">Indique a média da renda individual dos seus clientes (quanto ganham trabalhando em seus próprios negócios) e a renda familiar (incluindo todos os membros da família, independentemente de estarem envolvidos no negócio).</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-810d-b2b2-d93907d9bc6f"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Renda</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8191-97ce-f04691e0603e"/></div><div style="display:contents" dir="ltr"><table id="276cb023-eb3b-8166-98c0-d93de857fc62" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81ed-bc88-ed9bf0f105f8"><th id=";{}f" class="simple-table-header-color simple-table-header">Renda individual</th><td id="&gt;_Jd" class="">20k</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8102-adfb-cdf2dc818897"><th id=";{}f" class="simple-table-header-color simple-table-header">Renda negócio</th><td id="&gt;_Jd" class="">30k</td></tr></div></tbody></table></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8128-ab56-fde4c99094f4"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-819e-8532-f743beec739d" class=""><strong>Em relação a sua empresa e ao seu negócio</strong></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81e6-90f3-c273dc8b56cf"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-819f-90cd-e8256d4b6c9c" class=""><strong>Cidade e estado </strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a7-9424-dac6e0851da2" class=""><em><mark class="highlight-gray">Onde a sede de sua empresa está estabelecida? Indique também se você tem filiais onde estão.</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81ec-a075-e24032bad88f"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%">Belo Horizonte Minas Gerais</div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81fe-8132-e3a2d1f3bde8"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-819c-8932-e7ec94612cf8" class=""><strong>Tempo de mercado </strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-810d-9738-ea897cfa0054" class=""><em><mark class="highlight-gray">Há quanto tempo sua empresa está no mercado, formal ou informalmente?</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81fc-abf3-e5cc965bbd54"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%">5 anos</div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-815e-9822-fc78414322a5"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81d3-a379-e8b3951b2adb" class=""><strong>Faturamento do último mês </strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a8-9393-e7b38fbdfdbe" class=""><em><mark class="highlight-gray">Qual o faturamento total do último mês?</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8198-b197-d5158d7750b5"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%">80 mil</div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d4-83ef-eabc3ddb5cb5"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81c4-8805-ce329da60b0e" class=""><strong>Faturamento do último trimestre</strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8174-a52e-d8ed45739068" class=""><em><mark class="highlight-gray">Qual o faturamento total do último trimestre (últimos 3 meses somados)?</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-817f-a313-cdbea74035fa"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%">250 mil</div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81cb-b9c0-c80c41544dda"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81d3-bf53-dc854ffa0dcc" class=""><strong>Faturamento do último ano</strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a6-8291-c9803c6617bf" class=""><em><mark class="highlight-gray">Qual o faturamento total do último ano (total faturado no último ano. Ex: 2023)?</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-814c-a307-fc4931b8e9df"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%">1.6mi</div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8169-8a57-dceb736c0318"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81a8-b701-f5be52483bf4" class=""><strong>Análise de melhores meses de vendas (sazonalidade)</strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f4-8dd1-de4c2ba52662" class=""><em><mark class="highlight-gray">Marque os melhores meses de venda de acordo com o seu faturamento do último ano.</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-818e-8e2c-c9f8995ef61a"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Melhores Vendas</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-816b-b698-faa59a7b26cc"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-817d-812e-f67aa796c79c" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8140-8c9b-d443b743cfaf" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e7-96be-e681450c32b7" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Janeiro</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8121-a209-f86d37141a2f" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Fevereiro</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-818d-9eca-edd2965924ac" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Março</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8124-8f98-c41bf95930df" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Abril</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81b7-b77e-f7d8fd2ca482" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Maio</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-814f-bf9d-fed1e530603b" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Junho</span><div class="indented"></div></li></ul></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8178-a63a-e837974c823a" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-813e-9d09-f64bc22ca00f" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Julho</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-813f-a06d-d34193ffd809" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Agosto</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8177-af7a-ea14bf119591" class="to-do-list"><li><div class="checkbox checkbox-on"></div> <span class="to-do-children-checked">Setembro</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8123-9387-e57cc5995130" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Outubro</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8142-8dc4-e373fe22bbc0" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Novembro</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-811e-868f-c43b17b111d7" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Dezembro</span><div class="indented"></div></li></ul></div></div></div></div></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81b3-811d-fc0b9f1a016a"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8111-9cb2-d995722a75e6" class=""><strong>Marketing</strong></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8134-8246-f0d318837e9e"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-8180-b62b-ee102c1964e7" class=""><strong>Como funciona hoje sua estrutura de Marketing?</strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8108-a1eb-e6e39c4291a3" class=""><em><mark class="highlight-gray">Descreva de forma simples como funciona o marketing da sua empresa hoje. Você tem uma equipe ou trabalha sozinho? Quais ferramentas e métodos utiliza?</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8167-89d2-cff002d56119"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%">Marketing feito por equipe interna e pelo fundador.</div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-816a-b077-d6912e48b9c2"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-8108-9538-f6aae0f09a0b" class=""><strong>Qual o valor aproximado investido em Marketing mensalmente?</strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f7-ad4e-cf87033dd557" class=""><em><mark class="highlight-gray">Qual o seu gasto mensal com o marketing da sua empresa?</mark></em></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-816e-a345-c0fcc22ca9e6"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%">1000</div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ed-8eb0-e9eeb77799bf"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-81c5-a7ad-ee5a86cda7bc" class=""><strong>Análise SWOT</strong></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8109-9025-fed1c9b6afa0"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8156-8b36-c3bd1eef6e02" class=""><em><mark class="highlight-gray">Descreva abaixo os seguintes aspectos da sua empresa nos quadros indicados abaixo. Caso não saiba preencher, leia a definição de cada um clicando no (‣) abaixo</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8141-8e16-c33d04fe7083"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ea-80e8-c416c85b18c8" class="toggle"><li><details open=""><summary><em><mark class="highlight-gray">Definições da análise SWOT</mark></em></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817f-ad7a-c41af73a46b2" class=""><em><mark class="highlight-gray">Forças →  Identifique e descreva os recursos, habilidades, vantagens competitivas e outros aspectos positivos internos que a entidade possui.</mark></em></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8135-b529-c431bf200c38" class=""><em><mark class="highlight-gray">Fraquezas → Identifique e descreva as limitações, deficiências ou áreas em que a entidade está abaixo do desejado em relação à concorrência.</mark></em></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e1-bd90-f10c48a072bf" class=""><em><mark class="highlight-gray">Oportunidades → Identifique e descreva as tendências, condições de mercado, demandas dos clientes ou outras áreas externas que representam oportunidades para a entidade.</mark></em></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81b4-ba87-c4c6a802f914" class=""><em><mark class="highlight-gray">Ameaças → Identifique e descreva os fatores externos, como concorrentes, mudanças regulatórias ou econômicas, que representam riscos ou ameaças para a entidade.</mark></em></p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8158-954f-da8a0f8cb6c8"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8144-addd-eb1628c0bd8c" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81ba-9ddd-eecad766157b" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8139-9149-eb151068f039"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Forças</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ce-9f1f-c691f93b6a01"/></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80b0-a853-e408ef2d0506" class="bulleted-list"><li style="list-style-type:disc">Método Compass exclusivo</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-802b-825b-cf7fc98f078e" class="bulleted-list"><li style="list-style-type:disc">Autoridade do fundador</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-804d-8af2-d6db201e2e11" class="bulleted-list"><li style="list-style-type:disc">Conhecimento profundo em marketing, gestão e vendas</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80d1-ba3e-f152c05c6ebf" class="bulleted-list"><li style="list-style-type:disc">Liderança e treinamento de equipe</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d4-b983-c2619c112606" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81d0-a1a0-e3635d6fcb10"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Oportunidades</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-815c-978b-fb804cdea4d6"/></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80b3-a748-ff6b4e5e9a6d" class="bulleted-list"><li style="list-style-type:disc">Crescimento via conteúdo alinhado ao novo posicionamento</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-804a-bcc8-c97865ac5b96" class="bulleted-list"><li style="list-style-type:disc">Estruturação da esteira de produtos Compass</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80e6-97a9-dc82aa80a907" class="bulleted-list"><li style="list-style-type:disc">Diferenciação por foco em negócios físicos</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-806e-bf27-d585897ab5e1" class="bulleted-list"><li style="list-style-type:disc">Linguagem própria e próxima</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8145-80f3-ece9e0f6bec8" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-814d-8306-ed6874aa7c87" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ca-b9b8-d8050c47c699" class="">
+</p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8152-9c75-f73b9bc1bd25" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81a2-a8bb-d98ff396cc30"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Fraquezas</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8188-98cc-e67ede598586"/></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-809d-b137-fb6ed22e6ca2" class="bulleted-list"><li style="list-style-type:disc">Dependência extrema do fundador</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8036-bf30-ee0b155001ad" class="bulleted-list"><li style="list-style-type:disc">Baixo investimento em marketing</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8059-a4cd-f172ff63f42f" class="bulleted-list"><li style="list-style-type:disc">Produção de conteúdo ainda limitada</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-807a-9f01-ce336cb81040" class="bulleted-list"><li style="list-style-type:disc">Equipe enxuta</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80e8-be0a-e3c9cc9e4506" class="bulleted-list"><li style="list-style-type:disc">Queda recente de faturamento</li></ul></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-812d-9960-f49f54422ca9"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Ameaças</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8139-a318-da92ec84f5dd"/></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-8024-aabf-e3776a6dfc00" class="bulleted-list"><li style="list-style-type:disc">Dependência de indicações</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-801c-9761-d1e2adf35fe0" class="bulleted-list"><li style="list-style-type:disc">Churn recente (impacto de ~R$ 40 mil/mês)</li></ul></div><div style="display:contents" dir="auto"><ul id="2cdcb023-eb3b-80d1-967b-e3bd5ac5db87" class="bulleted-list"><li style="list-style-type:disc">Ausência de comercial ativo</li></ul></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815e-b97c-c555539ac029" class="">
+</p></div></div></div></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81fe-aaac-f5d28ddbf933" class=""><strong>Volte para a página anterior</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81a3-b4e2-c2dac086b01a"/></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8155-95cf-e2ed49bfe92b"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a9-82db-db40d65d9d46" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

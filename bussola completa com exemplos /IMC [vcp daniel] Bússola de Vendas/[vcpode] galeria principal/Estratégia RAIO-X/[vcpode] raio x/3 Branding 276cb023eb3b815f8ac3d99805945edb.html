@@ -1,0 +1,730 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>3. Branding</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-815f-8ac3-d99805945edb" class="page sans"><header><img class="page-cover-image" src="3%20Branding/22.png" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon notion-static-icon" src="https://www.notion.so/icons/flag_blue.svg"/></div><h1 class="page-title" dir="auto">3. Branding</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8114-93ec-c86be855c160" class="">
+</p></div><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-819a-ba34-c65215d61f6c" class="quote-large">O branding é uma análise abrangente que vai além da identidade visual, englobando posicionamento de mercado e análise de conteúdo. </blockquote></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-81aa-9064-f39b107c4c55" class=""><mark class="highlight-blue">Assista a aula:</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-816d-9a14-f14357e39144"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f7-a85b-fe874b6bcaef" class="">Para concluir essa etapa você precisa assistir a aula abaixo.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d7-9a63-f41ef0fc89fd"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81bc-a883-ed83d3ac5a46"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/movie-clapboard-play_blue.svg"/></div><div style="width:100%"><strong>Assista a aula sobre “Branding&quot;</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-811d-8c21-d5b73ec4d629"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81e8-8cee-f4e99a5b7cb4"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/14oYX68k7p" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/14oYX68k7p</div></div></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ec-b622-f041714cd39f"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8135-a0b6-f4f31ddbc1f5" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-818d-85ed-d95bab9d8e3f"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%"><strong>Conceitos importantes</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81fa-8121-d4f0ffdfde61"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8185-be90-ec2ccb874803" class=""><mark class="highlight-default"><strong>Definição de Branding</strong></mark></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f4-a3f5-f23fe65f4f3e" class="">Branding é um conjunto de ações que alinham posicionamento, propósito e valores da marca, com objetivo de despertar sensações e criar conexões, conscientes e inconscientes que vão fazer toda diferença pro cliente no momento de decidir se vai ou não comprar alguma coisa.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81c0-8127-c7b3865c4e1f"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8163-867f-efb24c45402a" class="">O que queremos dizer quando usamos os termos abaixo:</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81c7-91c7-f4bc1a373e01" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81e6-bc1a-caf4702d0294" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8176-94da-f07d465f37de" class="toggle"><li><details open=""><summary><strong>Estética</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ac-94ca-eea449902b88" class="">É a soma de todas as partes em forma de sensação. Neste caso, estamos usando estética para falar da soma de tudo que vemos e ouvimos em um conteúdo, e que tipo de sentimentos e sensações esse conjunto comunica.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8148-a29c-e64dc4544744" class="toggle"><li><details open=""><summary><strong>Design</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a2-bbc6-f26a4dad84af" class="">Vamos limitar o design neste contexto apenas para os elementos gráficos da marca, fontes e diagramação. </p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81de-bd94-fd8bb1c9985b" class="toggle"><li><details open=""><summary><strong>Som</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8166-aec6-d2831960b5ca" class="">Toda a parte de som de um conteúdo, seja a qualidade e clareza da narração ou da fala, efeitos sonoros e trilhas escolhidas.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e2-83b5-e4c269160c4c" class="toggle"><li><details open=""><summary><strong>Cor</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811d-b0c5-fb696192a93a" class="">Seja o tratamento de cor em um vídeo ou foto, ou o uso de uma cor predominante no design ou no cenário.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81dd-b024-dc6f06688865" class="toggle"><li><details open=""><summary><strong>Efeitos</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8119-bb6e-d9e534e8e99f" class="">Efeitos podem ser tanto filtros (comum no Instagram e TikTok onde você adiciona filtros de cor, maquiagem e outros), quanto outros efeitos visuais inseridos no conteúdo.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8131-bef0-f3e5aa8ab209" class="toggle"><li><details open=""><summary><strong>Fotografia</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81fb-8a23-d1ca3e79b409" class="">Princípios, processos e técnicas utilizadas para captar um vídeo ou uma foto. Neste caso, quando falamos de fotografia, falamos mais sobre o conjunto entre enquadramento, luz e cor de uma foto ou vídeo.</p></div></details></li></ul></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81c1-8117-fc1134265672" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81f9-8f86-c4f86304b5e5" class="toggle"><li><details open=""><summary><strong>Enquadramento</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-813a-ae7f-f8de9cf3ad99" class="">Termo específico para tratar da posição do objeto principal de uma fotografia ou vídeo em relação à câmera.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8109-b91e-e64e56560d87" class="toggle"><li><details open=""><summary><strong>Edição</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8110-9173-e0e1748bf0f4" class="">Quando falamos de edição, vai além apenas do corte, falamos de transição e análise crítica de qual deve ser a ordem das coisas em um vídeo ou uma foto.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8154-aef5-de4d4db3fa5d" class="toggle"><li><details open=""><summary><strong>Linguagem</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8133-920b-c63df8c4c62f" class="">Assim como usamos o termo Estética para encapsular o sentimento em relação ao que estamos vendo e ouvindo, Linguagem faz o mesmo com o que estamos lendo. Apesar de também se referir ao visual, preferimos separar as duas coisas para simplificar o entendimento.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ba-8450-eb873a341554" class="toggle"><li><details open=""><summary><strong>Roteiro</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d5-bba6-c869f1943dd9" class="">Se refere ao que está sendo narrado e escrito em um vídeo (consideramos também a legenda das publicações e os CTA’s).</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8108-a67c-e9cf1d18e744" class="toggle"><li><details open=""><summary><strong>Entonação</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ba-9c30-e96d102e48b6" class="">Intenção do narrador ou locutor ao pronunciar as palavras. Um mesmo texto pode ser triste, engraçado, motivador e neutro, dependendo da entonação.</p></div></details></li></ul></div></div></div></div></div></div></figure></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-8154-bdd9-fe3d8cb0ecf1" class=""><mark class="highlight-blue"><strong>Banco de Referências Compass</strong></mark></h3></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-815b-abc4-d4948c6d98e0"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e3-8f06-e57f160a8da0" class="">No link abaixo você vai encontrar uma série de referências explorando vários desses conceitos. </p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81b1-a3dc-e266691aa1be" class=""><a href="../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Banco%20de%20exemplos/Refer%C3%AAncias%20de%20Branding%20276cb023eb3b81b69cb4c3ce675b9571.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/storm_blue.svg"/>Referências de Branding</a> </p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-811c-9976-cb886b143264"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-81e6-84d8-dffcaaa09bb8" class=""><mark class="highlight-blue">Aplicando o método 🧭Compass</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-811c-8f59-ecf54b354148"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-812b-93f9-e33983000274" class=""><mark class="highlight-blue">Aprenda a fazer o exercício!</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ee-8c9b-fe63b7614114"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-blue_background">Se estiver com dúvidas, veja o vídeo abaixo para ver mais detalhes de como preencher essa página:</mark></summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8126-b435-e05627cf9ed7"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought-dialogue_blue.svg"/></div><div style="width:100%"><strong>Tutorial - Preenchendo o RAIO-X - Branding</strong><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-812e-8de1-ee3984df3c67"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/3939809/content/V4VGNxVne2" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title"></div></div><div class="bookmark-href">https://hotmart.com/pt-BR/club/vocepode-vendermais/products/3939809/content/V4VGNxVne2</div></div></a></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81fa-a369-d6598e33bdf0" class="">
+</p></div></div></figure></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-814b-8669-f0306116abb8"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-818e-96b4-fb6ffb6bd1b3" class="block-color-blue">Criando o meu board de referências</h3></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8180-9666-f82ef0c227ac"/></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81b4-b7d5-d3ec19f8fa19"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/light-bulb_blue.svg"/></div><div style="width:100%"><strong>Importante</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8124-9392-cfb47c444e22"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e2-b100-c9a188b31d90" class="">Queremos que você pense na sua marca, produto ou serviço. Dentro de todo seu posicionamento, atributos e benefícios, que tipo de estética, linguagem, edição e trilha você entende que combina mais com seu negócio? Um conteúdo que pode até não agradar tanto seu gosto pessoal mas funcionaria muito bem no seu tipo de conteúdo pode ser uma referência.</p></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-818d-a8cb-d263a486ef1b" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a2-a4d5-c6aab826a4a5" class="block-color-blue_background"><strong>Como procurar referências?</strong></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e9-9621-cd950a253a4f" class="">Encontre empresas que estão dentro do seu nicho, subnicho, segmento e mercado. Você já listou seus concorrentes, então comece por eles. Depois procure outras empresas locais, regionais, nacionais ou até internacionais - mesmo que não sejam necessariamente seus concorrentes - para fazer essa avaliação.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8120-906b-fe48cc6859bf" class=""><em>Utilize a tabela abaixo para fazer uma lista</em></p></div><div style="display:contents" dir="ltr"><table id="276cb023-eb3b-81f0-bc94-d6d7eff08bc6" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8161-8ad4-d39a69ceb72a"><th id="R^|[" class="simple-table-header-color simple-table-header" style="width:314.4296875px">Nome da referência</th><th id="[xvv" class="simple-table-header-color simple-table-header" style="width:484px">Link</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8188-a329-fb73908a2b22"><td id="R^|[" class="" style="width:314.4296875px"></td><td id="[xvv" class="" style="width:484px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81a2-9cc0-dc16e4d6c89b"><td id="R^|[" class="" style="width:314.4296875px"></td><td id="[xvv" class="" style="width:484px"></td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-814b-b32c-c2ffe439cf74" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815d-b523-ebebf4775ec6" class="block-color-blue_background"><strong>Como analisar as referências?</strong></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8152-beca-d0734670f887" class="">Você já tem acesso à ótimas referências de como todos aspectos de uma ação podem comunicar e reforçar posicionamento, benefícios e atributos de marca, porém <strong>queremos que você também saiba identificar boas práticas e por quê são boas (ou não são boas) dentro do contexto analisado</strong>.</p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8132-8177-ea81565919de" class="toggle"><li><details open=""><summary><em>Exemplos de como analisar</em></summary><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81bb-a142-c29f4b42843f"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%"><strong>Exemplo 01</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8159-b0da-efd409fec471"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8157-9943-c1067c703927" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8131-ab6b-c0bc089cb85f" style="width:68.75%" class="column"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-8116-99f7-d19c7a3bc362" class="quote-large"><em>Uma marca que se posiciona como prática, saborosa e divertida, usa em seus conteúdos cores vibrantes, a edição dos seus vídeos é dinâmica, sempre vemos detalhes do produto que valorizam o sabor e seu conteúdo consegue ensinar e mostrar muito em pouco tempo, com uma linguagem simples e objetiva.</em></blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81dc-b203-ce16346ba9e4" class="">
+</p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8175-93e0-de9330e65e0a" style="width:87.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f9-a85f-c25733daa4d1" class="">✅<strong> </strong><mark class="highlight-teal"><strong>Bom exemplo! - </strong></mark><strong>Por quê?</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8167-b2b6-dac6e48f6ab1"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-818d-9192-f102fe608320" class="bulleted-list"><li style="list-style-type:disc">Mostrar e ensinar em menos tempo e de forma dinâmica reforça a praticidade do produto;</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8185-98ff-fda8be004017" class="bulleted-list"><li style="list-style-type:disc">Cores mais saturadas (ou seja, com a cor mais forte) e vibrantes, assim como uma fotografia que mostra mais detalhes da comida, dá mais vida e sabor;</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8103-8a64-d883784f3c1f" class="bulleted-list"><li style="list-style-type:disc">Linguagem simples e objetiva (na narração e na legenda, por exemplo), também reforçam praticidade e rapidez;</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81a9-beb1-f68c926ccdd0" class="bulleted-list"><li style="list-style-type:disc">Edição dinâmica reforça que é uma marca/produto divertido, ou seja desperta felicidade em quem está consumindo o produto e o conteúdo.</li></ul></div></div></div></div></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-813d-8bcd-dca0a98ac720"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%"><strong>Exemplo 02</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81bb-8c6b-e1dfaeca541b"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8188-9f85-cb61aadf33f5" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-813b-a12e-d947e472ad7e" style="width:68.75%" class="column"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-814b-b9f4-de718f1ffdd2" class="quote-large">Uma marca de tecnologia que se posiciona como moderna, inovadora e criativa, usa em seus vídeos, edições com cortes simples, se, transições e usa uma linguagem informal, com memes e piadas com efeitos sonoros para descrever seus produtos e serviços. Se baseando em uma estética mais corporativa, para passar uma ideia de solidez, usa tons mais sóbrios, e cores pouco saturadas.</blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c5-a485-f4ebc3dc0dac" class="">
+</p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-810b-9dff-cdcb0ca1dc3f" style="width:87.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-818b-96e0-fe7597d86e11" class="">⚠️<strong> </strong><mark class="highlight-yellow"><strong>Pode melhorar </strong></mark><mark class="highlight-default">- </mark>Por quê?</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81e3-8bb8-e149ff84691c"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e5-b092-c725f74a3db5" class="bulleted-list"><li style="list-style-type:disc">A marca pode até falar que é moderna, inovadora e criativa mas só comunica valores contrários;</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-812b-8507-e50593732184" class="bulleted-list"><li style="list-style-type:disc">A linguagem informal, com o uso de memes e brincadeiras com o som são o ponto positivo;</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-813c-b150-e771d4368bd3" class="bulleted-list"><li style="list-style-type:disc">Uma edição pode ser simples, e com cortes sem transições, porém isso é uma oportunidade perdida de reforçar os valores que a empresa diz querer reforçar;</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81dd-ab70-d4888e166f54" class="bulleted-list"><li style="list-style-type:disc">Cores mais sóbrias e pouco saturadas (ou seja, pouca intensidade) ajudam a passar a ideia de solidez e seriedade, não inovação ou criatividade.</li></ul></div></div></div></div></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-817f-ba4d-f2f6ff2e4fdd"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%"><strong>Exemplo 03</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8191-82c9-e7ce20346422"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8116-a497-cf14deeebb29" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8164-8947-da5deb80311e" style="width:68.75%" class="column"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-81be-8f90-d66f98e25f7a" class="quote-large">Uma marca de roupas femininas que se posiciona como versátil, acessível e inclusiva faz muito conteúdo de carrossel e vídeos longos para mostrar os produtos, contratando modelos para vestir as roupas, sempre com ensaios super bem produzidos. </blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81bf-bd2b-e8c0bd85422c" class="">
+</p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8142-9029-f31aea035a2f" style="width:87.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c2-a458-dc8867d4ded1" class="">🛑<strong> </strong><mark class="highlight-red"><strong>Não fazer! </strong></mark><mark class="highlight-default"><strong>- </strong></mark>Por quê?</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ad-97e4-f13175eeb8e3"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8145-be17-cf9b698ae5b8" class="bulleted-list"><li style="list-style-type:disc">Apesar de se posicionar como acessível e inclusiva, a marca posta conteúdos sempre super bem produzidos, o que ajuda a comunica outros valores;</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-810b-91ef-f68f897c5dc6" class="bulleted-list"><li style="list-style-type:disc">Ao contratar modelos, é muito provável que a marca use pessoas dentro de um padrão de beleza que faz com que suas roupas não pareçam tão acessíveis;</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ed-96be-e1d013d8118a" class="bulleted-list"><li style="list-style-type:disc">Os ensaios super produzidos também passam a ideia de que é necessário muita preparação para vestir a marca, ou seja, nada versátil.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81f0-9e62-dd1b202cd054" class="bulleted-list"><li style="list-style-type:disc">O ideal seria usar pessoas reais, em situações mais reais, sem tanta burocracia ou mega produções.</li></ul></div></div></div></div></div></div></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8165-b513-c3f75fa8be49"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819a-af2d-fdf175f1376f" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8168-a33a-ce6270c915df" class="block-color-blue_background"><strong>O que queremos ver nas colunas</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ab-905b-f63752a66de8"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-813a-8bee-dd7aaf625fc4" class="">Conceitos que queremos que você observe no momento de preencher a sua tabela de referências. Não se preocupe, você não precisa escolher um conteúdo que seja perfeito, se uma coisa te chamou atenção dentro da categoria, ele pode virar uma referência.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81b6-9f83-c51c0eee7013"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81f3-87b1-f993132b6447" class="toggle"><li><details open=""><summary><mark class="highlight-gray">Instruções para preenchimento</mark></summary><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-810d-b389-e747a9dfa3b3" class="bulleted-list"><li style="list-style-type:disc">Um vídeo que tenha um texto muito bom, mas o visual não é chamativo, a edição tem muitos cortes, e a trilha é irritante, entra na coluna “Roteiro”;</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8102-bcfa-e132b89968b3" class="bulleted-list"><li style="list-style-type:disc">Um carrossel com um design lindo, mas que não diz nada com nada e o texto não é tão claro, entra em “Design”;</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8123-a9b2-c1886cf1a1d4" class="bulleted-list"><li style="list-style-type:disc">Um vídeo mais longo, em que a fotografia é linda, a trilha é perfeita, mas o roteiro é chato, pode entrar tanto em “Design” quanto “Trilha/Som”, depende o que mais faz sentido para você.</li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ec-be4a-e74adda72c0f"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8185-8db4-f4941e982c0b" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8178-8e53-e21fcfd28734" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8135-a170-d470d66929a0" class="toggle"><li><details open=""><summary><strong>Design</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a6-b071-d23e03678316" class="">Conteúdos que para você são muito bons por algum aspecto estético visual, seja Design, Fotografia, Composição ou Cor.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e8-91b8-e9b16c8e5758" class="toggle"><li><details open=""><summary><strong>Roteiro</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e2-a061-ca96349a3d47" class="">Conteúdos que tenham algum aspecto de linguagem escrita muito bom, seja roteiro, texto estático, legenda ou CTA.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8115-9c54-e1d946371fea" class="">
+</p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81e0-b4ab-c5fd2419a8c9" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8166-94a9-e271fd99fa8e" class="toggle"><li><details open=""><summary><strong>Edição</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8177-bfbe-cf8bbe16fdb4" class="">Conteúdos em que a edição do vídeo chamou a atenção, seja pela inovação ou por combinar com o tipo de conteúdo.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c5-bb35-fa7e07ae8689" class="toggle"><li><details open=""><summary><strong>Trilha/Som</strong></summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8109-8c4a-fedff5769cf6" class="">Trilhas e/ou efeitos sonoros que ajudam na composição do conteúdo ou comunicam os conceitos da marca e do produto analisado.</p></div></details></li></ul></div></div></div></div></div></details></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-812b-9744-d1924ba50a47" class="toggle"><li><details open=""><summary><em>Exemplos</em></summary><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81f6-a858-dcad4a6cc6fc"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%"><strong>Exemplos</strong><div style="display:contents" dir="auto"><div id="276cb023-eb3b-818a-8a88-e4e94cc909bf" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81cd-a428-c400a6f34777" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8162-a0fe-ed9a7834dc9b" class="bulleted-list"><li style="list-style-type:disc">Design<div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f3-8299-ff71b38fa501" class="">Vídeo de looks urbanos</p></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81da-a442-d5a34cb9f2e9"><a href="https://www.instagram.com/p/C36DrpdxrBy/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Riachuelo on Instagram: &quot;Qual look você AMOU e vai usar na sua semana? 😍  A coleção jeans da Riachu tem as peças que você precisava para montar seu look do dia a dia e curtir, do trabalho ao happy hour, com muita moda e conforto.   Vá até as lojas, site e app e escolha um jeans para chamar de seu!&quot;</div><div class="bookmark-description">532 likes, 92 comments -  riachueloFebruary 28, 2024 on : &quot;Qual look você AMOU e vai usar na sua semana? 😍  A coleção jeans da Riachu tem as peças que você precisava para montar seu look d...&quot;</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C36DrpdxrBy/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/430488599_2703694169778892_2586034567515964401_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=104&amp;_nc_ohc=lYwrfB6K4GUAb7nnX1y&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBj6wP_OKTrF-k70Qcq4sc_wTpLKWLE6MGi0Z1w5PDJmA&amp;oe=66195D1B&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e3-9ff6-e97d2bb6b8c9" class="bulleted-list"><li style="list-style-type:disc">Roteiro<div style="display:contents" dir="auto"><p id="276cb023-eb3b-8104-9101-c770b647d574" class="">Carrossel de data comemorativa</p></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81f4-8ffa-d9e05ab5256d"><a href="https://www.instagram.com/p/C5ORYzrMUkW/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Nubank on Instagram: &quot;No Dia da Mentira, a gente escolhe a verdade. Separamos alguns dos maiores mitos financeiros que são muito populares e preparamos uma matéria especial para falar a verdade sobre cada um deles. Acesse o link na bio e fique por dentro.&quot;</div><div class="bookmark-description">1,313 likes, 272 comments -  nubankApril 1, 2024 on : &quot;No Dia da Mentira, a gente escolhe a verdade. Separamos alguns dos maiores mitos financeiros que são muito populares e preparamos uma ma...&quot;</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C5ORYzrMUkW/</div></div><img src="https://scontent.cdninstagram.com/v/t39.30808-6/434483003_812727127560406_6649780081541999951_n.jpg?stp=dst-jpg_e15_p480x480&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=110&amp;_nc_ohc=A7pfqlUcDwEAb6RiW9p&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAWA9gNWTP_mdyYYRaxPxcCle46E5WyKuZ013f0JEHmsQ&amp;oe=66195B38&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div></li></ul></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8175-948e-fb2cf99911f0" style="width:50%" class="column"><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81a2-9152-cf054fa0eae6" class="bulleted-list"><li style="list-style-type:disc">Edição<div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c8-b3ca-eb5c76ae3e2d" class="">Edição usando fotos estáticas</p></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81fd-aeae-e8452721069c"><a href="https://www.instagram.com/p/C5bKEZ2AKiM/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Riachuelo on Instagram: &quot;Já conhece a cor-tendência do Outono Inverno 24?   O verde petróleo veio com tudo e promete looks versáteis e sofisticados para você viver a sua moda na nova estação.  Confira looks com a cor do momento e muito mais nas nossas lojas, site e app.&quot;</div><div class="bookmark-description">400 likes, 134 comments -  riachueloApril 6, 2024 on : &quot;Já conhece a cor-tendência do Outono Inverno 24?   O verde petróleo veio com tudo e promete looks versáteis e sofisticados para você...&quot;</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C5bKEZ2AKiM/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/435800046_1361950551159953_2352379739804965243_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=105&amp;_nc_ohc=2FyKM55R0kEAb7RDaKJ&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBa7U4uQovE-Dpt_1kp0x9j51WNzIRih3Ak472F8KUZCA&amp;oe=66196C42&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81aa-a22c-ede1409c16e8" class="bulleted-list"><li style="list-style-type:disc">Trilha/Som<div style="display:contents" dir="auto"><p id="276cb023-eb3b-813a-81b7-da8d1e1ac91d" class="">Trilha combinada ao tema do post</p></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81e9-a34c-dda10da04e2d"><a href="https://www.instagram.com/p/C4O1SJnsPso/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Riachuelo on Instagram: &quot;Foi no Nordeste que a Riachuelo nasceu, e é do Nordeste que a moda brasileira vai pra um patamar histórico!  Hoje, com alegria e muito orgulho, anunciamos que somos a marca de moda oficial do @timebrasil nas Olimpíadas de Paris! Através das mãos e da arte das nossas costureiras e bordadeiras, levaremos nossas raízes bordadas no peito com muito estilo para o mundo inteiro. 🇧🇷  Vamos juntos carregar no peito o orgulho de ser time Brasil? Acompanhe tudo nas nossas redes! 💚💛💙  #RiachueloComTimeBrasil #OrgulhoBordadoNoPeito&quot;</div><div class="bookmark-description">1,751 likes, 167 comments -  riachueloMarch 7, 2024 on : &quot;Foi no Nordeste que a Riachuelo nasceu, e é do Nordeste que a moda brasileira vai pra um patamar histórico!  Hoje, com alegria e muito ...&quot;</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C4O1SJnsPso/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/431724003_991298682607430_5200665578941950200_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=102&amp;_nc_ohc=ipxy4IGVgF8Ab5VD129&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBk3_UzLcVKZcT5FXnpgeea33eVoPzCf09wokkyDopwTQ&amp;oe=6619648A&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div></li></ul></div></div></div></div></div></div></figure></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81a7-8ab1-c1b57ceae943"/></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-8142-a4fd-db24d396e84a" class="collection-content"><h4 class="collection-title">Branding</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Name</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Guias</th></tr></thead><tbody><tr id="276cb023-eb3b-815f-9d26-db7355cb9f37"><td class="cell-title"><a href="3%20Branding/Branding/Exemplo%20de%20design%20276cb023eb3b815f9d26db7355cb9f37.html">Exemplo de design</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Design</span></td></tr><tr id="276cb023-eb3b-81da-8e4a-d119210c53db"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b81da8e4ad119210c53db.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Design</span></td></tr><tr id="276cb023-eb3b-81d1-a206-ca7100d470f7"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b81d1a206ca7100d470f7.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Design</span></td></tr><tr id="276cb023-eb3b-812c-a222-d60afaeab9d1"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b812ca222d60afaeab9d1.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Design</span></td></tr><tr id="276cb023-eb3b-813b-b176-f77c687f8d66"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b813bb176f77c687f8d66.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Design</span></td></tr><tr id="276cb023-eb3b-813d-bcf3-cb89e0b8a4c1"><td class="cell-title"><a href="3%20Branding/Branding/Exemplo%20de%20roteiro%20276cb023eb3b813dbcf3cb89e0b8a4c1.html">Exemplo de roteiro</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Roteiro</span></td></tr><tr id="276cb023-eb3b-8107-9a83-faa6b1638675"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b81079a83faa6b1638675.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Roteiro</span></td></tr><tr id="276cb023-eb3b-812d-b6de-cddc24b717f7"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b812db6decddc24b717f7.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Roteiro</span></td></tr><tr id="276cb023-eb3b-811c-b581-d5dc31b758a1"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b811cb581d5dc31b758a1.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Roteiro</span></td></tr><tr id="276cb023-eb3b-81fa-a83d-f553a5584e5c"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b81faa83df553a5584e5c.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Roteiro</span></td></tr><tr id="276cb023-eb3b-81b4-a0b4-e92c30586946"><td class="cell-title"><a href="3%20Branding/Branding/Exemplo%20de%20edi%C3%A7%C3%A3o%20276cb023eb3b81b4a0b4e92c30586946.html">Exemplo de edição</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Edição</span></td></tr><tr id="276cb023-eb3b-8114-9f5e-d5d0dfafac16"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b81149f5ed5d0dfafac16.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Edição</span></td></tr><tr id="276cb023-eb3b-81e4-8814-cfed2f02812a"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b81e48814cfed2f02812a.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Edição</span></td></tr><tr id="276cb023-eb3b-8121-88aa-ffcc2b340bdb"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b812188aaffcc2b340bdb.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Edição</span></td></tr><tr id="276cb023-eb3b-8166-8f80-e081112fdfba"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b81668f80e081112fdfba.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Edição</span></td></tr><tr id="276cb023-eb3b-8144-ace3-d1f10449131d"><td class="cell-title"><a href="3%20Branding/Branding/Exemplo%20de%20trilha%20som%20276cb023eb3b8144ace3d1f10449131d.html">Exemplo de trilha/som</a></td><td class="cell-thjx"><span class="selected-value select-value-color-blue">Trilha/Som</span></td></tr><tr id="276cb023-eb3b-8106-95b1-d4a60b574a68"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b810695b1d4a60b574a68.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-blue">Trilha/Som</span></td></tr><tr id="276cb023-eb3b-8109-a842-df159aceea39"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b8109a842df159aceea39.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-blue">Trilha/Som</span></td></tr><tr id="276cb023-eb3b-81f8-92ed-d9c28737e105"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b81f892edd9c28737e105.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-blue">Trilha/Som</span></td></tr><tr id="276cb023-eb3b-8151-acb6-ffe009a7f89f"><td class="cell-title"><a href="3%20Branding/Branding/Preencher%20aqui%20276cb023eb3b8151acb6ffe009a7f89f.html">Preencher aqui</a></td><td class="cell-thjx"><span class="selected-value select-value-color-blue">Trilha/Som</span></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8167-b86d-d7a87c6526fa" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8142-953f-fb5413ef04c4"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8112-9711-ea08ba4b7c3d"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/light-bulb_blue.svg"/></div><div style="width:100%"><strong>Não se esqueça!</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-815d-91de-f0401d964266"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811c-8361-c55772c9fb33" class="">Agora que você completou o conteúdo deste pilar, não se esqueça de preencher o checklist que está na página inicial em <a href="../../Estrat%C3%A9gia%20RAIO-X%20276cb023eb3b81a49114ddd28f743a12.html">Estratégia | Raio-X</a>.</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-813a-be40-e16949b65fa1"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81b6-9e23-ce943bdb58da" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81b1-8e5e-e1648ae0edab" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8153-9138-d93f922d3577" class="">
+</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8114-8fbe-e071ce4b519a" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-819a-8993-cbcde9dbbf5d" style="width:62.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8117-8c1f-ee68fcd38ed9" class=""><strong>Volte para a página anterior</strong></p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8102-843d-f94754da3f82" style="width:37.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8102-872c-d2170d8bc69d" class=""><strong>Avance para a próxima página</strong></p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8188-8830-fa907dd54214"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-816e-8284-e5c26581a726" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81e4-9de9-c16bf0b60b94" style="width:62.5%" class="column"></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81d8-ad72-d971051dd909" style="width:37.50000000000001%" class="column"></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-817b-bc80-f1c2f5756dc7"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-810a-bb6c-d52f49e165c8" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e3-927b-e21f149bb7ed" class="">
+</p></div><div style="display:contents" dir="auto"><div style="display:contents" dir="auto"><div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8151-8208-d3a18be30a77"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8129-aab5-f16e8a294db2" class="">Bússola de Vendas desenvolvido por <strong><a href="https://www.notion.so/f8156e7b171a4df68144f6293ae02538?pvs=21">Consultoria Inception</a></strong> para VocêPode Mkt Digital</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f6-bdc6-f5ec39f5a795" class=""><br/>Copyright © Castro Américo Digital – Todos os direitos reservados.<br/>É proibida a reprodução total ou parcial dos conteúdos dessa ferramenta.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8184-a344-d6b2fc8359af" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8117-a316-ccb13abc34ff" class=""><a href="http://vocepodevendermais.com.br">Site</a> l <a href="https://hotmart.com/pt-br/club/vocepode-vendermais/products/3939809">Plataforma de Alunos</a> | <a href="https://www.instagram.com/vocepode.vendermais">Instagram</a></p></div></div></div></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8179-86c9-f8d3dad209e4" class="bulleted-list"><li style="list-style-type:disc">Apesar de se posicionar como acessível e inclusiva, a marca posta conteúdos sempre super bem produzidos, o que ajuda a comunica outros valores;</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ef-ae0e-cc89f8404ab1" class="bulleted-list"><li style="list-style-type:disc">Ao contratar modelos, é muito provável que a marca use pessoas dentro de um padrão de beleza que faz com que suas roupas não pareçam tão acessíveis;</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8196-b068-eba3575d58ee" class="bulleted-list"><li style="list-style-type:disc">Os ensaios super produzidos também passam a ideia de que é necessário muita preparação para vestir a marca, ou seja, nada versátil.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81a5-b50e-d6391bf5fd7b" class="bulleted-list"><li style="list-style-type:disc">O ideal seria usar pessoas reais, em situações mais reais, sem tanta burocracia ou mega produções.</li></ul></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

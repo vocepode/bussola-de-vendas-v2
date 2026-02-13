@@ -1,18 +1,20 @@
+"use client";
+
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { trpc } from "@/lib/trpc";
 import { 
   Compass, CheckCircle2, Circle, PlayCircle, FileText, 
   CheckSquare, Download, Loader2, ArrowLeft, Lock 
 } from "lucide-react";
-import { Link, useParams } from "wouter";
+import Link from "next/link";
 import { getLoginUrl } from "@/const";
 
-export default function Module() {
-  const { slug } = useParams<{ slug: string }>();
+export default function Module({ slug }: { slug: string }) {
   const { isAuthenticated, loading: authLoading } = useAuth();
 
   const { data: module, isLoading: moduleLoading } = trpc.modules.getBySlug.useQuery(
@@ -20,7 +22,7 @@ export default function Module() {
     { enabled: !!slug }
   );
 
-  const { data: lessons, isLoading: lessonsLoading } = trpc.lessons.listByModule.useQuery(
+  const { data: tree, isLoading: treeLoading } = trpc.sections.listTreeByModule.useQuery(
     { moduleId: module?.id || 0 },
     { enabled: !!module?.id }
   );
@@ -29,7 +31,7 @@ export default function Module() {
     enabled: isAuthenticated,
   });
 
-  if (authLoading || moduleLoading || lessonsLoading) {
+  if (authLoading || moduleLoading || treeLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
@@ -128,6 +130,108 @@ export default function Module() {
     return names[type] || type;
   };
 
+  type SectionNode = {
+    section: {
+      id: number;
+      title: string;
+      orderIndex: number;
+      parentSectionId: number | null;
+    };
+    lessons: Array<{
+      id: number;
+      title: string;
+      description: string | null;
+      contentType: string;
+      durationMinutes: number | null;
+    }>;
+    children: SectionNode[];
+  };
+
+  const renderLessons = (lessons: SectionNode["lessons"], prefix?: string) => {
+    if (!lessons.length) return null;
+    return (
+      <div className="space-y-2">
+        {lessons.map((lesson, idx) => (
+          <Link key={lesson.id} href={`/licao/${lesson.id}`}>
+            <Card className="hover:shadow-md transition-shadow cursor-pointer">
+              <CardHeader className="py-4">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                    {getContentIcon(lesson.contentType)}
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <CardTitle className="text-base mb-1">
+                          {prefix ? `${prefix}.${idx + 1}` : idx + 1}. {lesson.title}
+                        </CardTitle>
+                        {lesson.description ? (
+                          <CardDescription>{lesson.description}</CardDescription>
+                        ) : null}
+                      </div>
+
+                      <div className="flex-shrink-0 flex flex-col items-end gap-2">
+                        <Badge variant="secondary">{getContentTypeName(lesson.contentType)}</Badge>
+                        {lesson.durationMinutes ? (
+                          <span className="text-xs text-muted-foreground">
+                            {lesson.durationMinutes} min
+                          </span>
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </CardHeader>
+            </Card>
+          </Link>
+        ))}
+      </div>
+    );
+  };
+
+  const SectionTree = ({ nodes, level, prefix }: { nodes: SectionNode[]; level: number; prefix: string }) => {
+    if (!nodes.length) return null;
+    return (
+      <Accordion type="multiple" className={level === 0 ? "border rounded-lg" : ""}>
+        {nodes.map((node, idx) => {
+          const sectionPrefix = prefix ? `${prefix}.${idx + 1}` : String(idx + 1);
+          const lessonsCount = node.lessons?.length ?? 0;
+          const childCount = node.children?.length ?? 0;
+
+          return (
+            <AccordionItem key={node.section.id} value={`${level}-${node.section.id}`}>
+              <AccordionTrigger className="px-4">
+                <div className="flex-1">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="min-w-0">
+                      <div className="font-semibold truncate">
+                        {sectionPrefix}. {node.section.title}
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {lessonsCount} lição(ões){childCount ? ` • ${childCount} subseção(ões)` : ""}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="px-4">
+                <div className="space-y-4">
+                  {renderLessons(node.lessons ?? [], sectionPrefix)}
+                  {node.children?.length ? (
+                    <div className="pl-4 border-l">
+                      <SectionTree nodes={node.children} level={level + 1} prefix={sectionPrefix} />
+                    </div>
+                  ) : null}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          );
+        })}
+      </Accordion>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -166,46 +270,19 @@ export default function Module() {
           </CardContent>
         </Card>
 
-        {/* Lessons List */}
+        {/* Lessons/Sections Tree */}
         <div className="space-y-4">
           <h2 className="text-2xl font-bold mb-4">Lições</h2>
           
-          {lessons && lessons.length > 0 ? (
-            lessons.map((lesson, index) => (
-              <Link key={lesson.id} href={`/licao/${lesson.id}`}>
-                <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                  <CardHeader>
-                    <div className="flex items-start gap-4">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                        {getContentIcon(lesson.contentType)}
-                      </div>
-                      
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1">
-                            <CardTitle className="text-lg mb-1">
-                              {index + 1}. {lesson.title}
-                            </CardTitle>
-                            <CardDescription>{lesson.description}</CardDescription>
-                          </div>
-                          
-                          <div className="flex-shrink-0 flex flex-col items-end gap-2">
-                            <Badge variant="secondary">
-                              {getContentTypeName(lesson.contentType)}
-                            </Badge>
-                            {lesson.durationMinutes && (
-                              <span className="text-xs text-muted-foreground">
-                                {lesson.durationMinutes} min
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardHeader>
-                </Card>
-              </Link>
-            ))
+          {tree?.rootLessons?.length ? (
+            <div className="space-y-2">
+              <div className="text-sm font-semibold text-muted-foreground">Sem seção</div>
+              {renderLessons(tree.rootLessons as any)}
+            </div>
+          ) : null}
+
+          {tree?.roots?.length ? (
+            <SectionTree nodes={tree.roots as any} level={0} prefix="" />
           ) : (
             <Card>
               <CardContent className="py-12 text-center text-muted-foreground">

@@ -1,0 +1,717 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Exemplos de C3</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-8188-a196-ceb50a559dcc" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/skip-forward_blue.svg"/></div><h1 class="page-title" dir="auto">Exemplos de C3</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-811d-93f1-fd48692c2893" class="quote-large">Aqui seguem exemplos de C3 para você ter como referência no planejamento e produção dos seus conteúdos. </blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815f-8a70-c0184a6e5b1f" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-810b-9e90-cff586a00845" class=""><strong>Exemplos</strong></p></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81e2-b80c-c9e351ce6850"><a href="https://www.instagram.com/p/CvGbzM4g0UZ/#advertiser" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">NYTT | athleisure brand on Instagram: &quot;Esse vídeo contém uma viciada em NYTT! @dudagouveaa 🚨 Fique até o final e veja o que ela tem para você!   #athleisure #gymclothes #workoutclothes&quot;</div><div class="bookmark-description">1,037 likes, 4 comments - nyttconcept on July 24, 2023: &quot;Esse vídeo contém uma viciada em NYTT! @dudagouveaa 🚨 Fique até o final e veja o que ela tem para você!   #athleisure #gymclothes ...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CvGbzM4g0UZ/#advertiser</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/362704543_957715148791521_2437418361251825820_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=DBhkoG9rWkQQ7kNvgEL3xKC&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBD7q0IlXKFBkev1GS6a8a47HqbvljK2m6rIpyTRfplfA&amp;oe=662AEB20&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81c7-b9aa-fd7a4942a14f"><a href="https://www.instagram.com/p/C3EbYn1tvMb/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Dra. Taiane Nunes Barcellos on Instagram: &quot;Hoje quero compartilhar com vocês o resultado da minha paciente Cida.  Com três mês e meio de pós operatório, estamos avaliando como está a recuperação dela que fez a Blefaroplastia, elevação da sobrancelha e laser de CO2. Confira o depoimento dela e sua experiência ao realizar a cirurgia comigo!  Agende você também o seu horário pelo link na bio.&quot;</div><div class="bookmark-description">100 likes, 6 comments - drataianebarcellos on February 7, 2024: &quot;Hoje quero compartilhar com vocês o resultado da minha paciente Cida.  Com três mês e meio de pós operatório, estamos avaliando como...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C3EbYn1tvMb/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/425987074_1096267634947381_8886131569687440291_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=101&amp;_nc_ohc=X7OEZLVqluAAb6skI8u&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBFMqCoqDXWwcTUjrcMCR_mxVM4h3hhdSkcCFd2RDMnxw&amp;oe=662AFA76&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8134-b136-ca0f22fea340"><a href="https://www.instagram.com/p/C2o8pwpuu3Q/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Dra. Taiane Nunes Barcellos on Instagram: &quot;Hoje teremos um resultado comentado!  . Quero compartilhar cada detalhe dos procedimentos que realizamos na Rosemeire e qual foi o resultado conquistado, sempre priorizando um rejuvenescimento natural.  . Agende uma avaliação pelo link da Bio.&quot;</div><div class="bookmark-description">105 likes, 0 comments - drataianebarcellos on January 25, 2024: &quot;Hoje teremos um resultado comentado!  . Quero compartilhar cada detalhe dos procedimentos que realizamos na Rosemeire e qual foi o result...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C2o8pwpuu3Q/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/426428629_375589828667549_7290614480887399517_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=105&amp;_nc_ohc=nyXl4GQ_5CUQ7kNvgEsew5X&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfDcFWr77uRodztT9AdOr06QJHn-G4nNqFpeAQPbXV2y6Q&amp;oe=662AE61D&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81bd-b849-c22f3be3ac4f"><a href="https://www.instagram.com/p/C2rhejmOMPW/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Dra. Taiane Nunes Barcellos on Instagram: &quot;Hoje quero compartilhar com vocês o resultado de uma blefaroplastia estruturada.   Com um mês e meio de pós operatório, estamos avaliando como está a recuperação da Rosana que fez a Blefaroplastia inferior e superior, elevação da sobrancelha e correção da Ptose. Confira o depoimento dela e sua experiência ao realizar a cirurgia comigo!  Agende você também o seu horário pelo link na bio.&quot;</div><div class="bookmark-description">103 likes, 4 comments -  drataianebarcellosJanuary 28, 2024 on : &quot;Hoje quero compartilhar com vocês o resultado de uma blefaroplastia estruturada.   Com um mês e meio de pós operatório, estamos avali...&quot;</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C2rhejmOMPW/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/426745346_862863415613168_646459034485982683_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=108&amp;_nc_ohc=-tmqzK-B57MAb5uEA6k&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfD28n_71vUnoJwU-GxuOQKi2mcUb2Cf3hSGMnKM24F5zg&amp;oe=66173861&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8175-a8cc-c428e943436d"><a href="https://www.instagram.com/p/C2ioj7_O8vI/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Dra. Taiane Nunes Barcellos on Instagram: &quot;A  blefaroplastia muda o olhar, transforma vidas e traz autoestima.  Confira o resultado com dois meses de pós operatório e o depoimento da Nilza e sua experiência ao realizar a cirurgia comigo!  Agende você também o seu horário pelo link na bio.  #blefaroplastia #blefaroplastiabh #cirurgiadepalpebras #oftalmologia #palpebracaida #palpebras&quot;</div><div class="bookmark-description">165 likes, 17 comments - drataianebarcellos on January 25, 2024: &quot;A  blefaroplastia muda o olhar, transforma vidas e traz autoestima.  Confira o resultado com dois meses de pós operatório e o depoiment...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C2ioj7_O8vI/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/421010727_350795804468831_8857436811422016808_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=111&amp;_nc_ohc=pH0O1A4Ck34Ab6GFxPt&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfC9MTQfswiIf6lXpxh7seghOLestkqThHzkmAwiS0sVtQ&amp;oe=662AEF2D&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8125-9a54-f300aa3412fa"><a href="https://www.instagram.com/p/C2YsiubtrJW/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Dra. Taiane Nunes Barcellos on Instagram: &quot;A blefaroplastia muda o olhar, transforma vidas e traz autoestima.  Confira o depoimento da Ana Paula e sua experiência ao realizar a cirurgia comigo! Ela tem 10 dias de pós operatório neste vídeo.   Agende você também o seu horário pelo link na bio.  #blefaroplastia #blefaroplastiabh #cirurgiadepalpebras #oftalmologia #palpebracaida #palpebras&quot;</div><div class="bookmark-description">151 likes, 9 comments -  drataianebarcellosJanuary 21, 2024 on : &quot;A blefaroplastia muda o olhar, transforma vidas e traz autoestima.  Confira o depoimento da Ana Paula e sua experiência ao realizar a ci...&quot;</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C2YsiubtrJW/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/420158739_7042643292486889_6484447932874128937_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=101&amp;_nc_ohc=t-nZFyEhfx0Ab7oNude&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBrpYegOpZnDX0vGb-aGghHazwcTCEt9MDD0-i2hQEaAw&amp;oe=6617340E&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8116-addc-e601b5ae3390"><a href="https://www.instagram.com/p/C1t3URPOKDX/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Dra. Taiane Nunes Barcellos on Instagram: &quot;Você já pensou em m fazer a Blefaroplastia? Quais são os seu motivos para pensar nesse procedimento?  Me conta aqui nos comentários!   Agende uma avaliação pelo link da Bio.&quot;</div><div class="bookmark-description">287 likes, 33 comments - drataianebarcellos on January 5, 2024: &quot;Você já pensou em m fazer a Blefaroplastia? Quais são os seu motivos para pensar nesse procedimento?  Me conta aqui nos comentários! ...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C1t3URPOKDX/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/418844917_219319001259643_1283167648741133476_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=107&amp;_nc_ohc=Ux_veG06yWgQ7kNvgGPE650&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfDAaHmPiBHdOBNNGdyIKnQmTPJ_GylN3fm7Ie2jkKXe4g&amp;oe=662AEBAC&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8167-b3e5-ec8e7fa92ba2"><a href="https://www.instagram.com/p/C2KjLedu-29/?img_index=1" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">NSDB | MAQUIAGEM CREMOSA on Instagram: &quot;“Minha paleta realçou minha beleza natural!” 🩷  Esses são alguns dos feedbacks per-fei-tos que temos recebidos sobre a nossa nova paleta Cheesecake que tem deixado nosso coração hiper mega quentinho e muuuito feliz! ✨  Você já testou nossa cremosa? Conta pra gente! 😊&quot;</div><div class="bookmark-description">35 likes, 15 comments - nemsodeblushbeauty on January 16, 2024: &quot;“Minha paleta realçou minha beleza natural!” 🩷  Esses são alguns dos feedbacks per-fei-tos que temos recebidos sobre a nossa nov...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C2KjLedu-29/?img_index=1</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/419045370_1310181326338815_989928679378138814_n.jpg?stp=dst-jpg_e35_s480x480&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=103&amp;_nc_ohc=sTzw3B_ZEGUQ7kNvgEza1ws&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAxyvPN40A7s_0CGW5PF5MrjrMTRB6PP4dVdJDLC6ceBw&amp;oe=662AE1CA&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81c9-a3b8-dba7541fd2a5"><a href="https://www.instagram.com/p/CxoQ0crOg1C/?img_index=1" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">NSDB | MAQUIAGEM CREMOSA on Instagram: &quot;por que as pessoas usam NSDB? 🤔   se você nunca testou nossos cremosos e está se fazendo essa pergunta pra tomar a decisão final, desliza pro lado e vem ver os feedbacks PERFEITOS que recebemos todos os dias! 🩷  se você já testou e também é fã de carteirinha, conta pra gente nos comentários! ✨&quot;</div><div class="bookmark-description">nemsodeblushbeauty on September 25, 2023: &quot;por que as pessoas usam NSDB? 🤔   se você nunca testou nossos cremosos e está se fazendo essa pergunta pra tomar a decisão final, d...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CxoQ0crOg1C/?img_index=1</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/382262077_841722370859051_1238507074107275467_n.jpg?stp=dst-jpg_e35_s480x480&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=111&amp;_nc_ohc=v3tEycggoUAQ7kNvgHKdeHm&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAwpe42PAufg3Za72ihTBwbfnOwyEdYvKamOfmiS5NkHQ&amp;oe=662B03B8&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81b0-ad98-c652b35c4f4a"><a href="https://www.instagram.com/p/Cs38vApruof/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Gislene Isquierdo / Mentora de Experts on Instagram: &quot;🚀 A Turbo UAU surgiu com essa missão… Trazer à tona o marketing da verdade e do amor!  ❌ Falsas promessas, dublê de rico, aquelas ideias malucas que te desgastam emocionalmente… Aqui não rola!  ☝🏼Se você se identifica com isso, comente “ESPECIAL” e bora pro próximo nível!  #comunicacao #marketingdigital #marketingdaverdade #posicionamentodigital&quot;</div><div class="bookmark-description">476 likes, 59 comments - gisleneisquierdo on May 30, 2023: &quot;🚀 A Turbo UAU surgiu com essa missão… Trazer à tona o marketing da verdade e do amor!  ❌ Falsas promessas, dublê de rico, aquel...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/Cs38vApruof/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/350093538_682647183599078_9167242982549765890_n.jpg?stp=dst-jpg_e35_s480x480&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=102&amp;_nc_ohc=4ATrGWlKYO4Q7kNvgGUKRd3&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAhzT0g59fiVcU3-Ty7bBD77ybfq52zSWak7S-of3sOeQ&amp;oe=662A1223&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-816d-8ccc-cb35a980e39c"><a href="https://www.instagram.com/p/C14YhOyOdfj/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">NYTT | athleisure brand on Instagram: &quot;Não é mais a NYTT que está falando que você pode confiar no que dizemos… são nossas nytt friends 🫶🏻  Comente um incentivo para quem ainda tem dúvida se vale a pena ter NYTT no armário 👇🏼&quot;</div><div class="bookmark-description">45 likes, 11 comments - nyttconcept on January 9, 2024: &quot;Não é mais a NYTT que está falando que você pode confiar no que dizemos… são nossas nytt friends 🫶🏻  Comente um incentivo pa...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C14YhOyOdfj/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/418375301_3793261167570959_5131444448995812517_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=111&amp;_nc_ohc=a3YP3HW8fT4Q7kNvgHd0YL1&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCht8pmOqZmZXz-8_DdErXY3mOYQsNvxUCK4O0UfCvpkA&amp;oe=662AF4B9&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-815c-838e-dfd78fa4a6d1"><a href="https://www.instagram.com/p/CxiquiPOx01/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">NYTT | athleisure brand on Instagram: &quot;🚨 ALERTA PERIGO! Risco enorme de perceberem que você é só quer usar a mesma roupa! 😂   Ligue o som para você escutar o relato da nossa cliente e acabar com qualquer dúvida e medo que você tem das roupas esportivas! 🫶🏻&quot;</div><div class="bookmark-description">78 likes, 7 comments - nyttconcept on September 23, 2023: &quot;🚨 ALERTA PERIGO! Risco enorme de perceberem que você é só quer usar a mesma roupa! 😂   Ligue o som para você escutar o relato d...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CxiquiPOx01/</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/381199727_322516063646414_3811199449191641845_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=102&amp;_nc_ohc=yqu3xK0PvwUAb5xfU3K&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfA-tQ4vCiJIdSeH2yZR5ffQVmxNKXhHP7ptVk4NTJlAJA&amp;oe=662AE284&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81d3-aced-f9dee70f610b"><a href="https://www.instagram.com/p/CwfXo54ADEg/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">NYTT | athleisure brand on Instagram: &quot;Obrigada, NYTT! Por salvar o meu estilo minimalista 🥹 - @alice_safortes   Imagina receber uma declaração de amor dessa! A NYTT veio para revolucionar a forma como você se veste 🫶🏻&quot;</div><div class="bookmark-description">529 likes, 41 comments - nyttconcept on August 28, 2023: &quot;Obrigada, NYTT! Por salvar o meu estilo minimalista 🥹 - @alice_safortes   Imagina receber uma declaração de amor dessa! A NYTT veio ...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/CwfXo54ADEg/</div></div><img src="https://scontent.cdninstagram.com/v/t51.2885-15/371165014_261707630099949_125133514624660934_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=109&amp;_nc_ohc=yw4zahEUSIIQ7kNvgH789FS&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfD2sF-FmEp4N9pXtoRPl_sdve6q3oMUSEWO40Fy2NpjCw&amp;oe=662AF05E&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-818c-a29d-d07da8646e87"><a href="https://www.instagram.com/p/C5d4N4qLEHe/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Priscila Sobral on Instagram: &quot;Não tenha vergonha de uma das etapas mais importantes no processo de se tornar grande: o início! Muito pelo contrário, apaixone-se por ela!  E melhor do que começar, é começar com o pé direito. Dia 8 de Abril, amanhã, na Formação Bastidores do Digital, você terá essa oportunidade!  Comente BASTIDORES para saber mais.&quot;</div><div class="bookmark-description">2,042 likes, 139 comments - priscila_zillo on April 7, 2024: &quot;Não tenha vergonha de uma das etapas mais importantes no processo de se tornar grande: o início! Muito pelo contrário, apaixone-se por...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C5d4N4qLEHe/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/436329411_3700602346854005_5855965464341236138_n.jpg?stp=dst-jpg_e35_p480x480&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=105&amp;_nc_ohc=Ms7N3gYBEycAb6Fk7wX&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfDgHv2P6HQTVSSEAzFwJGwHSwkYkXRp-zIvpuYprTQBJQ&amp;oe=662B03EF&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8138-a7e7-faf2e0f4c6b2"><a href="https://www.instagram.com/p/C5O85ksrxw4/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Curso New Seitai •Quiropraxia on Instagram: &quot;🚀 Desperte seu Potencial na Quiropraxia!   Neste curso abrangente, você mergulhará no universo da quiropraxia, aprendendo desde os princípios fundamentais até as técnicas avançadas, tudo de forma teórica e prática.   Com o foco no realinhamento da coluna vertebral e no alívio das dores, você se tornará apto a oferecer tratamentos eficazes e seguros para os seus pacientes, sem recorrer a intervenções invasivas ou medicamentosas.   🎯 Público-Alvo: Profissionais e Estudantes da Área da Saúde  ✅ Domine a Quiropraxia em apenas 4 dias! ✅ 85 horas de treinamento intenso (40h presenciais + 45h de consultoria online) ✅ Horários: Das 8h às 18h ✅ Experiência imersiva e prática, baseada em sólida teoria  🗓️ Datas: 22, 23 e 29, 30 de junho 📍 Localização: Belo Horizonte, Minas Gerais  🗓️ Datas: 16, 17, 18 e 19 de maio 📍 Localização:  São Luís no Maranhão  Prepare-se para elevar o seu conhecimento e se destacar na área da saúde, proporcionando uma verdadeira transformação na vida daqueles que buscam qualidade de vida.   Inscreva-se agora e embarque nessa jornada rumo ao sucesso profissional e pessoal! Deixe nos comentários a palavra: QUIROPRAXIA, para receber mais informações!   Se inscreva agora mesmo em nossa turma 🗓️ pelo site www.fabiopense.com ou📱Whatsapp: (31) 99124-2542&quot;</div><div class="bookmark-description">cursosfabiopense on April 1, 2024: &quot;🚀 Desperte seu Potencial na Quiropraxia!   Neste curso abrangente, você mergulhará no universo da quiropraxia, aprendendo desde os p...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C5O85ksrxw4/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/435019500_951411136227178_2587742247946066764_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=110&amp;_nc_ohc=EMruZAx31oUAb4Lvky_&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAigMpkbjpB8XyYp1LLRZ54z-cIzYPU79oq7-S3hXMbew&amp;oe=662AE0D2&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81be-92b0-e7547c20655e"><a href="https://www.instagram.com/p/C5WncljJVVB/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Leonardo Bagarolo on Instagram: &quot;Vocês também sofrem com a ansiedade pós compra? 😂😂 pq aqui em casa é assim, ainda mais com os descontos de até 40% das Ofertas do Dia da @amazonbrasil ! Lá você encontra uma variedade absurda de produtos, com uma entrega super rápida e uma experiência facilitada! #BomDiaComOfertasDoDia #publicidade&quot;</div><div class="bookmark-description">51K likes, 736 comments - leobagarolo on April 4, 2024: &quot;Vocês também sofrem com a ansiedade pós compra? 😂😂 pq aqui em casa é assim, ainda mais com os descontos de até 40% das Ofertas...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/p/C5WncljJVVB/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/435362323_1450275155862304_9139332269404168160_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=104&amp;_nc_ohc=4N4abb2KrmgAb7XnTRw&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfDOWIZqh_GtXTLooGnPFDPBO8twLwqo98_J-Gc-xourSQ&amp;oe=662B05AB&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81cb-a2fb-fad46f47e41f"><a href="https://www.instagram.com/reel/C5inAphgGx9/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GUE OLIVEIRA on Instagram: &quot;Ela ficou ou não maravilhosa???  #explorar #explorer #explorerpage #explorereels #antesedepois #explorar #ᴇxᴘʟᴏʀᴀʀ #exploration #explorers #urbanexplorer #transformacao #transformacion #transformation #transformação #hair #hairstylist #hairdresser #viral #salaodebeleza&quot;</div><div class="bookmark-description">168K likes, 2,255 comments - gueoliveira on April 9, 2024: &quot;Ela ficou ou não maravilhosa???  #explorar #explorer #explorerpage #explorereels #antesedepois #explorar #ᴇxᴘʟᴏʀᴀʀ #explorati...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/reel/C5inAphgGx9/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/435633596_3783325725238139_1299914788076048917_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=111&amp;_nc_ohc=x9thik2KpN0Q7kNvgGoA2eL&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfAmwmfwcARslQbl8wyQkjaZ79nbwhjfL-KaFcmiFH1Q3w&amp;oe=662AFFE6&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81b6-9d52-cf71a824bbc1"><a href="https://www.instagram.com/reel/C5VuL8JAW_K/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GUE OLIVEIRA on Instagram: &quot;Mensalmente crianças sentam na minha cadeira com o sofrimento causado pelo bullying por seus cabelos longos.  Minha pergunta é: até quando?   Esse #tbt é um dos que mais mexem comigo.   #explorer #explorar #explorereels #explorers #explorar #ᴇxᴘʟᴏʀᴀʀ #explorarpage #explorarbrasil #viral #viralizounanet #viralizou #transformation #transformacion #transformacao #transformação #hair #hairstylist #hairdresser #antesedepois #salaodebeleza #barbearia #criança #bullying #gueoliveira&quot;</div><div class="bookmark-description">169K likes, 4,507 comments - gueoliveira on April 4, 2024: &quot;Mensalmente crianças sentam na minha cadeira com o sofrimento causado pelo bullying por seus cabelos longos.  Minha pergunta é: até qu...&quot;.</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/reel/C5VuL8JAW_K/</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/435239971_431634006045252_4869153867863317411_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=100&amp;_nc_ohc=R0OqzyZykr0Ab4aWlmn&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBhjYm0XMwv7FDixpsCaQ7vPC7U8j5lZ5p_xxq1U9AbgA&amp;oe=662AE283&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d6-af52-e96e2990363d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81aa-ae73-e248b5763bca" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ba-b568-e190536a852e" class=""><strong>Volte para a página anterior</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8135-af53-e62a1928fc69"/></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8161-aff1-e474e9d0a93f"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8154-9852-c9c1a90c3760" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

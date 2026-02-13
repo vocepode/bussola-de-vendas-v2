@@ -1,0 +1,719 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>[C2] Carrossel</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-8156-9ff8-cba0b7388b00" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/camera-roll-portrait_blue.svg"/></div><h1 class="page-title" dir="auto">[C2] Carrossel</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/tornado_gray.svg" style="width:14px;height:14px;display:block"/></span>Funil</th><td></td></tr><tr class="property-row property-row-status"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/burst_gray.svg" style="width:14px;height:14px;display:block"/></span>Progresso Matriz</th><td><span class="status-value select-value-color-gray"><div class="status-dot status-dot-color-gray"></div>Ideia</span></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Formato de conteúdo</th><td></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Plataforma</th><td></td></tr><tr class="property-row property-row-checkbox"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/checkmark-square_gray.svg" style="width:14px;height:14px;display:block"/></span>Impulsionar</th><td><div class="checkbox checkbox-off"></div></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81b2-ad1f-c4fc50d556fa" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81a7-a1cf-ef29db282736" style="width:33.333333333333336%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81b6-b696-f8c7f54d7207"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/target_blue.svg"/></div><div style="width:100%"><strong>Objetivo</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8134-82cf-dda0c42b7eb3"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e1-854f-d5b350f2c7f8" class="">Aumentar a consciência, quebrar objeções e gerar engajamento.</p></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-815c-8aee-db96a24a6b6f" style="width:33.333333333333336%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8121-b037-e50e567f08bf"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/heart_blue.svg"/></div><div style="width:100%">Sentimento a explorar<div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81e0-9926-ee75896d56a6"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8136-b9d4-c45f84dd6542" class="">Desafio<br/>Medo<br/>Objeção</p></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8122-bab3-c5f7e8ffbaad" style="width:33.33333333333333%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81a8-804c-d29463c02d28"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/cards_blue.svg"/></div><div style="width:100%"><strong>Quantidade de cards</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-815a-8b1f-dbf8e43040b8"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8192-ac9a-cfd4add5adc9" class="">Mínimo 7<br/>Ideal 10</p></div></div></figure></div></div></div></div></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8181-a122-c7efb93a492c"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%">Como fazer seu carrossel<div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81cf-8164-c5d0bd214d4f"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81a0-a3b1-f0564e0f5c03" class="toggle"><li><details open=""><summary>Instruções</summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f3-9eac-e3af2b5bb3e7" class=""><strong>Card 1 - Capa</strong></p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-818c-a084-d3b7a9f54551" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-default">A capa de um carrossel C2 deve ser visualmente atraente e informativa para capturar a atenção do público e incentivá-lo a deslizar para ver o restante do conteúdo. </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-818f-a9c7-e5cb59a0f17b" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-default">Use uma imagem de alta qualidade que seja relevante ao tema do carrossel e adicione um título claro e conciso que resuma o conteúdo que será abordado. O texto deve ser grande e legível, utilizando cores que contrastem bem com o fundo para garantir a visibilidade. </mark></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ea-bcd9-cb4f909789ae" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-default">Inclua também um subtítulo ou uma breve descrição que reforce a importância do conteúdo, criando curiosidade e interesse. Adicione elementos visuais como ícones ou gráficos que complementem o título e ajudem a comunicar a mensagem principal rapidamente.</mark></li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-812a-b05c-dda143ee91b4" class=""><strong>Card 2 - Contracapa</strong></p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-813d-b681-e3fce495c229" class="bulleted-list"><li style="list-style-type:disc">A contra capa de um carrossel C2 deve complementar a capa e continuar capturando a atenção do público, mantendo o mesmo tema visual e reforçando a promessa feita na capa. </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8146-a90f-f0a546d252d4" class="bulleted-list"><li style="list-style-type:disc">Use uma imagem de alta qualidade que seja relevante e em continuidade com a imagem da capa. Inclua um subtítulo ou uma frase de impacto que reforce a importância do conteúdo e incentive o público a deslizar para ver o restante do carrossel. </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8171-8461-d017750d453e" class="bulleted-list"><li style="list-style-type:disc">Adicione elementos visuais consistentes, como cores, fontes e ícones, que ajudem a criar uma continuidade visual com a capa. O objetivo é manter o interesse e a curiosidade do público, garantindo que eles queiram ver o conteúdo completo.</li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8156-913d-f70d27b369ca" class=""><strong>Card 3: Gancho</strong></p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e4-9c34-fce0de89451c" class="bulleted-list"><li style="list-style-type:disc"><strong>Conteúdo</strong>: Introduza o tema principal com uma pergunta impactante ou uma afirmação provocadora que aborda a objeção, o medo ou o desafio da persona. Aqui é possivel fazer uma chamada de ação (CTA) estimulando que a audiência comente.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8115-90c3-ede2585a22ff" class="bulleted-list"><li style="list-style-type:disc"><strong>Imagem</strong>: Utilize uma imagem atraente e relevante que capte a atenção imediata do público. Inclua texto que destaque a pergunta ou afirmação.</li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-818a-8d8c-e1c02d0399f3" class=""><strong>Card 4: Introdução ao Sentimento (Objeção, Medo ou Desafio)</strong></p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-817a-8a06-c6ee94251a9b" class="bulleted-list"><li style="list-style-type:disc"><strong>Conteúdo</strong>: Descreva o sentimento escolhido em detalhes, explicando por que isso é uma preocupação importante para a audiência.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e6-a3b0-e942d5823f33" class="bulleted-list"><li style="list-style-type:disc"><strong>Imagem</strong>: Adicione uma imagem que represente visualmente o sentimento, ajudando o público a se identificar com a situação.</li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8151-95e5-dbb456fc4c4a" class=""><strong>Card 5: Posicionamento e Autoridade</strong></p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-814a-a277-c7fec99fbdce" class="bulleted-list"><li style="list-style-type:disc"><strong>Conteúdo</strong>: Apresente sua visão sobre o sentimento abordado, mostrando sua autoridade no assunto e gerando valor para a audiência.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8102-8b07-c3d8097da702" class="bulleted-list"><li style="list-style-type:disc"><strong>Imagem</strong>: Use uma imagem que mostre você ou sua marca em ação, reforçando a sua credibilidade e experiência no tema.</li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81bc-b15c-d4edbe5543c1" class=""><strong>Card 6: Introdução à Solução</strong></p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8180-a31c-dab44d7a56a5" class="bulleted-list"><li style="list-style-type:disc"><strong>Conteúdo</strong>: Comece a introduzir a solução para o problema, mencionando de forma geral como você pode ajudar a superar a objeção, medo ou desafio.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e0-a0b7-c185ce9bd1c4" class="bulleted-list"><li style="list-style-type:disc"><strong>Imagem</strong>: Inclua uma imagem que sugira a solução, como um exemplo de produto ou serviço, ou uma imagem de alguém encontrando alívio.</li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8165-b077-c711c9bed64d" class=""><strong>Card 7: Atributos e Benefícios Funcionais</strong></p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-813d-afed-f6b61326f10b" class="bulleted-list"><li style="list-style-type:disc"><strong>Conteúdo</strong>: Detalhe os atributos do seu produto ou serviço e seus benefícios funcionais. Explique como eles ajudam a resolver o problema específico da audiência.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8164-8a97-f87ca42b9114" class="bulleted-list"><li style="list-style-type:disc"><strong>Imagem</strong>: Use uma imagem que ilustre claramente os atributos e benefícios funcionais, como uma infografia ou uma foto do produto em uso.</li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-814d-aed6-e46eaff70c1e" class=""><strong>Card 8: Benefícios Emocionais</strong></p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-817c-b6be-d4889618c689" class="bulleted-list"><li style="list-style-type:disc"><strong>Conteúdo</strong>: Destaque os benefícios emocionais que seu produto ou serviço oferece, mostrando como ele impacta positivamente a vida do cliente.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-818f-a9bc-fd6687545601" class="bulleted-list"><li style="list-style-type:disc"><strong>Imagem</strong>: Adicione uma imagem emocionalmente envolvente que mostre clientes felizes ou satisfeitos com os resultados.</li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d0-a2db-fa8c161b775c" class=""><strong>Card 9: Essência da Marca</strong></p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8107-bf0f-f8e7df522c3f" class="bulleted-list"><li style="list-style-type:disc"><strong>Conteúdo</strong>: Explique a essência da sua marca, seus valores fundamentais e como eles se alinham com a solução que você oferece.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e6-af53-c2e4059cc012" class="bulleted-list"><li style="list-style-type:disc"><strong>Imagem</strong>: Utilize uma imagem que represente a essência da sua marca, como seu logotipo ou uma cena que ilustre seus valores.</li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811d-bf53-ffadf145e755" class=""><strong>Card 10: Fechamento e Chamada para Ação (CTA)</strong></p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ad-b998-d3120b706452" class="bulleted-list"><li style="list-style-type:disc"><strong>Conteúdo</strong>: Contextualize como você pode ajudar a vencer o medo ou desafio, reforçando a solução apresentada. Inclua uma chamada para ação que sugira salvar o conteúdo e comentar sobre ele.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81f8-a3ca-ec7ab1eb7fdd" class="bulleted-list"><li style="list-style-type:disc"><strong>Imagem</strong>: Use um (motion) na imagem que inspire ação, como um botão de CTA visual ou um ícone de salvamento. Adicione texto claro e direto que indique a ação desejada que deve ser salvar, comentar ou compartilhar.</li></ul></div></details></li></ul></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8188-8fd8-ddee45f7b181" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-819b-b271-eeb74fcff2d2" class="">Imagem/texto carrossel</h3></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81c3-ba3b-f54cb034c83a"/></div><div style="display:contents" dir="ltr"><table id="276cb023-eb3b-8195-845a-d09cb8ebb426" class="simple-table"><thead class="simple-table-header"><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81b7-855b-eaeaf12885ab"><th id="wCoO" class="simple-table-header-color simple-table-header" style="width:161.99999237060547px"></th><th id="^oD:" class="simple-table-header-color simple-table-header" style="width:258px">Imagem</th><th id="u\xJ" class="simple-table-header-color simple-table-header" style="width:316.9965515136719px">Texto da imagem</th></tr></div></thead><tbody><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81f7-9b0b-e2627857f727"><th id="wCoO" class="simple-table-header-color simple-table-header" style="width:161.99999237060547px">Card 1 - Capa</th><td id="^oD:" class="" style="width:258px"></td><td id="u\xJ" class="" style="width:316.9965515136719px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8189-b260-fdabe3d76c4a"><th id="wCoO" class="simple-table-header-color simple-table-header" style="width:161.99999237060547px">Card 2 - Contracapa</th><td id="^oD:" class="" style="width:258px"></td><td id="u\xJ" class="" style="width:316.9965515136719px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8162-8e4a-d918662da7c3"><th id="wCoO" class="simple-table-header-color simple-table-header" style="width:161.99999237060547px">Card 3</th><td id="^oD:" class="" style="width:258px"></td><td id="u\xJ" class="" style="width:316.9965515136719px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8151-a225-e899f56cd395"><th id="wCoO" class="simple-table-header-color simple-table-header" style="width:161.99999237060547px">Card 4</th><td id="^oD:" class="" style="width:258px"></td><td id="u\xJ" class="" style="width:316.9965515136719px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81f1-a500-fada40798b22"><th id="wCoO" class="simple-table-header-color simple-table-header" style="width:161.99999237060547px">Card 5</th><td id="^oD:" class="" style="width:258px"></td><td id="u\xJ" class="" style="width:316.9965515136719px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-814b-a5bc-cd80784d9fe5"><th id="wCoO" class="simple-table-header-color simple-table-header" style="width:161.99999237060547px">Card 6</th><td id="^oD:" class="" style="width:258px"></td><td id="u\xJ" class="" style="width:316.9965515136719px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81c7-a260-e745879b2139"><th id="wCoO" class="simple-table-header-color simple-table-header" style="width:161.99999237060547px">Card 7</th><td id="^oD:" class="" style="width:258px"></td><td id="u\xJ" class="" style="width:316.9965515136719px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8157-98f1-e4a0ee962b74"><th id="wCoO" class="simple-table-header-color simple-table-header" style="width:161.99999237060547px">Card 8</th><td id="^oD:" class="" style="width:258px"></td><td id="u\xJ" class="" style="width:316.9965515136719px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-811a-af2d-cf737ef8a608"><th id="wCoO" class="simple-table-header-color simple-table-header" style="width:161.99999237060547px">Card 9</th><td id="^oD:" class="" style="width:258px"></td><td id="u\xJ" class="" style="width:316.9965515136719px"></td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8177-acf7-df00c7f55121"><th id="wCoO" class="simple-table-header-color simple-table-header" style="width:161.99999237060547px">Card 10 - CTA</th><td id="^oD:" class="" style="width:258px"></td><td id="u\xJ" class="" style="width:316.9965515136719px"></td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8118-ba0f-db50c88b5c40" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-810a-a59e-fa5975435701" class="">Texto legenda</h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-812b-8ace-dcb5979a280b" class="">A legenda deve reforçar a mensagem do vídeo, oferecendo informações adicionais ou um resumo e repita o CTA na legenda.</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-819d-a749-f05933266d25"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c6-8b40-d2e17ad5dc16" class="bulleted-list"><li style="list-style-type:disc"><strong>Escreva aqui sua legenda</strong></li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8149-ba19-e192164857bf" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-8154-980e-dcdb08d257a5" class="">Capa do carrossel</h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c0-a405-f656be8903d6" class="">Adicione a capa com a headline</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-816d-afc3-cfedaa3b32b5"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-812e-9528-d8d9d8a5dfea" class="image"><a href="https://www.notion.so"><img src="https://www.notion.so"/></a></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f1-a83b-c80dd017acd0" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81de-ab61-d358a0ca9e4a" class="">Avaliação - após a publicação</h3></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8155-baa9-eae8f7025813"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8163-90d0-c804a2199939" class="toggle"><li><details open=""><summary>Como analisar</summary><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8180-8529-ef6591009e6a" class=""><strong>O que foi Bom: </strong>Após analisar as métricas da publicação, descreva aqui o que você considera que foi positivo nessa publicação. Você pode descrever tema, alguma frase de impacto, algo que chamou atenção do publico, se foi o design que impactou positivamente, horário da publicação. Enfim, tudo que você considerou que foi positivo<br/><br/><strong>O que foi ruim:</strong> Aqui você deve descrever os pontos que não foram bons ou que não deram certo nesta publicação. Um tema que não chamou atenção, frases que não converteram bem, o público ficou confuso, o design não estava bem elaborado, o horário de publicação não foi bom, o engajamento foi fraco com a pergunta feita no post. Tudo que não  deu certo e você precisa melhorar ou evitar em próximos posts.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81c6-84d8-d04cc292f691" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81ec-b8e4-eb9b012dc796" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8113-8c1c-e3294eea9b07"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/emoji_blue.svg"/></div><div style="width:100%"><strong>O que foi bom</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81be-8a29-c2eacc51ee58"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81de-8cca-d7ca5a0c6ca8" class="">Escreva aqui</p></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8102-bdb8-d61490f63dc1" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81a4-b4ff-cb509e4407d4"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/emoji-sad_blue.svg"/></div><div style="width:100%"><strong>O que foi ruim</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8194-a99c-e502d115c69e"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8180-91da-cb8c9a48cfda" class="">Escreva aqui</p></div></div></figure></div></div></div></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c7-ae19-c5f21656f12a" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d2-afd6-d0d9c72be70e"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81be-b7f7-fb0aa5bae4b4" class=""><strong>Referências</strong></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8155-9f2b-d09146a8b0df" class="">Coloque aqui suas referências para criar o conteúdo desta publicação</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-814d-88de-f1b8f091a107"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8184-af0d-ecb0ef3fcf19" class="bulleted-list"><li style="list-style-type:disc"><strong>link das referencias</strong></li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-816a-b760-cd66c6edf3aa" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

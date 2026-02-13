@@ -1,22 +1,12 @@
-import { COOKIE_NAME } from "@shared/const";
-import { getSessionCookieOptions } from "./_core/cookies";
-import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
 
 export const appRouter = router({
-  system: systemRouter,
-  
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
-    logout: publicProcedure.mutation(({ ctx }) => {
-      const cookieOptions = getSessionCookieOptions(ctx.req);
-      ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 });
-      return {
-        success: true,
-      } as const;
-    }),
+    // No Next/Vercel, o logout (limpeza de cookie) será feito via rota HTTP dedicada.
+    logout: publicProcedure.mutation(() => ({ success: true } as const)),
   }),
 
   modules: router({
@@ -27,12 +17,210 @@ export const appRouter = router({
     getBySlug: publicProcedure
       .input(z.object({ slug: z.string() }))
       .query(async ({ input }) => {
-        return await db.getModuleBySlug(input.slug);
+        return (await db.getModuleBySlug(input.slug)) ?? null;
       }),
     
     getProgress: protectedProcedure.query(async ({ ctx }) => {
       return await db.getUserModuleProgress(ctx.user.id);
     }),
+  }),
+
+  sections: router({
+    listTreeByModule: publicProcedure
+      .input(z.object({ moduleId: z.number() }))
+      .query(async ({ input }) => {
+        const [allSections, allLessons] = await Promise.all([
+          db.getSectionsByModuleId(input.moduleId),
+          db.getLessonsByModuleIdForTree(input.moduleId),
+        ]);
+
+        const nodeById = new Map<
+          number,
+          {
+            section: (typeof allSections)[number];
+            children: any[];
+            lessons: (typeof allLessons)[number][];
+          }
+        >();
+
+        for (const s of allSections) {
+          nodeById.set(s.id, { section: s, children: [], lessons: [] });
+        }
+
+        const roots: any[] = [];
+        for (const s of allSections) {
+          const node = nodeById.get(s.id);
+          if (!node) continue;
+
+          if (s.parentSectionId) {
+            const parent = nodeById.get(s.parentSectionId);
+            if (parent) parent.children.push(node);
+            else roots.push(node);
+          } else {
+            roots.push(node);
+          }
+        }
+
+        const rootLessons: (typeof allLessons)[number][] = [];
+        for (const l of allLessons) {
+          if (!l.sectionId) {
+            rootLessons.push(l);
+            continue;
+          }
+          const node = nodeById.get(l.sectionId);
+          if (node) node.lessons.push(l);
+          else rootLessons.push(l);
+        }
+
+        return { roots, rootLessons };
+      }),
+  }),
+
+  workspaces: router({
+    ensureNorthWorkspaceLessons: protectedProcedure.mutation(async () => {
+      const norte = await db.ensureModule({
+        slug: "norte",
+        title: "NORTE - Estratégia",
+        orderIndex: 1,
+        description: "Defina a estratégia de vendas e o direcionamento do seu negócio",
+      });
+
+      // Lições internas do workspace (1 por subetapa) para salvar rascunhos separadamente.
+      const workspaceLessons = [
+        // Onde você está
+        { slug: "ws-norte-onde-voce-esta-minha-empresa", title: "NORTE • Onde você está • Minha empresa", orderIndex: 900 },
+        { slug: "ws-norte-onde-voce-esta-concorrentes", title: "NORTE • Onde você está • Concorrentes", orderIndex: 901 },
+
+        // Sua audiência
+        { slug: "ws-norte-audiencia-faixa-etaria", title: "NORTE • Sua audiência • Faixa etária", orderIndex: 910 },
+        { slug: "ws-norte-audiencia-localizacao", title: "NORTE • Sua audiência • Localização", orderIndex: 911 },
+        { slug: "ws-norte-audiencia-nivel-educacao", title: "NORTE • Sua audiência • Nível de educação", orderIndex: 912 },
+        { slug: "ws-norte-audiencia-faixa-renda", title: "NORTE • Sua audiência • Faixa de renda", orderIndex: 913 },
+        { slug: "ws-norte-audiencia-quem-nao-e", title: "NORTE • Sua audiência • Quem não é", orderIndex: 914 },
+        { slug: "ws-norte-audiencia-interesses", title: "NORTE • Sua audiência • Interesses", orderIndex: 915 },
+        { slug: "ws-norte-audiencia-hobbies", title: "NORTE • Sua audiência • Hobbies", orderIndex: 916 },
+        { slug: "ws-norte-audiencia-buscas", title: "NORTE • Sua audiência • Principais buscas na internet", orderIndex: 917 },
+        { slug: "ws-norte-audiencia-preferencias", title: "NORTE • Sua audiência • Preferências de conteúdo", orderIndex: 918 },
+        { slug: "ws-norte-audiencia-compra", title: "NORTE • Sua audiência • Comportamento de compra", orderIndex: 919 },
+        { slug: "ws-norte-audiencia-objetivos", title: "NORTE • Sua audiência • Objetivos de vida", orderIndex: 920 },
+        { slug: "ws-norte-audiencia-desafios", title: "NORTE • Sua audiência • Desafios", orderIndex: 921 },
+        { slug: "ws-norte-audiencia-valores-medos", title: "NORTE • Sua audiência • Valores e medos", orderIndex: 922 },
+        { slug: "ws-norte-audiencia-desejos", title: "NORTE • Sua audiência • Desejos", orderIndex: 923 },
+        { slug: "ws-norte-audiencia-dores", title: "NORTE • Sua audiência • Dores", orderIndex: 924 },
+        { slug: "ws-norte-audiencia-objecoes", title: "NORTE • Sua audiência • Objeções", orderIndex: 925 },
+
+        // Posicionamento
+        { slug: "ws-norte-posicionamento-laddering", title: "NORTE • Posicionamento • Laddering", orderIndex: 930 },
+        { slug: "ws-norte-posicionamento-quadro", title: "NORTE • Posicionamento • Quadro", orderIndex: 931 },
+        { slug: "ws-norte-posicionamento-proposta-atual", title: "NORTE • Posicionamento • Minha proposta de valor", orderIndex: 932 },
+        { slug: "ws-norte-posicionamento-reflexao", title: "NORTE • Posicionamento • Perguntas de reflexão", orderIndex: 933 },
+        { slug: "ws-norte-posicionamento-proposta-nova", title: "NORTE • Posicionamento • Sua nova proposta de valor", orderIndex: 934 },
+      ] as const;
+
+      await db.ensureWorkspaceLessons({
+        moduleId: norte.id,
+        lessons: workspaceLessons.map((l) => ({ ...l, description: null })),
+      });
+
+      return { ok: true as const, moduleId: norte.id };
+    }),
+
+    ensureMarcoZeroWorkspaceLessons: protectedProcedure.mutation(async () => {
+      const marcoZero = await db.ensureModule({
+        slug: "marco-zero",
+        title: "Marco Zero",
+        orderIndex: 0,
+        description: "Diagnóstico e jornada inicial do negócio",
+      });
+
+      // Lições do workspace Marco Zero (match por lessonTitleIncludes no front: "Marco Zero" e "1. Diagnóstico")
+      const workspaceLessons = [
+        { slug: "ws-marco-zero-jornada", title: "Marco Zero - Sua Jornada até aqui", orderIndex: 100 },
+        { slug: "ws-marco-zero-diagnostico", title: "1. Diagnóstico do negócio", orderIndex: 101 },
+      ] as const;
+
+      await db.ensureWorkspaceLessons({
+        moduleId: marcoZero.id,
+        lessons: workspaceLessons.map((l) => ({ ...l, description: null })),
+      });
+
+      return { ok: true as const, moduleId: marcoZero.id };
+    }),
+
+    getProgressBySlug: protectedProcedure
+      .input(z.object({ slug: z.enum(["marco-zero", "norte"]) }))
+      .query(async ({ ctx, input }) => {
+        const mod = await db.getModuleBySlug(input.slug);
+        if (!mod) return { completed: 0, total: 0, percentage: 0 };
+        return await db.getWorkspaceProgressByModule(ctx.user.id, mod.id);
+      }),
+
+    getWorkspaceStateBySlug: protectedProcedure
+      .input(z.object({ slug: z.enum(["marco-zero", "norte"]) }))
+      .query(async ({ ctx, input }) => {
+        const mod = await db.getModuleBySlug(input.slug);
+        if (!mod) return { steps: [] };
+        const moduleLessons = await db.getLessonsByModuleId(mod.id);
+        if (moduleLessons.length === 0) return { steps: [] };
+        const lessonIds = moduleLessons.map((l) => l.id);
+        const states = await db.getLessonUserStatesByLessonIds(ctx.user.id, lessonIds);
+        const stateByLessonId = new Map(states.map((s) => [s.lessonId, s]));
+        const steps = moduleLessons.map((lesson) => {
+          const state = stateByLessonId.get(lesson.id);
+          return {
+            lessonId: lesson.id,
+            title: lesson.title,
+            status: (state?.status ?? "draft") as string,
+            data: (state?.data ?? {}) as Record<string, unknown>,
+          };
+        });
+        return { steps };
+      }),
+  }),
+
+  lessonState: router({
+    get: protectedProcedure
+      .input(z.object({ lessonId: z.number() }))
+      .query(async ({ ctx, input }) => {
+        const row = await db.getLessonUserState(ctx.user.id, input.lessonId);
+        return (
+          row ?? {
+            userId: ctx.user.id,
+            lessonId: input.lessonId,
+            data: {},
+            status: "draft" as const,
+            updatedAt: null as Date | null,
+          }
+        );
+      }),
+
+    upsertDraft: protectedProcedure
+      .input(
+        z.object({
+          lessonId: z.number(),
+          // Zod v4: z.record precisa de keySchema + valueSchema
+          patch: z.record(z.string(), z.unknown()),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        return await db.upsertLessonUserDraft({
+          userId: ctx.user.id,
+          lessonId: input.lessonId,
+          patch: input.patch,
+        });
+      }),
+
+    complete: protectedProcedure
+      .input(z.object({ lessonId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        return await db.completeLessonUserState({ userId: ctx.user.id, lessonId: input.lessonId });
+      }),
+
+    reset: protectedProcedure
+      .input(z.object({ lessonId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        return await db.resetLessonUserState({ userId: ctx.user.id, lessonId: input.lessonId });
+      }),
   }),
 
   lessons: router({
@@ -45,7 +233,7 @@ export const appRouter = router({
     getById: publicProcedure
       .input(z.object({ lessonId: z.number() }))
       .query(async ({ input }) => {
-        return await db.getLessonById(input.lessonId);
+        return (await db.getLessonById(input.lessonId)) ?? null;
       }),
     
     getProgress: protectedProcedure

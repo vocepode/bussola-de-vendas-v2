@@ -1,0 +1,716 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Vou te contar um segredo que vai mudar …</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-810d-8179-f3581929c7e2" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/unlock_blue.svg"/></div><h1 class="page-title" dir="auto">Vou te contar um segredo que vai mudar …</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/dependency_gray.svg" style="width:14px;height:14px;display:block"/></span>Formato</th><td><span class="selected-value select-value-color-blue">Vídeo curto</span></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Funil</th><td><span class="selected-value select-value-color-blue">C1</span></td></tr><tr class="property-row property-row-select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/arrow-circle-down_gray.svg" style="width:14px;height:14px;display:block"/></span>Guia de conteúdo</th><td><span class="selected-value select-value-color-blue">Dicas</span></td></tr><tr class="property-row property-row-select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/arrow-circle-down_gray.svg" style="width:14px;height:14px;display:block"/></span>Plano</th><td><span class="selected-value select-value-color-brown">Semana 2</span></td></tr><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/feed_gray.svg" style="width:14px;height:14px;display:block"/></span>Plataforma</th><td><span class="selected-value select-value-color-purple">Instagram</span><span class="selected-value select-value-color-blue">TikTok</span></td></tr><tr class="property-row property-row-checkbox"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/checkmark-square_gray.svg" style="width:14px;height:14px;display:block"/></span>Primeiros posts</th><td><div class="checkbox checkbox-off"></div></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-813a-8e08-d46914a77728" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81f5-bf72-f506fadbb6f9" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81e4-8526-eac55ac5bd15"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/target_blue.svg"/></div><div style="width:100%"><strong>Objetivo</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ed-bfdb-d33dc14cb5b4"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8128-921f-ec1727f492d9" class="">O objetivo é ensinar algo que vai fazer a diferença no dia a dia do seu público. O foco aqui é gerar valor, não fale diretamente do seu produto.</p></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8122-a215-d5fb594120f7" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-811b-af64-ddbef05f4409"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/clock_blue.svg"/></div><div style="width:100%"><strong>Tempo do Vídeo</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-815a-a665-ede525a1f61a"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8111-9379-d4f38e39fedc" class="">Duração ideal: 59 a 90 segundos, otimizado para plataformas como Instagram Reels, YouTube Shorts e TikTok.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817c-8568-dd6cf075b7d7" class="">
+</p></div></div></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81ce-b9a4-f0b7d8e7dfd2"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/hanger_blue.svg"/></div><div style="width:100%"><strong>Sugestões de Ganchos </strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8166-9019-f3819db25188"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-815a-8971-f1915c89b58b" class="bulleted-list"><li style="list-style-type:disc">Se você tem dificuldade com [X], tente isto</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81c8-8e84-d6951b99c6a1" class="bulleted-list"><li style="list-style-type:disc">3 coisas que eu queria saber antes;;</li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ad-8f37-fb22baa072fb" class="">
+</p></div></div></figure></div></div></div></div></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81b5-a9b3-df0eb9c3e2d7" class=""><strong>Roteiro</strong></h3></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8117-aff5-e0acdf6ade81"/></div><div style="display:contents" dir="ltr"><table id="276cb023-eb3b-8181-847b-e04fd1915861" class="simple-table"><tbody><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8128-a83b-f14768094560"><th id="qpXY" class="simple-table-header-color simple-table-header">Capa e Headline (frase que vai na capa)</th><td id="Bv?s" class="" style="width:524px">Na headline falando qual é a dica que você vai trazer no conteúdo.<br/>Use uma imagem ou frame atraente que seja visualmente atrativo e represente o tema do vídeo, deve despertar curiosidade e incentivar o consumo do conteúdo.</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-8124-ad7a-f1e65ce087af"><th id="qpXY" class="simple-table-header-color simple-table-header">Gancho</th><td id="Bv?s" class="" style="width:524px">Comece falando a dica ou falando o problema e como resolver.</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-813e-9085-dee9c3e82d73"><th id="qpXY" class="simple-table-header-color simple-table-header">Apresentação</th><td id="Bv?s" class="" style="width:524px">Após o gancho, faça uma breve apresentação de quem está gravando o vídeo, estabelecendo credibilidade e criando uma conexão pessoal com a audiência.</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-81ce-81d9-eb1e4ac7c9a4"><th id="qpXY" class="simple-table-header-color simple-table-header">Conteúdo</th><td id="Bv?s" class="" style="width:524px">Dê dicas que que sejam fáceis e possíveis de serem realizadas e que de alguma forma podem ajudar o seu público. Gere valor sem esperar nada em troca.</td></tr></div><div style="display:contents" dir="ltr"><tr id="276cb023-eb3b-818a-b115-d727e172c202"><th id="qpXY" class="simple-table-header-color simple-table-header">Fechamento</th><td id="Bv?s" class="" style="width:524px">Encerre com uma mensagem rápida e inspiradora.<br/>O CTA principal deve incentivar o público a seguir e conhecer mais sobre o perfil, com a opção de compartilhar o vídeo para ampliar o alcance.</td></tr></div></tbody></table></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819f-8a37-f52497dd74d8" class="">
+</p></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-8143-9b5c-c2091d5ccd79" class=""><strong>Referências que indicamos</strong></h3></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8102-b202-e9a13f57ba3a"/></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8145-816a-eb073a672495"><a href="https://www.instagram.com/reel/C3iBxKdMPHF/?utm_source=ig_web_copy_link&amp;igsh=MzRlODBiNWFlZA==" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">60K views · 9.2K likes | Isabela Matte on Instagram: &quot;Como fazer as pessoas compartilharem seu conteúdo? 👇  Essa é uma dica simples (pra quem é aluno do creators), se você quiser aprender como produzir conteúdo com estratégia, que traga resultados, vem pro creators (o link tá na minha bio!)   E aí, fez sentido? Me conta&quot;</div><div class="bookmark-description">9,210 likes, 105 comments -  isabelamatteFebruary 19, 2024 on : &quot;Como fazer as pessoas compartilharem seu conteúdo? 👇  Essa é uma dica simples (pra quem é aluno do creators), se você quiser apren...&quot;</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/reel/C3iBxKdMPHF/?utm_source=ig_web_copy_link&amp;igsh=MzRlODBiNWFlZA==</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/428452108_419224047208835_7157370292523588984_n.jpg?stp=dst-jpg_e15_p640x640&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=111&amp;_nc_ohc=FvtplY6ny7AAb7hcth6&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfB7jEvE-8St_NKBm3k7NkMF4OEKyJ1EowTOoScScSNeGQ&amp;oe=6614AA07&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8174-ac63-e5cad5b9d642"><a href="https://www.instagram.com/reel/C3_HvcDOBl2/?utm_source=ig_web_copy_link" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Roger Reiz - Emagrecimento on Instagram: &quot;✅ Siga @rogerreiz emagrecer comendo o que gosta.  Antes de passar a receita, preste muita atenção! 💡  Estou abrindo as inscrições para a primeira turma do meu Desafío SECA BUCHO em 21 dias  Nele iremos juntos aplicar exatamente o que me ajudou a eliminar os primeiros 10kg de barriga 🥵  Se quiser sabe sobre ele, comenta agora aqui &quot;Eu quero&quot; que te explico tudo 👇🏻  As vagas são limitadas e somente para aquém deseja eliminar o buchinho e podendo perder até 10kg logo nesse desafio 🔥 Agora bora para a receita...  Eu adoro essa pizza e costumo comê-la como jantar. Foi uma das minhas comidas favoritas durante o processo de perda de peso, quando emagreci incríveis 59kg.  Além disso, ela é muito fácil e rápida de fazer, levando menos de 5 minutos para ficar pronta.  A massa é feita com apenas 2 ovos inteiros, 4 colheres de água, 3 colheres de aveia e sal. É uma massa saudável e saborosa, perfeita para quem quer manter a forma sem abrir mão de uma boa pizza.  Para o recheio, eu costumo misturar molho de tomate, média de 3 colheres, frango desfiado utilizei 150g, queijo 2 fatias e orégano.  O resultado é uma pizza deliciosa e nutritiva, que pode ser saboreada sem culpa.  Se você quiser experimentar essa receita ou compartilhar com alguém que também está em busca de opções saudáveis e saborosas, não hesite em fazê-lo.  E se quiser mais dicas de como emagrecer sem precisar seguir dietas malucas, siga o meu perfil.  Aqui, compartilho diversas estratégias e receitas para uma vida mais saudável e equilibrada. 🚀🚀🚀  #pizzafit #emagreceragora #alimentaçãosaudavel&quot;</div><div class="bookmark-description">422K likes, 1,939 comments -  rogerreizMarch 1, 2024 on : &quot;✅ Siga @rogerreiz emagrecer comendo o que gosta.  Antes de passar a receita, preste muita atenção! 💡  Estou abrindo as inscriçõe...&quot;</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/reel/C3_HvcDOBl2/?utm_source=ig_web_copy_link</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/430823840_1266390518097270_1198850505044543250_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=106&amp;_nc_ohc=aZyINN2HS-0Ab4Hjdl9&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfCt6vDPajPGC4QFXzGef6kA5X9wEPAt6tRQtOdRg862SA&amp;oe=66149AB4&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8161-b021-f224e1cd1bbf"><a href="https://www.instagram.com/reel/C4q-SfPOFmv/?utm_source=ig_web_copy_link&amp;igsh=MzRlODBiNWFlZA==" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">NOU INCE | Luccas &amp; Bortoletti on Instagram: &quot;A IMPORTÂNCIA DA TRILHA SONORA 🎼  Um dos maiores &quot;macetes&quot; que irá colocar seus vídeos em um outro nível é saber que a trilha sonora tem o poder de gerar sentimento em quem está assistindo. E esse é um dos gatilhos que faz seu vídeo ser assistido até o final!  Comente &quot;TRILHA SONORA&quot; pra receber os sons que usamos nesse vídeo 🎧 . . . . Vídeo inspiração do mestre @rick_miura . . #tutorial #trilhasonora #audioviral #criador #videomaker #criacaodeconteudo #videomakermobile #edicaocapcut #conteudocriativo #videocriativo&quot;</div><div class="bookmark-description">114K likes, 6,367 comments -  nouince_March 18, 2024 on : &quot;A IMPORTÂNCIA DA TRILHA SONORA 🎼  Um dos maiores &quot;macetes&quot; que irá colocar seus vídeos em um outro nível é saber que a trilha son...&quot;</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/reel/C4q-SfPOFmv/?utm_source=ig_web_copy_link&amp;igsh=MzRlODBiNWFlZA==</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/433994167_3147263258769004_2886716789092596801_n.jpg?stp=dst-jpg_e15_p480x480&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=104&amp;_nc_ohc=5uZAj2bQaEEAb6GQx9G&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfBeZq5beGdCFmlmu8NeAB4DE4KAjtrL5rL4KfxuZV4M7g&amp;oe=6616C3B6&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8186-8966-d06523000f03"><a href="https://www.instagram.com/reel/C0kWH-3uZFt/?utm_source=ig_web_copy_link" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Blue Rose | Skincare on Instagram: &quot;Eu preciso usar vitamina C no meu skincare? Se você se pergunta isso, assista esse vídeo  e segue a gente para saber tudo sobre skincare!  #vitaminab3 #vitaminac #niacinamida #serumfacial&quot;</div><div class="bookmark-description">136 likes, 15 comments -  bluerosedermoDecember 7, 2023 on : &quot;Eu preciso usar vitamina C no meu skincare? Se você se pergunta isso, assista esse vídeo  e segue a gente para saber tudo sobre skincar...&quot;</div></div><div class="bookmark-href"><img src="https://static.cdninstagram.com/rsrc.php/v3/yI/r/VsNE-OHk_8a.png" class="icon bookmark-icon"/>https://www.instagram.com/reel/C0kWH-3uZFt/?utm_source=ig_web_copy_link</div></div><img src="https://scontent.cdninstagram.com/v/t51.29350-15/408823612_340737095334790_1222118361065258113_n.jpg?stp=dst-jpg_e35_p640x640_sh0.08&amp;_nc_ht=scontent.cdninstagram.com&amp;_nc_cat=110&amp;_nc_ohc=ZWEzuzifssoAb7OVpH5&amp;edm=AMO9-JQAAAAA&amp;ccb=7-5&amp;oh=00_AfDJTN3cpZR4xQrYjZBD3594svHDUUHlYx_riTS6MnE7nQ&amp;oe=661723DA&amp;_nc_sid=cc8940" class="bookmark-image"/></a></figure></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

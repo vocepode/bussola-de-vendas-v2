@@ -1,0 +1,723 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>3. Definição da minha proposta de valor</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-81ce-8cdc-f4492cd57593" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/hammer_blue.svg"/></div><h1 class="page-title" dir="auto"><mark class="highlight-blue"><strong>3. Definição da</strong></mark><mark class="highlight-blue"> minha proposta de valor</mark></h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81fa-9d88-c65a4456dcb1"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8196-9a30-d1be7c97fb14" class="block-color-default">Para te ajudar a definir sua proposta de valor de forma clara e concisa, é essencial construir uma frase que resume o que torna sua oferta única.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ad-a479-d90060aa1d1d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8174-8128-eb9918a042a7" class="">Utilize o modelo sugerido:</p></div><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-81d7-9e9e-e6aad7e3fb6d" class="quote-large"><mark class="highlight-default">&quot;</mark><mark class="highlight-default"><strong>Como eu faço (aquilo que eu faço), diferente de todo mundo, de um jeito que só você eu faço?</strong></mark><mark class="highlight-default">&quot;</mark></blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e9-92cd-d5d4970f6d4a" class="">
+</p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8163-9bae-df05048f52c9" class="toggle"><li><details open=""><summary><em>Exemplo</em></summary><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81e9-bd79-ea6fad52ff41" class="">Se você é um fotógrafo especializado em retratos de família, sua frase pode ser algo como: <strong><span style="border-bottom:0.05em solid">&quot;Capturo a essência única de cada família através de retratos autênticos e naturais”</span></strong></h3></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81dc-93b1-c64d74cf7fcd" class="">Essa frase deve ser o resultado de uma reflexão cuidadosa e detalhada sobre os elementos que compõem a proposta de valor da empresa. Ao formular essa frase, você não apenas ganha clareza sobre o que o torna único, mas também cria um poderoso instrumento de comunicação para atrair seu público-alvo e diferenciar-se no mercado.</p></div></details></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d0-9d13-cae0b409f85b"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-814c-9bde-e40195d82205" class=""><mark class="highlight-blue">Aprenda a fazer o exercício!</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-815f-8c72-de0205d0b244"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-blue_background">Se estiver com dúvidas, veja o vídeo abaixo para ver mais detalhes de como preencher essa página:</mark></summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-818a-82c0-d82842d97d03"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought-dialogue_blue.svg"/></div><div style="width:100%"><strong>Tutorial - Preenchendo o Norte - Definição de Proposta de Valor</strong><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-810c-adea-d189d6963eae"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/a4R0JnmR7n" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/a4R0JnmR7n</div></div></a></figure></div></div></figure></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8169-bbeb-ef42e208004a"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-812e-8abe-f9ff0ba67d7c"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/light-bulb_blue.svg"/></div><div style="width:100%"><strong>Aqui estão algumas dicas para abordar essa formulação no quadro acima</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d0-a494-ede08c2140ce"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-819b-a4a1-dff40dfbc954" class="bulleted-list"><li style="list-style-type:disc"><strong>Identifique o que você faz → </strong>Comece com uma descrição clara e direta do seu produto ou serviço. O que é exatamente que você oferece aos seus clientes?</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81d6-bd2b-f3292c375aa9" class="bulleted-list"><li style="list-style-type:disc"><strong>Especifique o seu jeito único → </strong>Reflita sobre como você entrega seu produto ou serviço de uma maneira que só você faz. Isso pode envolver seu processo, sua filosofia, sua abordagem ao cliente, ou qualquer outro aspecto que seja exclusivamente seu.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81ea-bb1d-fba579be9885" class="bulleted-list"><li style="list-style-type:disc"><strong>Determine o que te diferencia → </strong>Pense sobre o que faz sua oferta ser diferente das demais disponíveis no mercado. Isso pode ser relacionado à qualidade, ao método de produção, à tecnologia empregada, ao atendimento ao cliente, entre outros.</li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-816f-b3c6-d659250fdd74" class="bulleted-list"><li style="list-style-type:disc"><strong>Combine os elementos em uma frase→ </strong>Com base nas respostas às perguntas anteriores, elabore uma frase que resuma sua proposta de valor de forma concisa e impactante.</li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8185-8769-f4d41f70e04a"/></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8179-8956-f5c43c650b93" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f2-b678-f7df2b2ba278"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-810f-8b08-c9a0ab9833c6" class="">
+</p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81dc-80ff-eae7d6ca35dd"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/orbit_blue.svg"/></div><div style="width:100%"><strong>Minha proposta de valor</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81fe-8841-d9d27aceabfa"/></div><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-817e-92cc-f7002d039a7f" class="quote-large">A VocêPode ajuda empresários e profissionais a sair do improviso e da invisibilidade, construindo posicionamento estratégico e conteúdo que gera vendas todos os dias.<br/><br/><br/><strong>Menos improviso. Mais estratégia. Conteúdo que vende todos os dias.</strong><br/></blockquote></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817c-a081-e6383a1ae70c" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-811b-bc90-f50c7000fec2"/></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8062-87cb-c5954ef2c8a2" class="">
+</p></div><div style="display:contents" dir="auto"><h1 id="2e0cb023-eb3b-8066-9ede-d9f5e63a5192" class="">1️⃣ TESTE NA AUDIÊNCIA IMATURA</h1></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8009-83ec-f674cb9cc462" class=""><em>(não se posicionou, não faz conteúdo ou faz errado)</em></p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-803a-aba4-e32deda49b63" class="">Estado mental:</h3></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8041-9ebe-c30ab996327f" class="bulleted-list"><li style="list-style-type:disc">“Não sei o que postar”</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8035-9dbc-d5531befc98f" class="bulleted-list"><li style="list-style-type:disc">“Meu Instagram não cresce”</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8096-8146-c851fa321792" class="bulleted-list"><li style="list-style-type:disc">“Posto e ninguém comenta”</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80ee-bc64-e8e47c239fcb" class="bulleted-list"><li style="list-style-type:disc">“Não vendo pelo digital”</li></ul></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-8025-bc7e-c3d9750c4424" class="">Como a frase bate:</h3></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80a9-9ece-e4b7c0a3e961" class="bulleted-list"><li style="list-style-type:disc">✅ “sair do improviso” → <strong>dor exata</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8036-b78c-c68355203ae9" class="bulleted-list"><li style="list-style-type:disc">✅ “invisibilidade” → <strong>verdade sentida</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80b7-8b9a-dcb4ebb9026c" class="bulleted-list"><li style="list-style-type:disc">⚠️ “posicionamento estratégico” → termo ainda abstrato (ok, gera curiosidade)</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-804f-91b5-f587a26e666e" class="bulleted-list"><li style="list-style-type:disc">✅ “conteúdo que gera vendas” → <strong>desejo máximo</strong></li></ul></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-8061-8c1c-d01db8327d0b" class="">Veredito:</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8029-8903-e9e99ce61ff4" class="">✔️ <strong>Funciona muito bem</strong></p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8078-9946-d024431f7211" class="">Essa audiência se sente <strong>descrita</strong>, não intimidada.</p></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-8001-a71c-f15770c277a1"/></div><div style="display:contents" dir="auto"><h1 id="2e0cb023-eb3b-80b8-87f8-e525318b6398" class="">2️⃣ TESTE NA AUDIÊNCIA INTERMEDIÁRIA</h1></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-801e-88ce-ffc82ec25258" class=""><em>(já faz conteúdo, já aparece, mas não vende com consistência)</em></p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-804f-8527-c0ddb008ebd3" class="">Estado mental:</h3></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8067-80c8-d9c648b7e80d" class="bulleted-list"><li style="list-style-type:disc">“Tenho seguidores, mas não converte”</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80dd-8b32-f15cf65d143e" class="bulleted-list"><li style="list-style-type:disc">“Meu conteúdo engaja, mas não gera caixa”</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80b1-95ce-dc6367796153" class="bulleted-list"><li style="list-style-type:disc">“Parece que estou sempre tentando”</li></ul></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-80eb-bd90-e1b45e277448" class="">Como a frase bate:</h3></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8084-a485-e49019765482" class="bulleted-list"><li style="list-style-type:disc">✅ “sair do improviso” → <strong>dor escondida</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-805a-b2e1-f7d93cd7c67a" class="bulleted-list"><li style="list-style-type:disc">⚠️ “invisibilidade” → não é literal, mas é <strong>invisibilidade comercial</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80e5-88a6-f0e245283a00" class="bulleted-list"><li style="list-style-type:disc">✅ “posicionamento estratégico” → <strong>lacuna real</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8069-b901-fb036270fb77" class="bulleted-list"><li style="list-style-type:disc">✅ “conteúdo que gera vendas todos os dias” → <strong>promessa certa</strong></li></ul></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-8047-993f-c0ab1f22aca2" class="">Veredito:</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8066-ad25-d678eb094ea5" class="">✔️ <strong>Funciona bem</strong>, mas aqui a força está mais em:</p></div><div style="display:contents" dir="auto"><blockquote id="2e0cb023-eb3b-801f-8fb4-d5c215729e75" class="">“conteúdo que gera vendas”<div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80e0-a6d9-ce37b1d5935e" class="">do que em “invisibilidade”.</p></div></blockquote></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-8021-b14c-c928cc01dccd"/></div><div style="display:contents" dir="auto"><h1 id="2e0cb023-eb3b-8078-a143-fd1ba8a413d4" class="">3️⃣ TESTE NA AUDIÊNCIA MADURA</h1></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-805c-85e4-d2b860924237" class=""><em>(vende, já tem posicionamento, mas quer crescer mais)</em></p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-80ab-aa01-d6c41dda52f3" class="">Estado mental:</h3></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8099-a147-d4ccf8211b5a" class="bulleted-list"><li style="list-style-type:disc">“Já vendo, mas é instável”</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80d0-a0b5-f77f6a255ad9" class="bulleted-list"><li style="list-style-type:disc">“Dependo muito de mim”</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80a3-b089-da145bd86e7f" class="bulleted-list"><li style="list-style-type:disc">“Marketing não escala”</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-802f-8047-e77dbde0a9fb" class="bulleted-list"><li style="list-style-type:disc">“Quero previsibilidade”</li></ul></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-8004-9835-c354329adb20" class="">Como a frase bate:</h3></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80f3-ba86-e4b4c84309b2" class="bulleted-list"><li style="list-style-type:disc">⚠️ “invisibilidade” → <strong>não é a dor principal</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80fb-ba0b-ebe23d474197" class="bulleted-list"><li style="list-style-type:disc">⚠️ “conteúdo” → parece básico demais se isolado</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80d5-b76c-ebbce19df983" class="bulleted-list"><li style="list-style-type:disc">✅ “sair do improviso” → <strong>bate forte</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8098-9537-e1993aaa9e16" class="bulleted-list"><li style="list-style-type:disc">⚠️ falta explícita de “previsibilidade / escala”</li></ul></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-8095-a852-fa1f880ceff0" class="">Veredito:</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-804e-8f79-d060bf3b3db0" class="">⚠️ <strong>Funciona, mas não é perfeita</strong> para o topo do funil maduro.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8086-aa58-e5acacdacdeb" class="">👉 Essa audiência entra mais por <strong>explicação</strong>, não pela headline.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80ff-9f44-db84b318a905" class="">E isso é OK, desde que:</p></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80db-a403-ffed74365df1" class="bulleted-list"><li style="list-style-type:disc">você <strong>não use essa frase isolada</strong> para eles</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8035-827c-cf33d9f133ff" class="bulleted-list"><li style="list-style-type:disc">complemente com discurso de vendas e estratégia</li></ul></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-80e9-96b7-dd20064b9b5a"/></div><div style="display:contents" dir="auto"><h1 id="2e0cb023-eb3b-800c-9529-e8fcdc15196f" class="">4️⃣ TESTE DE AUTORIDADE (marca líder)</h1></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80e0-be90-f5f2063f6184" class="">Agora a pergunta mais importante:</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80de-95c8-dc0e99793cdd" class="">👉 <strong>Essa frase sustenta a VocêPode como escola de negócios?</strong></p></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-80ce-95d6-f73b94105c74" class="">Pontos fortes:</h3></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8026-b53d-d749b46900c7" class="bulleted-list"><li style="list-style-type:disc">Não parece agência</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80a3-8575-e26231322fe9" class="bulleted-list"><li style="list-style-type:disc">Não parece curso raso</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8044-99eb-d5a6f42fc9d4" class="bulleted-list"><li style="list-style-type:disc">Não promete hype</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80a2-bbf5-f14f2c27f60a" class="bulleted-list"><li style="list-style-type:disc">Fala de causa → meio → efeito</li></ul></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-80d4-8019-e07eb19d097d" class="">Ponto de atenção:</h3></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-807c-8dfb-fa02a00b946f" class="bulleted-list"><li style="list-style-type:disc">Ainda puxa mais para <strong>marketing</strong> do que para <strong>negócio</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8010-947e-f64fbed2fe7a" class="bulleted-list"><li style="list-style-type:disc">Isso é coerente com a decisão estratégica que você acabou de tomar</li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-805b-96b5-c0ae26a053bc" class="">👉 <strong>Ou seja: não é um erro. É uma escolha.</strong></p></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-8092-ba42-f205ee7bdd9a"/></div><div style="display:contents" dir="auto"><h1 id="2e0cb023-eb3b-8008-8f33-c7dd02c87ea6" class="">🧠 CONCLUSÃO ESTRATÉGICA (HONESTA)</h1></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-803d-a447-e2dc29ec57f6" class="">Essa proposta de valor:</h3></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80a9-ae10-cfc389b28a10" class="">✅ Funciona muito bem para <strong>abrir funil</strong></p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8095-b6c9-cdf42d14b753" class="">✅ Conversa com <strong>80% da audiência real da VCP hoje</strong></p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8048-93a8-fe7f53e27b3f" class="">⚠️ Precisa ser <strong>complementada</strong> (não substituída) para o público mais maduro</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8058-a21b-dfaf7d2454ba" class="">👉 E isso é exatamente o que você disse que quer agora.</p></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-8059-9945-ca47bda0a740"/></div><div style="display:contents" dir="auto"><h1 id="2e0cb023-eb3b-80d3-b70d-ecd2d1800a86" class="">🧭 RECOMENDAÇÃO DO NORTE</h1></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-80e1-9dcc-df280d03ab17" class="">✅ MANTER essa proposta como:</h3></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-803d-8fb5-dda4c981545c" class="bulleted-list"><li style="list-style-type:disc">proposta de valor <strong>central</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-805a-b2e8-d89cbf98b14e" class="bulleted-list"><li style="list-style-type:disc">frase de topo de funil</li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80cb-ae70-d8c79adeaf24" class="bulleted-list"><li style="list-style-type:disc">base institucional da marca</li></ul></div><div style="display:contents" dir="auto"><h3 id="2e0cb023-eb3b-8066-a9ef-cedf90d0147e" class="">❗ E criar depois:</h3></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-80ac-a2c7-eaf61c093323" class="bulleted-list"><li style="list-style-type:disc">uma <strong>variação para audiência madura</strong></li></ul></div><div style="display:contents" dir="auto"><ul id="2e0cb023-eb3b-8069-9239-c7cded0518b1" class="bulleted-list"><li style="list-style-type:disc">uma <strong>variação para vendas de programas avançados</strong></li></ul></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8023-a96b-e99b78ffaaa2" class="">Mas isso é <strong>próximo passo</strong>, não agora.</p></div><div style="display:contents" dir="auto"><hr id="2e0cb023-eb3b-8046-9050-c336593e68d9"/></div><div style="display:contents" dir="auto"><h2 id="2e0cb023-eb3b-807f-ad72-e2490bd1a661" class="">🔥 VEREDITO FINAL</h2></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-8004-854a-e13d5f24d117" class="">📍 <strong>A proposta está APROVADA para o Norte atual.</strong></p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-80da-82dd-f09809141bf7" class="">📍 Ela abre funil, respeita a história e não mata o futuro.</p></div><div style="display:contents" dir="auto"><p id="2e0cb023-eb3b-801d-b079-fdf90b763779" class="">📍 Não entra em conflito com nada que vocês já construíram.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8127-87e8-e3072f8ce832" class="">
+</p></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8140-88a4-f5fe658f96e5" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-819a-8a33-ec4584859dc6" style="width:62.5%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8101-a507-d6ab8fb900df" class=""><strong>Volte para a página anterior</strong></p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8121-8ee6-c0b12dc12447" style="width:37.50000000000001%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81bb-aa81-ec163c6bcee9" class=""><strong>Avance para a próxima página</strong></p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f6-a113-f9b99f076dbf"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81ba-8f0a-c1d2baf66bf2" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81b9-9540-f0f82768ff7b" style="width:56.25%" class="column"></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81d4-8742-e7f84ddf1979" style="width:43.75%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d6-b43d-eeff5f3d9f74" class="">
+</p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8133-b277-e1c7b846d685"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d8-b0b8-f205486b80ab" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819f-89cd-d803db6549bc" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

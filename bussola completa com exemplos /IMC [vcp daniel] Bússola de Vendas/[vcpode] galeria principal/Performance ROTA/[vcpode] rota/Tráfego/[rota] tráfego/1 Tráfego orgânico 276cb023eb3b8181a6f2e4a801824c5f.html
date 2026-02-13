@@ -1,0 +1,725 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>1. Tráfego orgânico</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-8181-a6f2-e4a801824c5f" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/flash_blue.svg"/></div><h1 class="page-title" dir="auto">1. Tráfego orgânico</h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-8156-b50d-f59dd82070c2" class="quote-large">Aqui você conhecerá um pouco das principais estratégias que recomendamos para você começar a aumentar o trafego nas suas redes sociais e suas vendas de forma orgânica.</blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8182-9fcb-ce0600e3ae9c" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8113-9236-c7fe9c794906" class=""><mark class="highlight-blue">Aprenda a fazer o exercício!</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8149-9d79-c0a7e4215bad"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-blue_background">Se estiver com dúvidas, veja o vídeo abaixo para ver mais detalhes de como preencher essa página:</mark></summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-818a-9518-dec5e1bcf227"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought-alert_blue.svg"/></div><div style="width:100%"><strong>Tutorial - Preenchendo a ROTA - Tráfego Orgânico</strong><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-81b1-a546-efc1c23945db"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/V4VdlYm872" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/V4VdlYm872</div></div></a></figure></div></div></figure></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8111-94fb-f802b2630c43"/></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-81be-9294-f4677697a30b" class=""><mark class="highlight-blue">Passo 1 - Criação de grupos no Whatsapp</mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-810a-8a32-c6a361468b12"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8112-8a39-d80d601a10d8"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%">Grupos de WhatsApp são ferramentas valiosas para construir uma comunidade envolvida, oferecendo atendimento direto, conteúdo exclusivo e aumentando as taxas de conversão. No Método COMPASS, eles desempenham um papel crucial, mantendo uma comunicação constante com leads e clientes para construir confiança, lançar produtos, coletar feedback e fortalecer a marca.</div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e1-a3d8-c82fe8d684df" class=""><em>Clique nas flechinhas (‣) para ver detalhes sobre como selecionar o público e interagir com cada um deles</em></p></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Grupo de clientes especiais</strong></summary><div class="indented"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ba-9fee-d38f158dc84f" class="">É o grupo dos seus melhores clientes. São aqueles que você considera os embaixadores da sua marca.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81af-8978-fd9f5ad80e7c" class="block-color-blue_background"><em><strong>Como selecionar</strong></em></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81cc-a964-e7576b364666" class="">Escolha os clientes que atendam os seguintes critérios:</p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8173-a51e-c9493abf60e4" class="bulleted-list"><li style="list-style-type:disc">Clientes compradores no ultimo ano, </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81e3-97ae-c856a13b8e65" class="bulleted-list"><li style="list-style-type:disc">Clientes que tem um ticket médio alto </li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8125-b187-c12ca5cc53d3" class="bulleted-list"><li style="list-style-type:disc">E que compraram mais de 2x</li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8133-9a40-d901ffcf6e5e" class="">Envie uma mensagem personalizada no whatsapp para ela com um texto parecido com o abaixo.</p></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81c5-8b03-e269eb5b5864"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/chat_blue.svg"/></div><div style="width:100%"><strong>Mensagem</strong><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8124-8740-e8e9d4a137fb"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815d-9877-d97a2ca3eaff" class="block-color-blue_background">Olá [Nome da Pessoa],</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81fe-a6d1-fc89e5e0c8ec" class="">Espero que esteja tudo bem com você! 😊</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8151-94aa-d9a8a613616a" class="">Estou entrando em contato para te convidar para participar de um grupo exclusivo da nossa marca no WhatsApp. Reunimos um seleto grupo pessoas especiais, como você, que são verdadeiros embaixadores da nossa marca e que valorizamos muito.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8130-8358-eea3af85fe86" class="">Neste grupo, compartilhamos informações privilegiadas, oferecemos conteúdo exclusivo, promovemos interações significativas e proporcionamos benefícios especiais aos membros. Acreditamos que sua presença e contribuição seriam extremamente valiosas para a comunidade que estamos construindo.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8139-8241-df09ddce26ec" class="">Se estiver interessado(a) em fazer parte deste grupo e desfrutar de todas as vantagens que ele oferece, por favor, me avise e ficarei feliz em enviar-lhe o convite.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8168-9ec7-fa4c37b02dde" class="">Desde já, agradeço pelo seu apoio contínuo à nossa marca e espero poder contar com sua participação no grupo.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8193-a669-c61bea76370f" class="">Grande abraço,<br/>[Seu Nome]</p></div></div></figure></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81b9-84dd-f9347790a212"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8100-87da-c1ba61680f75" class="">Certifique-se de personalizar a mensagem de acordo com o relacionamento que você tem com a pessoa e adaptar o convite de acordo com o contexto específico da sua marca e do grupo.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8167-8be6-e31816408546" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8194-a37d-caf36f41fddb" class="block-color-blue_background"><em><strong>O que enviar neste grupo </strong></em></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81e2-980e-d6405ae4673e" class="numbered-list" start="1"><li><strong>Conteúdo Exclusivo</strong>: Compartilhe informações privilegiadas, prévias de lançamentos antes de todo mundo saber (inclusive o grupo geral), promoções especiais e conteúdo exclusivo que só os membros do grupo têm acesso.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8166-ab8c-cf3220f49e5b" class="numbered-list" start="2"><li><strong>Interatividade</strong>: Incentive a participação dos membros através de enquetes, perguntas abertas, desafios relacionados à sua marca, e até mesmo realização de concursos exclusivos para o grupo.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-816e-90fa-daedf742d2fb" class="numbered-list" start="3"><li><strong>Atendimento Personalizado</strong>: Esteja sempre disponível para responder às perguntas dos membros e fornecer suporte personalizado. Mostre que eles são valorizados e que a sua opinião é importante para a marca.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81be-aa0b-da96825a8503" class="numbered-list" start="4"><li><strong>Eventos e Encontros</strong>: Organize encontros ou eventos exclusivos para os membros do grupo, seja virtualmente ou presencialmente, onde eles possam interagir diretamente com a equipe da marca e entre si.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8181-b1f8-e1e827181b22" class="numbered-list" start="5"><li><strong>Feedback e Sugestões</strong>: Solicite regularmente feedback sobre produtos, serviços e experiências com a marca. Mostre que suas opiniões são levadas em consideração e implemente mudanças com base nessas sugestões.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81cb-8f04-c0a3f568a448" class="numbered-list" start="6"><li><strong>Reconhecimento e Gratidão</strong>: Reconheça e agradeça publicamente aos membros do grupo por seu apoio e envolvimento. Destaque os membros mais engajados e os seus contributos para a comunidade.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8141-9456-f28003cd48d2" class="numbered-list" start="7"><li><strong>Ofertas Especiais</strong>: Ofereça descontos exclusivos, brindes ou benefícios especiais para os membros do grupo como forma de reconhecimento pelo seu compromisso com a marca.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81f3-b908-e833ed972296" class="numbered-list" start="8"><li><strong>Manter a Frequência</strong>: Mantenha uma frequência regular de postagens e interações no grupo para manter o engajamento e o interesse dos membros.</li></ol></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81ed-9cf0-fffefaeef10d"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Grupo de clientes geral</strong></summary><div class="indented"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81e5-9c92-f545e7f61187" class="">É o grupo com toda a sua base de clientes. </p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8147-a734-dc45ff5c6888" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815b-b508-d30cdf5d96bd" class="block-color-blue_background"><em><strong>Como selecionar</strong></em></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ff-88f3-cb438c5d953f" class="">Este grupo conterá a sua grande base de clientes. Você pode enviar convites individuais, por e-mail, postar nas suas redes sociais.  Coloque todas as pessoas que já compraram em algum momento com você, mesmo que tenha sido há muito tempo.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a3-b422-c9a9e244b637" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-816d-a5eb-dbf9d955ad69" class="block-color-blue_background"><em><strong>O que enviar neste grupo </strong></em></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8165-a6ff-c25c1cf558b7" class="numbered-list" start="1"><li><strong>Conteúdo Exclusivo</strong>: Compartilhe informações privilegiadas, prévias de lançamentos -  antes de postar nas suas redes sociais, promoções especiais e conteúdo exclusivo que só os membros do grupo têm acesso. A diferença deste grupo para o exclusivo é que lá elas tem acesso a coisas ainda mais antecipadas e a mais coisas exclusivas</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-815e-9c12-ea12d94028fc" class="numbered-list" start="2"><li><strong>Interatividade</strong>: Incentive a participação dos membros através de enquetes, perguntas abertas, desafios relacionados à sua marca, e até mesmo realização de concursos exclusivos para o grupo. Mantenha este grupo fechado, mas abra em momentos específicos para estas interações.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8156-99c0-def3175146b5" class="numbered-list" start="3"><li><strong>Feedback e Sugestões</strong>: Solicite regularmente feedback sobre produtos, serviços e experiências com a marca. Mostre que suas opiniões são levadas em consideração e implemente mudanças com base nessas sugestões.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8189-b6d7-ca34b4f896c5" class="numbered-list" start="4"><li><strong>Ofertas Especiais</strong>: Ofereça descontos exclusivos, brindes ou benefícios especiais para os membros do grupo como forma de reconhecimento pelo seu compromisso com a marca.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81bc-915a-e80ed0497a82" class="numbered-list" start="5"><li><strong>Manter a Frequência</strong>: Mantenha uma frequência regular de postagens e interações no grupo para manter o engajamento e o interesse dos membros.</li></ol></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-813d-833e-cdd366707260"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><strong>Grupo de Ações de pico de vendas</strong></summary><div class="indented"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8130-b485-d620b9cbc572" class="">Este grupo será temporario, para lista de espera de um lançamento ou serviço específico. Ou alguma ação muito exclusiva ou evento da sua marca. </p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-810b-ba22-c7eef4866ce6" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81bf-b14e-e83f1abc4c0e" class="block-color-blue_background"><em><strong>Como selecionar</strong></em></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81c3-b124-d3bf570c1efa" class="">Voce pode anunciar nas suas redes sociais, e-mails ou mandar mensagens para sua base de clientes. Convide também os membros do seu grupo geral para este grupo - o grupo especial terá acesso a este conteúdo</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8178-90d3-fe158f29e354" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a8-a565-de08566f9caa" class="block-color-blue_background"><em><strong>O que enviar neste grupo </strong></em></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81a1-b05a-f535f3281141" class="numbered-list" start="1"><li><strong>Defina as Regras e Expectativas: </strong>Envie uma mensagem inicial para o grupo explicando o propósito do grupo e o que os membros podem esperar dele.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-813c-a389-c9c1db30f92c" class="numbered-list" start="2"><li><strong> Envie Atualizações: </strong>Compartilhe regularmente atualizações sobre o progresso do lançamento do produto, como datas de lançamento, recursos adicionais e prévias exclusivas.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81e0-b8f7-e6a0ed7d0c7c" class="numbered-list" start="3"><li><strong>Conteúdo Exclusivo:: </strong>Ofereça conteúdo exclusivo aos membros do grupo, como vídeos de bastidores, entrevistas com a equipe de desenvolvimento ou sneak peeks do produto.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8157-9a21-d0ae9eeb446a" class="numbered-list" start="4"><li><strong>Promova Engajamento: </strong>Incentive os membros a interagir entre si, compartilhar suas expectativas e perguntas sobre o produto. Realize enquetes para coletar opiniões dos membros sobre recursos ou decisões relacionadas ao produto.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81a2-92fa-c29513f69dd8" class="numbered-list" start="5"><li><strong>Ofereça Benefícios Especiais: </strong>Ofereça benefícios exclusivos aos membros do grupo, como descontos especiais, acesso antecipado ao produto ou brindes exclusivos.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81d3-a196-c56e21012175" class="numbered-list" start="6"><li><strong>Mantenha a Comunicação Ativa: </strong>Certifique-se de manter uma comunicação regular no grupo, seja enviando atualizações, respondendo a perguntas dos membros ou promovendo discussões.</li></ol></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8163-bdd9-ce7512d4508a"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81b5-83c5-e90174f317ce" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81ce-b966-cb224fb3e3d9" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81f4-8ad8-e6ec620bbd3c"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Crie sua primeira experiência de engajamento com o Grupo Exclusivo</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815b-a8cf-d617e26e3d55" class="block-color-gray"><em>Faça as ações abaixo e dê check quando elas forem concluídas</em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8173-9c8b-c8a4476d4735"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81cd-9d65-f03ee2dded1e" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Crie o grupo e faça as configurações iniciais (foto de perfil, descrição, links importantes). Ë importante que este grupo tenha um nome especial, que dê senso de comunidade a ele</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81cb-8b01-effba2d3b7fa" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Crie uma promoção especial inicial para os participantes desse grupo</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8151-af09-cb68fd787413" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Faça o convite a cada uma das pessoas que entrarão nesse grupo</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8156-8bee-d0b73df54721" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Cada uma que entrar no grupo, dê uma mensagem de boas boas vindas.</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8199-8843-f9f6a59ce7be" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Interaja no grupo avisando que em breve, elas terão acesso a uma promoção exclusiva de lançamento do grupo</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81b8-8f90-c9047e1671e0" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Após 1 ou 2 dias da criação do grupo, lance a promoção. A cada nova pessoa ou grupo de pessoas novas no grupo relembre a promoção </span><div class="indented"></div></li></ul></div></div></figure></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8181-8797-d0341aee73a5" style="width:50%" class="column"><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81ed-a850-d9f6a36baf88"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Crie sua primeira experiência de engajamento com o Grupo Geral</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a3-b999-d0108f46753a" class="block-color-gray"><em>Faça as ações abaixo e dê check quando elas forem concluídas</em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8117-86de-f7bc092b2409"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81a7-9a02-c12a0cf3ecee" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Crie o grupo e faça as configurações iniciais (foto de perfil, descrição, links importantes). Coloque o nome da sua marca nele</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-817d-8bbc-e6a7dbce93c8" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Crie uma promoção especial inicial para os participantes desse grupo.</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8184-bb2a-ea1387c919a3" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Faça um post nas suas redes sociais anunciando a criação do grupo.</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-8101-a2b5-f01a2fd95370" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Mande, de tempos em tempos durante a primeira semana de criação, mensagens de boas vindas aos novos membros do grupo. Aproveite aqui e fale da promoção exclusiva a que eles tem acesso por serem membros.</span><div class="indented"></div></li></ul></div></div></figure></div></div></div></div></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-815a-bde9-d9126cea71df" class="block-color-default"><mark class="highlight-blue"><strong>Passo 2 - Comece a enviar emails marketing para sua base</strong></mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8176-9534-dc6d4da7824b"/></div><div style="display:contents" dir="ltr"><figure class="block-color-blue_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81b0-a7e5-f1ba39738fd2"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%">O email marketing continua sendo uma poderosa ferramenta para nutrir leads e converter visitantes em clientes, oferecendo mensagens personalizadas que educam, promovem vendas e mantêm a marca na mente do público. No Método COMPASS, é fundamental implementar campanhas de email marketing para acompanhar leads obtidos através de tráfego orgânico, fornecendo conteúdo relevante e ofertas personalizadas para otimizar a conversão de leads em clientes fiéis.</div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a8-9b30-ff49cbb7b1a5" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8126-82bd-e68cf70c3f9c" class="block-color-blue_background"><strong>O que você pode enviar em e-mail marketing</strong></p></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8161-8042-e3bd490e4c72" class="numbered-list" start="1"><li><strong>Atualizações de Produtos/Serviços</strong>: Informe seus assinantes sobre novos produtos, serviços ou recursos que sua marca lançou recentemente.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8163-af58-c1eb2c58b201" class="numbered-list" start="2"><li><strong>Conteúdo Educacional</strong>: Envie artigos, guias ou tutoriais relevantes para o seu setor ou nicho de mercado, ajudando seus assinantes a resolver problemas ou aprender algo novo.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8174-a119-ca93f8767746" class="numbered-list" start="3"><li><strong>Ofertas Especiais e Promoções</strong>: Anuncie descontos exclusivos, vendas sazonais ou ofertas especiais para incentivar os assinantes a fazer uma compra.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-818c-b2a8-c6859c1ca798" class="numbered-list" start="4"><li><strong>Conteúdo de Blog</strong>: Compartilhe os artigos mais recentes do seu blog para direcionar tráfego para o seu site e aumentar o envolvimento com sua marca.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-819a-93d0-dc3a0a42d69b" class="numbered-list" start="5"><li><strong>Conteúdo Gerado pelo Usuário</strong>: Destaque depoimentos, fotos ou histórias de clientes satisfeitos para demonstrar o valor do seu produto ou serviço.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81a0-a4ec-ea914d98df23" class="numbered-list" start="6"><li><strong>Eventos e Webinars</strong>: Promova eventos futuros, como webinars, workshops ou palestras, e convide os assinantes a participar.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8107-95b1-d00110b089de" class="numbered-list" start="7"><li><strong>Conteúdo Interativo</strong>: Inclua pesquisas, enquetes ou quizzes para incentivar a interação dos assinantes e coletar feedback valioso.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8151-9d52-c6aa54a5680a" class="numbered-list" start="8"><li><strong>Notícias da Indústria</strong>: Mantenha seus assinantes atualizados sobre as últimas notícias e tendências relevantes para o seu setor.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-8119-888c-e5ec3f58a7c5" class="numbered-list" start="9"><li><strong>Dicas e Truques</strong>: Compartilhe dicas úteis, truques ou hacks relacionados ao seu produto ou serviço para ajudar os assinantes a obter o máximo valor.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-814f-acae-c210d62eed54" class="numbered-list" start="10"><li><strong>Conteúdo de Estilo de Vida</strong>: Compartilhe conteúdo inspirador ou motivacional que ressoe com os valores e interesses do seu público-alvo.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-814e-83e5-c7d618d5bce7" class="numbered-list" start="11"><li><strong>Conteúdo de Bastidores</strong>: Dê aos assinantes uma visão dos bastidores da sua empresa, mostrando o processo de produção, a cultura da empresa ou o dia a dia dos funcionários.</li></ol></div><div style="display:contents" dir="auto"><ol type="1" id="276cb023-eb3b-81fd-ae40-d39fcca342da" class="numbered-list" start="12"><li><strong>Anúncios de Eventos e Lançamentos</strong>: Informe sobre eventos futuros da sua marca, como lançamentos de produtos, abertura de lojas ou participação em feiras.</li></ol></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81a7-ba99-d501c6571011" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811d-96c8-e206efcaad27" class="block-color-blue_background"><strong>Como selecionar o público e com que frequência mandar conteúdos para eles?</strong></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817a-9da9-c7b43ef0c39a" class="">É importante que você tenha segmentado a sua base de e-mails da mesma forma que segmentou seu público nos grupos do Whatsapp. Você deve manter uma frequência de pelo menos <strong>1 e-mail marketing a cada 15 dias.</strong></p></div><div style="display:contents" dir="ltr"><figure class="block-color-default callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-812c-acb9-d9b64aee8c2d"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/drafts_blue.svg"/></div><div style="width:100%"><strong>Criando seus primeiro e-mails marketing</strong><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8127-a537-d2d6d9438cc0" class="block-color-gray"><em>Faça as ações abaixo e dê check quando elas forem concluídas</em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81f2-a890-e0c2f2adde72"/></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-811e-8a1b-f11c54db58c5" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Crie o primeiro e-mail →  Convite para a base de clientes seguir o perfil no Instagram</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-818e-8087-cfa6cad99b0d" class=""><strong>Após uma semana</strong></p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81b9-ac19-e8abffb9e610" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Crie o segundo e-mail → Convide esta base de clientes para entrar no grupo geral do Whatsapp</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8113-b077-e39e503e708e" class=""><strong>Após duas semanas (do primeiro e-mail)</strong></p></div><div style="display:contents" dir="auto"><ul id="276cb023-eb3b-81a6-8fdf-e963528bbfc6" class="to-do-list"><li><div class="checkbox checkbox-off"></div> <span class="to-do-children-unchecked">Crie o terceiro e-mail → Email de conteúdo gerando valor e quebrando objeções do serviço ou produto</span><div class="indented"></div></li></ul></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8105-ba11-c20ed0b041fd"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8166-a46a-d691758b0e10" class=""><strong>E não esqueça de a partir daí você deve enviar pelo menos 1 email mensal para cada um dos seguintes tópicos:</strong></p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819c-a8da-c1d2848c8eb1" class="">→ Conteúdo e quebra de objeção</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-814b-94ac-ede4ac87ce60" class="">→ Oferta especial</p></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819c-8b30-e7b62d74a91d" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81f2-b896-d1f30479c208" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8135-ac26-f613a419fb5a" class=""><strong>Avance para a próxima página</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81c2-93d9-c2a6ce21501b"/></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-810d-a287-e1d22285c251"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819f-9604-f0b72a29f9ad" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8160-b07e-ed5f91f4471e" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

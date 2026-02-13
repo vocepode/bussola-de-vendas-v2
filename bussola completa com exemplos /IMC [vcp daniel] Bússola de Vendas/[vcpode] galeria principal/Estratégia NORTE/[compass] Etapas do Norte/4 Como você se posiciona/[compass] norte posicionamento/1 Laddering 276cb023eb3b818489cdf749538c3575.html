@@ -1,0 +1,720 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>1. Laddering</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="276cb023-eb3b-8184-89cd-f749538c3575" class="page sans"><header><div class="page-header-icon undefined"><img class="icon notion-static-icon" src="https://www.notion.so/icons/stairs_blue.svg"/></div><h1 class="page-title" dir="auto"><mark class="highlight-blue">1. Laddering</mark></h1><p class="page-description" dir="auto"></p><table class="properties"><tbody><tr class="property-row property-row-multi_select"><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Tags</th><td></td></tr></tbody></table></header><div class="page-body"><div style="display:contents" dir="ltr"><figure id="2dfcb023-eb3b-80c2-904e-c580c2c421ec" class="link-to-page"><a href="1%20Laddering/Sem%20t%C3%ADtulo%202dfcb023eb3b80c2904ec580c2c421ec.html">Sem título</a></figure></div><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-8144-bb36-cd8de8dc5572"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/bookmark_blue.svg"/></div><div style="width:100%">O Laddering é uma técnica usada no marketing para entender melhor a relação entre o que um produto ou serviço oferece (seus atributos) e o impacto que isso tem na vida do consumidor, tanto em nível funcional quanto emocional. É como subir degraus em uma escada, onde cada degrau representa um nível mais profundo de conexão entre o produto e o consumidor.</div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-817d-b7e6-f723228fb40f" class="">
+</p></div><div style="display:contents" dir="auto"><h2 id="276cb023-eb3b-8161-97d5-e208e228e6f2" class=""><mark class="highlight-blue">Aprenda a fazer o exercício! </mark></h2></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8103-8339-c4941bb30e1d"/></div><div style="display:contents" dir="auto"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0"><mark class="highlight-blue_background">Se estiver com dúvidas, veja o vídeo abaixo para ver mais detalhes de como preencher essa página:</mark></summary><div class="indented"><div style="display:contents" dir="ltr"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="276cb023-eb3b-81e9-a94f-c23c6e916c52"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://www.notion.so/icons/thought-dialogue_blue.svg"/></div><div style="width:100%"><strong>Tutorial - Preenchendo o NORTE - Laddering</strong><div style="display:contents" dir="ltr"><figure id="276cb023-eb3b-8142-8aa8-ed35ad6375f6"><a href="https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/97BdnLlq4p" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Hotmart Club</div><div class="bookmark-description">...</div></div><div class="bookmark-href"><img src="https://app-club-distribution.cp.hotmart.com/static/images/favicon.ico" class="icon bookmark-icon"/>https://hotmart.com/pt-BR/club/vocepode-vendermais/products/4596843/content/97BdnLlq4p</div></div></a></figure></div></div></figure></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d8-9633-c8fc6881ca32" class="">
+</p></div></div></details></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8153-8d3d-c15fa3ab870e"/></div><div style="display:contents" dir="auto"><h3 id="276cb023-eb3b-81f1-9a41-c0446a573ca3" class=""><mark class="highlight-blue">Percepções da Marca</mark></h3></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d5-9144-cb6276f0b4f3"/></div><div style="display:contents" dir="auto"><blockquote id="276cb023-eb3b-816a-937a-cf7f0133c84a" class="block-color-default"><strong>É importante conhecer e entender a sua marca para se posicionar no mercado. O exercício de laddering nos leva a compreender as percepções acerca da sua marca. Nesta prática vamos, descobrir os atributos, benefícios funcionais e benefícios emocionais que estão por trás das escolhas dos consumidores.  </strong></blockquote></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8159-80a6-efdf9323fd1c" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-815d-84dd-df186e2a1de1" class="">Liste pelo menos 15 itens para cada um dos seguintes grupos, <strong>Atributos, Benefícios Funcionais e Benefícios Emocionais</strong>. Ao final, escreva em um quadro qual a sua essência.</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8114-bb11-ed37602cb334" class=""><em><mark class="highlight-gray">Para te ajudar, trouxemos alguns exemplos de coisas que podem ser preenchidas. Mas pense no significado de cada um dos grupos e pense na sua marca para decidir.</mark></em></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81c7-bd74-f24b8db01848"/></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-812d-b820-f68e11e8c620" class="column-list"><div style="display:contents" dir="auto"><div id="276cb023-eb3b-81b7-8c38-c9b165960e39" style="width:33.333333333333336%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81d9-a87a-e214c9aa6ce4" class=""><a href="../../../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Banco%20de%20exemplos/Lista%20de%20Atributos%20de%20marca%20276cb023eb3b81249d94dacc8546597e.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/check_blue.svg"/>Lista de Atributos de marca</a> </p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-818e-93f1-c8492d0d4aea" style="width:33.333333333333336%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81ae-928a-de59649938bb" class=""><a href="../../../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Banco%20de%20exemplos/Lista%20de%20Benef%C3%ADcios%20Funcionais%20276cb023eb3b81e4a569d54600c97ec7.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/hammer_blue.svg"/>Lista de Benefícios Funcionais</a> </p></div></div></div><div style="display:contents" dir="auto"><div id="276cb023-eb3b-8171-90ce-e979b23e966d" style="width:33.33333333333333%" class="column"><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8146-a052-edfc19e3d93a" class=""><a href="../../../../../Databases%20importantes%20-%20n%C3%A3o%20mexer%20nem%20deletar/Banco%20de%20exemplos/Lista%20de%20Benef%C3%ADcios%20Emocionais%20276cb023eb3b81f99a1edf498a9c7414.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/heart_blue.svg"/>Lista de Benefícios Emocionais</a> </p></div></div></div></div></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81a3-a46f-c1fdf66374a9"/></div><div style="display:contents" dir="ltr"><div id="276cb023-eb3b-81ca-9c40-fc7c9416dc7b" class="collection-content"><h4 class="collection-title">LADDERING | Minha marca</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><img src="https://www.notion.so/icons/font_gray.svg" style="width:14px;height:14px;display:block"/></span>Name</th><th><span class="icon property-icon"><img src="https://www.notion.so/icons/list_gray.svg" style="width:14px;height:14px;display:block"/></span>Guias</th></tr></thead><tbody><tr id="276cb023-eb3b-8104-9cb9-ea2078a595c4"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/M%C3%A9todo%20COMPASS%20%E2%80%93%20sistema%20propriet%C3%A1rio%20de%20crescimen%20276cb023eb3b81049cb9ea2078a595c4.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-up-basic_purple.svg"/>Método COMPASS – sistema proprietário de crescimento estratégico.</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Atributos</span></td></tr><tr id="276cb023-eb3b-8198-a9ec-fa69a377abc3"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Especialidade%20em%20posicionamento%20estrat%C3%A9gico%20276cb023eb3b8198a9ecfa69a377abc3.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-up-basic_purple.svg"/>Especialidade em posicionamento estratégico</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Atributos</span></td></tr><tr id="276cb023-eb3b-815c-bf38-d965ea81b2a3"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Conte%C3%BAdo%20que%20vende%20276cb023eb3b815cbf38d965ea81b2a3.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-up-basic_purple.svg"/>Conteúdo que vende</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Atributos</span></td></tr><tr id="276cb023-eb3b-8194-ba31-f4b32c9c7868"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Mentorias%20e%20programas%20estrat%C3%A9gicos%20276cb023eb3b8194ba31f4b32c9c7868.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-up-basic_purple.svg"/>Mentorias e programas estratégicos</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Atributos</span></td></tr><tr id="276cb023-eb3b-81bd-9f06-f9d5a10f929c"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Estrat%C3%A9gia%20de%20crescimento%20aplicada%20ao%20dia%20a%20dia%20276cb023eb3b81bd9f06f9d5a10f929c.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-up-basic_purple.svg"/>Estratégia de crescimento aplicada ao dia a dia</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Atributos</span></td></tr><tr id="276cb023-eb3b-81f5-a68e-c1625f90ed88"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Autoridade%20comprovada%20em%20vendas%20via%20conte%C3%BAdo%20276cb023eb3b81f5a68ec1625f90ed88.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-up-basic_purple.svg"/>Autoridade comprovada em vendas via conteúdo</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Atributos</span></td></tr><tr id="276cb023-eb3b-8170-a720-fab1e80e8df3"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Postura%20de%20s%C3%B3cio%20estrat%C3%A9gico%20276cb023eb3b8170a720fab1e80e8df3.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-up-basic_purple.svg"/>Postura de sócio estratégico</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Atributos</span></td></tr><tr id="276cb023-eb3b-8194-9ee1-c37f0bfac630"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Proximidade%20com%20o%20fundador%20276cb023eb3b81949ee1c37f0bfac630.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-up-basic_purple.svg"/>Proximidade com o fundador</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Atributos</span></td></tr><tr id="276cb023-eb3b-8150-b722-e4d1780006f7"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Integra%C3%A7%C3%A3o%20entre%20posicionamento,%20conte%C3%BAdo%20e%20vendas%20276cb023eb3b8150b722e4d1780006f7.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-up-basic_purple.svg"/>Integração entre posicionamento, conteúdo e vendas</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Atributos</span></td></tr><tr id="2dfcb023-eb3b-80aa-8e1d-fca16ad46eb6"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Hist%C3%B3rico%20comprovado%20de%20crescimento%20em%20neg%C3%B3cios%20re%202dfcb023eb3b80aa8e1dfca16ad46eb6.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-up-basic_purple.svg"/>Histórico comprovado de crescimento em negócios reais</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Atributos</span></td></tr><tr id="2dfcb023-eb3b-80b1-8fb0-e1bace3784ec"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Ferramentas%20de%20IA%20do%20M%C3%A9todo%20COMPASS%202dfcb023eb3b80b18fb0e1bace3784ec.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-up-basic_purple.svg"/>Ferramentas de IA do Método COMPASS</a></td><td class="cell-thjx"><span class="selected-value select-value-color-red">Atributos</span></td></tr><tr id="276cb023-eb3b-81f3-a457-dc89fd4b6569"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Vender%20com%20mais%20consist%C3%AAncia%20276cb023eb3b81f3a457dc89fd4b6569.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Vender com mais consistência</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr><tr id="2dfcb023-eb3b-80cd-8134-fc006c024692"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Ter%20clareza%20de%20posicionamento%202dfcb023eb3b80cd8134fc006c024692.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Ter clareza de posicionamento</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr><tr id="2cdcb023-eb3b-8056-9abd-fbd7d822075b"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Criar%20conte%C3%BAdo%20que%20atrai,%20conecta%20e%20vende%202cdcb023eb3b80569abdfbd7d822075b.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Criar conteúdo que atrai, conecta e vende</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr><tr id="2cdcb023-eb3b-80d8-ac2b-e005b18caa9a"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Parar%20de%20depender%20de%20indica%C3%A7%C3%B5es%20ou%20sorte%202cdcb023eb3b80d8ac2be005b18caa9a.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Parar de depender de indicações ou sorte</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr><tr id="2cdcb023-eb3b-80e8-8b02-f93f530f7d6f"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Tomar%20decis%C3%B5es%20com%20base%20em%20estrat%C3%A9gia%202cdcb023eb3b80e88b02f93f530f7d6f.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Tomar decisões com base em estratégia</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr><tr id="276cb023-eb3b-81ea-b42c-f7552d881989"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Organizar%20a%20comunica%C3%A7%C3%A3o%20do%20neg%C3%B3cio%20276cb023eb3b81eab42cf7552d881989.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Organizar a comunicação do negócio</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr><tr id="2cdcb023-eb3b-80de-b914-d8e0e1533bc0"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Entender%20o%20papel%20do%20marketing%20na%20venda%202cdcb023eb3b80deb914d8e0e1533bc0.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Entender o papel do marketing na venda</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr><tr id="2cdcb023-eb3b-806e-a2de-f891cbfc4489"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Ganhar%20previsibilidade%20de%20crescimento%202cdcb023eb3b806ea2def891cbfc4489.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Ganhar previsibilidade de crescimento</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr><tr id="276cb023-eb3b-8166-ba6f-e13d8cce572e"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Clareza%20do%20que%20comunicar%20276cb023eb3b8166ba6fe13d8cce572e.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Clareza do que comunicar</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr><tr id="2cdcb023-eb3b-8006-b5d0-faa4ea258745"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Automa%C3%A7%C3%A3o%20e%20IA%20reduzindo%20carga%20operacional%202cdcb023eb3b8006b5d0faa4ea258745.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Automação e IA reduzindo carga operacional.</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr><tr id="2dfcb023-eb3b-8042-933c-e5049837ea96"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Reduzir%20desperd%C3%ADcio%20de%20tempo%20e%20dinheiro%202dfcb023eb3b8042933ce5049837ea96.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Reduzir desperdício de tempo e dinheiro</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr><tr id="2dfcb023-eb3b-80cb-9638-cf19b5731dd8"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Construir%20autoridade%20real%20no%20mercado%202dfcb023eb3b80cb9638cf19b5731dd8.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Construir autoridade real no mercado</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr><tr id="2dfcb023-eb3b-8023-96e1-d60b5aa2331f"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Integrar%20conte%C3%BAdo%20e%20vendas%20no%20mesmo%20sistema%202dfcb023eb3b802396e1d60b5aa2331f.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Integrar conteúdo e vendas no mesmo sistema</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr><tr id="2dfcb023-eb3b-80b1-bbb3-e8cc22974614"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Entender%20onde%20investir%20energia%20e%20recursos%202dfcb023eb3b80b1bbb3e8cc22974614.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Entender onde investir energia e recursos</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr><tr id="2cdcb023-eb3b-807c-b507-da208fb18bfa"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Al%C3%ADvio%20mental%202cdcb023eb3b807cb507da208fb18bfa.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Alívio mental</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Benefícios Emocionais</span></td></tr><tr id="276cb023-eb3b-8174-9424-c97fa17b64fa"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Seguran%C3%A7a%20para%20decidir%20276cb023eb3b81749424c97fa17b64fa.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Segurança para decidir</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Benefícios Emocionais</span></td></tr><tr id="2cdcb023-eb3b-80b7-b1e2-c3d3314d116d"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Confian%C3%A7a%20no%20pr%C3%B3prio%20neg%C3%B3cio%202cdcb023eb3b80b7b1e2c3d3314d116d.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Confiança no próprio negócio</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Benefícios Emocionais</span></td></tr><tr id="2cdcb023-eb3b-80e8-a314-ddd39ca08c07"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Orgulho%20do%20posicionamento%202cdcb023eb3b80e8a314ddd39ca08c07.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Orgulho do posicionamento</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Benefícios Emocionais</span></td></tr><tr id="2cdcb023-eb3b-8043-9114-ef9074121aaf"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Redu%C3%A7%C3%A3o%20da%20ansiedade%20com%20vendas%202cdcb023eb3b80439114ef9074121aaf.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Redução da ansiedade com vendas</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Benefícios Emocionais</span></td></tr><tr id="2cdcb023-eb3b-8058-bef1-d9743d51ce70"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Pertencimento%20a%20um%20ecossistema%20s%C3%A9rio%202cdcb023eb3b8058bef1d9743d51ce70.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Pertencimento a um ecossistema sério</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Benefícios Emocionais</span></td></tr><tr id="2dfcb023-eb3b-8012-af7d-e550d4bed328"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Clareza%20de%20caminho%202dfcb023eb3b8012af7de550d4bed328.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Clareza de caminho</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Benefícios Emocionais</span></td></tr><tr id="2dfcb023-eb3b-80d0-ba4d-e3009f50eaa2"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Menos%20medo%20de%20errar%202dfcb023eb3b80d0ba4de3009f50eaa2.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Menos medo de errar</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Benefícios Emocionais</span></td></tr><tr id="2dfcb023-eb3b-8016-8760-d432a40458a8"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Tranquilidade%20para%20planejar%20o%20futuro%202dfcb023eb3b80168760d432a40458a8.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Tranquilidade para planejar o futuro</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Benefícios Emocionais</span></td></tr><tr id="2dfcb023-eb3b-80ea-9693-f75cd8cd7558"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Sentimento%20de%20maturidade%20empresarial%202dfcb023eb3b80ea9693f75cd8cd7558.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Sentimento de maturidade empresarial</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Benefícios Emocionais</span></td></tr><tr id="2dfcb023-eb3b-805c-8313-ca61fc738e31"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Autonomia%20estrat%C3%A9gica%202dfcb023eb3b805c8313ca61fc738e31.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Autonomia estratégica</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Benefícios Emocionais</span></td></tr><tr id="2dfcb023-eb3b-8079-9f3f-e67b39a6ef42"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Respeito%20pr%C3%B3prio%20como%20empres%C3%A1rio%202dfcb023eb3b80799f3fe67b39a6ef42.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Respeito próprio como empresário</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Benefícios Emocionais</span></td></tr><tr id="2dfcb023-eb3b-80c0-861a-cfb232364a8d"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Menos%20frustra%C3%A7%C3%A3o%20com%20marketing%202dfcb023eb3b80c0861acfb232364a8d.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Menos frustração com marketing</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Benefícios Emocionais</span></td></tr><tr id="2dfcb023-eb3b-8068-82a9-f0350664d2d3"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Esperan%C3%A7a%20realista,%20n%C3%A3o%20ilus%C3%B3ria%202dfcb023eb3b806882a9f0350664d2d3.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-right_purple.svg"/>Esperança realista, não ilusória</a></td><td class="cell-thjx"><span class="selected-value select-value-color-pink">Benefícios Emocionais</span></td></tr><tr id="276cb023-eb3b-8121-ae62-fc33f32a2f27"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/A%20Voc%C3%AAPode%20transforma%20empres%C3%A1rios%20confusos%20em%20l%C3%ADde%20276cb023eb3b8121ae62fc33f32a2f27.html">A VocêPode transforma empresários confusos em líderes estratégicos que vendem com clareza, conteúdo e previsibilidade.</a></td><td class="cell-thjx"><span class="selected-value select-value-color-blue">Essência</span></td></tr><tr id="2dfcb023-eb3b-80f5-a5b6-da415ad79d1c"><td class="cell-title"><a href="1%20Laddering/LADDERING%20Minha%20marca/Sustentar%20crescimento%20sem%20improviso%20constante%202dfcb023eb3b80f5a5b6da415ad79d1c.html"><img class="icon notion-static-icon" src="https://www.notion.so/icons/arrow-turn-left_purple.svg"/>Sustentar crescimento sem improviso constante</a></td><td class="cell-thjx"><span class="selected-value select-value-color-purple">Benefícios Funcionais</span></td></tr></tbody></table><br/><br/></div></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-819a-88a3-e8fd393bcb96" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-81eb-bf1a-d82a9ab2dea1" class="">
+</p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-8100-aef6-cb935089e66f"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-811d-bfe6-fc023ab49f82" class=""><strong>Avance para a próxima página</strong></p></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-81d9-b500-d3b2f6863ca3"/></div><div style="display:contents" dir="auto"><hr id="276cb023-eb3b-816d-b5ac-e9fc1fa1cf92"/></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-814e-950e-d3bca1acbbcf" class="">
+</p></div><div style="display:contents" dir="auto"><p id="276cb023-eb3b-8195-899b-f1247d163521" class="">
+</p></div></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
