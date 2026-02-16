@@ -104,6 +104,13 @@ function NorthSidebarTree(props: {
 export default function NorthWorkspace() {
   const { isAuthenticated, loading: authLoading } = useAuth();
   const utils = trpc.useUtils();
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (!params.has("print_debug")) return;
+    document.body.classList.add("print-debug");
+    return () => document.body.classList.remove("print-debug");
+  }, []);
 
   const { data: norteModule, isLoading: norteLoading } = trpc.modules.getBySlug.useQuery(
     { slug: "norte" },
@@ -257,16 +264,21 @@ export default function NorthWorkspace() {
       title: `${norteModule.title} – ${currentStepDef.title}`,
     });
     printAreaRef.current.innerHTML = `<div class="print-document">${html}</div>`;
+    console.info("[print] norte current html length", printAreaRef.current.innerHTML.length);
     setPrinting(true);
     requestAnimationFrame(() => {
-      window.print();
-      setPrinting(false);
+      requestAnimationFrame(() => {
+        window.print();
+        setPrinting(false);
+      });
     });
   };
 
   const handlePrintAllSteps = async () => {
     if (!printAreaRef.current || !norteModule) return;
     setPrinting(true);
+    printAreaRef.current.innerHTML = `<div class="print-document"><h1 class="print-doc-title">${norteModule.title} – Todas as etapas</h1><p>Carregando conteúdo...</p></div>`;
+    console.info("[print] norte all loading html length", printAreaRef.current.innerHTML.length);
     try {
       const result = await utils.workspaces.getWorkspaceStateBySlug.fetch({ slug: "norte" });
       const stepsWithDefs = (result.steps ?? []).map((s, i) => ({
@@ -276,20 +288,24 @@ export default function NorthWorkspace() {
       }));
       const html = `<div class="print-document"><h1 class="print-doc-title">${norteModule.title} – Todas as etapas</h1>${buildAllStepsPrintHtml(stepsWithDefs)}</div>`;
       printAreaRef.current.innerHTML = html;
-      requestAnimationFrame(() => window.print());
+      console.info("[print] norte all html length", printAreaRef.current.innerHTML.length);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => window.print());
+      });
     } finally {
       setPrinting(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-background screen-only">
+    <>
       <div
         ref={printAreaRef}
         id="workspace-print-area"
-        className="print-only hidden"
+        className="print-only"
         aria-hidden
       />
+      <div className="min-h-screen bg-background screen-only">
       <header className="border-b bg-white sticky top-0 z-10 shadow-sm">
         <div className="container py-4 space-y-3">
           <div className="flex items-center gap-4">
@@ -397,7 +413,7 @@ export default function NorthWorkspace() {
           </section>
         </div>
       </main>
-    </div>
+      </div>
+    </>
   );
 }
-

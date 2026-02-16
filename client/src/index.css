@@ -346,6 +346,23 @@
 }
 
 /* Impressão: esconder app e mostrar apenas área de impressão dos workspaces */
+.print-only {
+  display: none;
+}
+
+.print-debug .print-only {
+  display: block;
+  visibility: visible;
+  position: static;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.print-debug #workspace-print-area {
+  outline: 2px dashed #ef4444;
+}
+
 @media print {
   .screen-only {
     display: none !important;
@@ -360,10 +377,6 @@
     width: 100% !important;
     height: auto !important;
     overflow: visible !important;
-  }
-
-  .print-only.hidden {
-    display: block !important;
   }
 
   #workspace-print-area {

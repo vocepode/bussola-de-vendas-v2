@@ -1,10 +1,11 @@
-import { eq, and, desc, asc, isNull, inArray } from "drizzle-orm";
+import { eq, and, desc, asc, isNull, inArray, gt } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { setDefaultResultOrder, lookup } from "node:dns/promises";
 import { isIP } from "node:net";
+import crypto from "node:crypto";
 import { 
-  InsertUser, users, sessions, modules, sections, lessons, lessonUserState, exercises, submissions, 
+  InsertUser, users, sessions, passwordResetTokens, modules, sections, lessons, lessonUserState, exercises, submissions, 
   lessonProgress, moduleProgress, badges, userBadges, resources,
   Module, Section, Lesson, LessonUserState, Exercise, Submission, ModuleProgress, LessonProgress,
   contentIdeas, contentScripts, ContentIdea, ContentScript, InsertContentIdea, InsertContentScript
@@ -24,6 +25,12 @@ function ensureDnsIpv4First() {
   } catch {
     // Ignora em runtimes que não suportam.
   }
+}
+
+function isMissingIsActiveColumnError(error: unknown): boolean {
+  const message = (error as { message?: string })?.message ?? "";
+  const causeCode = (error as { cause?: { code?: string } })?.cause?.code ?? "";
+  return message.includes('users.isActive') || (causeCode === "42703" && message.includes("users"));
 }
 
 /** Extrai host e port da URL (tudo após o último @ até a primeira / ou ?). */
@@ -91,15 +98,55 @@ export async function createUser(user: InsertUser): Promise<number> {
 export async function getUserByEmail(email: string) {
   const db = await getDb();
   if (!db) return undefined;
-  const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
-  return result[0];
+  try {
+    const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
+    return result[0];
+  } catch (error) {
+    if (!isMissingIsActiveColumnError(error) || !_sql) throw error;
+    const fallback = await _sql`
+      select
+        "id",
+        "name",
+        "email",
+        "passwordHash",
+        "role",
+        true as "isActive",
+        "createdAt",
+        "updatedAt",
+        "lastSignedIn"
+      from "users"
+      where "email" = ${email}
+      limit 1
+    `;
+    return fallback[0] as typeof users.$inferSelect | undefined;
+  }
 }
 
 export async function getUserById(userId: number) {
   const db = await getDb();
   if (!db) return undefined;
-  const result = await db.select().from(users).where(eq(users.id, userId)).limit(1);
-  return result[0];
+  try {
+    const result = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+    return result[0];
+  } catch (error) {
+    if (!isMissingIsActiveColumnError(error) || !_sql) throw error;
+    const fallback = await _sql`
+      select
+        "id",
+        "name",
+        "email",
+        "passwordHash",
+        "role",
+        true as "isActive",
+        "createdAt",
+        "updatedAt",
+        "lastSignedIn"
+      from "users"
+      where "id" = ${userId}
+      limit 1
+    `;
+    return fallback[0] as typeof users.$inferSelect | undefined;
+  }
 }
 
 export async function createSession(data: {
@@ -118,20 +165,151 @@ export async function deleteSession(token: string) {
   await db.delete(sessions).where(eq(sessions.token, token));
 }
 
+export async function deleteSessionsByUserId(userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db.delete(sessions).where(eq(sessions.userId, userId));
+}
+
 export async function getUserBySessionToken(token: string) {
   const db = await getDb();
   if (!db) return null;
-  const result = await db
-    .select({ user: users, session: sessions })
-    .from(sessions)
-    .innerJoin(users, eq(sessions.userId, users.id))
-    .where(eq(sessions.token, token))
+  const [session] = await db.select().from(sessions).where(eq(sessions.token, token)).limit(1);
+  if (!session) return null;
+  if (session.expiresAt.getTime() < Date.now()) return null;
+
+  const user = await getUserById(session.userId);
+  if (!user) return null;
+  if (!user.isActive) return null;
+  return user;
+}
+
+function sha256Hex(input: string): string {
+  return crypto.createHash("sha256").update(input).digest("hex");
+}
+
+export async function createPasswordResetTokenForUser(userId: number, ttlMinutes = 60): Promise<string> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const rawToken = crypto.randomBytes(32).toString("hex");
+  const tokenHash = sha256Hex(rawToken);
+  const expiresAt = new Date(Date.now() + ttlMinutes * 60 * 1000);
+
+  await db.insert(passwordResetTokens).values({
+    userId,
+    tokenHash,
+    expiresAt,
+  });
+
+  return rawToken;
+}
+
+export async function createPasswordResetTokenByEmail(email: string, ttlMinutes = 60): Promise<string | null> {
+  const user = await getUserByEmail(email.trim().toLowerCase());
+  if (!user) return null;
+  if (!user.isActive) return null;
+  return await createPasswordResetTokenForUser(user.id, ttlMinutes);
+}
+
+export async function consumePasswordResetToken(rawToken: string, passwordHash: string): Promise<boolean> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const tokenHash = sha256Hex(rawToken);
+  const now = new Date();
+
+  const [tokenRow] = await db
+    .select()
+    .from(passwordResetTokens)
+    .where(
+      and(
+        eq(passwordResetTokens.tokenHash, tokenHash),
+        isNull(passwordResetTokens.usedAt),
+        gt(passwordResetTokens.expiresAt, now)
+      )
+    )
     .limit(1);
 
-  const row = result[0];
-  if (!row) return null;
-  if (row.session.expiresAt.getTime() < Date.now()) return null;
-  return row.user;
+  if (!tokenRow) return false;
+
+  await db.transaction(async (tx) => {
+    await tx
+      .update(users)
+      .set({
+        passwordHash,
+        updatedAt: new Date(),
+      })
+      .where(eq(users.id, tokenRow.userId));
+
+    await tx
+      .update(passwordResetTokens)
+      .set({ usedAt: new Date() })
+      .where(eq(passwordResetTokens.id, tokenRow.id));
+
+    await tx.delete(sessions).where(eq(sessions.userId, tokenRow.userId));
+  });
+
+  return true;
+}
+
+export async function listUsersForAdmin() {
+  const db = await getDb();
+  if (!db) return [];
+
+  try {
+    return await db
+      .select({
+        id: users.id,
+        name: users.name,
+        email: users.email,
+        role: users.role,
+        isActive: users.isActive,
+        createdAt: users.createdAt,
+        lastSignedIn: users.lastSignedIn,
+      })
+      .from(users)
+      .orderBy(desc(users.createdAt));
+  } catch (error) {
+    if (!isMissingIsActiveColumnError(error) || !_sql) throw error;
+    return (await _sql`
+      select
+        "id",
+        "name",
+        "email",
+        "role",
+        true as "isActive",
+        "createdAt",
+        "lastSignedIn"
+      from "users"
+      order by "createdAt" desc
+    `) as {
+      id: number;
+      name: string | null;
+      email: string;
+      role: "user" | "admin";
+      isActive: boolean;
+      createdAt: Date;
+      lastSignedIn: Date;
+    }[];
+  }
+}
+
+export async function setUserAccess(userId: number, isActive: boolean) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db
+    .update(users)
+    .set({
+      isActive,
+      updatedAt: new Date(),
+    })
+    .where(eq(users.id, userId));
+
+  if (!isActive) {
+    await deleteSessionsByUserId(userId);
+  }
 }
 
 // ========== MODULES ==========

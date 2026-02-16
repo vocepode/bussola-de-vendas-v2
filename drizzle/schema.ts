@@ -22,6 +22,7 @@ export const users = pgTable("users", {
   email: varchar("email", { length: 320 }).notNull().unique(),
   passwordHash: text("passwordHash").notNull(),
   role: userRole("role").default("user").notNull(),
+  isActive: boolean("isActive").default(true).notNull(),
   createdAt: timestamp("createdAt", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updatedAt", { withTimezone: true }).defaultNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn", { withTimezone: true }).defaultNow().notNull(),
@@ -32,6 +33,19 @@ export const sessions = pgTable("sessions", {
   token: varchar("token", { length: 255 }).notNull().unique(),
   userId: integer("userId").notNull(),
   expiresAt: timestamp("expiresAt", { withTimezone: true }).notNull(),
+  createdAt: timestamp("createdAt", { withTimezone: true }).defaultNow().notNull(),
+});
+
+/**
+ * Tokens temporários para recuperação de senha.
+ * O token bruto nunca é salvo; persistimos apenas hash SHA-256.
+ */
+export const passwordResetTokens = pgTable("passwordResetTokens", {
+  id: serial("id").primaryKey(),
+  userId: integer("userId").notNull(),
+  tokenHash: varchar("tokenHash", { length: 64 }).notNull().unique(),
+  expiresAt: timestamp("expiresAt", { withTimezone: true }).notNull(),
+  usedAt: timestamp("usedAt", { withTimezone: true }),
   createdAt: timestamp("createdAt", { withTimezone: true }).defaultNow().notNull(),
 });
 
@@ -497,6 +511,7 @@ export const contentScriptsRelations = relations(contentScripts, ({ one }) => ({
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
+export type PasswordResetToken = typeof passwordResetTokens.$inferSelect;
 export type Module = typeof modules.$inferSelect;
 export type InsertModule = typeof modules.$inferInsert;
 export type Section = typeof sections.$inferSelect;

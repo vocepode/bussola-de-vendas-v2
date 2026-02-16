@@ -1,6 +1,7 @@
-import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
+import { adminProcedure, publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
+import bcrypt from "bcryptjs";
 
 export const appRouter = router({
   auth: router({
@@ -379,6 +380,63 @@ export const appRouter = router({
         submissionsCount: submissions.length,
       };
     }),
+  }),
+
+  admin: router({
+    listUsers: adminProcedure.query(async () => {
+      return await db.listUsersForAdmin();
+    }),
+
+    createUser: adminProcedure
+      .input(
+        z.object({
+          name: z.string().min(1).optional(),
+          email: z.string().email(),
+          password: z.string().min(8),
+          role: z.enum(["admin", "user"]).default("user"),
+          isActive: z.boolean().default(true),
+        })
+      )
+      .mutation(async ({ input }) => {
+        const email = input.email.trim().toLowerCase();
+        const existing = await db.getUserByEmail(email);
+        if (existing) {
+          throw new Error("Email já cadastrado");
+        }
+
+        const passwordHash = await bcrypt.hash(input.password, 10);
+        const userId = await db.createUser({
+          name: input.name ?? null,
+          email,
+          passwordHash,
+          role: input.role,
+          isActive: input.isActive,
+        });
+
+        return { success: true as const, userId };
+      }),
+
+    setUserAccess: adminProcedure
+      .input(
+        z.object({
+          userId: z.number(),
+          isActive: z.boolean(),
+        })
+      )
+      .mutation(async ({ input }) => {
+        await db.setUserAccess(input.userId, input.isActive);
+        return { success: true as const };
+      }),
+
+    generatePasswordResetLink: adminProcedure
+      .input(z.object({ userId: z.number() }))
+      .mutation(async ({ input }) => {
+        const token = await db.createPasswordResetTokenForUser(input.userId, 60);
+        return {
+          success: true as const,
+          resetUrl: `/redefinir-senha?token=${encodeURIComponent(token)}`,
+        };
+      }),
   }),
 
   contentIdeas: router({

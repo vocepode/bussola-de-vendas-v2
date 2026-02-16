@@ -79,7 +79,7 @@ function MiniCard(props: { title: string; subtitle: string }) {
   );
 }
 
-function HomeHeader() {
+function HomeHeader({ isAdmin }: { isAdmin: boolean }) {
   return (
     <div className="sticky top-0 z-20 -mx-4 px-4 py-3 bg-black/40 backdrop-blur-xl border-b border-white/10">
       <div className="container flex items-center justify-between gap-3">
@@ -128,6 +128,18 @@ function HomeHeader() {
             <Maximize2 className="w-4 h-4" />
           </Button>
 
+          {isAdmin ? (
+            <Link href="/admin">
+              <Button
+                type="button"
+                variant="default"
+                className="h-8 px-3 text-xs font-semibold bg-emerald-600 hover:bg-emerald-600/90 text-white"
+              >
+                Admin
+              </Button>
+            </Link>
+          ) : null}
+
           <Button
             type="button"
             variant="default"
@@ -157,7 +169,7 @@ export default function Home() {
 
   return (
     <div className="dark min-h-screen bg-background text-foreground">
-      <HomeHeader />
+      <HomeHeader isAdmin={user?.role === "admin"} />
       <main className="container py-10 space-y-10">
         {/* Cover / intro */}
         <section className="space-y-6">

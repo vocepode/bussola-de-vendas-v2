@@ -33,8 +33,8 @@ export async function POST(req: Request) {
     passwordHash,
     name: parsed.data.name ?? null,
     role: "user",
+    isActive: true,
   });
 
   return NextResponse.json({ success: true, userId });
 }
-
