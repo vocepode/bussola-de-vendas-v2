@@ -73,7 +73,7 @@ export function LoginForm() {
               <Input
                 id="email"
                 type="email"
-                className="h-9 rounded-lg border border-slate-700 bg-[#e7edf5] pl-9 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-[#9fc0e4] md:h-10"
+                className="h-9 rounded-lg border border-slate-700 bg-slate-200 pl-9 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-blue-200 md:h-10"
                 placeholder="vocepode@vocepode.pro"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -92,7 +92,7 @@ export function LoginForm() {
               <Input
                 id="password"
                 type={showPassword ? "text" : "password"}
-                className="h-9 rounded-lg border border-slate-700 bg-[#e7edf5] pl-9 pr-9 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-[#9fc0e4] md:h-10"
+                className="h-9 rounded-lg border border-slate-700 bg-slate-200 pl-9 pr-9 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-blue-200 md:h-10"
                 placeholder="Sua senha"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -127,7 +127,7 @@ export function LoginForm() {
 
           <Button
             type="submit"
-            className="mx-auto mt-1 flex h-10 w-32 rounded-full bg-[#5f3f97] text-base font-semibold text-white hover:bg-[#6a47a8] md:mt-2 md:w-40"
+            className="mx-auto mt-1 flex h-10 w-32 rounded-full bg-violet-800 text-base font-semibold text-white hover:bg-violet-700 md:mt-2 md:w-40"
             disabled={submitting}
           >
             {submitting ? "Entrando..." : "Entrar"}
