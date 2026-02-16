@@ -6,13 +6,13 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
-import { Check, LayoutList, Play, TrendingUp } from "lucide-react";
+import { AlertCircle, Check, LayoutList, Play, RefreshCw, TrendingUp } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
   const { user } = useAuth();
-  const { data: overview, isLoading: loadingOverview } = trpc.dashboard.getOverview.useQuery();
-  const { data: modules, isLoading: loadingModules } = trpc.modules.list.useQuery();
+  const { data: overview, isLoading: loadingOverview, isError: errorOverview, refetch: refetchOverview } = trpc.dashboard.getOverview.useQuery();
+  const { data: modules, isLoading: loadingModules, isError: errorModules, refetch: refetchModules } = trpc.modules.list.useQuery();
 
   const progressByModuleId = new Map((overview?.moduleProgress ?? []).map((p) => [p.moduleId, p]));
   const lessonCounts = overview?.lessonCounts ?? {};
@@ -21,9 +21,35 @@ export default function Home() {
   const pillarsRemaining = overview?.pillarsRemaining ?? Math.max((modules?.length ?? 0) - pillarsCompleted, 0);
   const moduleBySlug = new Map((modules ?? []).map((m) => [m.slug, m]));
 
+  const hasError = errorOverview || errorModules;
+  const isLoading = loadingOverview || loadingModules;
+
+  const retry = () => {
+    refetchOverview();
+    refetchModules();
+  };
+
   return (
     <DashboardLayout>
-      <div className="w-full space-y-6 pl-1 pr-2 md:pl-2 md:pr-4">
+      <div className="min-h-full w-full space-y-6 bg-[#000000] pl-1 pr-2 text-white md:pl-2 md:pr-4">
+        {hasError ? (
+          <Card className="border-amber-500/50 bg-amber-500/10 p-6 text-amber-200">
+            <div className="flex flex-col items-center gap-3 text-center">
+              <AlertCircle className="h-10 w-10 text-amber-400" />
+              <p className="font-medium">Não foi possível carregar os dados do dashboard.</p>
+              <p className="text-sm text-white/70">Tente novamente ou faça logout e entre de novo.</p>
+              <button
+                type="button"
+                onClick={retry}
+                className="inline-flex items-center gap-2 rounded-lg bg-amber-500/30 px-4 py-2 text-sm font-medium text-amber-100 hover:bg-amber-500/50"
+              >
+                <RefreshCw className="h-4 w-4" /> Tentar de novo
+              </button>
+            </div>
+          </Card>
+        ) : null}
+        {!hasError ? (
+          <>
         <section className="space-y-1">
           <h1 className="text-3xl font-semibold tracking-tight text-white">Olá, {user?.name ?? "Aluno"}</h1>
           <p className="text-sm text-white/60">continue de onde parou</p>
@@ -109,13 +135,15 @@ export default function Home() {
               );
             })}
 
-            {(loadingOverview || loadingModules) && !(modules && modules.length) ? (
+            {isLoading && !(modules && modules.length) ? (
               <Card className="col-span-full border border-[#1a1a24] bg-[#0d0e14] p-6 text-center text-sm text-white/60 shadow-none xl:col-span-6">
                 Carregando sua bússola...
               </Card>
             ) : null}
           </div>
         </section>
+          </>
+        ) : null}
       </div>
     </DashboardLayout>
   );

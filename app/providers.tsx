@@ -42,7 +42,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    // #region agent log
+    // #region agent log (apenas em desenvolvimento)
+    if (typeof window === "undefined" || process.env.NODE_ENV !== "development") return;
     try {
       const probe = document.createElement("div");
       probe.className = "text-4xl container";
