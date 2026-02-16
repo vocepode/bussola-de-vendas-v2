@@ -18,5 +18,6 @@ export async function GET() {
     email: user.email,
     role: user.role,
     isActive: user.isActive,
+    avatarUrl: user.avatarUrl ?? null,
   });
 }

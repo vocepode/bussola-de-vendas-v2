@@ -312,6 +312,47 @@ export async function setUserAccess(userId: number, isActive: boolean) {
   }
 }
 
+export async function updateUserProfileName(userId: number, name: string | null) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db
+    .update(users)
+    .set({
+      name,
+      updatedAt: new Date(),
+    })
+    .where(eq(users.id, userId));
+}
+
+export async function updateUserProfileAvatarUrl(userId: number, avatarUrl: string | null) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db
+    .update(users)
+    .set({
+      avatarUrl,
+      updatedAt: new Date(),
+    })
+    .where(eq(users.id, userId));
+}
+
+export async function updateUserPasswordHash(userId: number, passwordHash: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db
+    .update(users)
+    .set({
+      passwordHash,
+      updatedAt: new Date(),
+    })
+    .where(eq(users.id, userId));
+
+  await deleteSessionsByUserId(userId);
+}
+
 // ========== MODULES ==========
 
 export async function getAllModules(): Promise<Module[]> {
@@ -779,6 +820,25 @@ export async function getUserModuleProgress(userId: number): Promise<ModuleProgr
   if (!db) return [];
   
   return await db.select().from(moduleProgress).where(eq(moduleProgress.userId, userId));
+}
+
+export async function getLessonCountsByModuleIds(moduleIds: number[]): Promise<Record<number, number>> {
+  const db = await getDb();
+  if (!db || moduleIds.length === 0) return {};
+
+  const rows = await db
+    .select({
+      moduleId: lessons.moduleId,
+      lessonId: lessons.id,
+    })
+    .from(lessons)
+    .where(and(inArray(lessons.moduleId, moduleIds), eq(lessons.isActive, true)));
+
+  const counts: Record<number, number> = {};
+  for (const row of rows) {
+    counts[row.moduleId] = (counts[row.moduleId] ?? 0) + 1;
+  }
+  return counts;
 }
 
 // ========== BADGES ==========

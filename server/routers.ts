@@ -8,6 +8,47 @@ export const appRouter = router({
     me: publicProcedure.query(opts => opts.ctx.user),
     // No Next/Vercel, o logout (limpeza de cookie) será feito via rota HTTP dedicada.
     logout: publicProcedure.mutation(() => ({ success: true } as const)),
+    updateProfile: protectedProcedure
+      .input(
+        z.object({
+          name: z.string().trim().min(1, "Nome obrigatório").max(120),
+          avatarUrl: z.string().url().max(512).nullable().optional(),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        await db.updateUserProfileName(ctx.user.id, input.name);
+        if (input.avatarUrl !== undefined) {
+          await db.updateUserProfileAvatarUrl(ctx.user.id, input.avatarUrl);
+        }
+        return { success: true as const };
+      }),
+    changePassword: protectedProcedure
+      .input(
+        z.object({
+          currentPassword: z.string().min(1),
+          newPassword: z.string().min(8),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        const user = await db.getUserById(ctx.user.id);
+        if (!user) {
+          throw new Error("Usuário não encontrado");
+        }
+
+        const currentOk = await bcrypt.compare(input.currentPassword, user.passwordHash);
+        if (!currentOk) {
+          throw new Error("Senha atual inválida");
+        }
+
+        const samePassword = await bcrypt.compare(input.newPassword, user.passwordHash);
+        if (samePassword) {
+          throw new Error("A nova senha deve ser diferente da senha atual");
+        }
+
+        const newHash = await bcrypt.hash(input.newPassword, 10);
+        await db.updateUserPasswordHash(ctx.user.id, newHash);
+        return { success: true as const };
+      }),
   }),
 
   modules: router({
@@ -372,10 +413,16 @@ export const appRouter = router({
       const modules = await db.getAllModules();
       const totalProgress = moduleProgress.reduce((sum, p) => sum + p.progressPercentage, 0);
       const overallProgress = modules.length > 0 ? Math.round(totalProgress / modules.length) : 0;
+      const completedCount = moduleProgress.filter((p) => p.status === "completed").length;
+      const pillarsRemaining = Math.max(modules.length - completedCount, 0);
+      const lessonCounts = await db.getLessonCountsByModuleIds(modules.map((m) => m.id));
       
       return {
         overallProgress,
         moduleProgress,
+        pillarsCompleted: completedCount,
+        pillarsRemaining,
+        lessonCounts,
         badgesCount: userBadges.length,
         submissionsCount: submissions.length,
       };
