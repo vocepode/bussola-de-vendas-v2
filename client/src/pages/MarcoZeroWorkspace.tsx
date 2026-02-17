@@ -277,7 +277,7 @@ export default function MarcoZeroWorkspace() {
                 </DropdownMenuContent>
               </DropdownMenu>
               {status === "completed" ? (
-                <Badge className="gap-1.5 bg-violet-500 text-white">
+                <Badge className="gap-1.5 bg-[#7c3aed] text-white">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   Concluído
                 </Badge>
@@ -294,7 +294,7 @@ export default function MarcoZeroWorkspace() {
           </div>
           {progress != null && (
             <div className="flex items-center gap-3">
-              <Progress value={progress.percentage} className="h-2 flex-1 max-w-xs [&>div]:bg-violet-500" />
+              <Progress value={progress.percentage} className="h-2 flex-1 max-w-xs" />
               <span className="text-sm font-medium tabular-nums text-white/90">{progress.percentage}%</span>
             </div>
           )}
@@ -320,7 +320,7 @@ export default function MarcoZeroWorkspace() {
                       type="button"
                       className={[
                         "w-full text-left px-3 py-2 rounded-md transition-colors flex items-center justify-between gap-3",
-                        isActive ? "bg-primary/10 text-primary dark:bg-violet-500/30 dark:text-white font-medium" : "hover:bg-muted dark:hover:bg-white/10",
+                        isActive ? "bg-[#7c3aed]/30 text-white font-medium" : "hover:bg-muted dark:hover:bg-white/10",
                         !isResolved ? "opacity-60" : "",
                       ].join(" ")}
                       onClick={() => setActiveStep(s.key)}
