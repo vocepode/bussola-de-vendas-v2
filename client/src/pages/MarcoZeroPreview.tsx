@@ -40,8 +40,17 @@ export default function MarcoZeroPreview() {
 
   useEffect(() => {
     if (typeof document === "undefined") return;
-    document.documentElement.classList.add("preview-light-theme");
-    return () => document.documentElement.classList.remove("preview-light-theme");
+    const html = document.documentElement;
+    html.classList.remove("dark");
+    html.classList.add("preview-light-theme");
+    document.body.style.backgroundColor = "#ffffff";
+    document.body.style.color = "#000000";
+    return () => {
+      html.classList.add("dark");
+      html.classList.remove("preview-light-theme");
+      document.body.style.backgroundColor = "";
+      document.body.style.color = "";
+    };
   }, []);
 
   const pct = progress?.percentage ?? 0;
