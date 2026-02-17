@@ -242,25 +242,25 @@ export default function MarcoZeroWorkspace() {
         aria-hidden
       />
       <div className="min-h-screen bg-background dark:bg-[#000000] screen-only">
-      <header className="border-b bg-white dark:bg-[#05070d] dark:border-[#1a1a1f] sticky top-0 z-10 shadow-sm">
+      <header className="sticky top-0 z-10 border-b border-[#1a1a1f] bg-[#05070d] shadow-sm">
         <div className="container py-4 space-y-3">
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0 flex-1">
-              <div className="text-sm text-muted-foreground dark:text-white/60">Diagnóstico</div>
-              <h1 className="text-xl font-bold truncate dark:text-white">{marcoZeroModule.title}</h1>
+              <div className="text-sm text-white/60">Diagnóstico</div>
+              <h1 className="text-xl font-bold truncate text-white">{marcoZeroModule.title}</h1>
             </div>
             <div className="flex flex-shrink-0 items-center gap-2">
-              <span className="text-sm text-muted-foreground dark:text-white/60">
+              <span className="text-sm text-white/60">
                 {progress ? `${progress.completed} de ${progress.total} etapas` : "—"}
               </span>
               <Link href="/marco-zero/preview">
-                <Button variant="secondary" size="sm" className="dark:bg-white/10 dark:text-white dark:hover:bg-white/20">
+                <Button variant="secondary" size="sm" className="bg-white/10 text-white hover:bg-white/20">
                   Pré-visualizar página
                 </Button>
               </Link>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" disabled={printing} className="gap-2 dark:border-white/20 dark:text-white/90 dark:hover:bg-white/10">
+                  <Button variant="outline" size="sm" disabled={printing} className="gap-2 border-white/20 text-white/90 hover:bg-white/10">
                     <Printer className="w-4 h-4" />
                     Imprimir / PDF
                   </Button>
@@ -277,16 +277,16 @@ export default function MarcoZeroWorkspace() {
                 </DropdownMenuContent>
               </DropdownMenu>
               {status === "completed" ? (
-                <Badge className="gap-1.5 bg-primary text-primary-foreground dark:bg-violet-500 dark:text-white">
+                <Badge className="gap-1.5 bg-violet-500 text-white">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   Concluído
                 </Badge>
               ) : null}
-              <Avatar className="h-8 w-8 border border-border dark:border-white/20">
+              <Avatar className="h-8 w-8 border border-white/20">
                 {user?.avatarUrl ? (
                   <AvatarImage src={user.avatarUrl} alt="" className="object-cover" />
                 ) : null}
-                <AvatarFallback className="text-xs font-semibold">
+                <AvatarFallback className="text-xs font-semibold text-white">
                   {(user?.name ?? user?.email ?? "?").charAt(0).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
@@ -294,8 +294,8 @@ export default function MarcoZeroWorkspace() {
           </div>
           {progress != null && (
             <div className="flex items-center gap-3">
-              <Progress value={progress.percentage} className="h-2 flex-1 max-w-xs dark:[&>div]:bg-violet-500" />
-              <span className="text-sm font-medium tabular-nums dark:text-white/90">{progress.percentage}%</span>
+              <Progress value={progress.percentage} className="h-2 flex-1 max-w-xs [&>div]:bg-violet-500" />
+              <span className="text-sm font-medium tabular-nums text-white/90">{progress.percentage}%</span>
             </div>
           )}
         </div>
@@ -320,7 +320,7 @@ export default function MarcoZeroWorkspace() {
                       type="button"
                       className={[
                         "w-full text-left px-3 py-2 rounded-md transition-colors flex items-center justify-between gap-3",
-                        isActive ? "bg-primary/10 text-primary dark:bg-violet-500/25 dark:text-violet-300" : "hover:bg-muted dark:hover:bg-white/10",
+                        isActive ? "bg-primary/10 text-primary dark:bg-violet-500/30 dark:text-white font-medium" : "hover:bg-muted dark:hover:bg-white/10",
                         !isResolved ? "opacity-60" : "",
                       ].join(" ")}
                       onClick={() => setActiveStep(s.key)}
