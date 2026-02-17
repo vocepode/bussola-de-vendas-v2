@@ -19,11 +19,11 @@ export default function MaterialsPage() {
         </div>
 
         {isLoading ? (
-          <Card className="border-white/10 bg-[#0a0d16] p-6 text-sm text-white/65">Carregando materiais...</Card>
+          <Card className="border-[#262626] bg-[#161616] p-6 text-sm text-white/65">Carregando materiais...</Card>
         ) : null}
 
         {!isLoading && (!resources || resources.length === 0) ? (
-          <Card className="border-white/10 bg-[#0a0d16] p-10 text-center">
+          <Card className="border-[#262626] bg-[#161616] p-10 text-center">
             <FolderOpen className="mx-auto mb-3 h-6 w-6 text-white/45" />
             <p className="text-sm text-white/60">Nenhum material disponível no momento.</p>
           </Card>
@@ -31,7 +31,7 @@ export default function MaterialsPage() {
 
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {(resources ?? []).map((resource) => (
-            <Card key={resource.id} className="flex min-h-[170px] flex-col justify-between border-white/10 bg-[#0a0d16] p-4">
+            <Card key={resource.id} className="flex min-h-[170px] flex-col justify-between border-[#262626] bg-[#161616] p-4">
               <div className="space-y-2">
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="line-clamp-2 text-base font-semibold text-white">{resource.title}</h3>

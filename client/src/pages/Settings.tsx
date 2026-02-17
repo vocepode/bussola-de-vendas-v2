@@ -128,7 +128,7 @@ export default function SettingsPage() {
           </TabsList>
 
           <TabsContent value="perfil">
-            <Card className="border-white/10 bg-[#0a0d16] p-5">
+            <Card className="border-[#262626] bg-[#161616] p-5">
               <div className="mb-5 flex items-center gap-3">
                 <div className="rounded-lg bg-violet-500/20 p-2 text-violet-400">
                   <User className="h-4 w-4" />
@@ -205,7 +205,7 @@ export default function SettingsPage() {
           </TabsContent>
 
           <TabsContent value="seguranca">
-            <Card className="border-white/10 bg-[#0a0d16] p-5">
+            <Card className="border-[#262626] bg-[#161616] p-5">
               <div className="mb-5 flex items-center gap-3">
                 <div className="rounded-lg bg-red-500/20 p-2 text-red-400">
                   <ShieldCheck className="h-4 w-4" />

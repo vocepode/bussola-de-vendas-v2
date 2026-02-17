@@ -31,7 +31,7 @@ export default function Home() {
 
   return (
     <DashboardLayout>
-      <div className="min-h-full w-full space-y-6 bg-[#000000] pl-1 pr-2 text-white md:pl-2 md:pr-4">
+      <div className="min-h-full w-full space-y-6 bg-[#0a0a0a] pl-1 pr-2 text-white md:pl-2 md:pr-4">
         {hasError ? (
           <Card className="border-amber-500/50 bg-amber-500/10 p-6 text-amber-200">
             <div className="flex flex-col items-center gap-3 text-center">
@@ -94,7 +94,7 @@ export default function Home() {
 
               return (
                 <Link key={pillar.slug} href={href} className="min-w-0">
-                  <Card className="group flex h-full min-h-[240px] flex-col overflow-hidden rounded-2xl border border-[#1a1a24] bg-[#0d0e14] text-white shadow-none transition hover:-translate-y-0.5 hover:border-violet-500/40">
+                  <Card className="group flex h-full min-h-[240px] flex-col overflow-hidden rounded-2xl border border-[#262626] bg-[#161616] text-white shadow-none transition hover:-translate-y-0.5 hover:border-violet-500/40">
                     <div
                       className="relative flex h-[120px] shrink-0 overflow-hidden rounded-t-2xl"
                       style={
@@ -117,7 +117,7 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div className="flex min-h-0 flex-1 flex-col justify-between space-y-2 bg-[#0f1016] p-3">
+                    <div className="flex min-h-0 flex-1 flex-col justify-between space-y-2 bg-[#1a1a1a] p-3">
                       <p className="line-clamp-2 text-sm font-medium leading-snug text-white">
                         {pillar.subtitle}
                       </p>
@@ -136,7 +136,7 @@ export default function Home() {
             })}
 
             {isLoading && !(modules && modules.length) ? (
-              <Card className="col-span-full border border-[#1a1a24] bg-[#0d0e14] p-6 text-center text-sm text-white/60 shadow-none xl:col-span-6">
+              <Card className="col-span-full border border-[#262626] bg-[#161616] p-6 text-center text-sm text-white/60 shadow-none xl:col-span-6">
                 Carregando sua bússola...
               </Card>
             ) : null}

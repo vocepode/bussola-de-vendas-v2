@@ -76,13 +76,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         collapsible="icon"
         className={
           isDark
-            ? "border-r border-[#1a1a1f] bg-[#0a0a0f]"
+            ? "border-r border-[#262626] bg-[#111111]"
             : "border-r border-border bg-white"
         }
       >
         <SidebarHeader
           className={
-            isDark ? "h-14 border-b border-[#1a1a1f] px-2" : "h-14 border-b border-border px-2"
+            isDark ? "h-14 border-b border-[#262626] px-2" : "h-14 border-b border-border px-2"
           }
         >
           <SidebarTop theme={theme} onLogoClick={() => router.push("/")} />
@@ -147,7 +147,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </SidebarContent>
 
         <SidebarFooter
-          className={isDark ? "border-t border-[#1a1a1f] p-2" : "border-t border-border p-2"}
+          className={isDark ? "border-t border-[#262626] p-2" : "border-t border-border p-2"}
         >
           {showUser ? (
             <DropdownMenu>
@@ -217,13 +217,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       <SidebarInset
         className={
-          isDark ? "min-h-svh bg-[#000000] text-white" : "min-h-svh bg-background text-foreground"
+          isDark ? "min-h-svh bg-[#0a0a0a] text-white" : "min-h-svh bg-background text-foreground"
         }
       >
         <header
           className={
             isDark
-              ? "sticky top-0 z-30 flex h-14 items-center justify-between border-b border-[#1a1a1f] bg-[#05070d] px-2 md:px-4"
+              ? "sticky top-0 z-30 flex h-14 items-center justify-between border-b border-[#262626] bg-[#111111] px-2 md:px-4"
               : "sticky top-0 z-30 flex h-14 items-center justify-between border-b border-border bg-background px-2 md:px-4"
           }
         >

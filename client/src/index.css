@@ -90,35 +90,35 @@
 }
 
 .dark {
-  /* Dark Mode Colors - Creators Drive Inspired */
-  --background: #0a0e1f;         /* Fundo principal escuro */
+  /* Dark Mode - tom neutro (igual terminal), mesmo em local e Vercel */
+  --background: #0a0a0a;
   --foreground: #ffffff;
-  --card: #1a1f2e;               /* Cards com glassmorphism */
+  --card: #161616;
   --card-foreground: #ffffff;
-  --popover: #1a1f2e;
+  --popover: #161616;
   --popover-foreground: #ffffff;
-  --primary: #7c3aed;            /* Roxo vibrante */
+  --primary: #7c3aed;
   --primary-foreground: #ffffff;
-  --secondary: #1f2937;
+  --secondary: #1a1a1a;
   --secondary-foreground: #e5e7eb;
-  --muted: #141824;
-  --muted-foreground: #9ca3af;
-  --accent: #1f2937;
+  --muted: #1a1a1a;
+  --muted-foreground: #a3a3a3;
+  --accent: #1f1f1f;
   --accent-foreground: #ffffff;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #1f2937;
-  --input: #1f2937;
+  --border: #262626;
+  --input: #1a1a1a;
   --ring: #7c3aed;
   
-  /* Sidebar Dark */
-  --sidebar: #141824;
+  /* Sidebar Dark - mesmo tom neutro */
+  --sidebar: #111111;
   --sidebar-foreground: #ffffff;
   --sidebar-primary: #7c3aed;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #1f2937;
+  --sidebar-accent: #1f1f1f;
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #1f2937;
+  --sidebar-border: #262626;
   --sidebar-ring: #7c3aed;
   
   /* Charts Dark */
@@ -129,10 +129,10 @@
   --chart-5: #ef4444;
 }
 
-/* Força tema escuro em produção: body e raiz sempre escuros quando html tem .dark */
+/* Força tema escuro (tom neutro = terminal), igual em local e Vercel */
 html.dark,
 html.dark body {
-  background-color: #0a0a0f !important;
+  background-color: #0a0a0a !important;
   color: #ffffff !important;
 }
 

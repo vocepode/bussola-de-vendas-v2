@@ -36,7 +36,7 @@ export default function MyCompassPage() {
 
             return (
               <Link key={pillar.slug} href={href} className="min-w-0">
-                <Card className="group flex h-full min-h-[240px] flex-col overflow-hidden rounded-2xl border border-[#1a1a24] bg-[#0d0e14] text-white shadow-none transition hover:-translate-y-0.5 hover:border-violet-500/40">
+                <Card className="group flex h-full min-h-[240px] flex-col overflow-hidden rounded-2xl border border-[#262626] bg-[#161616] text-white shadow-none transition hover:-translate-y-0.5 hover:border-violet-500/40">
                   <div
                     className="relative flex h-[120px] shrink-0 overflow-hidden rounded-t-2xl"
                     style={
@@ -59,7 +59,7 @@ export default function MyCompassPage() {
                     </div>
                   </div>
 
-                  <div className="flex min-h-0 flex-1 flex-col justify-between space-y-2 bg-[#0f1016] p-3">
+                  <div className="flex min-h-0 flex-1 flex-col justify-between space-y-2 bg-[#1a1a1a] p-3">
                     <p className="line-clamp-2 text-sm font-medium leading-snug text-white">
                       {pillar.subtitle}
                     </p>
@@ -89,7 +89,7 @@ export default function MyCompassPage() {
           })}
 
           {(loadingOverview || loadingModules) && !(modules && modules.length) ? (
-            <Card className="col-span-full border border-[#1a1a24] bg-[#0d0e14] p-6 text-center text-sm text-white/60 shadow-none xl:col-span-6">
+            <Card className="col-span-full border border-[#262626] bg-[#161616] p-6 text-center text-sm text-white/60 shadow-none xl:col-span-6">
               Carregando sua bússola...
             </Card>
           ) : null}

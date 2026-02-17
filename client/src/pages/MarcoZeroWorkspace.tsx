@@ -241,8 +241,8 @@ export default function MarcoZeroWorkspace() {
         className="print-only"
         aria-hidden
       />
-      <div className="min-h-screen bg-background dark:bg-[#000000] screen-only">
-      <header className="sticky top-0 z-10 border-b border-[#1a1a1f] bg-[#05070d] shadow-sm">
+      <div className="min-h-screen bg-[#0a0a0a] screen-only">
+      <header className="sticky top-0 z-10 border-b border-[#262626] bg-[#111111] shadow-sm">
         <div className="container py-4 space-y-3">
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0 flex-1">
@@ -304,9 +304,9 @@ export default function MarcoZeroWorkspace() {
       <main className="container py-6">
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
           <aside className="lg:sticky lg:top-[84px] lg:h-[calc(100vh-120px)]">
-            <Card className="dark:border-[#1a1a1f] dark:bg-[#0d0e14]">
+            <Card className="border-[#262626] bg-[#161616]">
               <CardHeader>
-                <CardTitle className="text-base dark:text-white">Etapas do Marco Zero</CardTitle>
+                <CardTitle className="text-base text-white">Etapas do Marco Zero</CardTitle>
               </CardHeader>
               <CardContent className="space-y-1">
                 {STEPS.map((s) => {
@@ -342,9 +342,9 @@ export default function MarcoZeroWorkspace() {
           </aside>
 
           <section className="space-y-4">
-            <Card className="dark:border-[#1a1a1f] dark:bg-[#0d0e14]">
+            <Card className="border-[#262626] bg-[#161616]">
               <CardHeader>
-                <CardTitle className="dark:text-white">{STEPS.find((s) => s.key === activeStep)?.title}</CardTitle>
+                <CardTitle className="text-white">{STEPS.find((s) => s.key === activeStep)?.title}</CardTitle>
               </CardHeader>
               <CardContent className="dark:text-white/90">
                 {!activeLessonId ? (
