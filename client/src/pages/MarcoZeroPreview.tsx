@@ -40,8 +40,8 @@ export default function MarcoZeroPreview() {
 
   useEffect(() => {
     if (typeof document === "undefined") return;
-    document.body.classList.add("bg-white");
-    return () => document.body.classList.remove("bg-white");
+    document.documentElement.classList.add("preview-light-theme");
+    return () => document.documentElement.classList.remove("preview-light-theme");
   }, []);
 
   const pct = progress?.percentage ?? 0;
@@ -51,7 +51,7 @@ export default function MarcoZeroPreview() {
 
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-slate-500">Carregando preview...</div>}>
-    <div className="min-h-screen bg-white text-slate-900 print:bg-white print:text-slate-900">
+    <div id="marco-zero-preview" className="min-h-screen bg-white text-slate-900 print:bg-white print:text-slate-900">
       <div className="border-b bg-white sticky top-0 z-20">
         <div className="container flex flex-wrap items-center gap-3 py-4">
           <div className="flex-1 min-w-0">

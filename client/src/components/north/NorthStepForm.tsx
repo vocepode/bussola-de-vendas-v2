@@ -280,16 +280,16 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, foo
       return (
         <div key={idx} className="space-y-2">
           <div>
-            <div className="font-medium">{b.label}</div>
-            {b.helperText ? <div className="text-xs text-muted-foreground">{b.helperText}</div> : null}
+            <div className="font-medium text-white">{b.label}</div>
+            {b.helperText ? <div className="text-xs text-white/60">{b.helperText}</div> : null}
           </div>
 
-          <div className="rounded-lg border bg-white">
+          <div className="rounded-lg border border-[#262626] bg-[#161616] overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="border-[#262626]">
                   {b.columns.map((c) => (
-                    <TableHead key={c.key}>{c.label}</TableHead>
+                    <TableHead key={c.key} className="text-white">{c.label}</TableHead>
                   ))}
                   <TableHead className="w-[1%]" />
                 </TableRow>
@@ -297,35 +297,36 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, foo
               <TableBody>
                 {safeRows.length ? (
                   safeRows.map((r, rIdx) => (
-                    <TableRow key={rIdx}>
+                    <TableRow key={rIdx} className="border-[#262626] hover:bg-white/5">
                       {b.columns.map((c) => (
-                        <TableCell key={c.key}>
+                        <TableCell key={c.key} className="border-[#262626]">
                           <Input
                             value={String((r as any)[c.key] ?? "")}
                             placeholder={c.placeholder}
                             onChange={(e) => updateCell(rIdx, c.key, e.target.value, false)}
                             onBlur={(e) => updateCell(rIdx, c.key, e.target.value, true)}
+                            className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
                           />
                         </TableCell>
                       ))}
-                      <TableCell>
-                        <Button variant="ghost" size="sm" onClick={() => removeRow(rIdx)}>
+                      <TableCell className="border-[#262626]">
+                        <Button variant="ghost" size="sm" onClick={() => removeRow(rIdx)} className="text-white/90 hover:bg-white/10">
                           Remover
                         </Button>
                       </TableCell>
                     </TableRow>
                   ))
                 ) : (
-                  <TableRow>
-                    <TableCell colSpan={b.columns.length + 1} className="text-sm text-muted-foreground">
-                      Sem linhas ainda.
+                  <TableRow className="border-[#262626]">
+                    <TableCell colSpan={b.columns.length + 1} className="text-sm text-white/60 py-4">
+                      Sem linhas ainda. Clique em &quot;Adicionar linha&quot; para começar.
                     </TableCell>
                   </TableRow>
                 )}
               </TableBody>
             </Table>
           </div>
-          <Button variant="outline" onClick={addRow}>
+          <Button variant="outline" onClick={addRow} className="border-white/20 text-white hover:bg-white/10">
             Adicionar linha
           </Button>
         </div>

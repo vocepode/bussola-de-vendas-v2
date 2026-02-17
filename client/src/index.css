@@ -136,6 +136,46 @@ html.dark body {
   color: #ffffff !important;
 }
 
+/* Pré-visualização (Carta de Navegação): fundo branco, texto e tabelas em preto */
+html.preview-light-theme,
+html.preview-light-theme body {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+html.preview-light-theme table,
+html.preview-light-theme th,
+html.preview-light-theme td,
+html.preview-light-theme input,
+html.preview-light-theme textarea {
+  border-color: #000000 !important;
+}
+
+html.preview-light-theme p,
+html.preview-light-theme span,
+html.preview-light-theme h1, html.preview-light-theme h2, html.preview-light-theme h3,
+html.preview-light-theme label, html.preview-light-theme div {
+  color: #000000 !important;
+}
+
+html.preview-light-theme input,
+html.preview-light-theme textarea,
+html.preview-light-theme [class*="card"],
+html.preview-light-theme [class*="Card"] {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+}
+
+/* Tabelas na pré-visualização: fundo branco, texto e bordas pretas */
+html.preview-light-theme table,
+html.preview-light-theme thead, html.preview-light-theme tbody,
+html.preview-light-theme th, html.preview-light-theme td {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -469,13 +509,38 @@ html.dark body {
 }
 
 @media print {
-  /* Impressão sempre em tema claro: ignora dark mode */
+  /* Impressão sempre em tema claro: sobrescreve html.dark */
   html,
-  body {
+  html.dark,
+  body,
+  html.dark body {
     background: #ffffff !important;
-    color: #111827 !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+
+  /* Força todos os elementos a tema claro na impressão */
+  body *,
+  body *::before,
+  body *::after {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Reset de cores: fundo branco, texto preto na impressão */
+  div, section, main, article, header, footer, aside,
+  p, span, h1, h2, h3, h4, h5, h6, label, td, th, li {
+    color: #000000 !important;
+    background-color: transparent !important;
+    background: none !important;
+  }
+
+  table, thead, tbody, th, td {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #000000 !important;
   }
 
   .screen-only {
@@ -500,20 +565,36 @@ html.dark body {
     font-size: 12pt;
   }
 
+  /* Página de pré-visualização ao imprimir: fundo branco, texto e tabelas em preto */
+  #marco-zero-preview,
+  #marco-zero-preview * {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #000000 !important;
+  }
+
+  #marco-zero-preview table,
+  #marco-zero-preview th,
+  #marco-zero-preview td {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #000000 !important;
+  }
+
   .print-document {
     max-width: 100%;
     padding: 1rem;
     background: #ffffff !important;
-    color: #111827 !important;
+    color: #000000 !important;
   }
 
   .print-document * {
-    color: inherit;
+    color: #000000 !important;
   }
 
   .print-field-value,
   .print-intro-desc {
-    color: #374151 !important;
+    color: #000000 !important;
   }
 
   .print-doc-title {
@@ -521,7 +602,8 @@ html.dark body {
     font-weight: bold;
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid #000;
+    color: #000000 !important;
   }
 
   .print-step {
@@ -533,39 +615,43 @@ html.dark body {
     font-size: 14pt;
     font-weight: bold;
     margin-bottom: 0.75rem;
-    color: #111;
+    color: #000000 !important;
   }
 
   .print-intro-title {
     font-size: 12pt;
     font-weight: 600;
     margin: 0.5rem 0 0.25rem;
+    color: #000000 !important;
   }
 
   .print-intro-desc {
     margin: 0 0 0.75rem;
-    color: #444;
+    color: #000000 !important;
   }
 
   .print-divider {
     margin: 1rem 0;
-    border-color: #ccc;
+    border-color: #000;
   }
 
   .print-field {
     margin-bottom: 0.75rem;
+    color: #000000 !important;
   }
 
   .print-field-label {
     display: block;
     font-size: 11pt;
     margin-bottom: 0.25rem;
+    color: #000000 !important;
   }
 
   .print-field-value {
     white-space: pre-wrap;
     word-break: break-word;
     padding: 0.25rem 0;
+    color: #000000 !important;
   }
 
   .print-table-wrap {
@@ -576,17 +662,20 @@ html.dark body {
     width: 100%;
     border-collapse: collapse;
     font-size: 10pt;
+    background: #ffffff !important;
+    color: #000000 !important;
   }
 
   .print-table th,
   .print-table td {
-    border: 1px solid #333;
+    border: 1px solid #000000 !important;
     padding: 0.35rem 0.5rem;
     text-align: left;
+    background: #ffffff !important;
+    color: #000000 !important;
   }
 
   .print-table th {
-    background: #f0f0f0;
     font-weight: 600;
   }
 }
