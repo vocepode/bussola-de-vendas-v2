@@ -24,7 +24,7 @@ import { Loader2, ArrowLeft, CheckCircle2, Circle, AlertTriangle, Printer, FileD
 import { getLoginUrl } from "@/const";
 import { MARCO_ZERO_STEPS } from "@/marcoZero/schema";
 import { NorthStepForm } from "@/components/north/NorthStepForm";
-import { buildStepPrintHtml } from "@/lib/workspacePrint";
+import { buildStepPrintHtml, buildWorkspaceReportHtml } from "@/lib/workspacePrint";
 
 const STEPS = MARCO_ZERO_STEPS;
 type StepKey = (typeof STEPS)[number]["key"];
@@ -211,7 +211,7 @@ export default function MarcoZeroWorkspace() {
       }));
 
       const progressPercent = progress?.percentage ?? 0;
-      const html = buildMarcoZeroFullReportHtml({
+      const html = buildWorkspaceReportHtml({
         moduleTitle: marcoZeroModule.title,
         steps: stepsWithDefs,
         studentName: user?.name ?? undefined,
@@ -367,178 +367,4 @@ export default function MarcoZeroWorkspace() {
       </div>
     </>
   );
-}
-
-type ReportStep = { step: (typeof STEPS)[number]; data: Record<string, unknown>; title?: string };
-
-/** Constrói HTML mais narrativo para o relatório do Marco Zero (focado em "Sua jornada"). */
-function buildMarcoZeroStepReportHtml(params: {
-  moduleTitle: string;
-  step: (typeof STEPS)[number];
-  data: Record<string, unknown>;
-  studentName?: string;
-  progressPercentage: number;
-}) {
-  const { moduleTitle, step, data, studentName, progressPercentage } = params;
-  const status =
-    progressPercentage >= 100 ? "Finalizado" : progressPercentage > 0 ? "Incompleto" : "À fazer";
-  const today = new Date().toLocaleDateString("pt-BR");
-
-  const header = `
-    <header class="mz-report-header">
-      <div>
-        <div class="mz-report-kicker">Método COMPASS · Bússola de Vendas</div>
-        <div class="mz-report-title">Carta de Navegação | ${escapeHtml(moduleTitle)}</div>
-        <div class="mz-report-meta">Relatório Completo - Empresa: [—] · ${escapeHtml(
-          studentName ?? "[Nome do aluno]"
-        )} · ${today}</div>
-        <div class="mz-report-meta">Status: [Finalizado] / [Incompleto] / [ À fazer ]</div>
-      </div>
-      <div class="mz-report-status">Progresso · ${progressPercentage}%</div>
-    </header>
-  `;
-
-  const body = step.blocks
-    .filter((b) => b.type === "field" || b.type === "table")
-    .map((b) => renderFieldForReport(b as any, data))
-    .join("");
-  const progressTag = `<div style="font-size:10pt;color:#475569;text-align:right;">Progresso<br /><strong>${progressPercentage}%</strong></div>`;
-  const card = `
-    <section class="mz-report-card">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8pt;">
-        <h3>${escapeHtml(step.key === "jornada" ? "Sua jornada até aqui" : step.title)}</h3>
-        ${progressTag}
-      </div>
-      ${body || '<div class="mz-report-empty">Sem respostas.</div>'}
-    </section>
-  `;
-
-  return `<div class="print-document mz-report">${header}<h2 style="font-size:14pt;font-weight:700;margin:0 0 10pt;">Respostas - Marco Zero</h2><div style="font-size:10pt;color:#64748b;margin-bottom:10pt;">Leitura por exercício</div>${card}</div>`;
-}
-
-function buildMarcoZeroFullReportHtml(params: {
-  moduleTitle: string;
-  steps: ReportStep[];
-  studentName?: string;
-  progressPercentage: number;
-}) {
-  const { moduleTitle, steps, studentName, progressPercentage } = params;
-  const status =
-    progressPercentage >= 100 ? "Finalizado" : progressPercentage > 0 ? "Incompleto" : "À fazer";
-  const today = new Date().toLocaleDateString("pt-BR");
-
-  const header = `
-    <header class="mz-report-header">
-      <div>
-        <div class="mz-report-kicker">Método COMPASS · Bússola de Vendas</div>
-        <div class="mz-report-title">Carta de Navegação | ${escapeHtml(moduleTitle)}</div>
-        <div class="mz-report-meta">Relatório Completo - Empresa: [—] · ${escapeHtml(
-          studentName ?? "[Nome do aluno]"
-        )} · ${today}</div>
-        <div class="mz-report-meta">Status: [Finalizado] / [Incompleto] / [ À fazer ]</div>
-      </div>
-      <div class="mz-report-status">Progresso · ${progressPercentage}%</div>
-    </header>
-  `;
-
-  const cards = steps
-    .map(({ step, data }, idx) => {
-      const body = step.blocks
-        .filter((b) => b.type === "field" || b.type === "table")
-        .map((b) => renderFieldForReport(b as any, data))
-        .join("");
-      const progressTag = `<div style="font-size:10pt;color:#475569;text-align:right;">Progresso<br /><strong>${progressPercentage}%</strong></div>`;
-      const stepTitle = step.key === "jornada" ? "Sua jornada até aqui" : step.title;
-      const cardHeader = `
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8pt;margin-bottom:6pt;">
-          <div>
-            <div style="font-size:8.5pt;color:#94a3b8;text-transform:uppercase;letter-spacing:0.03em;">Método Compass · Bússola de Vendas</div>
-            <div style="font-size:11pt;font-weight:700;color:#0f172a;">${escapeHtml(moduleTitle)}</div>
-            <div style="font-size:9pt;color:#475569;">Status: [Finalizado] / [Incompleto] / [ À fazer ] · Progresso ${progressPercentage}%</div>
-          </div>
-        </div>
-      `;
-      const breakStyle = idx === 0 ? "" : "page-break-before: always; break-before: page;";
-      return `
-        <section class="mz-report-card" style="${breakStyle}">
-          ${cardHeader}
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8pt;">
-            <div>
-              <div style="font-size:9pt;color:#64748b;">Marco Zero</div>
-              <h3>${escapeHtml(stepTitle)}</h3>
-            </div>
-            ${progressTag}
-          </div>
-          ${body || '<div class="mz-report-empty">Sem respostas.</div>'}
-        </section>
-      `;
-    })
-    .join("");
-
-  return `<div class="print-document mz-report">${header}<h2 style="font-size:14pt;font-weight:700;margin:0 0 10pt;">Respostas - Marco Zero</h2><div style="font-size:10pt;color:#64748b;margin-bottom:10pt;">Leitura por exercício</div>${cards}</div>`;
-}
-
-function renderFieldForReport(
-  b: { type: "field" | "table"; label: string; fieldId: string; columns?: { key: string; label: string }[] },
-  data: Record<string, unknown>
-) {
-  if (b.type === "field") {
-    const value = formatValue(data[b.fieldId]);
-    return `
-      <div class="mz-report-item">
-        <strong>${escapeHtml(b.label)}</strong>
-        <div class="mz-report-value">${escapeHtml(value)}</div>
-      </div>
-    `;
-  }
-  const rowsRaw = data[b.fieldId];
-  const rows = Array.isArray(rowsRaw) ? rowsRaw.filter((r) => r && typeof r === "object") : [];
-  if (!rows.length) {
-    return `
-      <div class="mz-report-item">
-        <strong>${escapeHtml(b.label)}</strong>
-        <div class="mz-report-value">—</div>
-      </div>
-    `;
-  }
-  const columns = b.columns ?? [];
-  const table = `
-    <table class="mz-report-table">
-      <thead>
-        <tr>${columns.map((c) => `<th>${escapeHtml(c.label)}</th>`).join("")}</tr>
-      </thead>
-      <tbody>
-        ${rows
-          .map(
-            (r: any) =>
-              `<tr>${columns.map((c) => `<td>${escapeHtml(String(r[c.key] ?? ""))}</td>`).join("")}</tr>`
-          )
-          .join("")}
-      </tbody>
-    </table>
-  `;
-  return `
-    <div class="mz-report-item">
-      <strong>${escapeHtml(b.label)}</strong>
-      ${table}
-    </div>
-  `;
-}
-
-function escapeHtml(s: string) {
-  if (typeof document === "undefined") return s;
-  const div = document.createElement("div");
-  div.textContent = s;
-  return div.innerHTML;
-}
-
-function formatValue(value: unknown): string {
-  if (value == null) return "—";
-  if (Array.isArray(value)) {
-    if (!value.length) return "—";
-    return value.map((v) => (typeof v === "string" ? v : JSON.stringify(v))).join(", ");
-  }
-  if (typeof value === "object") return JSON.stringify(value);
-  const str = String(value);
-  return str.trim() === "" ? "—" : str;
 }

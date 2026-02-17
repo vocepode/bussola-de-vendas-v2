@@ -363,13 +363,13 @@
   outline: 2px dashed #ef4444;
 }
 
-/* Relatório Marco Zero — estilos também aplicados no preview em tela */
-.mz-report {
+/* Relatório genérico (preview/print workspaces) */
+.ws-report {
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   color: #0f172a;
 }
 
-.mz-report-header {
+.ws-report-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -377,25 +377,25 @@
   margin-bottom: 14pt;
 }
 
-.mz-report-kicker {
+.ws-report-kicker {
   font-size: 9pt;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: #64748b;
 }
 
-.mz-report-title {
+.ws-report-title {
   font-size: 16pt;
   font-weight: 700;
   margin: 3pt 0 4pt;
 }
 
-.mz-report-meta {
+.ws-report-meta {
   font-size: 9pt;
   color: #475569;
 }
 
-.mz-report-status {
+.ws-report-status {
   font-size: 10pt;
   font-weight: 700;
   background: #f8fafc;
@@ -405,7 +405,7 @@
   align-self: center;
 }
 
-.mz-report-card {
+.ws-report-card {
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 12pt;
@@ -413,50 +413,50 @@
   background: #ffffff;
 }
 
-.mz-report-card h3 {
+.ws-report-card h3 {
   margin: 0 0 8pt;
   font-size: 12pt;
   font-weight: 700;
 }
 
-.mz-report-item {
+.ws-report-item {
   padding: 6pt 0;
   border-top: 1px solid #f1f5f9;
 }
 
-.mz-report-item:first-child {
+.ws-report-item:first-child {
   border-top: none;
 }
 
-.mz-report-item strong {
+.ws-report-item strong {
   display: block;
   font-size: 10pt;
   margin-bottom: 2pt;
   color: #0f172a;
 }
 
-.mz-report-value {
+.ws-report-value {
   font-size: 10pt;
   color: #1f2937;
   white-space: pre-wrap;
   word-break: break-word;
 }
 
-.mz-report-table {
+.ws-report-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 4pt;
   font-size: 10pt;
 }
 
-.mz-report-table th,
-.mz-report-table td {
+.ws-report-table th,
+.ws-report-table td {
   border: 1px solid #e2e8f0;
   padding: 4pt 6pt;
   text-align: left;
 }
 
-.mz-report-empty {
+.ws-report-empty {
   font-size: 9.5pt;
   color: #94a3b8;
 }
