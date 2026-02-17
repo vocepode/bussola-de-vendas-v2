@@ -5,10 +5,22 @@ import { eq } from "drizzle-orm";
 import { users } from "../drizzle/schema";
 import { getDb } from "../server/db";
 import crypto from "node:crypto";
+import postgres from "postgres";
 
 function sha256Prefix(value: string): string {
   // Sem PII nos logs: só prefixo do hash.
   return crypto.createHash("sha256").update(value).digest("hex").slice(0, 10);
+}
+
+async function ensureIsActiveColumn(databaseUrl: string) {
+  const sql = postgres(databaseUrl, { max: 1, idle_timeout: 5 });
+  try {
+    await sql`alter table "users" add column if not exists "isActive" boolean not null default true;`;
+    await sql`update "users" set "isActive" = true where "isActive" is null;`;
+    await sql`create index if not exists "users_isActive_idx" on "users" ("isActive");`;
+  } finally {
+    await sql.end({ timeout: 0 });
+  }
 }
 
 async function main() {
@@ -45,7 +57,19 @@ async function main() {
 
   const passwordHash = await bcrypt.hash(password, 10);
 
-  const existing = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  let existing: typeof users.$inferSelect[] = [];
+  try {
+    existing = await db.select().from(users).where(eq(users.email, email)).limit(1);
+  } catch (err: any) {
+    const msg = String(err?.message ?? "");
+    if (msg.includes("isActive") && process.env.DATABASE_URL) {
+      console.warn("[create-user] Coluna isActive ausente, criando...");
+      await ensureIsActiveColumn(process.env.DATABASE_URL);
+      existing = await db.select().from(users).where(eq(users.email, email)).limit(1);
+    } else {
+      throw err;
+    }
+  }
 
   if (existing[0]) {
     await db
@@ -53,6 +77,7 @@ async function main() {
       .set({
         passwordHash,
         updatedAt: new Date(),
+        isActive: true,
       })
       .where(eq(users.id, existing[0].id));
 
@@ -83,6 +108,7 @@ async function main() {
       name: "Daniel",
       passwordHash,
       role,
+      isActive: true,
       updatedAt: new Date(),
       lastSignedIn: new Date(),
     })
@@ -111,4 +137,3 @@ main().catch((err) => {
   console.error("[create-user] Falhou:", err);
   process.exitCode = 1;
 });
-
