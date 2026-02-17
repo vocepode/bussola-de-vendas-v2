@@ -537,4 +537,3 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill }: P
     </div>
   );
 }
-

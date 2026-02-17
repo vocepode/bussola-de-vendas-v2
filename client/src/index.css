@@ -363,6 +363,104 @@
   outline: 2px dashed #ef4444;
 }
 
+/* Relatório Marco Zero — estilos também aplicados no preview em tela */
+.mz-report {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  color: #0f172a;
+}
+
+.mz-report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12pt;
+  margin-bottom: 14pt;
+}
+
+.mz-report-kicker {
+  font-size: 9pt;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+}
+
+.mz-report-title {
+  font-size: 16pt;
+  font-weight: 700;
+  margin: 3pt 0 4pt;
+}
+
+.mz-report-meta {
+  font-size: 9pt;
+  color: #475569;
+}
+
+.mz-report-status {
+  font-size: 10pt;
+  font-weight: 700;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 6pt 10pt;
+  align-self: center;
+}
+
+.mz-report-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12pt;
+  margin-bottom: 12pt;
+  background: #ffffff;
+}
+
+.mz-report-card h3 {
+  margin: 0 0 8pt;
+  font-size: 12pt;
+  font-weight: 700;
+}
+
+.mz-report-item {
+  padding: 6pt 0;
+  border-top: 1px solid #f1f5f9;
+}
+
+.mz-report-item:first-child {
+  border-top: none;
+}
+
+.mz-report-item strong {
+  display: block;
+  font-size: 10pt;
+  margin-bottom: 2pt;
+  color: #0f172a;
+}
+
+.mz-report-value {
+  font-size: 10pt;
+  color: #1f2937;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.mz-report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 4pt;
+  font-size: 10pt;
+}
+
+.mz-report-table th,
+.mz-report-table td {
+  border: 1px solid #e2e8f0;
+  padding: 4pt 6pt;
+  text-align: left;
+}
+
+.mz-report-empty {
+  font-size: 9.5pt;
+  color: #94a3b8;
+}
+
 @media print {
   .screen-only {
     display: none !important;
