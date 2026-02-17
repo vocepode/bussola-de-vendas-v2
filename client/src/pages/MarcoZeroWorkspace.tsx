@@ -277,7 +277,7 @@ export default function MarcoZeroWorkspace() {
                 </DropdownMenuContent>
               </DropdownMenu>
               {status === "completed" ? (
-                <Badge className="gap-1.5 bg-[#7c3aed] text-white">
+                <Badge className="gap-1.5 bg-primary text-primary-foreground">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   Concluído
                 </Badge>
@@ -320,7 +320,7 @@ export default function MarcoZeroWorkspace() {
                       type="button"
                       className={[
                         "w-full text-left px-3 py-2 rounded-md transition-colors flex items-center justify-between gap-3",
-                        isActive ? "bg-[#7c3aed]/30 text-white font-medium" : "hover:bg-muted dark:hover:bg-white/10",
+                        isActive ? "bg-primary/30 text-white font-medium" : "hover:bg-muted dark:hover:bg-white/10",
                         !isResolved ? "opacity-60" : "",
                       ].join(" ")}
                       onClick={() => setActiveStep(s.key)}

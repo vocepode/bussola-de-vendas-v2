@@ -462,7 +462,7 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, foo
         <div className="text-sm text-muted-foreground">{savedLabel}</div>
         <div className="flex items-center gap-2">
           {status === "completed" ? (
-            <Badge className="gap-2 bg-[#7c3aed] text-white">
+            <Badge className="gap-2 bg-primary text-primary-foreground">
               <CheckCircle2 className="w-3.5 h-3.5" />
               Concluído
             </Badge>

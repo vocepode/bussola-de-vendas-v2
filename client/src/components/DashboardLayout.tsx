@@ -103,8 +103,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   tooltip={item.label}
                   className={
                     isDark
-                      ? "h-9 text-[14px] text-white/90 hover:bg-white/10 hover:text-white data-[active=true]:bg-[#7c3aed]/25 data-[active=true]:text-white data-[active=true]:[&>svg]:text-white"
-                      : "h-9 text-[14px] text-foreground/90 hover:bg-muted hover:text-foreground data-[active=true]:bg-[#7c3aed]/15 data-[active=true]:text-violet-700 data-[active=true]:[&>svg]:text-violet-700"
+                      ? "h-9 text-[14px] text-white/90 hover:bg-white/10 hover:text-white data-[active=true]:bg-primary/25 data-[active=true]:text-white data-[active=true]:[&>svg]:text-white"
+                      : "h-9 text-[14px] text-foreground/90 hover:bg-muted hover:text-foreground data-[active=true]:bg-primary/15 data-[active=true]:text-violet-700 data-[active=true]:[&>svg]:text-violet-700"
                   }
                   onClick={() => router.push(item.path)}
                 >
@@ -133,8 +133,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   tooltip={item.label}
                   className={
                     isDark
-                      ? "h-9 text-[14px] text-white/90 hover:bg-white/10 hover:text-white data-[active=true]:bg-[#7c3aed]/25 data-[active=true]:text-white data-[active=true]:[&>svg]:text-white"
-                      : "h-9 text-[14px] text-foreground/90 hover:bg-muted hover:text-foreground data-[active=true]:bg-[#7c3aed]/15 data-[active=true]:text-violet-700 data-[active=true]:[&>svg]:text-violet-700"
+                      ? "h-9 text-[14px] text-white/90 hover:bg-white/10 hover:text-white data-[active=true]:bg-primary/25 data-[active=true]:text-white data-[active=true]:[&>svg]:text-white"
+                      : "h-9 text-[14px] text-foreground/90 hover:bg-muted hover:text-foreground data-[active=true]:bg-primary/15 data-[active=true]:text-violet-700 data-[active=true]:[&>svg]:text-violet-700"
                   }
                   onClick={() => router.push(item.path)}
                 >
