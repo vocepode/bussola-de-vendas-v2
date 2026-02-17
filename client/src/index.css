@@ -469,6 +469,15 @@ html.dark body {
 }
 
 @media print {
+  /* Impressão sempre em tema claro: ignora dark mode */
+  html,
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
   .screen-only {
     display: none !important;
   }
@@ -494,6 +503,17 @@ html.dark body {
   .print-document {
     max-width: 100%;
     padding: 1rem;
+    background: #ffffff !important;
+    color: #111827 !important;
+  }
+
+  .print-document * {
+    color: inherit;
+  }
+
+  .print-field-value,
+  .print-intro-desc {
+    color: #374151 !important;
   }
 
   .print-doc-title {
