@@ -136,44 +136,38 @@ html.dark body {
   color: #ffffff !important;
 }
 
-/* Pré-visualização (Carta de Navegação): fundo branco, texto e tabelas em preto */
-html.preview-light-theme,
-html.preview-light-theme body {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-}
+/* Pré-visualização (Carta de Navegação): fundo branco, texto e tabelas em preto – só na tela */
+@media screen {
+  html.preview-light-theme,
+  html.preview-light-theme body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
 
-html.preview-light-theme table,
-html.preview-light-theme th,
-html.preview-light-theme td,
-html.preview-light-theme input,
-html.preview-light-theme textarea {
-  border-color: #000000 !important;
-}
+  /* Força todo o conteúdo da pré-visualização a branco e preto */
+  html.preview-light-theme #marco-zero-preview,
+  html.preview-light-theme #marco-zero-preview * {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+  }
 
-html.preview-light-theme p,
-html.preview-light-theme span,
-html.preview-light-theme h1, html.preview-light-theme h2, html.preview-light-theme h3,
-html.preview-light-theme label, html.preview-light-theme div {
-  color: #000000 !important;
-}
+  html.preview-light-theme #marco-zero-preview table,
+  html.preview-light-theme #marco-zero-preview th,
+  html.preview-light-theme #marco-zero-preview td {
+    border: 1px solid #000000 !important;
+  }
 
-html.preview-light-theme input,
-html.preview-light-theme textarea,
-html.preview-light-theme [class*="card"],
-html.preview-light-theme [class*="Card"] {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  border: 1px solid #000000 !important;
-}
+  html.preview-light-theme #marco-zero-preview button {
+    background-color: #f3f4f6 !important;
+    color: #111827 !important;
+    border: 1px solid #000000 !important;
+  }
 
-/* Tabelas na pré-visualização: fundo branco, texto e bordas pretas */
-html.preview-light-theme table,
-html.preview-light-theme thead, html.preview-light-theme tbody,
-html.preview-light-theme th, html.preview-light-theme td {
-  background-color: #ffffff !important;
-  color: #000000 !important;
-  border: 1px solid #000000 !important;
+  html.preview-light-theme #marco-zero-preview button[class*="primary"],
+  html.preview-light-theme #marco-zero-preview button.bg-primary {
+    background-color: #7c3aed !important;
+    color: #ffffff !important;
+  }
 }
 
 @layer base {

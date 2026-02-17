@@ -51,8 +51,12 @@ export default function MarcoZeroPreview() {
 
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-slate-500">Carregando preview...</div>}>
-    <div id="marco-zero-preview" className="min-h-screen bg-white text-slate-900 print:bg-white print:text-slate-900">
-      <div className="border-b bg-white sticky top-0 z-20">
+    <div
+      id="marco-zero-preview"
+      className="min-h-screen bg-white text-slate-900 print:bg-white print:text-slate-900"
+      style={{ backgroundColor: "#ffffff", color: "#000000" }}
+    >
+      <div className="border-b border-black sticky top-0 z-20" style={{ backgroundColor: "#ffffff", color: "#000000" }}>
         <div className="container flex flex-wrap items-center gap-3 py-4">
           <div className="flex-1 min-w-0">
             <div className="text-xs uppercase tracking-[0.08em] text-slate-500">Método Compass · Bússola de Vendas</div>
@@ -74,7 +78,7 @@ export default function MarcoZeroPreview() {
         </div>
       </div>
 
-      <main className="container py-6 space-y-4">
+      <main className="container py-6 space-y-4" style={{ backgroundColor: "#ffffff", color: "#000000" }}>
         <div className="flex items-center gap-3">
           <h2 className="text-xl font-semibold">Respostas - Marco Zero</h2>
           <span className="text-sm text-slate-500">Leitura por exercício</span>
@@ -90,8 +94,13 @@ export default function MarcoZeroPreview() {
           stepsToShow.map(({ def, data }, idx) => (
             <Card
               key={def.key}
-              className="p-5 border-slate-200 shadow-sm"
-              style={idx > 0 ? { pageBreakBefore: "always", breakBefore: "page" } : undefined}
+              className="p-5 border border-slate-200 shadow-sm bg-white text-black"
+              style={{
+                backgroundColor: "#ffffff",
+                color: "#000000",
+                borderColor: "#000000",
+                ...(idx > 0 ? { pageBreakBefore: "always", breakBefore: "page" } : {}),
+              }}
             >
               <div className="flex items-start justify-between gap-3 border-b border-slate-200 pb-3 mb-3">
                 <div>
