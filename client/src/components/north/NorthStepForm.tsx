@@ -32,6 +32,7 @@ type Props = {
     rowKey: string;
     values: string[];
   };
+  footerExtra?: React.ReactNode;
 };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -106,7 +107,7 @@ function StringListField(props: {
   );
 }
 
-export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill }: Props) {
+export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, footerExtra }: Props) {
   const utils = trpc.useUtils();
 
   const { data: state, isLoading } = trpc.lessonState.get.useQuery(
@@ -515,6 +516,8 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill }: P
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+
+        {footerExtra}
 
         <Button
           className="gap-2"

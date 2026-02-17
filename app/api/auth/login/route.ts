@@ -61,10 +61,27 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true });
   } catch (error: unknown) {
+    const cause = (error as { cause?: { message?: string; code?: string }; message?: string })?.cause;
+    const errMsg = cause?.message ?? (error as Error)?.message ?? "";
+    const errCode = cause?.code ?? (error as { code?: string })?.code ?? "";
     console.error("[auth] Falha no login:", error);
-    return NextResponse.json(
-      { error: "Falha ao conectar no banco de dados. Verifique sua conexão e tente novamente." },
-      { status: 503 }
-    );
+    const isTenantNotFound =
+      errMsg.includes("Tenant or user not found") || errCode === "XX000";
+    const isConnectionRefused = errCode === "ECONNREFUSED" || errMsg.includes("ECONNREFUSED");
+    const isSslError = errMsg.includes("SSL") || errMsg.includes("TLS") || errCode === "ECONNRESET";
+    let message: string;
+    if (isTenantNotFound) {
+      message =
+        "Projeto Supabase pausado ou credenciais do banco incorretas. Em Supabase: reative o projeto (se pausado) e confira em Settings > Database a senha e a connection string.";
+    } else if (isConnectionRefused) {
+      message =
+        "Conexão recusada pelo banco. Confira no .env a URL (host e porta). Para pooler Supabase use porta 6543 (session) ou 5432 (transaction).";
+    } else if (isSslError) {
+      message =
+        "Erro de SSL na conexão com o banco. Adicione na URL do .env: ?pgbouncer=true&sslmode=require";
+    } else {
+      message = "Falha ao conectar no banco de dados. Verifique sua conexão e tente novamente.";
+    }
+    return NextResponse.json({ error: message }, { status: 503 });
   }
 }

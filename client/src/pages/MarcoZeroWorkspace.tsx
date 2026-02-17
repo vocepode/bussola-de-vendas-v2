@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DropdownMenu,
@@ -21,6 +23,7 @@ import {
 } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { Loader2, ArrowLeft, CheckCircle2, Circle, AlertTriangle, Printer, FileDown } from "lucide-react";
+import DashboardLayout from "@/components/DashboardLayout";
 import { getLoginUrl } from "@/const";
 import { MARCO_ZERO_STEPS } from "@/marcoZero/schema";
 import { NorthStepForm } from "@/components/north/NorthStepForm";
@@ -231,37 +234,39 @@ export default function MarcoZeroWorkspace() {
   // Pré-visualização agora é uma página dedicada (/marco-zero/preview).
 
   return (
-    <>
+    <DashboardLayout>
       <div
         ref={printAreaRef}
         id="workspace-print-area"
         className="print-only"
         aria-hidden
       />
-      <div className="min-h-screen bg-background screen-only">
-      <header className="border-b bg-white sticky top-0 z-10 shadow-sm">
+      <div className="min-h-screen bg-background dark:bg-[#000000] screen-only">
+      <header className="border-b bg-white dark:bg-[#05070d] dark:border-[#1a1a1f] sticky top-0 z-10 shadow-sm">
         <div className="container py-4 space-y-3">
           <div className="flex items-center gap-4">
             <Link href="/">
-              <Button variant="ghost" size="sm">
+              <Button variant="ghost" size="sm" className="dark:text-white/90 dark:hover:bg-white/10">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Dashboard
               </Button>
             </Link>
             <div className="flex-1 min-w-0">
-              <div className="text-sm text-muted-foreground">Diagnóstico</div>
-              <h1 className="text-xl font-bold truncate">{marcoZeroModule.title}</h1>
+              <div className="text-sm text-muted-foreground dark:text-white/60">Diagnóstico</div>
+              <h1 className="text-xl font-bold truncate dark:text-white">{marcoZeroModule.title}</h1>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">
+              <span className="text-sm text-muted-foreground dark:text-white/60">
                 {progress ? `${progress.completed} de ${progress.total} etapas` : "—"}
               </span>
               <Link href="/marco-zero/preview">
-                <Button variant="secondary" size="sm">Pré-visualizar página</Button>
+                <Button variant="secondary" size="sm" className="dark:bg-white/10 dark:text-white dark:hover:bg-white/20">
+                  Pré-visualizar página
+                </Button>
               </Link>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" disabled={printing} className="gap-2">
+                  <Button variant="outline" size="sm" disabled={printing} className="gap-2 dark:border-white/20 dark:text-white/90 dark:hover:bg-white/10">
                     <Printer className="w-4 h-4" />
                     Imprimir / PDF
                   </Button>
@@ -277,12 +282,26 @@ export default function MarcoZeroWorkspace() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+              {status === "completed" ? (
+                <Badge className="gap-1.5 bg-primary text-primary-foreground dark:bg-violet-500 dark:text-white">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  Concluído
+                </Badge>
+              ) : null}
+              <Avatar className="h-8 w-8 border border-border dark:border-white/20">
+                {user?.avatarUrl ? (
+                  <AvatarImage src={user.avatarUrl} alt="" className="object-cover" />
+                ) : null}
+                <AvatarFallback className="text-xs font-semibold">
+                  {(user?.name ?? user?.email ?? "?").charAt(0).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
             </div>
           </div>
           {progress != null && (
             <div className="flex items-center gap-3">
-              <Progress value={progress.percentage} className="h-2 flex-1 max-w-xs" />
-              <span className="text-sm font-medium tabular-nums">{progress.percentage}%</span>
+              <Progress value={progress.percentage} className="h-2 flex-1 max-w-xs dark:[&>div]:bg-violet-500" />
+              <span className="text-sm font-medium tabular-nums dark:text-white/90">{progress.percentage}%</span>
             </div>
           )}
         </div>
@@ -291,9 +310,9 @@ export default function MarcoZeroWorkspace() {
       <main className="container py-6">
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6">
           <aside className="lg:sticky lg:top-[84px] lg:h-[calc(100vh-120px)]">
-            <Card>
+            <Card className="dark:border-[#1a1a1f] dark:bg-[#0d0e14]">
               <CardHeader>
-                <CardTitle className="text-base">Etapas do Marco Zero</CardTitle>
+                <CardTitle className="text-base dark:text-white">Etapas do Marco Zero</CardTitle>
               </CardHeader>
               <CardContent className="space-y-1">
                 {STEPS.map((s) => {
@@ -307,7 +326,7 @@ export default function MarcoZeroWorkspace() {
                       type="button"
                       className={[
                         "w-full text-left px-3 py-2 rounded-md transition-colors flex items-center justify-between gap-3",
-                        isActive ? "bg-primary/10 text-primary" : "hover:bg-muted",
+                        isActive ? "bg-primary/10 text-primary dark:bg-violet-500/25 dark:text-violet-300" : "hover:bg-muted dark:hover:bg-white/10",
                         !isResolved ? "opacity-60" : "",
                       ].join(" ")}
                       onClick={() => setActiveStep(s.key)}
@@ -329,35 +348,33 @@ export default function MarcoZeroWorkspace() {
           </aside>
 
           <section className="space-y-4">
-            <Card>
+            <Card className="dark:border-[#1a1a1f] dark:bg-[#0d0e14]">
               <CardHeader>
-                <CardTitle>{STEPS.find((s) => s.key === activeStep)?.title}</CardTitle>
+                <CardTitle className="dark:text-white">{STEPS.find((s) => s.key === activeStep)?.title}</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="dark:text-white/90">
                 {!activeLessonId ? (
-                  <div className="flex items-start gap-3 rounded-lg border p-4 bg-muted/20">
-                    <AlertTriangle className="w-5 h-5 text-muted-foreground mt-0.5" />
+                  <div className="flex items-start gap-3 rounded-lg border p-4 bg-muted/20 dark:border-white/10 dark:bg-white/5">
+                    <AlertTriangle className="w-5 h-5 text-muted-foreground dark:text-amber-400 mt-0.5" />
                     <div>
-                      <div className="font-medium">Etapa não encontrada no conteúdo importado</div>
-                      <div className="text-sm text-muted-foreground">
+                      <div className="font-medium dark:text-white">Etapa não encontrada no conteúdo importado</div>
+                      <div className="text-sm text-muted-foreground dark:text-white/70">
                         Essa etapa ainda não existe como lição no banco (ou o título mudou). Reimporte o HTML e tente de
                         novo.
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <>
-                    <NorthStepForm
-                      lessonId={activeLessonId}
-                      step={STEPS.find((s) => s.key === activeStep)!}
-                      workspaceSlug="marco-zero"
-                    />
-                    <div className="pt-4">
+                  <NorthStepForm
+                    lessonId={activeLessonId}
+                    step={STEPS.find((s) => s.key === activeStep)!}
+                    workspaceSlug="marco-zero"
+                    footerExtra={
                       <Button variant="outline" onClick={() => refetchState()}>
                         Recarregar estado
                       </Button>
-                    </div>
-                  </>
+                    }
+                  />
                 )}
               </CardContent>
             </Card>
@@ -365,6 +382,6 @@ export default function MarcoZeroWorkspace() {
         </div>
       </main>
       </div>
-    </>
+    </DashboardLayout>
   );
 }
