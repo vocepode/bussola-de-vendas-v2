@@ -69,7 +69,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (!user) return null;
 
-  const isDark = theme === "dark";
+  const isDark = theme !== "light";
 
   return (
     <SidebarProvider defaultOpen style={{ "--sidebar-width": "220px" } as CSSProperties}>

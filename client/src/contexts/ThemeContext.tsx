@@ -58,10 +58,12 @@ export function ThemeProvider({
   );
 }
 
-export function useTheme() {
+const DEFAULT_THEME: ThemeContextType = {
+  theme: "dark",
+  switchable: false,
+};
+
+export function useTheme(): ThemeContextType {
   const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used within ThemeProvider");
-  }
-  return context;
+  return context ?? DEFAULT_THEME;
 }
