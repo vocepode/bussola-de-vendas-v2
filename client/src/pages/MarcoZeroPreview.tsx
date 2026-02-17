@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { Suspense, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { trpc } from "@/lib/trpc";
 import { MARCO_ZERO_STEPS } from "@/marcoZero/schema";
 import { Loader2 } from "lucide-react";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 type StepKey = (typeof MARCO_ZERO_STEPS)[number]["key"];
 
@@ -16,6 +17,7 @@ export default function MarcoZeroPreview() {
   const search = useSearchParams();
   const scope = (search?.get("step") as StepKey | "all" | null) ?? "all";
 
+  const { user } = useAuth();
   const { data: module } = trpc.modules.getBySlug.useQuery({ slug: "marco-zero" }, { enabled: true });
   const { data: progress } = trpc.workspaces.getProgressBySlug.useQuery({ slug: "marco-zero" });
   const { data: workspace, isLoading } = trpc.workspaces.getWorkspaceStateBySlug.useQuery({ slug: "marco-zero" });
@@ -43,10 +45,12 @@ export default function MarcoZeroPreview() {
   }, []);
 
   const pct = progress?.percentage ?? 0;
+  const studentDisplay = user?.name ?? "Aluno";
   const status = pct >= 100 ? "Finalizado" : pct > 0 ? "Incompleto" : "À fazer";
   const today = new Date().toLocaleDateString("pt-BR");
 
   return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-slate-500">Carregando preview...</div>}>
     <div className="min-h-screen bg-white text-slate-900">
       <div className="border-b bg-white sticky top-0 z-20">
         <div className="container flex flex-wrap items-center gap-3 py-4">
@@ -54,7 +58,7 @@ export default function MarcoZeroPreview() {
             <div className="text-xs uppercase tracking-[0.08em] text-slate-500">Método Compass · Bússola de Vendas</div>
             <div className="text-2xl font-bold leading-tight">Carta de Navegação | {module?.title ?? "Marco Zero"}</div>
             <div className="text-sm text-slate-600">
-              Relatório Completo - Empresa: [—] · {progress?.studentName ?? "Daniel"} · {today}
+              Relatório Completo - Empresa: [—] · {studentDisplay} · {today}
             </div>
             <div className="text-sm text-slate-600">Status: [Finalizado] / [Incompleto] / [ À fazer ]</div>
           </div>
@@ -161,6 +165,7 @@ export default function MarcoZeroPreview() {
           ))}
       </main>
     </div>
+    </Suspense>
   );
 }
 
