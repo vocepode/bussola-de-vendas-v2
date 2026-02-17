@@ -15,6 +15,11 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="dark" suppressHydrationWarning>
       <body>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('dark');",
+          }}
+        />
         <Providers>{children}</Providers>
       </body>
     </html>

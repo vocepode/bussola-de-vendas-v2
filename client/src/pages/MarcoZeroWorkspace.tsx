@@ -244,18 +244,12 @@ export default function MarcoZeroWorkspace() {
       <div className="min-h-screen bg-background dark:bg-[#000000] screen-only">
       <header className="border-b bg-white dark:bg-[#05070d] dark:border-[#1a1a1f] sticky top-0 z-10 shadow-sm">
         <div className="container py-4 space-y-3">
-          <div className="flex items-center gap-4">
-            <Link href="/">
-              <Button variant="ghost" size="sm" className="dark:text-white/90 dark:hover:bg-white/10">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Dashboard
-              </Button>
-            </Link>
-            <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between gap-4">
+            <div className="min-w-0 flex-1">
               <div className="text-sm text-muted-foreground dark:text-white/60">Diagnóstico</div>
               <h1 className="text-xl font-bold truncate dark:text-white">{marcoZeroModule.title}</h1>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-shrink-0 items-center gap-2">
               <span className="text-sm text-muted-foreground dark:text-white/60">
                 {progress ? `${progress.completed} de ${progress.total} etapas` : "—"}
               </span>

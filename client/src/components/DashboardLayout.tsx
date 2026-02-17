@@ -67,9 +67,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     return <DashboardLayoutSkeleton />;
   }
 
-  if (!user) return null;
-
   const isDark = theme !== "light";
+  const showUser = !!user;
 
   return (
     <SidebarProvider defaultOpen style={{ "--sidebar-width": "220px" } as CSSProperties}>
@@ -150,50 +149,69 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <SidebarFooter
           className={isDark ? "border-t border-[#1a1a1f] p-2" : "border-t border-border p-2"}
         >
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button
-                className={
-                  isDark
-                    ? "flex w-full items-center gap-3 rounded-lg px-1 py-1.5 text-left hover:bg-white/5 group-data-[collapsible=icon]:justify-center"
-                    : "flex w-full items-center gap-3 rounded-lg px-1 py-1.5 text-left hover:bg-muted group-data-[collapsible=icon]:justify-center"
-                }
-              >
-                <Avatar
-                  className={isDark ? "h-8 w-8 border border-white/20" : "h-8 w-8 border border-border"}
+          {showUser ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  className={
+                    isDark
+                      ? "flex w-full items-center gap-3 rounded-lg px-1 py-1.5 text-left hover:bg-white/5 group-data-[collapsible=icon]:justify-center"
+                      : "flex w-full items-center gap-3 rounded-lg px-1 py-1.5 text-left hover:bg-muted group-data-[collapsible=icon]:justify-center"
+                  }
                 >
-                  {user.avatarUrl ? (
-                    <AvatarImage src={user.avatarUrl} alt="" className="object-cover" />
-                  ) : null}
-                  <AvatarFallback className="text-xs font-semibold">
-                    {(user.name ?? user.email).charAt(0).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
-                  <p className={isDark ? "truncate text-xs text-white" : "truncate text-xs text-foreground"}>
-                    {user.name ?? "Aluno"}
-                  </p>
-                  <p
-                    className={
-                      isDark ? "truncate text-[11px] text-white/55" : "truncate text-[11px] text-muted-foreground"
-                    }
+                  <Avatar
+                    className={isDark ? "h-8 w-8 border border-white/20" : "h-8 w-8 border border-border"}
                   >
-                    {user.email}
-                  </p>
-                </div>
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem onClick={() => router.push("/configuracoes")} className="cursor-pointer">
-                <Settings className="mr-2 h-4 w-4" />
-                Configurações
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={logout} className="cursor-pointer text-red-500 focus:text-red-500">
-                <LogOut className="mr-2 h-4 w-4" />
-                Sair
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                    {user!.avatarUrl ? (
+                      <AvatarImage src={user!.avatarUrl} alt="" className="object-cover" />
+                    ) : null}
+                    <AvatarFallback className="text-xs font-semibold">
+                      {(user!.name ?? user!.email).charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
+                    <p className={isDark ? "truncate text-xs text-white" : "truncate text-xs text-foreground"}>
+                      {user!.name ?? "Aluno"}
+                    </p>
+                    <p
+                      className={
+                        isDark ? "truncate text-[11px] text-white/55" : "truncate text-[11px] text-muted-foreground"
+                      }
+                    >
+                      {user!.email}
+                    </p>
+                  </div>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem onClick={() => router.push("/configuracoes")} className="cursor-pointer">
+                  <Settings className="mr-2 h-4 w-4" />
+                  Configurações
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={logout} className="cursor-pointer text-red-500 focus:text-red-500">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sair
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <div
+              className={
+                isDark
+                  ? "flex w-full items-center gap-3 rounded-lg px-1 py-1.5 text-left group-data-[collapsible=icon]:justify-center"
+                  : "flex w-full items-center gap-3 rounded-lg px-1 py-1.5 text-left group-data-[collapsible=icon]:justify-center"
+              }
+            >
+              <Avatar className={isDark ? "h-8 w-8 border border-white/20" : "h-8 w-8 border border-border"}>
+                <AvatarFallback className="text-xs font-semibold">?</AvatarFallback>
+              </Avatar>
+              <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
+                <p className={isDark ? "truncate text-xs text-white/70" : "truncate text-xs text-muted-foreground"}>
+                  Carregando…
+                </p>
+              </div>
+            </div>
+          )}
         </SidebarFooter>
       </Sidebar>
 
@@ -226,55 +244,81 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <Bell className="h-4 w-4" />
               <span className="absolute right-0 top-0.5 h-1.5 w-1.5 rounded-full bg-emerald-400" />
             </button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  className={
-                    isDark
-                      ? "flex items-center gap-1.5 rounded-lg px-1 py-1.5 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                      : "flex items-center gap-1.5 rounded-lg px-1 py-1.5 hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  }
-                >
-                  <Avatar
+            {showUser ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
                     className={
                       isDark
-                        ? "h-8 w-8 border border-white/20 rounded-full bg-violet-700"
-                        : "h-8 w-8 border border-border rounded-full bg-violet-100"
+                        ? "flex items-center gap-1.5 rounded-lg px-1 py-1.5 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        : "flex items-center gap-1.5 rounded-lg px-1 py-1.5 hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     }
                   >
-                    {user.avatarUrl ? (
-                      <AvatarImage src={user.avatarUrl} alt="" className="object-cover" />
-                    ) : null}
-                    <AvatarFallback
+                    <Avatar
                       className={
                         isDark
-                          ? "text-xs font-semibold text-white"
-                          : "text-xs font-semibold text-violet-700"
+                          ? "h-8 w-8 border border-white/20 rounded-full bg-violet-700"
+                          : "h-8 w-8 border border-border rounded-full bg-violet-100"
                       }
                     >
-                      {(user.name ?? user.email).charAt(0).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <ChevronDown
-                    className={isDark ? "h-4 w-4 text-white/70" : "h-4 w-4 text-muted-foreground"}
-                  />
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem onClick={() => router.push("/configuracoes")} className="cursor-pointer">
-                  <Settings className="mr-2 h-4 w-4" />
-                  Configurações
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={logout} className="cursor-pointer text-red-500 focus:text-red-500">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Sair
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                      {user!.avatarUrl ? (
+                        <AvatarImage src={user!.avatarUrl} alt="" className="object-cover" />
+                      ) : null}
+                      <AvatarFallback
+                        className={
+                          isDark
+                            ? "text-xs font-semibold text-white"
+                            : "text-xs font-semibold text-violet-700"
+                        }
+                      >
+                        {(user!.name ?? user!.email).charAt(0).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <ChevronDown
+                      className={isDark ? "h-4 w-4 text-white/70" : "h-4 w-4 text-muted-foreground"}
+                    />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem onClick={() => router.push("/configuracoes")} className="cursor-pointer">
+                    <Settings className="mr-2 h-4 w-4" />
+                    Configurações
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={logout} className="cursor-pointer text-red-500 focus:text-red-500">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sair
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Avatar
+                className={
+                  isDark
+                    ? "h-8 w-8 border border-white/20 rounded-full bg-violet-700"
+                    : "h-8 w-8 border border-border rounded-full bg-violet-100"
+                }
+              >
+                <AvatarFallback
+                  className={
+                    isDark
+                      ? "text-xs font-semibold text-white"
+                      : "text-xs font-semibold text-violet-700"
+                  }
+                >
+                  ?
+                </AvatarFallback>
+              </Avatar>
+            )}
           </div>
         </header>
 
-        <main className="p-2 md:p-4">{children}</main>
+        <main className="p-2 md:p-4">
+          {showUser ? children : (
+            <div className="flex min-h-[40vh] items-center justify-center text-muted-foreground dark:text-white/70">
+              Carregando…
+            </div>
+          )}
+        </main>
       </SidebarInset>
     </SidebarProvider>
   );
