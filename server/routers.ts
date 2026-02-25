@@ -127,38 +127,18 @@ export const appRouter = router({
         description: "Defina a estratégia de vendas e o direcionamento do seu negócio",
       });
 
-      // Lições internas do workspace (1 por subetapa) para salvar rascunhos separadamente.
+      // Lições internas do workspace (1 por sub-seção) — 7 sub-seções v2: Matrioska (1.1, 1.2), Sua Audiência (2.1, 2.2, 2.3), Posicionamento (3.1, 3.2).
       const workspaceLessons = [
-        // Onde você está
-        { slug: "ws-norte-onde-voce-esta-minha-empresa", title: "NORTE • Onde você está • Minha empresa", orderIndex: 900 },
-        { slug: "ws-norte-onde-voce-esta-concorrentes", title: "NORTE • Onde você está • Concorrentes", orderIndex: 901 },
-
-        // Sua audiência
-        { slug: "ws-norte-audiencia-faixa-etaria", title: "NORTE • Sua audiência • Faixa etária", orderIndex: 910 },
-        { slug: "ws-norte-audiencia-localizacao", title: "NORTE • Sua audiência • Localização", orderIndex: 911 },
-        { slug: "ws-norte-audiencia-nivel-educacao", title: "NORTE • Sua audiência • Nível de educação", orderIndex: 912 },
-        { slug: "ws-norte-audiencia-faixa-renda", title: "NORTE • Sua audiência • Faixa de renda", orderIndex: 913 },
-        { slug: "ws-norte-audiencia-quem-nao-e", title: "NORTE • Sua audiência • Quem não é", orderIndex: 914 },
-        { slug: "ws-norte-audiencia-interesses", title: "NORTE • Sua audiência • Interesses", orderIndex: 915 },
-        { slug: "ws-norte-audiencia-hobbies", title: "NORTE • Sua audiência • Hobbies", orderIndex: 916 },
-        { slug: "ws-norte-audiencia-buscas", title: "NORTE • Sua audiência • Principais buscas na internet", orderIndex: 917 },
-        { slug: "ws-norte-audiencia-preferencias", title: "NORTE • Sua audiência • Preferências de conteúdo", orderIndex: 918 },
-        { slug: "ws-norte-audiencia-compra", title: "NORTE • Sua audiência • Comportamento de compra", orderIndex: 919 },
-        { slug: "ws-norte-audiencia-objetivos", title: "NORTE • Sua audiência • Objetivos de vida", orderIndex: 920 },
-        { slug: "ws-norte-audiencia-desafios", title: "NORTE • Sua audiência • Desafios", orderIndex: 921 },
-        { slug: "ws-norte-audiencia-valores-medos", title: "NORTE • Sua audiência • Valores e medos", orderIndex: 922 },
-        { slug: "ws-norte-audiencia-desejos", title: "NORTE • Sua audiência • Desejos", orderIndex: 923 },
-        { slug: "ws-norte-audiencia-dores", title: "NORTE • Sua audiência • Dores", orderIndex: 924 },
-        { slug: "ws-norte-audiencia-objecoes", title: "NORTE • Sua audiência • Objeções", orderIndex: 925 },
-
-        // Posicionamento
-        { slug: "ws-norte-posicionamento-laddering", title: "NORTE • Posicionamento • Laddering", orderIndex: 930 },
-        { slug: "ws-norte-posicionamento-quadro", title: "NORTE • Posicionamento • Quadro", orderIndex: 931 },
-        { slug: "ws-norte-posicionamento-proposta-atual", title: "NORTE • Posicionamento • Minha proposta de valor", orderIndex: 932 },
-        { slug: "ws-norte-posicionamento-reflexao", title: "NORTE • Posicionamento • Perguntas de reflexão", orderIndex: 933 },
-        { slug: "ws-norte-posicionamento-proposta-nova", title: "NORTE • Posicionamento • Sua nova proposta de valor", orderIndex: 934 },
+        { slug: "ws-norte-matrioska-meu-negocio", title: "NORTE • Matrioska do Meu Negócio", orderIndex: 1 },
+        { slug: "ws-norte-matrioska-concorrentes", title: "NORTE • Matrioska dos Concorrentes", orderIndex: 2 },
+        { slug: "ws-norte-dados-demograficos", title: "NORTE • Dados Demográficos", orderIndex: 3 },
+        { slug: "ws-norte-os-sentimentos", title: "NORTE • Os Sentimentos", orderIndex: 4 },
+        { slug: "ws-norte-atitudes-interesses", title: "NORTE • Atitudes e Interesses", orderIndex: 5 },
+        { slug: "ws-norte-laddering", title: "NORTE • Laddering", orderIndex: 6 },
+        { slug: "ws-norte-proposta-valor", title: "NORTE • Proposta de Valor", orderIndex: 7 },
       ] as const;
 
+      await db.deleteModuleLessons(norte.id);
       await db.ensureWorkspaceLessons({
         moduleId: norte.id,
         lessons: workspaceLessons.map((l) => ({ ...l, description: null })),
@@ -175,10 +155,12 @@ export const appRouter = router({
         description: "Diagnóstico e jornada inicial do negócio",
       });
 
-      // Lições do workspace Marco Zero (match por lessonTitleIncludes no front: "Marco Zero" e "1. Diagnóstico")
       const workspaceLessons = [
-        { slug: "ws-marco-zero-jornada", title: "Marco Zero - Sua Jornada até aqui", orderIndex: 100 },
-        { slug: "ws-marco-zero-diagnostico", title: "1. Diagnóstico do negócio", orderIndex: 101 },
+        { slug: "ws-marco-zero-jornada", title: "Sua Jornada até Aqui", orderIndex: 100 },
+        { slug: "ws-marco-zero-desafios", title: "Seus Desafios Hoje", orderIndex: 101 },
+        { slug: "ws-marco-zero-diagnostico", title: "Diagnóstico do Negócio", orderIndex: 102 },
+        { slug: "ws-marco-zero-produtos", title: "Produtos e Serviços", orderIndex: 103 },
+        { slug: "ws-marco-zero-identidade", title: "Identidade e Direção", orderIndex: 104 },
       ] as const;
 
       await db.ensureWorkspaceLessons({
@@ -189,8 +171,28 @@ export const appRouter = router({
       return { ok: true as const, moduleId: marcoZero.id };
     }),
 
+    ensureComecePorAquiWorkspaceLessons: protectedProcedure.mutation(async () => {
+      const comece = await db.ensureModule({
+        slug: "comece-por-aqui",
+        title: "Comece por Aqui",
+        orderIndex: -1,
+        description: "Primeiros passos e informações iniciais",
+      });
+
+      const workspaceLessons = [
+        { slug: "ws-comece-por-aqui-inicial", title: "Comece por Aqui", orderIndex: 0 },
+      ] as const;
+
+      await db.ensureWorkspaceLessons({
+        moduleId: comece.id,
+        lessons: workspaceLessons.map((l) => ({ ...l, description: null })),
+      });
+
+      return { ok: true as const, moduleId: comece.id };
+    }),
+
     getProgressBySlug: protectedProcedure
-      .input(z.object({ slug: z.enum(["marco-zero", "norte"]) }))
+      .input(z.object({ slug: z.enum(["marco-zero", "norte", "comece-por-aqui"]) }))
       .query(async ({ ctx, input }) => {
         const mod = await db.getModuleBySlug(input.slug);
         if (!mod) return { completed: 0, total: 0, percentage: 0 };
@@ -198,7 +200,7 @@ export const appRouter = router({
       }),
 
     getWorkspaceStateBySlug: protectedProcedure
-      .input(z.object({ slug: z.enum(["marco-zero", "norte"]) }))
+      .input(z.object({ slug: z.enum(["marco-zero", "norte", "comece-por-aqui"]) }))
       .query(async ({ ctx, input }) => {
         const mod = await db.getModuleBySlug(input.slug);
         if (!mod) return { steps: [] };
@@ -214,6 +216,7 @@ export const appRouter = router({
             title: lesson.title,
             status: (state?.status ?? "draft") as string,
             data: (state?.data ?? {}) as Record<string, unknown>,
+            createdAt: state?.createdAt ?? null,
           };
         });
         return { steps };
@@ -255,13 +258,49 @@ export const appRouter = router({
     complete: protectedProcedure
       .input(z.object({ lessonId: z.number() }))
       .mutation(async ({ ctx, input }) => {
-        return await db.completeLessonUserState({ userId: ctx.user.id, lessonId: input.lessonId });
+        const result = await db.completeLessonUserState({ userId: ctx.user.id, lessonId: input.lessonId });
+        // Sincronizar com lessonProgress e moduleProgress para o dashboard e a bússola refletirem a conclusão
+        const lesson = await db.getLessonById(input.lessonId);
+        if (lesson) {
+          await db.upsertLessonProgress({
+            userId: ctx.user.id,
+            lessonId: input.lessonId,
+            status: "completed",
+          });
+          const progressPercentage = await db.calculateModuleProgress(ctx.user.id, lesson.moduleId);
+          const status = progressPercentage === 100 ? "completed" : "in_progress";
+          await db.upsertModuleProgress({
+            userId: ctx.user.id,
+            moduleId: lesson.moduleId,
+            status,
+            progressPercentage,
+          });
+        }
+        return result;
       }),
 
     reset: protectedProcedure
       .input(z.object({ lessonId: z.number() }))
       .mutation(async ({ ctx, input }) => {
-        return await db.resetLessonUserState({ userId: ctx.user.id, lessonId: input.lessonId });
+        const result = await db.resetLessonUserState({ userId: ctx.user.id, lessonId: input.lessonId });
+        // Sincronizar lessonProgress e moduleProgress para o dashboard refletir
+        const lesson = await db.getLessonById(input.lessonId);
+        if (lesson) {
+          await db.upsertLessonProgress({
+            userId: ctx.user.id,
+            lessonId: input.lessonId,
+            status: "in_progress",
+          });
+          const progressPercentage = await db.calculateModuleProgress(ctx.user.id, lesson.moduleId);
+          const status = progressPercentage === 100 ? "completed" : progressPercentage > 0 ? "in_progress" : "locked";
+          await db.upsertModuleProgress({
+            userId: ctx.user.id,
+            moduleId: lesson.moduleId,
+            status,
+            progressPercentage,
+          });
+        }
+        return result;
       }),
   }),
 
@@ -405,21 +444,52 @@ export const appRouter = router({
 
   dashboard: router({
     getOverview: protectedProcedure.query(async ({ ctx }) => {
-      const moduleProgress = await db.getUserModuleProgress(ctx.user.id);
+      const tableProgress = await db.getUserModuleProgress(ctx.user.id);
       const userBadges = await db.getUserBadges(ctx.user.id);
       const submissions = await db.getUserSubmissions(ctx.user.id);
-      
-      // Calcular progresso geral
       const modules = await db.getAllModules();
-      const totalProgress = moduleProgress.reduce((sum, p) => sum + p.progressPercentage, 0);
-      const overallProgress = modules.length > 0 ? Math.round(totalProgress / modules.length) : 0;
-      const completedCount = moduleProgress.filter((p) => p.status === "completed").length;
-      const pillarsRemaining = Math.max(modules.length - completedCount, 0);
+
+      // Reconciliar com progresso dos workspaces (lessonUserState): Comece por Aqui, Marco Zero e Norte
+      // marcam conclusão via lessonState.complete; o dashboard usa moduleProgress. Usar o maior dos dois.
+      const progressByModuleId = new Map(tableProgress.map((p) => [p.moduleId, p]));
+      const mergedProgress: typeof tableProgress = [];
+      for (const mod of modules) {
+        const ws = await db.getWorkspaceProgressByModule(ctx.user.id, mod.id);
+        const row = progressByModuleId.get(mod.id);
+        const tablePct = row?.progressPercentage ?? 0;
+        const pct = Math.max(tablePct, ws.percentage);
+        const status = pct === 100 ? "completed" : pct > 0 ? "in_progress" : "locked";
+        if (row) {
+          mergedProgress.push({ ...row, progressPercentage: pct, status });
+        } else {
+          mergedProgress.push({
+            id: 0,
+            userId: ctx.user.id,
+            moduleId: mod.id,
+            status,
+            progressPercentage: pct,
+            startedAt: pct > 0 ? new Date() : null,
+            completedAt: pct === 100 ? new Date() : null,
+          } as typeof tableProgress[0]);
+        }
+      }
+
+      // Comece por Aqui não é pilar: os 3 cards do topo consideram só os pilares (excluindo comece-por-aqui)
+      const pillarModuleIds = new Set(
+        modules.filter((m) => m.slug !== "comece-por-aqui").map((m) => m.id)
+      );
+      const pillarProgress = mergedProgress.filter((p) => pillarModuleIds.has(p.moduleId));
+      const totalPillarProgress = pillarProgress.reduce((sum, p) => sum + p.progressPercentage, 0);
+      const pillarCount = pillarModuleIds.size;
+      const overallProgress =
+        pillarCount > 0 ? Math.round(totalPillarProgress / pillarCount) : 0;
+      const completedCount = pillarProgress.filter((p) => p.status === "completed").length;
+      const pillarsRemaining = Math.max(pillarCount - completedCount, 0);
       const lessonCounts = await db.getLessonCountsByModuleIds(modules.map((m) => m.id));
-      
+
       return {
         overallProgress,
-        moduleProgress,
+        moduleProgress: mergedProgress,
         pillarsCompleted: completedCount,
         pillarsRemaining,
         lessonCounts,

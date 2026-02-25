@@ -140,7 +140,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <ErrorBoundary>
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
-          <ThemeProvider defaultTheme="dark" switchable={false}>
+          <ThemeProvider defaultTheme="dark" switchable={true}>
             <TooltipProvider>
               <Toaster />
               {children}

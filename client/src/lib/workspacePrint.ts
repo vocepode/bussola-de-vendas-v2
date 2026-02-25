@@ -22,7 +22,7 @@ function formatValue(value: unknown): string {
   return String(value);
 }
 
-/** Gera HTML de uma etapa para impressão (título + blocos com dados). */
+/** Gera HTML de uma seção para impressão (título + blocos com dados). */
 export function buildStepPrintHtml(
   step: NorthStepDef,
   data: Record<string, unknown>,
@@ -74,7 +74,7 @@ export function buildStepPrintHtml(
   return `<section class="print-step">${parts.join("")}</section>`;
 }
 
-/** Gera HTML de várias etapas para "imprimir todas". */
+/** Gera HTML de várias seções para "imprimir todas". */
 export function buildAllStepsPrintHtml(
   steps: { step: NorthStepDef; data: Record<string, unknown>; title?: string }[]
 ): string {
@@ -92,6 +92,13 @@ export function buildWorkspaceReportHtml(params: {
   const status =
     progressPercentage >= 100 ? "Finalizado" : progressPercentage > 0 ? "Incompleto" : "À fazer";
   const today = new Date().toLocaleDateString("pt-BR");
+  const totalSecoes = steps.length;
+  const secoesConcluidas =
+    totalSecoes > 0 ? Math.round((progressPercentage / 100) * totalSecoes) : 0;
+  const secoesLine =
+    totalSecoes > 0
+      ? ` · ${secoesConcluidas} de ${totalSecoes} ${totalSecoes === 1 ? "seção concluída" : "seções concluídas"}`
+      : "";
   const header = `
     <header class="ws-report-header">
       <div>
@@ -100,7 +107,7 @@ export function buildWorkspaceReportHtml(params: {
         <div class="ws-report-meta">Relatório Completo - Empresa: [—] · ${escapeHtml(
           studentName ?? "[Nome do aluno]"
         )} · ${today}</div>
-        <div class="ws-report-meta">Status: [Finalizado] / [Incompleto] / [ À fazer ]</div>
+        <div class="ws-report-meta">Status: [Finalizado] / [Incompleto] / [ À fazer ] · Progresso ${progressPercentage}%${secoesLine}</div>
       </div>
       <div class="ws-report-status">${statusLabel ?? status} · ${progressPercentage}%</div>
     </header>
@@ -113,7 +120,9 @@ export function buildWorkspaceReportHtml(params: {
         .map((b) => renderFieldForReport(b as any, data))
         .join("");
       const progressTag = `<div style="font-size:10pt;color:#475569;text-align:right;">Progresso<br /><strong>${progressPercentage}%</strong></div>`;
-      const stepTitle = step.key === "jornada" ? "Sua jornada até aqui" : step.title;
+      const stepTitle =
+        step.key === "jornada" ? "Sua jornada até aqui" : step.title;
+      const sectionTitle = `Seção ${idx + 1} · ${stepTitle}`;
       const breakStyle = idx === 0 ? "" : "page-break-before: always; break-before: page;";
       return `
         <section class="ws-report-card" style="${breakStyle}">
@@ -127,7 +136,7 @@ export function buildWorkspaceReportHtml(params: {
           <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8pt;">
             <div>
               <div style="font-size:9pt;color:#64748b;">${escapeHtml(moduleTitle)}</div>
-              <h3>${escapeHtml(stepTitle)}</h3>
+              <h3>${escapeHtml(sectionTitle)}</h3>
             </div>
             ${progressTag}
           </div>

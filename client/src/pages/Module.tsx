@@ -74,7 +74,7 @@ export default function Module({ slug }: { slug: string }) {
   }
 
   const progress = moduleProgress?.find(p => p.moduleId === module.id);
-  const isLocked = progress?.status === "locked";
+  const isLocked = false;
 
   if (isLocked) {
     return (
@@ -233,7 +233,7 @@ export default function Module({ slug }: { slug: string }) {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="pillar-inner module-inner min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-white sticky top-0 z-10 shadow-sm">
         <div className="container py-4">

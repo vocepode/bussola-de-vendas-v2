@@ -12,6 +12,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -19,12 +20,13 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Loader2, ArrowLeft, CheckCircle2, Circle, AlertTriangle, Printer, FileDown } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { getLoginUrl } from "@/const";
+import { getModuleHref, PILLARS_ORDER } from "@/constants/pillars";
 import { MARCO_ZERO_STEPS } from "@/marcoZero/schema";
 import { NorthStepForm } from "@/components/north/NorthStepForm";
 import { buildStepPrintHtml, buildWorkspaceReportHtml } from "@/lib/workspacePrint";
@@ -78,6 +80,8 @@ export default function MarcoZeroWorkspace() {
   const [activeStep, setActiveStep] = useState<StepKey>(() => STEPS[0]?.key ?? "jornada");
   const printAreaRef = useRef<HTMLDivElement>(null);
   const [printing, setPrinting] = useState(false);
+  const [pdfSectionsOpen, setPdfSectionsOpen] = useState(false);
+  const [pdfSectionKeys, setPdfSectionKeys] = useState<StepKey[]>(() => STEPS.map((s) => s.key));
 
   const lessonIdByStepKey = useMemo(() => {
     const map = new Map<StepKey, number>();
@@ -241,17 +245,17 @@ export default function MarcoZeroWorkspace() {
         className="print-only"
         aria-hidden
       />
-      <div className="min-h-screen bg-[#0a0a0a] screen-only">
+      <div className="pillar-inner marco-zero-inner min-h-screen bg-[#0a0a0a] screen-only">
       <header className="sticky top-0 z-10 border-b border-[#262626] bg-[#111111] shadow-sm">
         <div className="container py-4 space-y-3">
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0 flex-1">
-              <div className="text-sm text-white/60">Diagnóstico</div>
+              <div className="text-sm text-white/60">O ponto de partida</div>
               <h1 className="text-xl font-bold truncate text-white">{marcoZeroModule.title}</h1>
             </div>
             <div className="flex flex-shrink-0 items-center gap-2">
               <span className="text-sm text-white/60">
-                {progress ? `${progress.completed} de ${progress.total} etapas` : "—"}
+                {progress ? `${progress.completed} de 5 etapas` : "—"}
               </span>
               <Link href="/marco-zero/preview">
                 <Button variant="secondary" size="sm" className="bg-white/10 text-white hover:bg-white/20">
@@ -262,10 +266,21 @@ export default function MarcoZeroWorkspace() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" disabled={printing} className="gap-2 border-white/20 text-white/90 hover:bg-white/10">
                     <Printer className="w-4 h-4" />
-                    Imprimir / PDF
+                    Imprimir / Salvar PDF
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
+                  <DropdownMenuItem
+                    onClick={() => window.open("/marco-zero/preview?pdf=full", "_blank", "noopener,noreferrer")}
+                  >
+                    <FileDown className="w-4 h-4 mr-2" />
+                    PDF Completo
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setPdfSectionsOpen(true)}>
+                    <FileDown className="w-4 h-4 mr-2" />
+                    PDF por Seção
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handlePrintCurrentStep}>
                     <FileDown className="w-4 h-4 mr-2" />
                     Imprimir etapa atual
@@ -276,6 +291,47 @@ export default function MarcoZeroWorkspace() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+              <Dialog open={pdfSectionsOpen} onOpenChange={setPdfSectionsOpen}>
+                <DialogContent className="sm:max-w-md border-[#262626] bg-[#161616] text-white">
+                  <DialogHeader>
+                    <DialogTitle>PDF por Seção</DialogTitle>
+                  </DialogHeader>
+                  <p className="text-sm text-white/70">
+                    Selecione as seções para incluir no PDF. Depois, use a pré-visualização para imprimir ou salvar.
+                  </p>
+                  <div className="space-y-3 py-2">
+                    {STEPS.map((s) => (
+                      <label key={s.key} className="flex items-center gap-2 cursor-pointer">
+                        <Checkbox
+                          checked={pdfSectionKeys.includes(s.key)}
+                          onCheckedChange={(checked) => {
+                            setPdfSectionKeys((prev) =>
+                              checked ? [...prev, s.key] : prev.filter((k) => k !== s.key)
+                            );
+                          }}
+                        />
+                        <span>{s.title}</span>
+                      </label>
+                    ))}
+                  </div>
+                  <div className="flex justify-end gap-2">
+                    <Button variant="outline" size="sm" onClick={() => setPdfSectionsOpen(false)}>
+                      Cancelar
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={() => {
+                        const q = new URLSearchParams();
+                        if (pdfSectionKeys.length > 0) q.set("sections", pdfSectionKeys.join(","));
+                        setPdfSectionsOpen(false);
+                        window.open(`/marco-zero/preview?${q.toString()}`, "_blank", "noopener,noreferrer");
+                      }}
+                    >
+                      Abrir pré-visualização
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
               {status === "completed" ? (
                 <Badge className="gap-1.5 bg-primary text-primary-foreground">
                   <CheckCircle2 className="w-3.5 h-3.5" />
@@ -321,10 +377,8 @@ export default function MarcoZeroWorkspace() {
                       className={[
                         "w-full text-left px-3 py-2 rounded-md transition-colors flex items-center justify-between gap-3",
                         isActive ? "bg-primary/30 text-white font-medium" : "hover:bg-muted dark:hover:bg-white/10",
-                        !isResolved ? "opacity-60" : "",
                       ].join(" ")}
                       onClick={() => setActiveStep(s.key)}
-                      disabled={!isResolved}
                     >
                       <span className="truncate">{s.title}</span>
                       {stepStatus === "completed" ? (
@@ -359,16 +413,48 @@ export default function MarcoZeroWorkspace() {
                     </div>
                   </div>
                 ) : (
-                  <NorthStepForm
-                    lessonId={activeLessonId}
-                    step={STEPS.find((s) => s.key === activeStep)!}
-                    workspaceSlug="marco-zero"
-                    footerExtra={
-                      <Button variant="outline" onClick={() => refetchState()}>
+                  <>
+                    <NorthStepForm
+                      lessonId={activeLessonId}
+                      step={STEPS.find((s) => s.key === activeStep)!}
+                      workspaceSlug="marco-zero"
+                    />
+                    <div className="pt-8 mt-8 flex flex-wrap items-center gap-4 border-t border-[#262626]">
+                      <Button variant="outline" size="sm" onClick={() => refetchState()} className="border-white/20 text-white hover:bg-white/10">
                         Recarregar estado
                       </Button>
-                    }
-                  />
+                      <div className="flex flex-wrap items-center gap-3">
+                        {(() => {
+                          const stepIndex = STEPS.findIndex((s) => s.key === activeStep);
+                          const prevStep = stepIndex > 0 ? STEPS[stepIndex - 1] : null;
+                          const nextStep = stepIndex >= 0 && stepIndex < STEPS.length - 1 ? STEPS[stepIndex + 1] : null;
+                          const pillarIndex = PILLARS_ORDER.findIndex((p) => p.slug === "marco-zero");
+                          const nextPilar = pillarIndex >= 0 && pillarIndex < PILLARS_ORDER.length - 1 ? PILLARS_ORDER[pillarIndex + 1] : null;
+                          const nextPilarHref = nextPilar ? (nextPilar.href ?? getModuleHref(nextPilar.slug)) : null;
+                          return (
+                            <>
+                              {prevStep ? (
+                                <Button variant="outline" size="sm" onClick={() => setActiveStep(prevStep.key)} className="border-white/20 text-white hover:bg-white/10">
+                                  ← Seção anterior
+                                </Button>
+                              ) : null}
+                              {nextStep ? (
+                                <Button size="sm" onClick={() => setActiveStep(nextStep.key)} className="bg-primary text-primary-foreground hover:bg-primary/90">
+                                  Avançar →
+                                </Button>
+                              ) : nextPilarHref ? (
+                                <Link href={nextPilarHref}>
+                                  <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
+                                    Avançar → Próximo pilar
+                                  </Button>
+                                </Link>
+                              ) : null}
+                            </>
+                          );
+                        })()}
+                      </div>
+                    </div>
+                  </>
                 )}
               </CardContent>
             </Card>

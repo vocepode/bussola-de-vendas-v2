@@ -353,6 +353,30 @@ export async function updateUserPasswordHash(userId: number, passwordHash: strin
   await deleteSessionsByUserId(userId);
 }
 
+/**
+ * Cria ou atualiza usuário a partir do webhook Hotmart.
+ * Se o email já existir, atualiza apenas o nome. Caso contrário, cria com o placeholderPasswordHash
+ * (o usuário deve usar "Recuperar senha" para definir senha).
+ */
+export async function upsertUserFromHotmart(
+  email: string,
+  name: string | null,
+  placeholderPasswordHash: string
+): Promise<number> {
+  const existing = await getUserByEmail(email);
+  if (existing) {
+    await updateUserProfileName(existing.id, name);
+    return existing.id;
+  }
+  return createUser({
+    email,
+    name: name ?? null,
+    passwordHash: placeholderPasswordHash,
+    role: "user",
+    isActive: true,
+  });
+}
+
 // ========== MODULES ==========
 
 export async function getAllModules(): Promise<Module[]> {
@@ -459,6 +483,17 @@ export async function ensureWorkspaceLessons(params: {
 
   // Retorna a lista atual (inclui as recém-criadas)
   return await getLessonsByModuleId(params.moduleId);
+}
+
+/** Remove todas as lições de um módulo (e os estados de usuário associados). Usado para substituir completamente as lições do Norte. */
+export async function deleteModuleLessons(moduleId: number): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const existing = await db.select({ id: lessons.id }).from(lessons).where(eq(lessons.moduleId, moduleId));
+  const lessonIds = existing.map((l) => l.id);
+  if (lessonIds.length === 0) return;
+  await db.delete(lessonUserState).where(inArray(lessonUserState.lessonId, lessonIds));
+  await db.delete(lessons).where(eq(lessons.moduleId, moduleId));
 }
 
 export async function getLessonsByModuleIdForTree(moduleId: number): Promise<Lesson[]> {

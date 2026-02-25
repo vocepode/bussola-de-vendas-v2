@@ -1,9 +1,8 @@
 "use client";
 
 import { useAuth } from "@/_core/hooks/useAuth";
-import { useTheme } from "@/contexts/ThemeContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import ThemeSwitch from "@/components/ui/theme-switch";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +24,7 @@ import {
 } from "@/components/ui/sidebar";
 import {
   Bell,
+  BookOpen,
   ChevronDown,
   ChevronLeft,
   Compass,
@@ -36,11 +36,14 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import type { CSSProperties } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
+import { cn } from "@/lib/utils";
 import { DashboardLayoutSkeleton } from "./DashboardLayoutSkeleton";
 
 const MAIN_MENU = [
   { icon: Grid2x2, label: "Dashboard", path: "/" },
   { icon: Compass, label: "Minha Bússola", path: "/minha-bussola" },
+  { icon: BookOpen, label: "Meus cursos", path: "/meus-cursos" },
   { icon: FolderOpen, label: "Meus Materiais", path: "/materiais" },
 ] as const;
 
@@ -53,9 +56,12 @@ function isPathActive(pathname: string, itemPath: string) {
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { loading, user, logout } = useAuth();
-  const { theme } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
+  const { theme } = useTheme();
+  /** Quando tema é dark: shell e conteúdo escuros. Quando tema é light: shell e conteúdo claros em todas as seções. */
+  const sidebarLight = theme !== "dark";
+  const contentLight = theme === "light";
 
   useEffect(() => {
     if (loading) return;
@@ -67,33 +73,25 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     return <DashboardLayoutSkeleton />;
   }
 
-  const isDark = theme !== "light";
   const showUser = !!user;
 
   return (
     <SidebarProvider defaultOpen style={{ "--sidebar-width": "220px" } as CSSProperties}>
       <Sidebar
         collapsible="icon"
-        className={
-          isDark
-            ? "border-r border-[#262626] bg-[#111111]"
-            : "border-r border-border bg-white"
-        }
+        className={cn(
+          "border-r",
+          sidebarLight ? "border-border bg-background" : "border-[#262626] bg-[#111111]"
+        )}
       >
         <SidebarHeader
-          className={
-            isDark ? "h-14 border-b border-[#262626] px-2" : "h-14 border-b border-border px-2"
-          }
+          className={cn("h-14 border-b px-2", sidebarLight ? "border-border" : "border-[#262626]")}
         >
-          <SidebarTop theme={theme} onLogoClick={() => router.push("/")} />
+          <SidebarTop theme={sidebarLight ? "light" : "dark"} onLogoClick={() => router.push("/")} />
         </SidebarHeader>
 
         <SidebarContent
-          className={
-            isDark
-              ? "px-1.5 py-2 text-white"
-              : "px-1.5 py-2 text-foreground"
-          }
+          className={cn("px-1.5 py-2", sidebarLight ? "text-foreground" : "text-white")}
         >
           <SidebarMenu>
             {MAIN_MENU.map((item) => (
@@ -101,11 +99,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <SidebarMenuButton
                   isActive={isPathActive(pathname, item.path)}
                   tooltip={item.label}
-                  className={
-                    isDark
-                      ? "h-9 text-[14px] text-white/90 hover:bg-white/10 hover:text-white data-[active=true]:bg-primary/25 data-[active=true]:text-white data-[active=true]:[&>svg]:text-white"
-                      : "h-9 text-[14px] text-foreground/90 hover:bg-muted hover:text-foreground data-[active=true]:bg-primary/15 data-[active=true]:text-violet-700 data-[active=true]:[&>svg]:text-violet-700"
-                  }
+                  className={cn(
+                    "h-9 text-[14px]",
+                    sidebarLight
+                      ? "text-foreground/90 hover:bg-muted hover:text-foreground data-[active=true]:bg-primary/25 data-[active=true]:text-primary data-[active=true]:[&>svg]:text-primary"
+                      : "text-white/90 hover:bg-white/10 hover:text-white data-[active=true]:bg-primary/25 data-[active=true]:text-white data-[active=true]:[&>svg]:text-white"
+                  )}
                   onClick={() => router.push(item.path)}
                 >
                   <item.icon className="h-4 w-4 shrink-0" />
@@ -116,11 +115,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </SidebarMenu>
 
           <div
-            className={
-              isDark
-                ? "mt-6 px-1.5 text-[11px] uppercase tracking-wide text-white/45 group-data-[collapsible=icon]:hidden"
-                : "mt-6 px-1.5 text-[11px] uppercase tracking-wide text-muted-foreground group-data-[collapsible=icon]:hidden"
-            }
+            className={cn(
+              "mt-6 px-1.5 text-[11px] uppercase tracking-wide group-data-[collapsible=icon]:hidden",
+              sidebarLight ? "text-muted-foreground" : "text-white/45"
+            )}
           >
             CONTA
           </div>
@@ -131,11 +129,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <SidebarMenuButton
                   isActive={isPathActive(pathname, item.path)}
                   tooltip={item.label}
-                  className={
-                    isDark
-                      ? "h-9 text-[14px] text-white/90 hover:bg-white/10 hover:text-white data-[active=true]:bg-primary/25 data-[active=true]:text-white data-[active=true]:[&>svg]:text-white"
-                      : "h-9 text-[14px] text-foreground/90 hover:bg-muted hover:text-foreground data-[active=true]:bg-primary/15 data-[active=true]:text-violet-700 data-[active=true]:[&>svg]:text-violet-700"
-                  }
+                  className={cn(
+                    "h-9 text-[14px]",
+                    sidebarLight
+                      ? "text-foreground/90 hover:bg-muted hover:text-foreground data-[active=true]:bg-primary/25 data-[active=true]:text-primary data-[active=true]:[&>svg]:text-primary"
+                      : "text-white/90 hover:bg-white/10 hover:text-white data-[active=true]:bg-primary/25 data-[active=true]:text-white data-[active=true]:[&>svg]:text-white"
+                  )}
                   onClick={() => router.push(item.path)}
                 >
                   <item.icon className="h-4 w-4 shrink-0" />
@@ -147,36 +146,49 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </SidebarContent>
 
         <SidebarFooter
-          className={isDark ? "border-t border-[#262626] p-2" : "border-t border-border p-2"}
+          className={cn("border-t p-2", sidebarLight ? "border-border" : "border-[#262626]")}
         >
           {showUser ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button
-                  className={
-                    isDark
-                      ? "flex w-full items-center gap-3 rounded-lg px-1 py-1.5 text-left hover:bg-white/5 group-data-[collapsible=icon]:justify-center"
-                      : "flex w-full items-center gap-3 rounded-lg px-1 py-1.5 text-left hover:bg-muted group-data-[collapsible=icon]:justify-center"
-                  }
+                  className={cn(
+                    "flex w-full items-center gap-3 rounded-lg px-1 py-1.5 text-left group-data-[collapsible=icon]:justify-center",
+                    sidebarLight ? "hover:bg-muted" : "hover:bg-white/5"
+                  )}
                 >
                   <Avatar
-                    className={isDark ? "h-8 w-8 border border-white/20" : "h-8 w-8 border border-border"}
+                    className={cn(
+                      "h-8 w-8 border",
+                      sidebarLight ? "border-border" : "border-white/20"
+                    )}
                   >
                     {user!.avatarUrl ? (
                       <AvatarImage src={user!.avatarUrl} alt="" className="object-cover" />
                     ) : null}
-                    <AvatarFallback className="text-xs font-semibold">
+                    <AvatarFallback
+                      className={cn(
+                        "text-xs font-semibold",
+                        sidebarLight ? "text-foreground" : "bg-white/15 text-white"
+                      )}
+                    >
                       {(user!.name ?? user!.email).charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                   <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
-                    <p className={isDark ? "truncate text-xs text-white" : "truncate text-xs text-foreground"}>
+                    <p
+                      className={cn(
+                        "truncate text-xs",
+                        sidebarLight ? "text-foreground" : "text-white"
+                      )}
+                    >
                       {user!.name ?? "Aluno"}
                     </p>
                     <p
-                      className={
-                        isDark ? "truncate text-[11px] text-white/55" : "truncate text-[11px] text-muted-foreground"
-                      }
+                      className={cn(
+                        "truncate text-[11px]",
+                        sidebarLight ? "text-muted-foreground" : "text-white/55"
+                      )}
                     >
                       {user!.email}
                     </p>
@@ -195,18 +207,29 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <div
-              className={
-                isDark
-                  ? "flex w-full items-center gap-3 rounded-lg px-1 py-1.5 text-left group-data-[collapsible=icon]:justify-center"
-                  : "flex w-full items-center gap-3 rounded-lg px-1 py-1.5 text-left group-data-[collapsible=icon]:justify-center"
-              }
-            >
-              <Avatar className={isDark ? "h-8 w-8 border border-white/20" : "h-8 w-8 border border-border"}>
-                <AvatarFallback className="text-xs font-semibold">?</AvatarFallback>
+            <div className="flex w-full items-center gap-3 rounded-lg px-1 py-1.5 text-left group-data-[collapsible=icon]:justify-center">
+              <Avatar
+                className={cn(
+                  "h-8 w-8 border",
+                  sidebarLight ? "border-border" : "border-white/20"
+                )}
+              >
+                <AvatarFallback
+                  className={cn(
+                    "text-xs font-semibold",
+                    sidebarLight ? "text-foreground" : "bg-white/15 text-white"
+                  )}
+                >
+                  ?
+                </AvatarFallback>
               </Avatar>
               <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
-                <p className={isDark ? "truncate text-xs text-white/70" : "truncate text-xs text-muted-foreground"}>
+                <p
+                  className={cn(
+                    "truncate text-xs",
+                    sidebarLight ? "text-muted-foreground" : "text-white/70"
+                  )}
+                >
                   Carregando…
                 </p>
               </div>
@@ -216,28 +239,32 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </Sidebar>
 
       <SidebarInset
-        className={
-          isDark ? "min-h-svh bg-[#0a0a0a] text-white" : "min-h-svh bg-background text-foreground"
-        }
+        className={cn(
+          "min-h-svh",
+          contentLight
+            ? "content-area-light bg-background text-foreground"
+            : "bg-[#0a0a0a] text-white"
+        )}
       >
         <header
-          className={
-            isDark
-              ? "sticky top-0 z-30 flex h-14 items-center justify-between border-b border-[#262626] bg-[#111111] px-2 md:px-4"
-              : "sticky top-0 z-30 flex h-14 items-center justify-between border-b border-border bg-background px-2 md:px-4"
-          }
+          className={cn(
+            "sticky top-0 z-30 flex h-14 items-center justify-between px-2 md:px-4",
+            contentLight
+              ? "border-b border-border bg-background"
+              : "border-b border-[#262626] bg-[#111111]"
+          )}
         >
           <div className="flex items-center gap-2">
             <SidebarTrigger className="md:hidden" />
           </div>
 
           <div className="flex items-center gap-2">
-            <ThemeToggle />
+            <ThemeSwitch />
             <button
               className={
-                isDark
-                  ? "relative rounded-md p-1.5 text-white/75 hover:bg-white/10 hover:text-white"
-                  : "relative rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+                contentLight
+                  ? "relative rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+                  : "relative rounded-md p-1.5 text-white/75 hover:bg-white/10 hover:text-white"
               }
               aria-label="Notificações"
             >
@@ -249,16 +276,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <DropdownMenuTrigger asChild>
                   <button
                     className={
-                      isDark
-                        ? "flex items-center gap-1.5 rounded-lg px-1 py-1.5 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                        : "flex items-center gap-1.5 rounded-lg px-1 py-1.5 hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      contentLight
+                        ? "flex items-center gap-1.5 rounded-lg px-1 py-1.5 hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        : "flex items-center gap-1.5 rounded-lg px-1 py-1.5 hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     }
                   >
                     <Avatar
                       className={
-                        isDark
-                          ? "h-8 w-8 border border-white/20 rounded-full bg-violet-700"
-                          : "h-8 w-8 border border-border rounded-full bg-violet-100"
+                        contentLight
+                          ? "h-8 w-8 border border-border rounded-full bg-violet-100"
+                          : "h-8 w-8 border border-white/20 rounded-full bg-violet-700"
                       }
                     >
                       {user!.avatarUrl ? (
@@ -266,16 +293,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                       ) : null}
                       <AvatarFallback
                         className={
-                          isDark
-                            ? "text-xs font-semibold text-white"
-                            : "text-xs font-semibold text-violet-700"
+                          contentLight
+                            ? "text-xs font-semibold text-violet-700"
+                            : "text-xs font-semibold text-white"
                         }
                       >
                         {(user!.name ?? user!.email).charAt(0).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                     <ChevronDown
-                      className={isDark ? "h-4 w-4 text-white/70" : "h-4 w-4 text-muted-foreground"}
+                      className={contentLight ? "h-4 w-4 text-muted-foreground" : "h-4 w-4 text-white/70"}
                     />
                   </button>
                 </DropdownMenuTrigger>
@@ -293,16 +320,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             ) : (
               <Avatar
                 className={
-                  isDark
-                    ? "h-8 w-8 border border-white/20 rounded-full bg-violet-700"
-                    : "h-8 w-8 border border-border rounded-full bg-violet-100"
+                  contentLight
+                    ? "h-8 w-8 border border-border rounded-full bg-violet-100"
+                    : "h-8 w-8 border border-white/20 rounded-full bg-violet-700"
                 }
               >
                 <AvatarFallback
                   className={
-                    isDark
-                      ? "text-xs font-semibold text-white"
-                      : "text-xs font-semibold text-violet-700"
+                    contentLight
+                      ? "text-xs font-semibold text-violet-700"
+                      : "text-xs font-semibold text-white"
                   }
                 >
                   ?
@@ -314,7 +341,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         <main className="p-2 md:p-4">
           {showUser ? children : (
-            <div className="flex min-h-[40vh] items-center justify-center text-muted-foreground dark:text-white/70">
+            <div className={contentLight ? "flex min-h-[40vh] items-center justify-center text-muted-foreground" : "flex min-h-[40vh] items-center justify-center text-white/70"}>
               Carregando…
             </div>
           )}
@@ -344,14 +371,18 @@ function SidebarTop({ theme, onLogoClick }: { theme: "light" | "dark"; onLogoCli
           <img
             src={logoCompass}
             alt="Compass Bússola de vendas"
-            className="mx-auto h-6 w-6 max-w-[24px] shrink-0 object-contain object-center"
+            width={24}
+            height={24}
+            className="mx-auto h-6 w-6 min-h-[24px] min-w-[24px] shrink-0 object-contain object-center"
           />
         ) : (
           <>
             <img
               src={logoVcp}
               alt="vcp+"
-              className="h-8 w-auto shrink-0 object-contain"
+              width={80}
+              height={32}
+              className="h-8 min-h-[32px] w-auto min-w-[60px] shrink-0 object-contain object-left"
             />
             <div className="min-w-0 flex-1">
               <p

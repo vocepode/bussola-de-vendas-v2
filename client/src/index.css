@@ -136,6 +136,258 @@ html.dark body {
   color: #ffffff !important;
 }
 
+/* Área de conteúdo em tema claro (Marco Zero, Norte, Raio X, Mapa, Rota) – fundo branco, texto preto, sem alterar preview/impressão */
+.content-area-light {
+  --background: #ffffff;
+  --foreground: #111827;
+  --card: #ffffff;
+  --card-foreground: #111827;
+  --popover: #ffffff;
+  --popover-foreground: #111827;
+  --primary: #7c3aed;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f6;
+  --secondary-foreground: #374151;
+  --muted: #f9fafb;
+  --muted-foreground: #6b7280;
+  --accent: #f3f4f6;
+  --accent-foreground: #111827;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #7c3aed;
+}
+
+/* Tema claro na área interna do Marco Zero (e pilares): preto e branco, sem alterar preview/impressão */
+.content-area-light .marco-zero-inner {
+  background-color: #ffffff !important;
+}
+
+.content-area-light .marco-zero-inner header {
+  background-color: #f9fafb !important;
+  border-color: #e5e7eb !important;
+}
+
+.content-area-light .marco-zero-inner .border-\[\#262626\] {
+  border-color: #e5e7eb !important;
+}
+
+.content-area-light .marco-zero-inner .bg-\[\#161616\] {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+.content-area-light .marco-zero-inner .text-white,
+.content-area-light .marco-zero-inner .text-white\/60,
+.content-area-light .marco-zero-inner .text-white\/90 {
+  color: #111827 !important;
+}
+
+.content-area-light .marco-zero-inner header .text-white\/60 {
+  color: #6b7280 !important;
+}
+
+.content-area-light .marco-zero-inner .bg-white\/10,
+.content-area-light .marco-zero-inner [class*="hover:bg-white/10"]:hover,
+.content-area-light .marco-zero-inner .dark\:hover\:bg-white\/10:hover {
+  background-color: #f3f4f6 !important;
+}
+
+.content-area-light .marco-zero-inner .border-white\/20 {
+  border-color: #e5e7eb !important;
+}
+
+.content-area-light .marco-zero-inner .text-white\/70,
+.content-area-light .marco-zero-inner .dark\:text-white\/70 {
+  color: #6b7280 !important;
+}
+
+.content-area-light .marco-zero-inner .dark\:text-white {
+  color: #111827 !important;
+}
+
+.content-area-light .marco-zero-inner .dark\:border-white\/10 {
+  border-color: #e5e7eb !important;
+}
+
+.content-area-light .marco-zero-inner .dark\:bg-white\/5 {
+  background-color: #f9fafb !important;
+}
+
+/* Dashboard em tema claro: versão em branco quando o tema global é light */
+.content-area-light .dashboard-inner {
+  background-color: #ffffff !important;
+}
+
+.content-area-light .dashboard-inner .text-white,
+.content-area-light .dashboard-inner .text-white\/60,
+.content-area-light .dashboard-inner .text-white\/90,
+.content-area-light .dashboard-inner .text-white\/80,
+.content-area-light .dashboard-inner .text-white\/85 {
+  color: #111827 !important;
+}
+
+.content-area-light .dashboard-inner .text-white\/70 {
+  color: #6b7280 !important;
+}
+
+.content-area-light .dashboard-inner .border-\[\#262626\] {
+  border-color: #e5e7eb !important;
+}
+
+.content-area-light .dashboard-inner .bg-\[\#161616\] {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+.content-area-light .dashboard-inner .bg-\[\#1a1a1a\] {
+  background-color: #f9fafb !important;
+}
+
+.content-area-light .dashboard-inner .border-\[\#2e1a4a\] {
+  border-color: #e9d5ff !important;
+}
+
+.content-area-light .dashboard-inner .bg-\[\#3b2163\] {
+  background-color: #f5f3ff !important;
+  border-color: #e9d5ff !important;
+}
+
+.content-area-light .dashboard-inner .hover\:border-violet-500\/40:hover {
+  border-color: #a78bfa !important;
+}
+
+.content-area-light .dashboard-inner [class*="bg-white/20"] {
+  background-color: #e5e7eb !important;
+}
+
+/* Minha Bússola, Meus Materiais, Configurações: tema claro quando o tema global é light */
+.content-area-light .bussola-inner,
+.content-area-light .materials-inner,
+.content-area-light .settings-inner {
+  background-color: transparent !important;
+}
+
+.content-area-light .bussola-inner .text-white,
+.content-area-light .bussola-inner .text-white\/60,
+.content-area-light .bussola-inner .text-white\/80,
+.content-area-light .bussola-inner .text-white\/85,
+.content-area-light .bussola-inner .text-white\/90,
+.content-area-light .materials-inner .text-white,
+.content-area-light .materials-inner .text-white\/45,
+.content-area-light .materials-inner .text-white\/60,
+.content-area-light .materials-inner .text-white\/65,
+.content-area-light .settings-inner .text-white,
+.content-area-light .settings-inner .text-white\/40,
+.content-area-light .settings-inner .text-white\/45,
+.content-area-light .settings-inner .text-white\/55,
+.content-area-light .settings-inner .text-white\/80 {
+  color: #111827 !important;
+}
+
+.content-area-light .bussola-inner .border-\[\#262626\],
+.content-area-light .materials-inner .border-\[\#262626\],
+.content-area-light .settings-inner .border-\[\#262626\] {
+  border-color: #e5e7eb !important;
+}
+
+.content-area-light .bussola-inner .bg-\[\#161616\],
+.content-area-light .materials-inner .bg-\[\#161616\],
+.content-area-light .settings-inner .bg-\[\#161616\] {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+.content-area-light .bussola-inner .bg-\[\#1a1a1a\] {
+  background-color: #f9fafb !important;
+}
+
+.content-area-light .bussola-inner .hover\:border-violet-500\/40:hover {
+  border-color: #a78bfa !important;
+}
+
+.content-area-light .bussola-inner [class*="bg-white/20"] {
+  background-color: #e5e7eb !important;
+}
+
+.content-area-light .bussola-inner .border-white\/30,
+.content-area-light .bussola-inner .bg-white\/5,
+.content-area-light .bussola-inner .group-hover\:bg-white\/10,
+.content-area-light .settings-inner .border-white\/10,
+.content-area-light .settings-inner .border-white\/15,
+.content-area-light .settings-inner .border-white\/30,
+.content-area-light .settings-inner .bg-white\/5,
+.content-area-light .settings-inner .hover\:border-white\/50,
+.content-area-light .settings-inner .hover\:bg-white\/5 {
+  border-color: #e5e7eb !important;
+  background-color: #f9fafb !important;
+}
+
+.content-area-light .settings-inner .bg-white\/10 {
+  background-color: #f3f4f6 !important;
+}
+
+.content-area-light .materials-inner .bg-white\/10 {
+  background-color: #f3f4f6 !important;
+}
+
+/* Pilares (Norte, Raio X, Mapa, Rota): tema claro quando o tema global é light */
+.content-area-light .north-inner,
+.content-area-light .module-inner {
+  background-color: #ffffff !important;
+}
+
+.content-area-light .north-inner .border-\[\#262626\],
+.content-area-light .module-inner .border-\[\#262626\] {
+  border-color: #e5e7eb !important;
+}
+
+.content-area-light .north-inner .bg-\[\#161616\],
+.content-area-light .module-inner .bg-\[\#161616\] {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+.content-area-light .north-inner .text-white,
+.content-area-light .north-inner .text-white\/60,
+.content-area-light .north-inner .text-white\/90,
+.content-area-light .module-inner .text-white,
+.content-area-light .module-inner .text-white\/60,
+.content-area-light .module-inner .text-white\/90 {
+  color: #111827 !important;
+}
+
+.content-area-light .north-inner .hover\:bg-white\/5:hover,
+.content-area-light .module-inner .hover\:bg-white\/5:hover {
+  background-color: #f3f4f6 !important;
+}
+
+.content-area-light .module-inner .text-white {
+  color: #111827 !important;
+}
+
+.content-area-light .comece-inner .border-\[\#262626\],
+.content-area-light .comece-inner .bg-\[\#161616\] {
+  border-color: #e5e7eb !important;
+  background-color: #ffffff !important;
+}
+
+.content-area-light .comece-inner .bg-\[\#1a1a1a\] {
+  background-color: #f9fafb !important;
+}
+
+.content-area-light .comece-inner .text-white,
+.content-area-light .comece-inner .text-white\/70,
+.content-area-light .comece-inner .text-white\/80 {
+  color: #111827 !important;
+}
+
+.content-area-light .meus-cursos-inner .text-white,
+.content-area-light .meus-cursos-inner .text-white\/60 {
+  color: #111827 !important;
+}
+
 /* Pré-visualização (Carta de Navegação): fundo branco, texto e tabelas em preto – só na tela */
 @media screen {
   html.preview-light-theme,

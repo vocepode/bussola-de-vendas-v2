@@ -1,16 +1,23 @@
 "use client";
 
 import { getModuleGradient, getModuleHref, PILLARS_ORDER } from "@/constants/pillars";
+import { COURSES } from "@/constants/courses";
+import { GUIDES } from "@/constants/guides";
 import DashboardLayout from "@/components/DashboardLayout";
+import { CourseCard } from "@/components/CourseCard";
+import { GuideCard } from "@/components/GuideCard";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useTheme } from "@/contexts/ThemeContext";
 import { AlertCircle, Check, LayoutList, Play, RefreshCw, TrendingUp } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
   const { user } = useAuth();
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const { data: overview, isLoading: loadingOverview, isError: errorOverview, refetch: refetchOverview } = trpc.dashboard.getOverview.useQuery();
   const { data: modules, isLoading: loadingModules, isError: errorModules, refetch: refetchModules } = trpc.modules.list.useQuery();
 
@@ -31,7 +38,7 @@ export default function Home() {
 
   return (
     <DashboardLayout>
-      <div className="min-h-full w-full space-y-6 bg-[#0a0a0a] pl-1 pr-2 text-white md:pl-2 md:pr-4">
+      <div className="dashboard-inner min-h-full w-full space-y-6 bg-[#0a0a0a] pl-1 pr-2 text-white md:pl-2 md:pr-4">
         {hasError ? (
           <Card className="border-amber-500/50 bg-amber-500/10 p-6 text-amber-200">
             <div className="flex flex-col items-center gap-3 text-center">
@@ -94,9 +101,9 @@ export default function Home() {
 
               return (
                 <Link key={pillar.slug} href={href} className="min-w-0">
-                  <Card className="group flex h-full min-h-[240px] flex-col overflow-hidden rounded-2xl border border-[#262626] bg-[#161616] text-white shadow-none transition hover:-translate-y-0.5 hover:border-violet-500/40">
+                  <Card className="group flex h-full min-h-[280px] flex-col gap-0 overflow-hidden rounded-2xl border border-[#262626] bg-[#161616] p-0 text-white shadow-none transition hover:-translate-y-0.5 hover:border-violet-500/40">
                     <div
-                      className="relative flex h-[120px] shrink-0 overflow-hidden rounded-t-2xl"
+                      className="relative flex h-[160px] w-full shrink-0 overflow-hidden rounded-t-2xl"
                       style={
                         module
                           ? { background: getModuleGradient(module.color) }
@@ -123,12 +130,17 @@ export default function Home() {
                       </p>
                       <div className="flex items-center gap-1.5 text-xs text-white/85">
                         <LayoutList className="h-3.5 w-3.5 shrink-0 text-white/90" />
-                        <span>{lessonCount > 0 ? `${Math.min(lessonCount, 2)} módulos` : "2 módulos"}</span>
+                        <span>{lessonCount > 0 ? `${lessonCount} ${lessonCount === 1 ? "seção" : "seções"}` : "—"}</span>
                       </div>
                       <Progress
                         value={percentage}
                         className="h-2 bg-white/20 [&>*]:bg-green-500"
                       />
+                      {lessonCount > 0 ? (
+                        <p className="text-xs text-white/60">
+                          {Math.round((percentage / 100) * lessonCount)} de {lessonCount} {lessonCount === 1 ? "seção concluída" : "seções concluídas"}
+                        </p>
+                      ) : null}
                     </div>
                   </Card>
                 </Link>
@@ -140,6 +152,37 @@ export default function Home() {
                 Carregando sua bússola...
               </Card>
             ) : null}
+          </div>
+        </section>
+
+        <section className="space-y-3">
+          <h2 className="text-2xl font-semibold text-white">Meus cursos</h2>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+            {COURSES.map((course) => (
+              <CourseCard
+                key={course.id}
+                title={course.title}
+                href={course.href}
+                acronym={course.acronym}
+                cover={course.cover}
+                dark={isDark}
+              />
+            ))}
+          </div>
+        </section>
+
+        <section className="space-y-3">
+          <h2 className="text-2xl font-semibold text-white">Guias de uso</h2>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+            {GUIDES.map((guide) => (
+              <GuideCard
+                key={guide.id}
+                title={guide.title}
+                href={guide.href}
+                cover={guide.cover}
+                dark={isDark}
+              />
+            ))}
           </div>
         </section>
           </>

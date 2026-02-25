@@ -10,11 +10,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { trpc } from "@/lib/trpc";
+import { useTheme } from "@/contexts/ThemeContext";
+import { cn } from "@/lib/utils";
 import { Lock, Save, ShieldCheck, Upload, User } from "lucide-react";
 import { toast } from "sonner";
 
 export default function SettingsPage() {
   const utils = trpc.useUtils();
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const { data: me } = trpc.auth.me.useQuery();
 
   const [name, setName] = useState(me?.name ?? "");
@@ -111,38 +115,57 @@ export default function SettingsPage() {
 
   return (
     <DashboardLayout>
-      <div className="mx-auto w-full max-w-5xl space-y-5">
+      <div className="content-inner settings-inner mx-auto w-full max-w-5xl space-y-5">
         <div>
-          <h1 className="text-3xl font-semibold">Configurações</h1>
-          <p className="text-sm text-white/60">Gerencie suas informações pessoais e preferências</p>
+          <h1 className={cn("text-3xl font-semibold", isDark ? "text-white" : "text-foreground")}>Configurações</h1>
+          <p className={cn("text-sm", isDark ? "text-white/70" : "text-muted-foreground")}>Gerencie suas informações pessoais e preferências</p>
         </div>
 
         <Tabs defaultValue="perfil" className="space-y-4">
-          <TabsList className="grid h-11 w-full grid-cols-2 bg-white/5 p-1">
-            <TabsTrigger value="perfil" className="data-[state=active]:bg-violet-500/25 data-[state=active]:text-violet-300 data-[state=active]:[&>svg]:text-violet-300">
+          <TabsList
+            className={cn(
+              "grid h-11 w-full grid-cols-2 p-1",
+              isDark ? "bg-white/10" : "bg-muted border border-border"
+            )}
+          >
+            <TabsTrigger
+              value="perfil"
+              className={cn(
+                isDark
+                  ? "data-[state=inactive]:text-white/70 data-[state=active]:bg-violet-500/30 data-[state=active]:text-white data-[state=active]:[&>svg]:text-white"
+                  : "data-[state=inactive]:text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:[&>svg]:text-primary-foreground"
+              )}
+            >
               <User className="h-4 w-4" /> Perfil
             </TabsTrigger>
-            <TabsTrigger value="seguranca" className="data-[state=active]:bg-red-500/25 data-[state=active]:text-red-400 data-[state=active]:[&>svg]:text-red-400">
+            <TabsTrigger
+              value="seguranca"
+              className={cn(
+                isDark
+                  ? "data-[state=inactive]:text-white/70 data-[state=active]:bg-red-500/30 data-[state=active]:text-white data-[state=active]:[&>svg]:text-white"
+                  : "data-[state=inactive]:text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:[&>svg]:text-primary-foreground"
+              )}
+            >
               <Lock className="h-4 w-4" /> Segurança
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="perfil">
-            <Card className="border-[#262626] bg-[#161616] p-5">
+            <Card className={cn("p-5", isDark ? "border-[#262626] bg-[#161616]" : "border-border bg-card")}>
               <div className="mb-5 flex items-center gap-3">
-                <div className="rounded-lg bg-violet-500/20 p-2 text-violet-400">
+                <div className={cn("rounded-lg p-2", isDark ? "bg-violet-500/20 text-violet-400" : "bg-primary/10 text-primary")}>
                   <User className="h-4 w-4" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-white">Meu Perfil</h2>
-                  <p className="text-xs text-white/55">Informações pessoais e foto de perfil</p>
+                  <h2 className={cn("text-lg font-semibold", isDark ? "text-white" : "text-foreground")}>Meu Perfil</h2>
+                  <p className={cn("text-xs", isDark ? "text-white/70" : "text-muted-foreground")}>Informações pessoais e foto de perfil</p>
                 </div>
               </div>
 
               <form onSubmit={onSaveProfile} className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-[180px_1fr]">
                   <div className="space-y-2">
-                    <Label className="text-white/80">Foto de Perfil</Label>
+                    <Label className={isDark ? "text-white/90" : "text-foreground"}>Foto de Perfil</Label>
                     <input
                       ref={fileInputRef}
                       type="file"
@@ -156,7 +179,12 @@ export default function SettingsPage() {
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
                       disabled={uploading}
-                      className="flex h-28 w-28 cursor-pointer items-center justify-center rounded-full border border-dashed border-white/30 text-xs text-white/45 transition hover:border-white/50 hover:bg-white/5 disabled:pointer-events-none disabled:opacity-60"
+                      className={cn(
+                        "flex h-28 w-28 cursor-pointer items-center justify-center rounded-full border border-dashed text-xs transition disabled:pointer-events-none disabled:opacity-60",
+                        isDark
+                          ? "border-white/30 text-white/70 hover:border-white/50 hover:bg-white/5"
+                          : "border-border text-muted-foreground hover:border-primary/50 hover:bg-muted/50"
+                      )}
                     >
                       {me?.avatarUrl ? (
                         <Avatar className="h-28 w-28 rounded-full border-0">
@@ -167,7 +195,7 @@ export default function SettingsPage() {
                         </Avatar>
                       ) : (
                         <span className="flex flex-col items-center gap-1">
-                          <Upload className="h-6 w-6 text-white/60" />
+                          <Upload className="h-6 w-6" />
                           {uploading ? "Enviando…" : "Upload"}
                         </span>
                       )}
@@ -176,20 +204,30 @@ export default function SettingsPage() {
 
                   <div className="space-y-3">
                     <div className="space-y-1.5">
-                      <Label htmlFor="name" className="text-white/80">Nome Completo</Label>
-                      <Input id="name" value={name} onChange={(e) => setName(e.target.value)} className="border-white/15 bg-white/5 text-white" />
+                      <Label htmlFor="name" className={isDark ? "text-white/90" : "text-foreground"}>Nome Completo</Label>
+                      <Input
+                        id="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className={isDark ? "border-white/20 bg-white/5 text-white placeholder:text-white/50" : "bg-background text-foreground placeholder:text-muted-foreground"}
+                      />
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label htmlFor="email" className="text-white/80">Email</Label>
-                      <Input id="email" value={me?.email ?? ""} disabled className="border-white/10 bg-white/5 text-white/55" />
-                      <p className="text-[11px] text-white/40">O email não pode ser alterado</p>
+                      <Label htmlFor="email" className={isDark ? "text-white/90" : "text-foreground"}>Email</Label>
+                      <Input
+                        id="email"
+                        value={me?.email ?? ""}
+                        disabled
+                        className={isDark ? "border-white/15 bg-white/5 text-white/80" : "bg-muted text-foreground"}
+                      />
+                      <p className={cn("text-[11px]", isDark ? "text-white/60" : "text-muted-foreground")}>O email não pode ser alterado</p>
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label className="text-white/80">Função</Label>
+                      <Label className={isDark ? "text-white/90" : "text-foreground"}>Função</Label>
                       <div>
-                        <Badge className="bg-white/10 text-white">{me?.role === "admin" ? "Admin" : "Aluno"}</Badge>
+                        <Badge className={isDark ? "bg-white/10 text-white" : "bg-muted text-foreground"}>{me?.role === "admin" ? "Admin" : "Aluno"}</Badge>
                       </div>
                     </div>
                   </div>
@@ -205,49 +243,49 @@ export default function SettingsPage() {
           </TabsContent>
 
           <TabsContent value="seguranca">
-            <Card className="border-[#262626] bg-[#161616] p-5">
+            <Card className={cn("p-5", isDark ? "border-[#262626] bg-[#161616]" : "border-border bg-card")}>
               <div className="mb-5 flex items-center gap-3">
-                <div className="rounded-lg bg-red-500/20 p-2 text-red-400">
+                <div className={cn("rounded-lg p-2", isDark ? "bg-red-500/20 text-red-400" : "bg-destructive/10 text-destructive")}>
                   <ShieldCheck className="h-4 w-4" />
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold text-white">Segurança</h2>
-                  <p className="text-xs text-white/55">Altere sua senha de acesso</p>
+                  <h2 className={cn("text-lg font-semibold", isDark ? "text-white" : "text-foreground")}>Segurança</h2>
+                  <p className={cn("text-xs", isDark ? "text-white/70" : "text-muted-foreground")}>Altere sua senha de acesso</p>
                 </div>
               </div>
 
               <form onSubmit={onChangePassword} className="space-y-4">
                 <div className="grid gap-3 md:grid-cols-3">
                   <div className="space-y-1.5">
-                    <Label htmlFor="currentPassword" className="text-white/80">Senha Atual</Label>
+                    <Label htmlFor="currentPassword" className={isDark ? "text-white/90" : "text-foreground"}>Senha Atual</Label>
                     <Input
                       id="currentPassword"
                       type="password"
                       value={currentPassword}
                       onChange={(e) => setCurrentPassword(e.target.value)}
-                      className="border-white/15 bg-white/5 text-white"
+                      className={isDark ? "border-white/20 bg-white/5 text-white placeholder:text-white/50" : "bg-background text-foreground placeholder:text-muted-foreground"}
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label htmlFor="newPassword" className="text-white/80">Nova Senha</Label>
+                    <Label htmlFor="newPassword" className={isDark ? "text-white/90" : "text-foreground"}>Nova Senha</Label>
                     <Input
                       id="newPassword"
                       type="password"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
-                      className="border-white/15 bg-white/5 text-white"
+                      className={isDark ? "border-white/20 bg-white/5 text-white placeholder:text-white/50" : "bg-background text-foreground placeholder:text-muted-foreground"}
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <Label htmlFor="confirmPassword" className="text-white/80">Confirmar Nova Senha</Label>
+                    <Label htmlFor="confirmPassword" className={isDark ? "text-white/90" : "text-foreground"}>Confirmar Nova Senha</Label>
                     <Input
                       id="confirmPassword"
                       type="password"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="border-white/15 bg-white/5 text-white"
+                      className={isDark ? "border-white/20 bg-white/5 text-white placeholder:text-white/50" : "bg-background text-foreground placeholder:text-muted-foreground"}
                     />
                   </div>
                 </div>
