@@ -248,7 +248,13 @@ export default function MarcoZeroWorkspace() {
       <div className="pillar-inner marco-zero-inner min-h-screen bg-[#0a0a0a] screen-only">
       <header className="sticky top-0 z-10 border-b border-[#262626] bg-[#111111] shadow-sm">
         <div className="container py-4 space-y-3">
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <Link href="/">
+              <Button variant="ghost" size="sm" className="text-white/90 hover:bg-white/10">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Dashboard
+              </Button>
+            </Link>
             <div className="min-w-0 flex-1">
               <div className="text-sm text-white/60">O ponto de partida</div>
               <h1 className="text-xl font-bold truncate text-white">{marcoZeroModule.title}</h1>

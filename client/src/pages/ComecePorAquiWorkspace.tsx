@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, CheckCircle2, Mail, MessageCircle } from "lucide-react";
+import { Loader2, ArrowLeft, CheckCircle2, Mail, MessageCircle } from "lucide-react";
 import { getLoginUrl } from "@/const";
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
@@ -194,6 +194,7 @@ export default function ComecePorAquiWorkspace() {
             <div className="flex items-center gap-4">
               <Link href="/">
                 <Button variant="ghost" size="sm" className={isDark ? "text-white/90 hover:bg-white/10" : ""}>
+                  <ArrowLeft className="w-4 h-4 mr-2" />
                   Dashboard
                 </Button>
               </Link>
