@@ -7,6 +7,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
 import { ExternalLink, FolderOpen } from "lucide-react";
 
@@ -40,13 +41,15 @@ export default function MaterialsPage() {
         </section>
 
         {isLoading ? (
-          <Card className="border-[#262626] bg-[#161616] p-6 text-sm text-white/65">Carregando materiais...</Card>
+          <Card className={cn("p-6 text-sm", isDark ? "border-[#262626] bg-[#161616] text-white/65" : "border-border bg-card text-muted-foreground")}>
+            Carregando materiais...
+          </Card>
         ) : null}
 
         {!isLoading && (!resources || resources.length === 0) ? (
-          <Card className="border-[#262626] bg-[#161616] p-10 text-center">
-            <FolderOpen className="mx-auto mb-3 h-6 w-6 text-white/45" />
-            <p className="text-sm text-white/60">Nenhum material disponível no momento.</p>
+          <Card className={cn("p-10 text-center", isDark ? "border-[#262626] bg-[#161616]" : "border-border bg-card")}>
+            <FolderOpen className={cn("mx-auto mb-3 h-6 w-6", isDark ? "text-white/45" : "text-muted-foreground")} />
+            <p className={cn("text-sm", isDark ? "text-white/60" : "text-muted-foreground")}>Nenhum material disponível no momento.</p>
           </Card>
         ) : null}
 
@@ -54,13 +57,25 @@ export default function MaterialsPage() {
           <h2 className="text-xl font-semibold text-foreground">Recursos por módulo</h2>
           <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
           {(resources ?? []).map((resource) => (
-            <Card key={resource.id} className="flex min-h-[170px] flex-col justify-between border-[#262626] bg-[#161616] p-4">
+            <Card
+              key={resource.id}
+              className={cn(
+                "flex min-h-[170px] flex-col justify-between p-4",
+                isDark ? "border-[#262626] bg-[#161616]" : "border-border bg-card"
+              )}
+            >
               <div className="space-y-2">
                 <div className="flex items-start justify-between gap-2">
-                  <h3 className="line-clamp-2 text-base font-semibold text-white">{resource.title}</h3>
-                  <Badge className="bg-white/10 text-[11px] text-white">{resource.resourceType}</Badge>
+                  <h3 className={cn("line-clamp-2 text-base font-semibold", isDark ? "text-white" : "text-foreground")}>
+                    {resource.title}
+                  </h3>
+                  <Badge className={isDark ? "bg-white/10 text-[11px] text-white" : "bg-muted text-[11px] text-foreground"}>
+                    {resource.resourceType}
+                  </Badge>
                 </div>
-                <p className="line-clamp-3 text-sm text-white/60">{resource.description || "Material de apoio para acelerar sua implementação."}</p>
+                <p className={cn("line-clamp-3 text-sm", isDark ? "text-white/60" : "text-muted-foreground")}>
+                  {resource.description || "Material de apoio para acelerar sua implementação."}
+                </p>
               </div>
 
               <div className="mt-4">

@@ -8,6 +8,7 @@ import { CourseCard } from "@/components/CourseCard";
 import { GuideCard } from "@/components/GuideCard";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useTheme } from "@/contexts/ThemeContext";
@@ -38,13 +39,18 @@ export default function Home() {
 
   return (
     <DashboardLayout>
-      <div className="dashboard-inner min-h-full w-full space-y-6 bg-[#0a0a0a] pl-1 pr-2 text-white md:pl-2 md:pr-4">
+      <div
+        className={cn(
+          "dashboard-inner min-h-full w-full space-y-6 pl-1 pr-2 md:pl-2 md:pr-4",
+          isDark ? "bg-[#0a0a0a] text-white" : "bg-background text-foreground"
+        )}
+      >
         {hasError ? (
           <Card className="border-amber-500/50 bg-amber-500/10 p-6 text-amber-200">
             <div className="flex flex-col items-center gap-3 text-center">
               <AlertCircle className="h-10 w-10 text-amber-400" />
               <p className="font-medium">Não foi possível carregar os dados do dashboard.</p>
-              <p className="text-sm text-white/70">Tente novamente ou faça logout e entre de novo.</p>
+              <p className={cn("text-sm", isDark ? "text-white/70" : "text-muted-foreground")}>Tente novamente ou faça logout e entre de novo.</p>
               <button
                 type="button"
                 onClick={retry}
@@ -58,38 +64,38 @@ export default function Home() {
         {!hasError ? (
           <>
         <section className="space-y-1">
-          <h1 className="text-3xl font-semibold tracking-tight text-white">Olá, {user?.name ?? "Aluno"}</h1>
-          <p className="text-sm text-white/60">continue de onde parou</p>
+          <h1 className={cn("text-3xl font-semibold tracking-tight", isDark ? "text-white" : "text-foreground")}>Olá, {user?.name ?? "Aluno"}</h1>
+          <p className={cn("text-sm", isDark ? "text-white/60" : "text-muted-foreground")}>continue de onde parou</p>
         </section>
 
         <section className="grid gap-3 md:grid-cols-3">
-          <Card className="rounded-xl border border-[#2e1a4a] bg-[#3b2163] p-4 text-white shadow-none">
+          <Card className={cn("rounded-xl border p-4 shadow-none", isDark ? "border-[#2e1a4a] bg-[#3b2163] text-white" : "border-primary/30 bg-primary/10 text-foreground")}>
             <div className="mb-2 flex items-start justify-between">
-              <p className="text-sm text-white/90">Progresso da Jornada</p>
-              <TrendingUp className="h-4 w-4 text-white/80" />
+              <p className={cn("text-sm", isDark ? "text-white/90" : "text-foreground/90")}>Progresso da Jornada</p>
+              <TrendingUp className={cn("h-4 w-4", isDark ? "text-white/80" : "text-primary")} />
             </div>
             <p className="text-3xl font-semibold">{overallProgress}%</p>
           </Card>
 
-          <Card className="rounded-xl border border-[#2e1a4a] bg-[#3b2163] p-4 text-white shadow-none">
+          <Card className={cn("rounded-xl border p-4 shadow-none", isDark ? "border-[#2e1a4a] bg-[#3b2163] text-white" : "border-primary/30 bg-primary/10 text-foreground")}>
             <div className="mb-2 flex items-start justify-between">
-              <p className="text-sm text-white/90">Pilares a finalizar</p>
-              <Play className="h-4 w-4 text-white/80" />
+              <p className={cn("text-sm", isDark ? "text-white/90" : "text-foreground/90")}>Pilares a finalizar</p>
+              <Play className={cn("h-4 w-4", isDark ? "text-white/80" : "text-primary")} />
             </div>
             <p className="text-3xl font-semibold">{pillarsRemaining}</p>
           </Card>
 
-          <Card className="rounded-xl border border-[#2e1a4a] bg-[#3b2163] p-4 text-white shadow-none">
+          <Card className={cn("rounded-xl border p-4 shadow-none", isDark ? "border-[#2e1a4a] bg-[#3b2163] text-white" : "border-primary/30 bg-primary/10 text-foreground")}>
             <div className="mb-2 flex items-start justify-between">
-              <p className="text-sm text-white/90">Pilares Finalizados</p>
-              <Check className="h-4 w-4 text-white/80" />
+              <p className={cn("text-sm", isDark ? "text-white/90" : "text-foreground/90")}>Pilares Finalizados</p>
+              <Check className={cn("h-4 w-4", isDark ? "text-white/80" : "text-primary")} />
             </div>
             <p className="text-3xl font-semibold">{pillarsCompleted}</p>
           </Card>
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-2xl font-semibold text-white">Minha Bússola</h2>
+          <h2 className={cn("text-2xl font-semibold", isDark ? "text-white" : "text-foreground")}>Minha Bússola</h2>
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
             {PILLARS_ORDER.map((pillar) => {
@@ -101,7 +107,14 @@ export default function Home() {
 
               return (
                 <Link key={pillar.slug} href={href} className="min-w-0">
-                  <Card className="group flex h-full min-h-[280px] flex-col gap-0 overflow-hidden rounded-2xl border border-[#262626] bg-[#161616] p-0 text-white shadow-none transition hover:-translate-y-0.5 hover:border-violet-500/40">
+                  <Card
+                    className={cn(
+                      "group flex h-full min-h-[280px] flex-col gap-0 overflow-hidden rounded-2xl border p-0 shadow-none transition hover:-translate-y-0.5",
+                      isDark
+                        ? "border-[#262626] bg-[#161616] text-white hover:border-violet-500/40"
+                        : "border-border bg-card text-foreground hover:border-primary/50"
+                    )}
+                  >
                     <div
                       className="relative flex h-[160px] w-full shrink-0 overflow-hidden rounded-t-2xl"
                       style={
@@ -124,20 +137,20 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div className="flex min-h-0 flex-1 flex-col justify-between space-y-2 bg-[#1a1a1a] p-3">
-                      <p className="line-clamp-2 text-sm font-medium leading-snug text-white">
+                    <div className={cn("flex min-h-0 flex-1 flex-col justify-between space-y-2 p-3", isDark ? "bg-[#1a1a1a]" : "bg-muted/20")}>
+                      <p className={cn("line-clamp-2 text-sm font-medium leading-snug", isDark ? "text-white" : "text-foreground")}>
                         {pillar.subtitle}
                       </p>
-                      <div className="flex items-center gap-1.5 text-xs text-white/85">
-                        <LayoutList className="h-3.5 w-3.5 shrink-0 text-white/90" />
+                      <div className={cn("flex items-center gap-1.5 text-xs", isDark ? "text-white/85" : "text-muted-foreground")}>
+                        <LayoutList className={cn("h-3.5 w-3.5 shrink-0", isDark ? "text-white/90" : "text-foreground/80")} />
                         <span>{lessonCount > 0 ? `${lessonCount} ${lessonCount === 1 ? "seção" : "seções"}` : "—"}</span>
                       </div>
                       <Progress
                         value={percentage}
-                        className="h-2 bg-white/20 [&>*]:bg-green-500"
+                        className={cn("h-2 [&>*]:bg-green-500", isDark ? "bg-white/20" : "bg-muted")}
                       />
                       {lessonCount > 0 ? (
-                        <p className="text-xs text-white/60">
+                        <p className={cn("text-xs", isDark ? "text-white/60" : "text-muted-foreground")}>
                           {Math.round((percentage / 100) * lessonCount)} de {lessonCount} {lessonCount === 1 ? "seção concluída" : "seções concluídas"}
                         </p>
                       ) : null}
@@ -148,7 +161,7 @@ export default function Home() {
             })}
 
             {isLoading && !(modules && modules.length) ? (
-              <Card className="col-span-full border border-[#262626] bg-[#161616] p-6 text-center text-sm text-white/60 shadow-none xl:col-span-6">
+              <Card className={cn("col-span-full p-6 text-center text-sm shadow-none xl:col-span-6", isDark ? "border-[#262626] bg-[#161616] text-white/60" : "border-border bg-card text-muted-foreground")}>
                 Carregando sua bússola...
               </Card>
             ) : null}
@@ -156,7 +169,7 @@ export default function Home() {
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-2xl font-semibold text-white">Meus cursos</h2>
+          <h2 className={cn("text-2xl font-semibold", isDark ? "text-white" : "text-foreground")}>Meus cursos</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
             {COURSES.map((course) => (
               <CourseCard
@@ -172,7 +185,7 @@ export default function Home() {
         </section>
 
         <section className="space-y-3">
-          <h2 className="text-2xl font-semibold text-white">Guias de uso</h2>
+          <h2 className={cn("text-2xl font-semibold", isDark ? "text-white" : "text-foreground")}>Guias de uso</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
             {GUIDES.map((guide) => (
               <GuideCard

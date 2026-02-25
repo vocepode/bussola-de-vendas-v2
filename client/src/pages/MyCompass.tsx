@@ -4,11 +4,15 @@ import { getModuleGradient, getModuleHref, PILLARS_ORDER } from "@/constants/pil
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { useTheme } from "@/contexts/ThemeContext";
+import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
 import { Lock, LayoutList } from "lucide-react";
 import Link from "next/link";
 
 export default function MyCompassPage() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const { data: overview, isLoading: loadingOverview } = trpc.dashboard.getOverview.useQuery();
   const { data: modules, isLoading: loadingModules } = trpc.modules.list.useQuery();
 
@@ -18,10 +22,15 @@ export default function MyCompassPage() {
 
   return (
     <DashboardLayout>
-      <div className="content-inner bussola-inner w-full space-y-6 pl-1 pr-2 md:pl-2 md:pr-4">
+      <div
+        className={cn(
+          "content-inner bussola-inner w-full space-y-6 pl-1 pr-2 md:pl-2 md:pr-4",
+          isDark ? "text-white" : "text-foreground"
+        )}
+      >
         <section className="space-y-1">
-          <h1 className="text-3xl font-semibold tracking-tight text-white">Minha Bússola</h1>
-          <p className="text-sm text-white/60">Acompanhe seu progresso em cada pilar do método</p>
+          <h1 className={cn("text-3xl font-semibold tracking-tight", isDark ? "text-white" : "text-foreground")}>Minha Bússola</h1>
+          <p className={cn("text-sm", isDark ? "text-white/60" : "text-muted-foreground")}>Acompanhe seu progresso em cada pilar do método</p>
         </section>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
@@ -40,11 +49,13 @@ export default function MyCompassPage() {
 
             const cardContent = (
               <Card
-                className={
-                  isLocked
-                    ? "group flex h-full min-h-[280px] flex-col gap-0 overflow-hidden rounded-2xl border border-[#262626] bg-[#161616] p-0 text-white shadow-none opacity-75"
-                    : "group flex h-full min-h-[280px] flex-col gap-0 overflow-hidden rounded-2xl border border-[#262626] bg-[#161616] p-0 text-white shadow-none transition hover:-translate-y-0.5 hover:border-violet-500/40"
-                }
+                className={cn(
+                  "group flex h-full min-h-[280px] flex-col gap-0 overflow-hidden rounded-2xl border p-0 shadow-none transition hover:-translate-y-0.5",
+                  isLocked && "opacity-75",
+                  isDark
+                    ? "border-[#262626] bg-[#161616] text-white hover:border-violet-500/40"
+                    : "border-border bg-card text-foreground hover:border-primary/50"
+                )}
               >
                 <div
                   className="relative flex h-[160px] w-full shrink-0 overflow-hidden rounded-t-2xl"
@@ -73,31 +84,41 @@ export default function MyCompassPage() {
                   </div>
                 </div>
 
-                <div className="flex min-h-0 flex-1 flex-col justify-between space-y-2 bg-[#1a1a1a] p-3">
-                  <p className="line-clamp-2 text-sm font-medium leading-snug text-white">
+                <div className={cn("flex min-h-0 flex-1 flex-col justify-between space-y-2 p-3", isDark ? "bg-[#1a1a1a]" : "bg-muted/20")}>
+                  <p className={cn("line-clamp-2 text-sm font-medium leading-snug", isDark ? "text-white" : "text-foreground")}>
                     {pillar.subtitle}
                   </p>
-                  <div className="flex items-center gap-1.5 text-xs text-white/85">
-                    <LayoutList className="h-3.5 w-3.5 shrink-0 text-white/90" />
+                  <div className={cn("flex items-center gap-1.5 text-xs", isDark ? "text-white/85" : "text-muted-foreground")}>
+                    <LayoutList className={cn("h-3.5 w-3.5 shrink-0", isDark ? "text-white/90" : "text-foreground/80")} />
                     <span>{totalLessons > 0 ? `${totalLessons} ${totalLessons === 1 ? "seção" : "seções"}` : "—"}</span>
                   </div>
                   <Progress
                     value={percentage}
-                    className="h-2 bg-white/20 [&>*]:bg-green-500"
+                    className={cn("h-2 [&>*]:bg-green-500", isDark ? "bg-white/20" : "bg-muted")}
                   />
                   {totalLessons > 0 ? (
-                    <p className="text-xs text-white/60">
+                    <p className={cn("text-xs", isDark ? "text-white/60" : "text-muted-foreground")}>
                       {completedLessons} de {totalLessons} {totalLessons === 1 ? "seção concluída" : "seções concluídas"}
                     </p>
                   ) : null}
                   {isLocked ? (
-                    <span className="inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-white/20 bg-white/5 py-2 text-xs font-medium text-white/80">
+                    <span
+                      className={cn(
+                        "inline-flex w-full items-center justify-center gap-1.5 rounded-lg border py-2 text-xs font-medium",
+                        isDark ? "border-white/20 bg-white/5 text-white/80" : "border-border bg-muted/30 text-muted-foreground"
+                      )}
+                    >
                       <Lock className="h-3.5 w-3.5" />
                       Conclua &quot;{prevPillar?.title}&quot; para desbloquear
                     </span>
                   ) : (
                     <span
-                      className="inline-flex w-full items-center justify-center rounded-lg border border-white/30 bg-white/5 py-2 text-sm font-medium text-white transition group-hover:bg-white/10"
+                      className={cn(
+                        "inline-flex w-full items-center justify-center rounded-lg border py-2 text-sm font-medium transition",
+                        isDark
+                          ? "border-white/30 bg-white/5 text-white group-hover:bg-white/10"
+                          : "border-border bg-muted/50 text-foreground group-hover:bg-muted"
+                      )}
                       aria-hidden
                     >
                       {percentage > 0 ? "Continuar" : "Começar"}
@@ -118,7 +139,7 @@ export default function MyCompassPage() {
           })}
 
           {(loadingOverview || loadingModules) && !(modules && modules.length) ? (
-            <Card className="col-span-full border border-[#262626] bg-[#161616] p-6 text-center text-sm text-white/60 shadow-none xl:col-span-6">
+            <Card className={cn("col-span-full p-6 text-center text-sm shadow-none xl:col-span-6", isDark ? "border-[#262626] bg-[#161616] text-white/60" : "border-border bg-card text-muted-foreground")}>
               Carregando sua bússola...
             </Card>
           ) : null}

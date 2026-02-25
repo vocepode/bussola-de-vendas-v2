@@ -22,6 +22,7 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useIsMobile } from "@/components/hooks/use-mobile";
 import {
   Bell,
   BookOpen,
@@ -59,6 +60,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const router = useRouter();
   const pathname = usePathname();
   const { theme } = useTheme();
+  const isMobile = useIsMobile();
   /** Quando tema é dark: shell e conteúdo escuros. Quando tema é light: shell e conteúdo claros em todas as seções. */
   const sidebarLight = theme !== "dark";
   const contentLight = theme === "light";
@@ -255,7 +257,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           )}
         >
           <div className="flex items-center gap-2">
-            <SidebarTrigger className="md:hidden" />
+            {isMobile ? <SidebarTrigger /> : null}
           </div>
 
           <div className="flex items-center gap-2">
