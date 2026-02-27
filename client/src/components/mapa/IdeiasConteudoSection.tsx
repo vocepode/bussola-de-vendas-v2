@@ -13,11 +13,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { CONTEUDO_TOPICOS, CONTEUDO_FUNIL } from "@/constants/mapa";
 import { trpc } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { Loader2, Pencil, Plus } from "lucide-react";
+import { LayoutGrid, LayoutList, Loader2, Pencil, Plus } from "lucide-react";
 import Link from "next/link";
 
 type TopicValue = (typeof CONTEUDO_TOPICOS)[number]["value"];
@@ -46,6 +54,7 @@ export function IdeiasConteudoSection() {
     },
   });
 
+  const [viewMode, setViewMode] = useState<"lista" | "cards">("cards");
   const [editingId, setEditingId] = useState<number | null>(null);
   const [showNewForm, setShowNewForm] = useState(false);
   const [newTitle, setNewTitle] = useState("");
@@ -112,11 +121,31 @@ export function IdeiasConteudoSection() {
       <div>
         <h2 className="text-xl font-semibold">Ideias de Conteúdo</h2>
         <p className="text-sm text-muted-foreground mt-1">
-          Associe cada ideia a um tema, tópico e estágio do funil (C1/C2/C3). Organizadas em cards por tema.
+          Associe cada ideia a um tema, tópico e estágio do funil (C1/C2/C3). Visualize em lista ou em cards por tema.
         </p>
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex flex-wrap items-center justify-end gap-2">
+        <div className="flex rounded-md border border-input bg-background p-0.5">
+          <Button
+            variant={viewMode === "lista" ? "secondary" : "ghost"}
+            size="sm"
+            className="h-8 gap-1.5 px-3"
+            onClick={() => setViewMode("lista")}
+          >
+            <LayoutList className="h-4 w-4" />
+            Lista
+          </Button>
+          <Button
+            variant={viewMode === "cards" ? "secondary" : "ghost"}
+            size="sm"
+            className="h-8 gap-1.5 px-3"
+            onClick={() => setViewMode("cards")}
+          >
+            <LayoutGrid className="h-4 w-4" />
+            Cards
+          </Button>
+        </div>
         <Button
           size="sm"
           className="gap-2"
@@ -206,7 +235,68 @@ export function IdeiasConteudoSection() {
         </Card>
       )}
 
-      {gruposPorTema.map((grupo) => (
+      {viewMode === "lista" && (
+        <>
+          {editingId != null && (() => {
+            const idea = listaIdeias.find((i) => i.id === editingId);
+            return idea ? (
+              <Card>
+                <CardContent className="pt-4">
+                  <IdeiaEditForm
+                    idea={idea}
+                    temas={listaTemas}
+                    onSave={(data) => {
+                      updateMutation.mutate({ id: idea.id, ...data }, { onSuccess: () => setEditingId(null) });
+                    }}
+                    onCancel={() => setEditingId(null)}
+                    isSaving={updateMutation.isPending}
+                  />
+                </CardContent>
+              </Card>
+            ) : null;
+          })()}
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Tema</TableHead>
+                  <TableHead>Ideia</TableHead>
+                  <TableHead>Tópico</TableHead>
+                  <TableHead>Funil</TableHead>
+                  <TableHead className="w-[140px] text-right">Ações</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {listaIdeias.map((idea) => (
+                  <TableRow key={idea.id}>
+                    <TableCell className="text-muted-foreground text-sm">
+                      {listaTemas.find((t) => t.id === idea.themeId)?.name ?? idea.theme ?? "—"}
+                    </TableCell>
+                    <TableCell className="font-medium">{idea.title}</TableCell>
+                    <TableCell className="text-sm">
+                      {CONTEUDO_TOPICOS.find((t) => t.value === idea.topic)?.label ?? idea.topic}
+                    </TableCell>
+                    <TableCell className="text-sm">
+                      {CONTEUDO_FUNIL.find((f) => f.value === idea.funnel)?.label ?? idea.funnel}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Button size="sm" variant="ghost" className="h-8 gap-1" onClick={() => setEditingId(idea.id)}>
+                        <Pencil className="h-3 w-3" />
+                        Editar
+                      </Button>
+                      <Button size="sm" variant="ghost" className="h-8 gap-1" asChild>
+                        <Link href={`/roteiro/${idea.id}`}>Roteiro →</Link>
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </>
+      )}
+
+      {viewMode === "cards" && gruposPorTema.map((grupo) => (
         <div key={grupo.themeId ?? "sem-tema"} className="space-y-3">
           <h3 className="text-base font-semibold text-foreground border-b pb-1.5">
             {grupo.themeName}

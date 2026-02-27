@@ -1048,6 +1048,22 @@ export async function deleteMapaEditorial(id: number, userId: number) {
     .where(and(eq(mapaEditoriais.id, id), eq(mapaEditoriais.userId, userId)));
 }
 
+/** Progresso do MAPA (Estrutura de Conteúdo): 25% editoriais, 25% temas, 25% temas por editoria, 25% ideias. */
+export async function getMapaProgressPercentage(userId: number): Promise<number> {
+  const [ed, tem, ideias] = await Promise.all([
+    listMapaEditoriais(userId),
+    listMapaTemas(userId),
+    listContentIdeas(userId),
+  ]);
+  let p = 0;
+  if (ed.length > 0) p += 25;
+  if (tem.length > 0) p += 25;
+  const editoriaisComTemas = ed.some((e) => tem.some((t) => t.editorialId === e.id));
+  if (editoriaisComTemas) p += 25;
+  if (ideias.length > 0) p += 25;
+  return p;
+}
+
 export async function listMapaTemas(userId: number, editorialId?: number): Promise<MapTema[]> {
   const db = await getDb();
   if (!db) return [];

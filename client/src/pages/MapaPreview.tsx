@@ -5,18 +5,23 @@ import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import { trpc } from "@/lib/trpc";
 import { CONTEUDO_TOPICOS, CONTEUDO_FUNIL } from "@/constants/mapa";
-import { Loader2, ArrowLeft, Printer } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 export default function MapPreview() {
   const searchParams = useSearchParams();
   const { user, loading: authLoading } = useAuth();
+  const { data: progress } = trpc.workspaces.getProgressBySlug.useQuery({ slug: "mapa" }, { enabled: !!user });
   const { data: editoriais, isLoading: loadingEd } = trpc.mapa.editoriais.list.useQuery(undefined, { enabled: !!user });
   const { data: temas, isLoading: loadingTemas } = trpc.mapa.temas.list.useQuery(undefined, { enabled: !!user });
   const { data: ideias, isLoading: loadingIdeias } = trpc.contentIdeas.list.useQuery(undefined, { enabled: !!user });
 
   const isLoading = authLoading || loadingEd || loadingTemas || loadingIdeias;
+  const pct = progress?.percentage ?? 0;
+  const today = new Date().toLocaleDateString("pt-BR");
+  const clienteDisplay = user?.name ?? "Cliente";
 
   useEffect(() => {
     if (typeof document === "undefined") return;
@@ -63,38 +68,56 @@ export default function MapPreview() {
   }
 
   return (
-    <div className="mapa-preview min-h-screen bg-white text-black">
+    <div
+      id="mapa-preview"
+      className="min-h-screen bg-white text-slate-900 print:bg-white print:text-slate-900"
+      style={{ backgroundColor: "#ffffff", color: "#000000" }}
+    >
       <style>{`
         @media print {
-          .mapa-preview { padding: 0; }
-          .mapa-preview .screen-only { display: none !important; }
-          .mapa-preview .print-doc { padding: 0.5in; max-width: 100%; }
-          .mapa-preview .print-section { break-inside: avoid; page-break-inside: avoid; margin-bottom: 1.5rem; }
-          .mapa-preview h1 { font-size: 1.5rem; margin-bottom: 1rem; }
-          .mapa-preview h2 { font-size: 1.15rem; margin-top: 1rem; margin-bottom: 0.5rem; }
-          @page { size: A4; margin: 1cm; }
+          .print-only-footer {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            font-size: 10px; color: #666; padding: 8px 16px;
+            border-top: 1px solid #ddd;
+            display: flex; justify-content: space-between; align-items: center;
+          }
+          .screen-only-preview { display: none !important; }
         }
+        @media screen {
+          .print-only-footer { display: none; }
+        }
+        .mapa-preview .print-section { break-inside: avoid; page-break-inside: avoid; margin-bottom: 1.5rem; }
+        @page { size: A4; margin: 1cm; }
       `}</style>
 
-      <div className="screen-only border-b border-slate-200 bg-slate-50 sticky top-0 z-20 px-4 py-3 flex items-center justify-between gap-4">
-        <Button variant="ghost" size="sm" asChild>
-          <Link href="/mapa">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Voltar ao MAPA
-          </Link>
-        </Button>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-slate-600 hidden sm:inline">
-            Visualização para impressão
-          </span>
-          <Button variant="outline" size="sm" onClick={() => window.print()} className="gap-2">
-            <Printer className="w-4 h-4" />
-            Imprimir / Salvar PDF
-          </Button>
+      <div className="screen-only-preview border-b border-slate-200 sticky top-0 z-20 bg-white">
+        <div className="container flex flex-wrap items-center gap-3 py-4">
+          <div className="flex-1 min-w-0">
+            <div className="text-xs uppercase tracking-[0.08em] text-slate-500">Método Compass · Bússola de Vendas</div>
+            <div className="text-2xl font-bold leading-tight">Estrutura de Conteúdo | MAPA</div>
+            <div className="text-sm text-slate-600">
+              Cliente: {clienteDisplay} · Gerado em {today}
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="rounded-full border border-slate-200 px-3 py-1 text-sm font-semibold text-slate-700">
+              Progresso · {pct}%
+            </div>
+            <Button variant="outline" asChild>
+              <Link href="/mapa">Voltar</Link>
+            </Button>
+            <Button onClick={() => window.print()}>Imprimir / Salvar PDF</Button>
+          </div>
         </div>
       </div>
 
-      <div className="print-doc px-4 py-8 max-w-4xl mx-auto">
+      <div className="print-only-footer">
+        <span>MÉTODO COMPASS · BÚSSOLA DE VENDAS · VocêPode+</span>
+        <span>{clienteDisplay} · Gerado em {today} · MAPA</span>
+      </div>
+
+      <main className="container py-6 space-y-8 pb-16" style={{ backgroundColor: "#ffffff", color: "#000000" }}>
+      <div className="mapa-preview print-doc max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold mb-6">MAPA – Estrutura de Conteúdo</h1>
 
         {/* 1. Editoriais */}
@@ -177,7 +200,19 @@ export default function MapPreview() {
             </ul>
           )}
         </section>
+
+        <section className="print-section mt-6">
+          <div className="flex items-center justify-between text-sm mb-2">
+            <span className="font-medium text-slate-700">Progresso do MAPA</span>
+            <span className="font-semibold">{pct}%</span>
+          </div>
+          <Progress value={pct} className="h-3" />
+          <p className="text-xs text-slate-600 mt-1">
+            {progress?.completed ?? 0} de {progress?.total ?? 4} etapas da Estrutura de Conteúdo
+          </p>
+        </section>
       </div>
+      </main>
     </div>
   );
 }

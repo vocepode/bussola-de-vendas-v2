@@ -63,10 +63,31 @@ async function getOverviewData(userId: number) {
     }
   }
 
+  let mapaPct = 0;
+  try {
+    mapaPct = await db.getMapaProgressPercentage(userId);
+  } catch (err) {
+    console.warn("[dashboard.getOverview] Erro ao carregar progresso MAPA:", err);
+  }
+  const mapaModule = modules.find((m) => m.slug === "mapa");
+  const MAPA_SECTIONS_COUNT = 4; // editoriais, temas, temas por editoria, ideias
+  if (mapaModule) {
+    lessonCounts[mapaModule.id] = MAPA_SECTIONS_COUNT;
+    const mapaProgressIdx = mergedProgress.findIndex((p) => p.moduleId === mapaModule.id);
+    if (mapaProgressIdx >= 0) {
+      mergedProgress[mapaProgressIdx] = {
+        ...mergedProgress[mapaProgressIdx],
+        progressPercentage: mapaPct,
+        status: mapaPct === 100 ? "completed" : mapaPct > 0 ? "in_progress" : "locked",
+      };
+    }
+  }
+
   const PILLAR_SLUGS = ["marco-zero", "norte", "raio-x", "mapa", "rota"] as const;
   const progressBySlug = new Map(
     PILLAR_SLUGS.map((slug) => {
       if (slug === "raio-x") return [slug, raioXPct] as const;
+      if (slug === "mapa") return [slug, mapaPct] as const;
       const mod = modules.find((m) => m.slug === slug);
       const entry = mod ? mergedProgress.find((p) => p.moduleId === mod.id) : null;
       return [slug, entry?.progressPercentage ?? 0] as const;
@@ -80,6 +101,13 @@ async function getOverviewData(userId: number) {
   const completedCount = pillarPercentages.filter((p) => p === 100).length;
   const pillarsRemaining = Math.max(PILLAR_SLUGS.length - completedCount, 0);
 
+  const mapaCompletedSections = Math.min(Math.round((mapaPct / 100) * MAPA_SECTIONS_COUNT), MAPA_SECTIONS_COUNT);
+  const mapaOverview = {
+    sectionCount: MAPA_SECTIONS_COUNT,
+    progressPercentage: mapaPct,
+    completedSections: mapaCompletedSections,
+  };
+
   return {
     overallProgress,
     moduleProgress: mergedProgress,
@@ -87,6 +115,7 @@ async function getOverviewData(userId: number) {
     pillarsRemaining,
     lessonCounts,
     raioXOverview,
+    mapaOverview,
     badgesCount: userBadges.length,
     submissionsCount: submissions.length,
   };
@@ -281,8 +310,14 @@ export const appRouter = router({
     }),
 
     getProgressBySlug: protectedProcedure
-      .input(z.object({ slug: z.enum(["marco-zero", "norte", "comece-por-aqui"]) }))
+      .input(z.object({ slug: z.enum(["marco-zero", "norte", "comece-por-aqui", "mapa"]) }))
       .query(async ({ ctx, input }) => {
+        if (input.slug === "mapa") {
+          const percentage = await db.getMapaProgressPercentage(ctx.user.id);
+          const total = 4; // editoriais, temas, temas por editoria, ideias
+          const completed = Math.round((percentage / 100) * total);
+          return { completed, total, percentage };
+        }
         const mod = await db.getModuleBySlug(input.slug);
         if (!mod) return { completed: 0, total: 0, percentage: 0 };
         return await db.getWorkspaceProgressByModule(ctx.user.id, mod.id);

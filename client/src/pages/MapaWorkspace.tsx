@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
@@ -31,21 +31,8 @@ export default function MapWorkspace() {
   const [activeStep, setActiveStep] = useState<MapaEstruturaStepKey>("editoriais");
   const [matrizActive, setMatrizActive] = useState(false);
 
-  const { data: editoriais } = trpc.mapa.editoriais.list.useQuery();
-  const { data: temas } = trpc.mapa.temas.list.useQuery();
-  const { data: ideias } = trpc.contentIdeas.list.useQuery();
-  const progressPercentage = useMemo(() => {
-    const ed = editoriais ?? [];
-    const tem = temas ?? [];
-    const ids = ideias ?? [];
-    let p = 0;
-    if (ed.length > 0) p += 25;
-    if (tem.length > 0) p += 25;
-    const editoriaisComTemas = ed.some((e) => tem.some((t) => t.editorialId === e.id));
-    if (editoriaisComTemas) p += 25;
-    if (ids.length > 0) p += 25;
-    return p;
-  }, [editoriais, temas, ideias]);
+  const { data: progress } = trpc.workspaces.getProgressBySlug.useQuery({ slug: "mapa" });
+  const progressPercentage = progress?.percentage ?? 0;
 
   const handleEstruturaStep = (step: MapaEstruturaStepKey) => {
     setActiveStep(step);
