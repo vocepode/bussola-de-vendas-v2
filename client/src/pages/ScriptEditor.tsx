@@ -341,7 +341,7 @@ export default function ScriptEditor({ ideaId }: { ideaId: string }) {
                   {idea.funnel.toUpperCase()}
                 </span>
                 <span className="text-slate-500 text-sm">
-                  {idea.format.replace("_", " ")}
+                  {String(idea.format ?? "estatico").replace("_", " ")}
                 </span>
               </div>
             </div>

@@ -175,7 +175,7 @@ export default function ContentMatrix() {
                                 
                                 <div className="flex items-center gap-2 text-xs">
                                   <span className="text-slate-500">
-                                    {item.idea.format.replace("_", " ")}
+                                    {String(item.idea.format ?? "estatico").replace("_", " ")}
                                   </span>
                                 </div>
 
