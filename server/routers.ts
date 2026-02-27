@@ -1,7 +1,96 @@
+import { TRPCError } from "@trpc/server";
 import { adminProcedure, publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
 import bcrypt from "bcryptjs";
+
+async function getOverviewData(userId: number) {
+  const tableProgress = await db.getUserModuleProgress(userId);
+  const userBadges = await db.getUserBadges(userId);
+  const submissions = await db.getUserSubmissions(userId);
+  const modules = await db.getAllModules();
+
+  const progressByModuleId = new Map(tableProgress.map((p) => [p.moduleId, p]));
+  const mergedProgress: typeof tableProgress = [];
+  for (const mod of modules) {
+    const ws = await db.getWorkspaceProgressByModule(userId, mod.id);
+    const row = progressByModuleId.get(mod.id);
+    const tablePct = row?.progressPercentage ?? 0;
+    const pct = Math.max(tablePct, ws.percentage);
+    const status = pct === 100 ? "completed" : pct > 0 ? "in_progress" : "locked";
+    if (row) {
+      mergedProgress.push({ ...row, progressPercentage: pct, status });
+    } else {
+      mergedProgress.push({
+        id: 0,
+        userId,
+        moduleId: mod.id,
+        status,
+        progressPercentage: pct,
+        startedAt: pct > 0 ? new Date() : null,
+        completedAt: pct === 100 ? new Date() : null,
+      } as (typeof tableProgress)[0]);
+    }
+  }
+
+  const lessonCounts = await db.getLessonCountsByModuleIds(modules.map((m) => m.id));
+
+  const RAIO_X_SECTIONS_COUNT = 3;
+  let raioXPct = 0;
+  try {
+    const raioXRow = await db.getRaioXByUserId(userId);
+    raioXPct = raioXRow?.progressoGeral ?? 0;
+  } catch (err) {
+    console.warn("[dashboard.getOverview] Erro ao carregar Raio-X (verifique migrations):", err);
+  }
+  const raioXCompletedSections = Math.round((raioXPct / 100) * RAIO_X_SECTIONS_COUNT);
+  const raioXOverview = {
+    sectionCount: RAIO_X_SECTIONS_COUNT,
+    progressPercentage: raioXPct,
+    completedSections: Math.min(raioXCompletedSections, RAIO_X_SECTIONS_COUNT),
+  };
+
+  const raioXModule = modules.find((m) => m.slug === "raio-x");
+  if (raioXModule) {
+    lessonCounts[raioXModule.id] = RAIO_X_SECTIONS_COUNT;
+    const raioXProgressIdx = mergedProgress.findIndex((p) => p.moduleId === raioXModule.id);
+    if (raioXProgressIdx >= 0) {
+      mergedProgress[raioXProgressIdx] = {
+        ...mergedProgress[raioXProgressIdx],
+        progressPercentage: raioXPct,
+        status: raioXPct === 100 ? "completed" : raioXPct > 0 ? "in_progress" : "locked",
+      };
+    }
+  }
+
+  const PILLAR_SLUGS = ["marco-zero", "norte", "raio-x", "mapa", "rota"] as const;
+  const progressBySlug = new Map(
+    PILLAR_SLUGS.map((slug) => {
+      if (slug === "raio-x") return [slug, raioXPct] as const;
+      const mod = modules.find((m) => m.slug === slug);
+      const entry = mod ? mergedProgress.find((p) => p.moduleId === mod.id) : null;
+      return [slug, entry?.progressPercentage ?? 0] as const;
+    })
+  );
+  const pillarPercentages = PILLAR_SLUGS.map((s) => progressBySlug.get(s) ?? 0);
+  const overallProgress =
+    pillarPercentages.length > 0
+      ? Math.round(pillarPercentages.reduce((a, b) => a + b, 0) / pillarPercentages.length)
+      : 0;
+  const completedCount = pillarPercentages.filter((p) => p === 100).length;
+  const pillarsRemaining = Math.max(PILLAR_SLUGS.length - completedCount, 0);
+
+  return {
+    overallProgress,
+    moduleProgress: mergedProgress,
+    pillarsCompleted: completedCount,
+    pillarsRemaining,
+    lessonCounts,
+    raioXOverview,
+    badgesCount: userBadges.length,
+    submissionsCount: submissions.length,
+  };
+}
 
 export const appRouter = router({
   auth: router({
@@ -444,58 +533,21 @@ export const appRouter = router({
 
   dashboard: router({
     getOverview: protectedProcedure.query(async ({ ctx }) => {
-      const tableProgress = await db.getUserModuleProgress(ctx.user.id);
-      const userBadges = await db.getUserBadges(ctx.user.id);
-      const submissions = await db.getUserSubmissions(ctx.user.id);
-      const modules = await db.getAllModules();
-
-      // Reconciliar com progresso dos workspaces (lessonUserState): Comece por Aqui, Marco Zero e Norte
-      // marcam conclusão via lessonState.complete; o dashboard usa moduleProgress. Usar o maior dos dois.
-      const progressByModuleId = new Map(tableProgress.map((p) => [p.moduleId, p]));
-      const mergedProgress: typeof tableProgress = [];
-      for (const mod of modules) {
-        const ws = await db.getWorkspaceProgressByModule(ctx.user.id, mod.id);
-        const row = progressByModuleId.get(mod.id);
-        const tablePct = row?.progressPercentage ?? 0;
-        const pct = Math.max(tablePct, ws.percentage);
-        const status = pct === 100 ? "completed" : pct > 0 ? "in_progress" : "locked";
-        if (row) {
-          mergedProgress.push({ ...row, progressPercentage: pct, status });
-        } else {
-          mergedProgress.push({
-            id: 0,
-            userId: ctx.user.id,
-            moduleId: mod.id,
-            status,
-            progressPercentage: pct,
-            startedAt: pct > 0 ? new Date() : null,
-            completedAt: pct === 100 ? new Date() : null,
-          } as typeof tableProgress[0]);
-        }
+      try {
+        return await getOverviewData(ctx.user.id);
+      } catch (err) {
+        console.error("[dashboard.getOverview] Erro:", err);
+        return {
+          overallProgress: 0,
+          moduleProgress: [],
+          pillarsCompleted: 0,
+          pillarsRemaining: 5,
+          lessonCounts: {} as Record<number, number>,
+          raioXOverview: { sectionCount: 3, progressPercentage: 0, completedSections: 0 },
+          badgesCount: 0,
+          submissionsCount: 0,
+        };
       }
-
-      // Comece por Aqui não é pilar: os 3 cards do topo consideram só os pilares (excluindo comece-por-aqui)
-      const pillarModuleIds = new Set(
-        modules.filter((m) => m.slug !== "comece-por-aqui").map((m) => m.id)
-      );
-      const pillarProgress = mergedProgress.filter((p) => pillarModuleIds.has(p.moduleId));
-      const totalPillarProgress = pillarProgress.reduce((sum, p) => sum + p.progressPercentage, 0);
-      const pillarCount = pillarModuleIds.size;
-      const overallProgress =
-        pillarCount > 0 ? Math.round(totalPillarProgress / pillarCount) : 0;
-      const completedCount = pillarProgress.filter((p) => p.status === "completed").length;
-      const pillarsRemaining = Math.max(pillarCount - completedCount, 0);
-      const lessonCounts = await db.getLessonCountsByModuleIds(modules.map((m) => m.id));
-
-      return {
-        overallProgress,
-        moduleProgress: mergedProgress,
-        pillarsCompleted: completedCount,
-        pillarsRemaining,
-        lessonCounts,
-        badgesCount: userBadges.length,
-        submissionsCount: submissions.length,
-      };
     }),
   }),
 
@@ -678,6 +730,97 @@ export const appRouter = router({
       .query(async ({ ctx, input }) => {
         return await db.listContentScriptsWithIdeas(ctx.user.id, input);
       }),
+  }),
+
+  raioX: router({
+    get: protectedProcedure.query(async ({ ctx }) => {
+      try {
+        // Trava Norte desativada para validação; reativar depois exigindo Norte 100%
+        let norteCompleto = false;
+        const norteMod = await db.getModuleBySlug("norte");
+        if (norteMod) {
+          const progress = await db.getWorkspaceProgressByModule(ctx.user.id, norteMod.id);
+          norteCompleto = progress.percentage === 100;
+        }
+        const norteData: Record<string, unknown> | null = null;
+        let row = await db.getRaioXByUserId(ctx.user.id);
+        if (!row) {
+          row = await db.createRaioXIfNotExists(ctx.user.id, norteCompleto, norteData);
+        }
+        const etapasConcluidas = Array.isArray((row as { etapasConcluidas?: string[] }).etapasConcluidas)
+          ? (row as { etapasConcluidas: string[] }).etapasConcluidas
+          : [];
+        return {
+          bloqueado: false as const,
+          data: {
+            id: row.id,
+            userId: row.userId,
+            version: row.version,
+            secaoRedesSociais: row.secaoRedesSociais ?? undefined,
+            secaoWeb: row.secaoWeb ?? undefined,
+            secaoAnalise: row.secaoAnalise ?? undefined,
+            etapasConcluidas,
+            progressoGeral: row.progressoGeral ?? 0,
+            concluido: row.concluido ?? false,
+            norteCompleto: row.norteCompleto ?? false,
+            norteData: row.norteData ?? undefined,
+            createdAt: row.createdAt,
+            updatedAt: row.updatedAt,
+          },
+          norteData: row.norteData ?? undefined,
+        };
+      } catch (err) {
+        console.error("[raioX.get]", err);
+        const msg = err instanceof Error ? err.message : String(err);
+        const isTableMissing = /relation "raio_x" does not exist|table "raio_x" does not exist/i.test(msg);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: isTableMissing
+            ? "Tabela raio_x não existe. Execute: yarn db:push (ou aplique a migration 0006_raio_x.sql no banco)."
+            : `Erro ao carregar Raio-X: ${msg}`,
+        });
+      }
+    }),
+
+    saveSecao: protectedProcedure
+      .input(
+        z.object({
+          secao: z.enum(["redes_sociais", "web", "analise"]),
+          data: z.record(z.string(), z.unknown()),
+        })
+      )
+      .mutation(async ({ ctx, input }) => {
+        const { updatedAt } = await db.upsertRaioXSecao(ctx.user.id, input.secao, input.data);
+        return { success: true, updatedAt: updatedAt.toISOString() };
+      }),
+
+    concluirEtapa: protectedProcedure
+      .input(z.object({ secao: z.enum(["redes_sociais", "web", "analise"]) }))
+      .mutation(async ({ ctx, input }) => {
+        const result = await db.concluirEtapaRaioX(ctx.user.id, input.secao);
+        return { success: true, updatedAt: result.updatedAt.toISOString(), etapasConcluidas: result.etapasConcluidas };
+      }),
+
+    updateProgress: protectedProcedure
+      .input(z.object({ progresso: z.number().min(0).max(100) }))
+      .mutation(async ({ ctx, input }) => {
+        await db.updateRaioXProgress(ctx.user.id, input.progresso);
+        return { success: true };
+      }),
+
+    concluir: protectedProcedure.mutation(async ({ ctx }) => {
+      const row = await db.getRaioXByUserId(ctx.user.id);
+      const secaoAnalise = row?.secaoAnalise as { meses?: unknown[] } | undefined;
+      const meses = Array.isArray(secaoAnalise?.meses) ? secaoAnalise.meses : [];
+      if (meses.length < 1) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Preencha pelo menos um mês na Análise para concluir o Raio-X.",
+        });
+      }
+      await db.setRaioXConcluido(ctx.user.id);
+      return { success: true };
+    }),
   }),
 });
 

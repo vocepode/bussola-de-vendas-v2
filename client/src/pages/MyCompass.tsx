@@ -35,12 +35,20 @@ export default function MyCompassPage() {
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {PILLARS_ORDER.map((pillar, pillarIndex) => {
+            const isRaioX = pillar.slug === "raio-x";
+            const raioXOverview = overview?.raioXOverview;
             const module = moduleBySlug.get(pillar.slug);
             const progress = module ? progressByModuleId.get(module.id) : null;
-            const percentage = progress?.progressPercentage ?? 0;
-            const totalLessons = module ? lessonCounts[module.id] ?? 0 : 0;
-            const completedLessons = totalLessons > 0 ? Math.round((percentage / 100) * totalLessons) : 0;
-            const href = pillar.href ?? (module ? getModuleHref(module.slug) : "/");
+            const percentage = isRaioX && raioXOverview
+              ? raioXOverview.progressPercentage
+              : (progress?.progressPercentage ?? 0);
+            const totalLessons = isRaioX && raioXOverview
+              ? raioXOverview.sectionCount
+              : (module ? lessonCounts[module.id] ?? 0 : 0);
+            const completedLessons = isRaioX && raioXOverview
+              ? raioXOverview.completedSections
+              : (totalLessons > 0 ? Math.round((percentage / 100) * totalLessons) : 0);
+            const href = pillar.href ?? (module ? getModuleHref(module.slug) : getModuleHref(pillar.slug));
 
             const prevPillar = pillarIndex > 0 ? PILLARS_ORDER[pillarIndex - 1] : null;
             const prevModule = prevPillar ? moduleBySlug.get(prevPillar.slug) : null;

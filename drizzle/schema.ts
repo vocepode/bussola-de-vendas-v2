@@ -424,6 +424,29 @@ export const contentScripts = pgTable("contentScripts", {
   updatedAt: timestamp("updatedAt", { withTimezone: true }).defaultNow().notNull(),
 });
 
+/**
+ * Estado do módulo Raio-X por usuário (um registro por usuário).
+ * Pré-requisito: Norte 100% completo.
+ */
+export const raioX = pgTable(
+  "raio_x",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("userId").notNull().unique(),
+    version: text("version").notNull().default("2.0.3"),
+    secaoRedesSociais: jsonb("secao_redes_sociais").$type<Record<string, unknown>>(),
+    secaoWeb: jsonb("secao_web").$type<Record<string, unknown>>(),
+    secaoAnalise: jsonb("secao_analise").$type<Record<string, unknown>>(),
+    etapasConcluidas: jsonb("etapas_concluidas").$type<string[]>().default([]),
+    progressoGeral: integer("progresso_geral").default(0),
+    concluido: boolean("concluido").default(false),
+    norteCompleto: boolean("norte_completo").default(false),
+    norteData: jsonb("norte_data").$type<Record<string, unknown>>(),
+    createdAt: timestamp("createdAt", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updatedAt", { withTimezone: true }).defaultNow().notNull(),
+  }
+);
+
 // Relations
 export const modulesRelations = relations(modules, ({ many, one }) => ({
   lessons: many(lessons),
@@ -509,6 +532,13 @@ export const contentScriptsRelations = relations(contentScripts, ({ one }) => ({
   }),
 }));
 
+export const raioXRelations = relations(raioX, ({ one }) => ({
+  user: one(users, {
+    fields: [raioX.userId],
+    references: [users.id],
+  }),
+}));
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
@@ -534,3 +564,5 @@ export type ContentIdea = typeof contentIdeas.$inferSelect;
 export type InsertContentIdea = typeof contentIdeas.$inferInsert;
 export type ContentScript = typeof contentScripts.$inferSelect;
 export type InsertContentScript = typeof contentScripts.$inferInsert;
+export type RaioX = typeof raioX.$inferSelect;
+export type InsertRaioX = typeof raioX.$inferInsert;

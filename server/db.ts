@@ -1,4 +1,4 @@
-import { eq, and, desc, asc, isNull, inArray, gt } from "drizzle-orm";
+import { eq, and, desc, asc, isNull, inArray, gt, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { setDefaultResultOrder, lookup } from "node:dns/promises";
@@ -8,7 +8,9 @@ import {
   InsertUser, users, sessions, passwordResetTokens, modules, sections, lessons, lessonUserState, exercises, submissions, 
   lessonProgress, moduleProgress, badges, userBadges, resources,
   Module, Section, Lesson, LessonUserState, Exercise, Submission, ModuleProgress, LessonProgress,
-  contentIdeas, contentScripts, ContentIdea, ContentScript, InsertContentIdea, InsertContentScript
+  contentIdeas, contentScripts, ContentIdea, ContentScript, InsertContentIdea, InsertContentScript,
+  raioX,
+  RaioX,
 } from "../drizzle/schema";
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -1077,4 +1079,193 @@ export async function listContentScriptsWithIdeas(userId: number, filters?: {
   }
   
   return filtered;
+}
+
+// ========== RAIO-X ==========
+
+/** Postgres code for "undefined column" (coluna não existe). */
+function isMissingColumnError(err: unknown): boolean {
+  const code = (err as { cause?: { code?: string } })?.cause?.code;
+  return code === "42703";
+}
+
+type RaioXFallbackRow = {
+  id: number;
+  userId: number;
+  version: string;
+  secao_redes_sociais: unknown;
+  secao_web: unknown;
+  secao_analise: unknown;
+  progresso_geral: number | null;
+  concluido: boolean | null;
+  norte_completo: boolean | null;
+  norte_data: unknown;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+/** Fallback quando a coluna etapas_concluidas ainda não existe (migration não aplicada). */
+async function getRaioXByUserIdFallback(
+  db: NonNullable<Awaited<ReturnType<typeof getDb>>>,
+  userId: number
+): Promise<RaioX | undefined> {
+  const result = await db.execute<RaioXFallbackRow>(
+    sql`SELECT id, "userId", version, secao_redes_sociais, secao_web, secao_analise, progresso_geral, concluido, norte_completo, norte_data, "createdAt", "updatedAt" FROM raio_x WHERE "userId" = ${userId} LIMIT 1`
+  );
+  const rows = Array.isArray(result) ? result : (result as { rows?: RaioXFallbackRow[] })?.rows ?? [];
+  const row: RaioXFallbackRow | undefined = rows[0];
+  if (!row) return undefined;
+  return {
+    id: row.id,
+    userId: row.userId,
+    version: row.version,
+    secaoRedesSociais: row.secao_redes_sociais ?? undefined,
+    secaoWeb: row.secao_web ?? undefined,
+    secaoAnalise: row.secao_analise ?? undefined,
+    etapasConcluidas: [],
+    progressoGeral: row.progresso_geral ?? 0,
+    concluido: row.concluido ?? false,
+    norteCompleto: row.norte_completo ?? false,
+    norteData: row.norte_data ?? undefined,
+    createdAt: row.createdAt,
+    updatedAt: row.updatedAt,
+  } as unknown as RaioX;
+}
+
+export async function getRaioXByUserId(userId: number): Promise<RaioX | undefined> {
+  const db = await getDb();
+  if (!db) return undefined;
+  try {
+    const result = await db.select().from(raioX).where(eq(raioX.userId, userId)).limit(1);
+    return result[0];
+  } catch (err) {
+    if (isMissingColumnError(err)) {
+      return getRaioXByUserIdFallback(db, userId);
+    }
+    throw err;
+  }
+}
+
+export async function upsertRaioXSecao(
+  userId: number,
+  secao: "redes_sociais" | "web" | "analise",
+  data: Record<string, unknown>
+): Promise<{ updatedAt: Date }> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const field =
+    secao === "redes_sociais"
+      ? { secaoRedesSociais: data }
+      : secao === "web"
+        ? { secaoWeb: data }
+        : { secaoAnalise: data };
+  const existing = await getRaioXByUserId(userId);
+  const now = new Date();
+  if (existing) {
+    const [row] = await db
+      .update(raioX)
+      .set({ ...field, updatedAt: now })
+      .where(eq(raioX.userId, userId))
+      .returning({ updatedAt: raioX.updatedAt });
+    return { updatedAt: row?.updatedAt ?? now };
+  }
+  const [row] = await db
+    .insert(raioX).values({
+      userId,
+      version: "2.0.3",
+      ...field,
+      createdAt: now,
+      updatedAt: now,
+    })
+    .returning({ updatedAt: raioX.updatedAt });
+  return { updatedAt: row?.updatedAt ?? now };
+}
+
+export async function updateRaioXProgress(userId: number, progresso: number): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db
+    .update(raioX)
+    .set({ progressoGeral: progresso, updatedAt: new Date() })
+    .where(eq(raioX.userId, userId));
+}
+
+export async function setRaioXConcluido(userId: number): Promise<void> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db
+    .update(raioX)
+    .set({ concluido: true, progressoGeral: 100, updatedAt: new Date() })
+    .where(eq(raioX.userId, userId));
+}
+
+const RAIO_X_SECOES = ["redes_sociais", "web", "analise"] as const;
+
+export async function concluirEtapaRaioX(
+  userId: number,
+  secao: "redes_sociais" | "web" | "analise"
+): Promise<{ updatedAt: Date; etapasConcluidas: string[] }> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const row = await getRaioXByUserId(userId);
+  if (!row) throw new Error("Raio-X não encontrado");
+  const current = (row as { etapasConcluidas?: string[] }).etapasConcluidas;
+  const arr = Array.isArray(current) ? [...current] : [];
+  if (!arr.includes(secao)) arr.push(secao);
+  const progressoGeral = Math.round((arr.length / RAIO_X_SECOES.length) * 100);
+  const now = new Date();
+
+  const runUpdate = async () => {
+    const [updated] = await db
+      .update(raioX)
+      .set({
+        etapasConcluidas: arr,
+        progressoGeral,
+        updatedAt: now,
+      })
+      .where(eq(raioX.userId, userId))
+      .returning({ updatedAt: raioX.updatedAt, etapasConcluidas: raioX.etapasConcluidas });
+    return updated;
+  };
+
+  try {
+    const updated = await runUpdate();
+    return {
+      updatedAt: updated?.updatedAt ?? now,
+      etapasConcluidas: (updated?.etapasConcluidas as string[]) ?? arr,
+    };
+  } catch (err) {
+    if (isMissingColumnError(err)) {
+      await db.execute(sql`ALTER TABLE "raio_x" ADD COLUMN IF NOT EXISTS "etapas_concluidas" jsonb DEFAULT '[]'::jsonb`);
+      const updated = await runUpdate();
+      return {
+        updatedAt: updated?.updatedAt ?? now,
+        etapasConcluidas: (updated?.etapasConcluidas as string[]) ?? arr,
+      };
+    }
+    throw err;
+  }
+}
+
+export async function createRaioXIfNotExists(userId: number, norteCompleto: boolean, norteData: Record<string, unknown> | null): Promise<RaioX> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const existing = await getRaioXByUserId(userId);
+  if (existing) return existing;
+  const now = new Date();
+  const [row] = await db
+    .insert(raioX)
+    .values({
+      userId,
+      version: "2.0.3",
+      progressoGeral: 0,
+      concluido: false,
+      norteCompleto,
+      norteData,
+      createdAt: now,
+      updatedAt: now,
+    })
+    .returning();
+  if (!row) throw new Error("Failed to create raio_x");
+  return row;
 }

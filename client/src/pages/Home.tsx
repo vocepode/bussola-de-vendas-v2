@@ -99,11 +99,20 @@ export default function Home() {
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
             {PILLARS_ORDER.map((pillar) => {
+              const isRaioX = pillar.slug === "raio-x";
+              const raioXOverview = overview?.raioXOverview;
               const module = moduleBySlug.get(pillar.slug);
               const progress = module ? progressByModuleId.get(module.id) : null;
-              const percentage = progress?.progressPercentage ?? 0;
-              const lessonCount = module ? lessonCounts[module.id] ?? 0 : 0;
-              const href = pillar.href ?? (module ? getModuleHref(module.slug) : "/");
+              const percentage = isRaioX && raioXOverview
+                ? raioXOverview.progressPercentage
+                : (progress?.progressPercentage ?? 0);
+              const lessonCount = isRaioX && raioXOverview
+                ? raioXOverview.sectionCount
+                : (module ? lessonCounts[module.id] ?? 0 : 0);
+              const completedLabel = isRaioX && raioXOverview
+                ? raioXOverview.completedSections
+                : (lessonCount > 0 ? Math.round((percentage / 100) * lessonCount) : 0);
+              const href = pillar.href ?? (module ? getModuleHref(module.slug) : getModuleHref(pillar.slug));
 
               return (
                 <Link key={pillar.slug} href={href} className="min-w-0">
@@ -151,7 +160,7 @@ export default function Home() {
                       />
                       {lessonCount > 0 ? (
                         <p className={cn("text-xs", isDark ? "text-white/60" : "text-muted-foreground")}>
-                          {Math.round((percentage / 100) * lessonCount)} de {lessonCount} {lessonCount === 1 ? "seção concluída" : "seções concluídas"}
+                          {completedLabel} de {lessonCount} {lessonCount === 1 ? "seção concluída" : "seções concluídas"}
                         </p>
                       ) : null}
                     </div>

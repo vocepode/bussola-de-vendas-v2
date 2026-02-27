@@ -20,7 +20,7 @@ export default function RootLayout({
             __html: `
 (function() {
   var path = typeof window !== 'undefined' ? window.location.pathname : '';
-  if (path.indexOf('/marco-zero/preview') !== -1 || path.indexOf('/norte/preview') !== -1) {
+  if (path.indexOf('/marco-zero/preview') !== -1 || path.indexOf('/norte/preview') !== -1 || path.indexOf('/raio-x/preview') !== -1) {
     document.documentElement.classList.remove('dark');
     document.documentElement.classList.add('preview-light-theme');
     document.body.style.backgroundColor = '#ffffff';
