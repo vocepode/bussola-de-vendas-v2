@@ -378,6 +378,43 @@ export async function updateUserPasswordHash(userId: number, passwordHash: strin
   await deleteSessionsByUserId(userId);
 }
 
+/** Define senha inicial e exige troca no próximo acesso (ex.: reenvio de e-mail de boas-vindas). */
+export async function setInitialPasswordForUser(userId: number, passwordHash: string) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db
+    .update(users)
+    .set({
+      passwordHash,
+      mustChangePassword: true,
+      updatedAt: new Date(),
+    })
+    .where(eq(users.id, userId));
+
+  await deleteSessionsByUserId(userId);
+}
+
+/** Remove o usuário e todos os dados associados (sessões, progresso, MAPA, etc.). */
+export async function deleteUser(userId: number): Promise<void> {
+  const database = await getDb();
+  if (!database) throw new Error("Database not available");
+
+  await database.delete(contentScripts).where(eq(contentScripts.userId, userId));
+  await database.delete(contentIdeas).where(eq(contentIdeas.userId, userId));
+  await database.delete(mapaTemas).where(eq(mapaTemas.userId, userId));
+  await database.delete(mapaEditoriais).where(eq(mapaEditoriais.userId, userId));
+  await database.delete(raioX).where(eq(raioX.userId, userId));
+  await database.delete(lessonUserState).where(eq(lessonUserState.userId, userId));
+  await database.delete(lessonProgress).where(eq(lessonProgress.userId, userId));
+  await database.delete(moduleProgress).where(eq(moduleProgress.userId, userId));
+  await database.delete(submissions).where(eq(submissions.userId, userId));
+  await database.delete(userBadges).where(eq(userBadges.userId, userId));
+  await database.delete(passwordResetTokens).where(eq(passwordResetTokens.userId, userId));
+  await database.delete(sessions).where(eq(sessions.userId, userId));
+  await database.delete(users).where(eq(users.id, userId));
+}
+
 /**
  * Cria ou atualiza usuário a partir do webhook Hotmart.
  * Se o email já existir, atualiza apenas o nome.

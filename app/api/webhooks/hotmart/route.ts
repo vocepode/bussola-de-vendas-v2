@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import * as db from "../../../../server/db";
 import { sendEmail } from "../../../../server/email";
+import { buildInitialAccessEmailMessage, WELCOME_EMAIL_SUBJECT } from "../../../../server/email-templates";
 import { getInitialUserPassword } from "../../../../server/initial-password";
 
 // Assinatura do webhook desabilitada: não exige HOTMART_WEBHOOK_SECRET.
@@ -12,8 +13,6 @@ const PURCHASE_EVENTS = new Set([
   "PURCHASE_COMPLETE",
   "PURCHASE_COMPLETED",
 ]);
-const ACCESS_URL = "https://link.vocepodevendermais.com.br/bussola-app";
-const WHATSAPP_SUPPORT_URL = "https://link.vocepodevendermais.com.br/suporte-alunos";
 
 const payloadSchema = z.object({
   event: z.string().optional(),
@@ -54,46 +53,6 @@ function getBuyerEmailAndName(data: unknown): { email: string; name: string | nu
     email: email.trim().toLowerCase(),
     name: name && typeof name === "string" ? name.trim() || null : null,
   };
-}
-
-function buildInitialAccessEmailMessage(params: {
-  name: string | null;
-  email: string;
-  initialPassword: string;
-}): { text: string; html: string } {
-  const nome = params.name?.trim() || "aluno(a)";
-  const text = [
-    `Olá, ${nome}!`,
-    "",
-    "Seja bem-vindo(a) ao BússolaApp, o sistema de implementação do método COMPASS.",
-    "",
-    "Seu acesso à plataforma foi liberado com sucesso.",
-    "",
-    `Login: ${params.email}`,
-    `Senha inicial: ${params.initialPassword}`,
-    "",
-    `ACESSE AGORA: ${ACCESS_URL}`,
-    "",
-    "Importante:",
-    "No primeiro acesso, vá em Configurações > Segurança e altere sua senha.",
-    "",
-    "Se precisar de ajuda, responda este e-mail que nosso time te atende ou pode nos chamar no WhatsApp abaixo:",
-    WHATSAPP_SUPPORT_URL,
-    "",
-    "Aurora | Jornada Compass",
-    "Sucesso do cliente",
-  ].join("\n");
-  const html = [
-    `<p>Olá, ${nome}!</p>`,
-    "<p>Seja bem-vindo(a) ao BússolaApp, o sistema de implementação do método COMPASS.</p>",
-    "<p>Seu acesso à plataforma foi liberado com sucesso.</p>",
-    `<p><strong>Login:</strong> ${params.email}<br /><strong>Senha inicial:</strong> ${params.initialPassword}</p>`,
-    `<p><strong>ACESSE AGORA:</strong> <a href="${ACCESS_URL}" target="_blank" rel="noopener noreferrer">${ACCESS_URL}</a></p>`,
-    "<p><strong>Importante:</strong><br />No primeiro acesso, vá em Configurações &gt; Segurança e altere sua senha.</p>",
-    `<p>Se precisar de ajuda, responda este e-mail que nosso time te atende ou pode nos chamar no WhatsApp abaixo:<br /><a href="${WHATSAPP_SUPPORT_URL}" target="_blank" rel="noopener noreferrer">${WHATSAPP_SUPPORT_URL}</a></p>`,
-    "<p>Aurora | Jornada Compass<br />Sucesso do cliente</p>",
-  ].join("");
-  return { text, html };
 }
 
 export async function POST(req: Request) {
@@ -147,7 +106,6 @@ export async function POST(req: Request) {
       passwordHash
     );
     if (upserted.created) {
-      const subject = "Seu acesso a BússolaApp";
       const emailContent = buildInitialAccessEmailMessage({
         name: buyer.name,
         email: buyer.email,
@@ -157,7 +115,7 @@ export async function POST(req: Request) {
       try {
         await sendEmail({
           to: buyer.email,
-          subject,
+          subject: WELCOME_EMAIL_SUBJECT,
           message: emailContent.text,
           html: emailContent.html,
         });

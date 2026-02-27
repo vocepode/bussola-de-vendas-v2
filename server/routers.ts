@@ -1,10 +1,21 @@
+import crypto from "node:crypto";
 import { TRPCError } from "@trpc/server";
 import { adminProcedure, publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
+import { sendEmail } from "./email";
+import { buildInitialAccessEmailMessage, WELCOME_EMAIL_SUBJECT } from "./email-templates";
 import bcrypt from "bcryptjs";
 import { getInitialUserPassword } from "./initial-password";
 import { toAuthMeUser } from "./auth-user";
+
+function generateRandomPassword(length = 12): string {
+  const chars = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789";
+  const bytes = crypto.randomBytes(length);
+  let result = "";
+  for (let i = 0; i < length; i++) result += chars[bytes[i]! % chars.length];
+  return result;
+}
 
 async function getOverviewData(userId: number) {
   const tableProgress = await db.getUserModuleProgress(userId);
@@ -687,6 +698,40 @@ export const appRouter = router({
           success: true as const,
           resetUrl: `/redefinir-senha?token=${encodeURIComponent(token)}`,
         };
+      }),
+
+    resendWelcomeEmail: adminProcedure
+      .input(z.object({ userId: z.number() }))
+      .mutation(async ({ input }) => {
+        const user = await db.getUserById(input.userId);
+        if (!user) throw new TRPCError({ code: "NOT_FOUND", message: "Usuário não encontrado" });
+        const initialPassword = generateRandomPassword(12);
+        const passwordHash = await bcrypt.hash(initialPassword, 10);
+        await db.setInitialPasswordForUser(input.userId, passwordHash);
+        const emailContent = buildInitialAccessEmailMessage({
+          name: user.name,
+          email: user.email,
+          initialPassword,
+        });
+        await sendEmail({
+          to: user.email,
+          subject: WELCOME_EMAIL_SUBJECT,
+          message: emailContent.text,
+          html: emailContent.html,
+        });
+        return { success: true as const };
+      }),
+
+    deleteUser: adminProcedure
+      .input(z.object({ userId: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (input.userId === ctx.user.id) {
+          throw new TRPCError({ code: "BAD_REQUEST", message: "Você não pode excluir sua própria conta." });
+        }
+        const user = await db.getUserById(input.userId);
+        if (!user) throw new TRPCError({ code: "NOT_FOUND", message: "Usuário não encontrado" });
+        await db.deleteUser(input.userId);
+        return { success: true as const };
       }),
   }),
 

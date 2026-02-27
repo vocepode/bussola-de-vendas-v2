@@ -6,6 +6,16 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -51,6 +61,21 @@ export default function AdminPanel() {
     onError: (error) => toast.error(error.message),
   });
 
+  const resendWelcomeEmail = trpc.admin.resendWelcomeEmail.useMutation({
+    onSuccess: () => toast.success("E-mail de boas-vindas reenviado"),
+    onError: (error) => toast.error(error.message),
+  });
+
+  const deleteUser = trpc.admin.deleteUser.useMutation({
+    onSuccess: () => {
+      toast.success("Usuário excluído");
+      setDeleteConfirmUser(null);
+      void utils.admin.listUsers.invalidate();
+    },
+    onError: (error) => toast.error(error.message),
+  });
+
+  const [deleteConfirmUser, setDeleteConfirmUser] = useState<{ id: number; name: string; email: string } | null>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [active, setActive] = useState(true);
@@ -167,7 +192,7 @@ export default function AdminPanel() {
         <Card>
           <CardHeader>
             <CardTitle>Usuários</CardTitle>
-            <CardDescription>Ative/desative acesso e gere link de redefinição de senha.</CardDescription>
+            <CardDescription>Ative/desative acesso, reenvie o e-mail de boas-vindas ou gere link de redefinição de senha.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             {usersQuery.isLoading ? (
@@ -195,10 +220,32 @@ export default function AdminPanel() {
                     </Button>
                     <Button
                       variant="secondary"
+                      onClick={() => resendWelcomeEmail.mutate({ userId: u.id })}
+                      disabled={resendWelcomeEmail.isPending && resendWelcomeEmail.variables?.userId === u.id}
+                    >
+                      {resendWelcomeEmail.isPending && resendWelcomeEmail.variables?.userId === u.id
+                        ? "Enviando..."
+                        : "Reenviar e-mail"}
+                    </Button>
+                    <Button
+                      variant="secondary"
                       onClick={() => generateResetLink.mutate({ userId: u.id })}
                       disabled={generateResetLink.isPending}
                     >
                       Copiar link de senha
+                    </Button>
+                    <Button
+                      variant="destructive"
+                      onClick={() =>
+                        setDeleteConfirmUser({
+                          id: u.id,
+                          name: u.name || "Sem nome",
+                          email: u.email,
+                        })
+                      }
+                      disabled={deleteUser.isPending && deleteUser.variables?.userId === u.id}
+                    >
+                      Excluir
                     </Button>
                   </div>
                 </div>
@@ -207,6 +254,38 @@ export default function AdminPanel() {
           </CardContent>
         </Card>
       </div>
+
+      <AlertDialog
+        open={!!deleteConfirmUser}
+        onOpenChange={(open) => {
+          if (!open) setDeleteConfirmUser(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Excluir usuário?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta ação não pode ser desfeita. Todos os dados do usuário (progresso, MAPA, etc.) serão removidos
+              permanentemente.
+              {deleteConfirmUser && (
+                <span className="mt-2 block font-medium text-foreground">
+                  {deleteConfirmUser.name} ({deleteConfirmUser.email})
+                </span>
+              )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => deleteConfirmUser && deleteUser.mutate({ userId: deleteConfirmUser.id })}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              disabled={deleteUser.isPending}
+            >
+              {deleteUser.isPending ? "Excluindo..." : "Excluir"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <Dialog
         open={initialPasswordModalOpen}
