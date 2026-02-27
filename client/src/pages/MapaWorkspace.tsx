@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, ChevronDown, ChevronRight, Eye, FileDown } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
+import { trpc } from "@/lib/trpc";
 import { MAPA_ESTRUTURA_STEPS, type MapaEstruturaStepKey } from "@/constants/mapa";
 import { EditoriaisSection } from "@/components/mapa/EditoriaisSection";
 import { TemasSection } from "@/components/mapa/TemasSection";
@@ -28,6 +30,22 @@ export default function MapWorkspace() {
   const [matrizOpen, setMatrizOpen] = useState(false);
   const [activeStep, setActiveStep] = useState<MapaEstruturaStepKey>("editoriais");
   const [matrizActive, setMatrizActive] = useState(false);
+
+  const { data: editoriais } = trpc.mapa.editoriais.list.useQuery();
+  const { data: temas } = trpc.mapa.temas.list.useQuery();
+  const { data: ideias } = trpc.contentIdeas.list.useQuery();
+  const progressPercentage = useMemo(() => {
+    const ed = editoriais ?? [];
+    const tem = temas ?? [];
+    const ids = ideias ?? [];
+    let p = 0;
+    if (ed.length > 0) p += 25;
+    if (tem.length > 0) p += 25;
+    const editoriaisComTemas = ed.some((e) => tem.some((t) => t.editorialId === e.id));
+    if (editoriaisComTemas) p += 25;
+    if (ids.length > 0) p += 25;
+    return p;
+  }, [editoriais, temas, ideias]);
 
   const handleEstruturaStep = (step: MapaEstruturaStepKey) => {
     setActiveStep(step);
@@ -66,7 +84,7 @@ export default function MapWorkspace() {
                   className={cn("gap-2", isDark ? "border-white/20 text-white/90 hover:bg-white/10" : "")}
                   asChild
                 >
-                  <Link href="/mapa/preview" target="_blank">
+                  <Link href="/mapa/preview" target="_blank" rel="noopener noreferrer">
                     <Eye className="w-4 h-4" />
                     Pré-visualizar
                   </Link>
@@ -75,12 +93,21 @@ export default function MapWorkspace() {
                   variant="outline"
                   size="sm"
                   className={cn("gap-2", isDark ? "border-white/20 text-white/90 hover:bg-white/10" : "")}
-                  onClick={() => window.open("/mapa/preview", "_blank")}
+                  onClick={() => window.open("/mapa/preview?print=1", "_blank", "noopener,noreferrer")}
                 >
                   <FileDown className="w-4 h-4" />
                   Imprimir / Salvar PDF
                 </Button>
               </div>
+            </div>
+            <div className="flex items-center gap-3 mt-3">
+              <Progress
+                value={progressPercentage}
+                className={cn("h-2 flex-1 max-w-xs", isDark && "[&>div]:bg-primary")}
+              />
+              <span className={cn("text-sm font-medium tabular-nums", isDark ? "text-white/90" : "text-foreground")}>
+                {progressPercentage}%
+              </span>
             </div>
           </div>
         </header>

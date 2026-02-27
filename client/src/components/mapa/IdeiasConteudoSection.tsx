@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,20 +15,35 @@ import {
 } from "@/components/ui/select";
 import { CONTEUDO_TOPICOS, CONTEUDO_FUNIL } from "@/constants/mapa";
 import { trpc } from "@/lib/trpc";
-import { Loader2, Plus } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import { Loader2, Pencil, Plus } from "lucide-react";
+import Link from "next/link";
 
 type TopicValue = (typeof CONTEUDO_TOPICOS)[number]["value"];
 type FunnelValue = (typeof CONTEUDO_FUNIL)[number]["value"];
 
 export function IdeiasConteudoSection() {
   const utils = trpc.useUtils();
-  const { data: temas } = trpc.mapa.temas.list.useQuery();
-  const { data: ideias, isLoading } = trpc.contentIdeas.list.useQuery();
+  const { data: temas } = trpc.mapa.temas.list.useQuery(undefined, { refetchOnMount: "always" });
+  const { data: ideias, isLoading } = trpc.contentIdeas.list.useQuery(undefined, { refetchOnMount: "always" });
   const createMutation = trpc.contentIdeas.create.useMutation({
-    onSuccess: () => utils.contentIdeas.list.invalidate(),
+    onSuccess: () => {
+      utils.contentIdeas.list.invalidate();
+      toast.success("Ideia de conteúdo salva.");
+    },
+    onError: (err) => {
+      toast.error(err.message || "Não foi possível salvar a ideia. Tente novamente.");
+    },
   });
   const updateMutation = trpc.contentIdeas.update.useMutation({
-    onSuccess: () => utils.contentIdeas.list.invalidate(),
+    onSuccess: () => {
+      utils.contentIdeas.list.invalidate();
+      toast.success("Ideia atualizada.");
+    },
+    onError: (err) => {
+      toast.error(err.message || "Não foi possível atualizar. Tente novamente.");
+    },
   });
 
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -59,6 +75,30 @@ export function IdeiasConteudoSection() {
     );
   };
 
+  const listaTemas = temas ?? [];
+  const listaIdeias = ideias ?? [];
+  const gruposPorTema = (() => {
+    const semTema: { themeId: number | null; themeName: string; ideias: typeof listaIdeias } = { themeId: null, themeName: "Sem tema", ideias: [] };
+    const porTema = new Map<number, { themeId: number; themeName: string; ideias: typeof listaIdeias }>();
+    for (const t of listaTemas) {
+      porTema.set(t.id, { themeId: t.id, themeName: t.name, ideias: [] });
+    }
+    for (const idea of listaIdeias) {
+      if (idea.themeId != null) {
+        const g = porTema.get(idea.themeId);
+        if (g) g.ideias.push(idea);
+        else porTema.set(idea.themeId, { themeId: idea.themeId, themeName: listaTemas.find((x) => x.id === idea.themeId)?.name ?? "Tema", ideias: [idea] });
+      } else {
+        semTema.ideias.push(idea);
+      }
+    }
+    const ordenados = listaTemas
+      .filter((t) => (porTema.get(t.id)?.ideias.length ?? 0) > 0)
+      .map((t) => porTema.get(t.id)!);
+    if (semTema.ideias.length > 0) return [...ordenados, semTema];
+    return ordenados;
+  })();
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -72,7 +112,7 @@ export function IdeiasConteudoSection() {
       <div>
         <h2 className="text-xl font-semibold">Ideias de Conteúdo</h2>
         <p className="text-sm text-muted-foreground mt-1">
-          Associe cada ideia a um tema, tópico e estágio do funil (C1/C2/C3).
+          Associe cada ideia a um tema, tópico e estágio do funil (C1/C2/C3). Organizadas em cards por tema.
         </p>
       </div>
 
@@ -143,8 +183,10 @@ export function IdeiasConteudoSection() {
                 size="sm"
                 onClick={handleCreate}
                 disabled={!newTitle.trim() || !newTopic || !newFunnel || createMutation.isPending}
+                className="gap-2"
               >
-                Salvar
+                {createMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                {createMutation.isPending ? "Salvando..." : "Salvar"}
               </Button>
               <Button
                 size="sm"
@@ -164,43 +206,63 @@ export function IdeiasConteudoSection() {
         </Card>
       )}
 
-      <div className="space-y-2">
-        {(ideias ?? []).map((idea) => (
-          <Card key={idea.id}>
-            <CardContent className="pt-4">
-              {editingId === idea.id ? (
-                <IdeiaEditForm
-                  idea={idea}
-                  temas={temas ?? []}
-                  onSave={(data) => {
-                    updateMutation.mutate({ id: idea.id, ...data }, { onSuccess: () => setEditingId(null) });
-                  }}
-                  onCancel={() => setEditingId(null)}
-                  isSaving={updateMutation.isPending}
-                />
-              ) : (
-                <div className="flex items-start justify-between gap-4">
-                  <div className="min-w-0 flex-1">
-                    <p className="font-medium">{idea.title}</p>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Tema: {temas?.find((t) => t.id === idea.themeId)?.name ?? idea.theme ?? "—"} · 
-                      Tópico: {CONTEUDO_TOPICOS.find((t) => t.value === idea.topic)?.label ?? idea.topic} · 
-                      Funil: {CONTEUDO_FUNIL.find((f) => f.value === idea.funnel)?.label ?? idea.funnel}
-                    </p>
-                  </div>
-                  <div className="flex gap-2 shrink-0">
-                    <Button size="sm" variant="ghost" onClick={() => setEditingId(idea.id)}>
-                      Editar
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {gruposPorTema.map((grupo) => (
+        <div key={grupo.themeId ?? "sem-tema"} className="space-y-3">
+          <h3 className="text-base font-semibold text-foreground border-b pb-1.5">
+            {grupo.themeName}
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {grupo.ideias.map((idea) => (
+              <Card key={idea.id} className="overflow-hidden">
+                <CardContent className="p-4">
+                  {editingId === idea.id ? (
+                    <IdeiaEditForm
+                      idea={idea}
+                      temas={listaTemas}
+                      onSave={(data) => {
+                        updateMutation.mutate({ id: idea.id, ...data }, { onSuccess: () => setEditingId(null) });
+                      }}
+                      onCancel={() => setEditingId(null)}
+                      isSaving={updateMutation.isPending}
+                    />
+                  ) : (
+                    <>
+                      <p className="font-medium text-sm leading-snug line-clamp-3">{idea.title}</p>
+                      <div className="flex flex-wrap gap-1.5 mt-3">
+                        <Badge variant="secondary" className="text-xs font-normal">
+                          {CONTEUDO_TOPICOS.find((t) => t.value === idea.topic)?.label ?? idea.topic}
+                        </Badge>
+                        <Badge
+                          variant="outline"
+                          className={cn(
+                            "text-xs font-normal",
+                            idea.funnel === "c1" && "border-amber-500/50 text-amber-700 dark:text-amber-400",
+                            idea.funnel === "c2" && "border-blue-500/50 text-blue-700 dark:text-blue-400",
+                            idea.funnel === "c3" && "border-emerald-500/50 text-emerald-700 dark:text-emerald-400"
+                          )}
+                        >
+                          {CONTEUDO_FUNIL.find((f) => f.value === idea.funnel)?.label ?? idea.funnel}
+                        </Badge>
+                      </div>
+                      <div className="flex justify-end mt-3 pt-2 border-t border-border/50">
+                        <Button size="sm" variant="ghost" className="h-8 gap-1 text-xs" onClick={() => setEditingId(idea.id)}>
+                          <Pencil className="h-3 w-3" />
+                          Editar
+                        </Button>
+                        <Button size="sm" variant="ghost" className="h-8 gap-1 text-xs" asChild>
+                          <Link href={`/roteiro/${idea.id}`}>Criar Roteiro →</Link>
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      ))}
 
-      {(!ideias || ideias.length === 0) && !showNewForm && (
+      {listaIdeias.length === 0 && !showNewForm && (
         <p className="text-sm text-muted-foreground">Nenhuma ideia ainda. Crie temas primeiro e depois adicione ideias.</p>
       )}
     </div>

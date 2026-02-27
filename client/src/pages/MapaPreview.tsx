@@ -1,19 +1,43 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/lib/trpc";
 import { CONTEUDO_TOPICOS, CONTEUDO_FUNIL } from "@/constants/mapa";
-import { Loader2, ArrowLeft } from "lucide-react";
+import { Loader2, ArrowLeft, Printer } from "lucide-react";
 
 export default function MapPreview() {
+  const searchParams = useSearchParams();
   const { user, loading: authLoading } = useAuth();
   const { data: editoriais, isLoading: loadingEd } = trpc.mapa.editoriais.list.useQuery(undefined, { enabled: !!user });
   const { data: temas, isLoading: loadingTemas } = trpc.mapa.temas.list.useQuery(undefined, { enabled: !!user });
   const { data: ideias, isLoading: loadingIdeias } = trpc.contentIdeas.list.useQuery(undefined, { enabled: !!user });
 
   const isLoading = authLoading || loadingEd || loadingTemas || loadingIdeias;
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const html = document.documentElement;
+    html.classList.remove("dark");
+    html.classList.add("preview-light-theme");
+    document.body.style.backgroundColor = "#ffffff";
+    document.body.style.color = "#000000";
+    return () => {
+      html.classList.add("dark");
+      html.classList.remove("preview-light-theme");
+      document.body.style.backgroundColor = "";
+      document.body.style.color = "";
+    };
+  }, []);
+
+  useEffect(() => {
+    if (searchParams?.get("print") !== "1" || isLoading) return;
+    const t = setTimeout(() => window.print(), 500);
+    return () => clearTimeout(t);
+  }, [searchParams, isLoading]);
 
   const editoriaisOrdenadas = (editoriais ?? []).sort((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0));
   const temasOrdenados = (temas ?? []).sort((a, b) => (a.orderIndex ?? 0) - (b.orderIndex ?? 0));
@@ -52,15 +76,21 @@ export default function MapPreview() {
         }
       `}</style>
 
-      <div className="screen-only border-b bg-muted/30 sticky top-0 z-10 px-4 py-3 flex items-center justify-between">
+      <div className="screen-only border-b border-slate-200 bg-slate-50 sticky top-0 z-20 px-4 py-3 flex items-center justify-between gap-4">
         <Button variant="ghost" size="sm" asChild>
           <Link href="/mapa">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Voltar ao MAPA
           </Link>
         </Button>
-        <div className="text-sm text-muted-foreground">
-          Use Ctrl+P (ou Cmd+P) para imprimir ou salvar como PDF.
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-slate-600 hidden sm:inline">
+            Visualização para impressão
+          </span>
+          <Button variant="outline" size="sm" onClick={() => window.print()} className="gap-2">
+            <Printer className="w-4 h-4" />
+            Imprimir / Salvar PDF
+          </Button>
         </div>
       </div>
 
