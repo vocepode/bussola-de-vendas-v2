@@ -576,13 +576,13 @@ export function mergeSecaoRedesSociais(
         nota: typeof c.nota === "string" ? c.nota : "",
       }))
     : [];
+  const conclusao = typeof (instagramRaw as Record<string, unknown>).conclusao === "string"
+    ? String((instagramRaw as Record<string, unknown>).conclusao)
+    : "";
+  const concluido = (instagramRaw as Record<string, unknown>).concluido === true;
   const instagram = {
     ...instagramRaw,
-    concorrentes,
-    conclusao: typeof (instagramRaw as Record<string, unknown>).conclusao === "string"
-      ? String((instagramRaw as Record<string, unknown>).conclusao)
-      : "",
-    concluido: (instagramRaw as Record<string, unknown>).concluido === true,
+    concorrentes: { concorrentes, conclusao, concluido },
   };
   return {
     ...initial,
