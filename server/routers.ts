@@ -579,6 +579,7 @@ export const appRouter = router({
           pillarsRemaining: 5,
           lessonCounts: {} as Record<number, number>,
           raioXOverview: { sectionCount: 3, progressPercentage: 0, completedSections: 0 },
+          mapaOverview: { sectionCount: 4, progressPercentage: 0, completedSections: 0 },
           badgesCount: 0,
           submissionsCount: 0,
         };
