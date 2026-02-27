@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useRequirePillarAccess } from "@/_core/hooks/useRequirePillarAccess";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -36,6 +37,7 @@ type StepKey = (typeof STEPS)[number]["key"];
 
 export default function MarcoZeroWorkspace() {
   const { isAuthenticated, loading: authLoading, user } = useAuth();
+  const { allowed, isLoading: pillarCheckLoading } = useRequirePillarAccess("marco-zero");
   const utils = trpc.useUtils();
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -136,6 +138,8 @@ export default function MarcoZeroWorkspace() {
   }, [isAuthenticated]);
 
   if (
+    pillarCheckLoading ||
+    !allowed ||
     authLoading ||
     norteLoading ||
     marcoZeroLoading ||

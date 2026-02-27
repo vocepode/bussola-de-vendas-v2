@@ -86,6 +86,15 @@ export async function getDb() {
 
 // ========== USER MANAGEMENT ==========
 
+/** Garante que a coluna mustChangePassword existe (para migrações ainda não aplicadas). */
+export async function ensureMustChangePasswordColumn(): Promise<void> {
+  const database = await getDb();
+  if (!database) return;
+  await database.execute(
+    sql`ALTER TABLE "users" ADD COLUMN IF NOT EXISTS "mustChangePassword" boolean DEFAULT false NOT NULL`
+  );
+}
+
 export async function createUser(user: InsertUser): Promise<number> {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
@@ -316,6 +325,15 @@ export async function setUserAccess(userId: number, isActive: boolean) {
   if (!isActive) {
     await deleteSessionsByUserId(userId);
   }
+}
+
+export async function setUserRole(userId: number, role: "user" | "admin") {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db
+    .update(users)
+    .set({ role, updatedAt: new Date() })
+    .where(eq(users.id, userId));
 }
 
 export async function updateUserProfileName(userId: number, name: string | null) {

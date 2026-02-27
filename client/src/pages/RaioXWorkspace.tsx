@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { useRequirePillarAccess } from "@/_core/hooks/useRequirePillarAccess";
 import { Badge } from "@/components/ui/badge";
 import DashboardLayout from "@/components/DashboardLayout";
 import { RaioXModule, BloqueioNorte } from "@/components/raio-x/RaioXModule";
@@ -22,6 +23,7 @@ import { cn } from "@/lib/utils";
 export default function RaioXWorkspace() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
+  const { allowed, isLoading: pillarCheckLoading } = useRequirePillarAccess("raio-x");
   const utils = trpc.useUtils();
   const [printing, setPrinting] = useState(false);
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
@@ -67,7 +69,7 @@ export default function RaioXWorkspace() {
     concluirEtapa.mutate({ secao });
   };
 
-  if (isLoading) {
+  if (pillarCheckLoading || !allowed || isLoading) {
     return (
       <DashboardLayout>
         <div className="flex min-h-[40vh] items-center justify-center">

@@ -325,6 +325,40 @@ export const appRouter = router({
         return await db.getWorkspaceProgressByModule(ctx.user.id, mod.id);
       }),
 
+    canAccessPillar: protectedProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ ctx, input }) => {
+        const order = ["comece-por-aqui", "marco-zero", "norte", "raio-x", "mapa", "rota"] as const;
+        const index = order.indexOf(input.slug as (typeof order)[number]);
+        if (index <= 0 || input.slug === "rota") return { allowed: true as const, previousSlug: undefined as string | undefined };
+        const previousSlug = order[index - 1];
+        let prevPercentage = 0;
+        if (previousSlug === "raio-x") {
+          try {
+            const row = await db.getRaioXByUserId(ctx.user.id);
+            prevPercentage = row?.progressoGeral ?? 0;
+          } catch {
+            prevPercentage = 0;
+          }
+        } else if (previousSlug === "mapa") {
+          try {
+            prevPercentage = await db.getMapaProgressPercentage(ctx.user.id);
+          } catch {
+            prevPercentage = 0;
+          }
+        } else {
+          const mod = await db.getModuleBySlug(previousSlug);
+          if (mod) {
+            const prog = await db.getWorkspaceProgressByModule(ctx.user.id, mod.id);
+            prevPercentage = prog.percentage;
+          }
+        }
+        return {
+          allowed: prevPercentage >= 100,
+          previousSlug,
+        };
+      }),
+
     getWorkspaceStateBySlug: protectedProcedure
       .input(z.object({ slug: z.enum(["marco-zero", "norte", "comece-por-aqui"]) }))
       .query(async ({ ctx, input }) => {

@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { getModuleGradient, getModuleHref, PILLARS_ORDER } from "@/constants/pillars";
 import { COURSES } from "@/constants/courses";
 import { GUIDES } from "@/constants/guides";
@@ -13,7 +14,7 @@ import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { useTheme } from "@/contexts/ThemeContext";
-import { AlertCircle, Check, LayoutList, Play, RefreshCw, TrendingUp } from "lucide-react";
+import { AlertCircle, Check, LayoutList, Lock, Play, RefreshCw, TrendingUp } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -29,6 +30,18 @@ export default function Home() {
   const pillarsCompleted = overview?.pillarsCompleted ?? 0;
   const pillarsRemaining = overview?.pillarsRemaining ?? Math.max((modules?.length ?? 0) - pillarsCompleted, 0);
   const moduleBySlug = new Map((modules ?? []).map((m) => [m.slug, m]));
+
+  const percentagesByIndex = useMemo(() => {
+    return PILLARS_ORDER.map((pillar) => {
+      const isRaioX = pillar.slug === "raio-x";
+      const isMapa = pillar.slug === "mapa";
+      const module = moduleBySlug.get(pillar.slug);
+      const progress = module ? progressByModuleId.get(module.id) : null;
+      if (isRaioX && overview?.raioXOverview) return overview.raioXOverview.progressPercentage;
+      if (isMapa && overview?.mapaOverview) return overview.mapaOverview.progressPercentage;
+      return progress?.progressPercentage ?? 0;
+    });
+  }, [overview, modules]);
 
   const hasError = errorOverview || errorModules;
   const isLoading = loadingOverview || loadingModules;
@@ -83,7 +96,7 @@ export default function Home() {
           <h2 className={cn("text-2xl font-semibold", isDark ? "text-white" : "text-foreground")}>Minha Bússola</h2>
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-            {PILLARS_ORDER.map((pillar) => {
+            {PILLARS_ORDER.map((pillar, pillarIndex) => {
               const isRaioX = pillar.slug === "raio-x";
               const isMapa = pillar.slug === "mapa";
               const isComingSoon = (pillar as { comingSoon?: boolean }).comingSoon === true;
@@ -107,12 +120,16 @@ export default function Home() {
                   ? mapaOverview.completedSections
                   : (lessonCount > 0 ? Math.round((percentage / 100) * lessonCount) : 0);
               const href = pillar.href ?? (module ? getModuleHref(module.slug) : getModuleHref(pillar.slug));
+              const prevPillar = pillarIndex > 0 ? PILLARS_ORDER[pillarIndex - 1] : null;
+              const prevPercentage = pillarIndex > 0 ? percentagesByIndex[pillarIndex - 1] ?? 0 : 100;
+              const isLocked = !isComingSoon && pillarIndex > 0 && prevPercentage < 100;
 
               const cardContent = (
                 <Card
                   className={cn(
                     "group flex h-full min-h-[280px] flex-col gap-0 overflow-hidden rounded-2xl border p-0 shadow-none transition",
-                    !isComingSoon && "hover:-translate-y-0.5",
+                    !isComingSoon && !isLocked && "hover:-translate-y-0.5",
+                    isLocked && "opacity-75",
                     isDark
                       ? "border-[#262626] bg-[#161616] text-white hover:border-violet-500/40"
                       : "border-border bg-card text-foreground hover:border-primary/50",
@@ -137,6 +154,11 @@ export default function Home() {
                       aria-hidden
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/25" />
+                    {isLocked && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                        <Lock className="h-10 w-10 text-white/90" />
+                      </div>
+                    )}
                     {!isComingSoon && (
                       <div className="absolute bottom-2 right-2 z-10">
                         <span className="rounded bg-black/35 px-2 py-0.5 text-[11px] font-medium text-white">
@@ -159,6 +181,16 @@ export default function Home() {
                       >
                         Em breve
                       </span>
+                    ) : isLocked ? (
+                      <span
+                        className={cn(
+                          "inline-flex w-full items-center justify-center gap-1.5 rounded-lg border py-2 text-xs font-medium",
+                          isDark ? "border-white/20 bg-white/5 text-white/80" : "border-border bg-muted/30 text-muted-foreground"
+                        )}
+                      >
+                        <Lock className="h-3.5 w-3.5" />
+                        Conclua &quot;{prevPillar?.title}&quot; para desbloquear
+                      </span>
                     ) : (
                       <>
                         <div className={cn("flex items-center gap-1.5 text-xs", isDark ? "text-white/85" : "text-muted-foreground")}>
@@ -180,6 +212,9 @@ export default function Home() {
                 </Card>
               );
 
+              if (isLocked) {
+                return <div key={pillar.slug} className="min-w-0 cursor-not-allowed">{cardContent}</div>;
+              }
               if (isComingSoon) {
                 return <div key={pillar.slug} className="min-w-0 cursor-default">{cardContent}</div>;
               }

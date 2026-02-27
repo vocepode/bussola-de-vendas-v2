@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { getModuleGradient, getModuleHref, PILLARS_ORDER } from "@/constants/pillars";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Card } from "@/components/ui/card";
@@ -19,6 +20,20 @@ export default function MyCompassPage() {
   const progressByModuleId = new Map((overview?.moduleProgress ?? []).map((p) => [p.moduleId, p]));
   const lessonCounts = overview?.lessonCounts ?? {};
   const moduleBySlug = new Map((modules ?? []).map((m) => [m.slug, m]));
+  const raioXOverview = overview?.raioXOverview;
+  const mapaOverview = overview?.mapaOverview;
+
+  const percentagesByIndex = useMemo(() => {
+    return PILLARS_ORDER.map((pillar) => {
+      const isRaioX = pillar.slug === "raio-x";
+      const isMapa = pillar.slug === "mapa";
+      const module = moduleBySlug.get(pillar.slug);
+      const progress = module ? progressByModuleId.get(module.id) : null;
+      if (isRaioX && raioXOverview) return raioXOverview.progressPercentage;
+      if (isMapa && mapaOverview) return mapaOverview.progressPercentage;
+      return progress?.progressPercentage ?? 0;
+    });
+  }, [overview, modules]);
 
   return (
     <DashboardLayout>
@@ -60,8 +75,8 @@ export default function MyCompassPage() {
             const href = pillar.href ?? (module ? getModuleHref(module.slug) : getModuleHref(pillar.slug));
 
             const prevPillar = pillarIndex > 0 ? PILLARS_ORDER[pillarIndex - 1] : null;
-            const prevModule = prevPillar ? moduleBySlug.get(prevPillar.slug) : null;
-            const isLocked = false;
+            const prevPercentage = pillarIndex > 0 ? percentagesByIndex[pillarIndex - 1] ?? 0 : 100;
+            const isLocked = !isComingSoon && pillarIndex > 0 && prevPercentage < 100;
 
             const cardContent = (
               <Card

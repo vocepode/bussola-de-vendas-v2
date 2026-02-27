@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRequirePillarAccess } from "@/_core/hooks/useRequirePillarAccess";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,7 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ArrowLeft, ChevronDown, ChevronRight, Eye, FileDown, Printer } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronRight, Eye, FileDown, Loader2, Printer } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
@@ -32,6 +33,7 @@ const ESTRUTURA_LABELS: Record<MapaEstruturaStepKey, string> = {
 export default function MapWorkspace() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
+  const { allowed, isLoading: pillarCheckLoading } = useRequirePillarAccess("mapa");
   const [estruturaOpen, setEstruturaOpen] = useState(true);
   const [matrizOpen, setMatrizOpen] = useState(false);
   const [activeStep, setActiveStep] = useState<MapaEstruturaStepKey>("editoriais");
@@ -48,6 +50,16 @@ export default function MapWorkspace() {
   const handleMatrizPlaceholder = () => {
     setMatrizActive(true);
   };
+
+  if (pillarCheckLoading || !allowed) {
+    return (
+      <DashboardLayout>
+        <div className="flex min-h-[40vh] items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout>

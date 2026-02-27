@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/_core/hooks/useAuth";
+import { useRequirePillarAccess } from "@/_core/hooks/useRequirePillarAccess";
 import { trpc } from "@/lib/trpc";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
@@ -108,6 +109,7 @@ function NorthSidebarTree(props: {
 
 export default function NorthWorkspace() {
   const { isAuthenticated, loading: authLoading } = useAuth();
+  const { allowed, isLoading: pillarCheckLoading } = useRequirePillarAccess("norte");
   const utils = trpc.useUtils();
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -221,6 +223,8 @@ export default function NorthWorkspace() {
   const isDark = theme === "dark";
 
   if (
+    pillarCheckLoading ||
+    !allowed ||
     authLoading ||
     norteLoading ||
     norteLessonsLoading ||
