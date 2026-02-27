@@ -24,13 +24,13 @@ export const GUIDES = [
   {
     id: "guia-mapa",
     title: "Guia Mapa",
-    cover: "/branding/guias/guia-mapa.png",
+    cover: "/branding/guias/guia-mapa..png",
     href: "#", // a enviar – atualize quando tiver o link
   },
   {
     id: "guia-rota",
     title: "Guia Rota",
-    cover: "/branding/guias/guia-rota.png",
+    cover: "/branding/guias/guia-rota..png",
     href: "#", // a enviar – atualize quando tiver o link
   },
 ] as const;

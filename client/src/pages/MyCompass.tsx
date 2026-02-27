@@ -36,6 +36,7 @@ export default function MyCompassPage() {
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {PILLARS_ORDER.map((pillar, pillarIndex) => {
             const isRaioX = pillar.slug === "raio-x";
+            const isComingSoon = (pillar as { comingSoon?: boolean }).comingSoon === true;
             const raioXOverview = overview?.raioXOverview;
             const module = moduleBySlug.get(pillar.slug);
             const progress = module ? progressByModuleId.get(module.id) : null;
@@ -52,23 +53,24 @@ export default function MyCompassPage() {
 
             const prevPillar = pillarIndex > 0 ? PILLARS_ORDER[pillarIndex - 1] : null;
             const prevModule = prevPillar ? moduleBySlug.get(prevPillar.slug) : null;
-            const prevProgress = prevModule ? progressByModuleId.get(prevModule.id) : null;
             const isLocked = false;
 
             const cardContent = (
               <Card
                 className={cn(
-                  "group flex h-full min-h-[280px] flex-col gap-0 overflow-hidden rounded-2xl border p-0 shadow-none transition hover:-translate-y-0.5",
+                  "group flex h-full min-h-[280px] flex-col gap-0 overflow-hidden rounded-2xl border p-0 shadow-none transition",
+                  !isComingSoon && "hover:-translate-y-0.5",
                   isLocked && "opacity-75",
                   isDark
                     ? "border-[#262626] bg-[#161616] text-white hover:border-violet-500/40"
-                    : "border-border bg-card text-foreground hover:border-primary/50"
+                    : "border-border bg-card text-foreground hover:border-primary/50",
+                  isComingSoon && "opacity-90"
                 )}
               >
                 <div
                   className="relative flex h-[160px] w-full shrink-0 overflow-hidden rounded-t-2xl"
                   style={
-                    module
+                    module && !isComingSoon
                       ? { background: getModuleGradient(module.color) }
                       : { background: "linear-gradient(135deg, #b11f83, #2e1269 48%, #0f123f)" }
                   }
@@ -76,7 +78,10 @@ export default function MyCompassPage() {
                   <img
                     src={pillar.cover}
                     alt=""
-                    className="absolute inset-0 h-full w-full object-cover opacity-90"
+                    className={cn(
+                      "absolute inset-0 h-full w-full object-cover opacity-90",
+                      isComingSoon && "grayscale"
+                    )}
                     aria-hidden
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/25" />
@@ -85,52 +90,67 @@ export default function MyCompassPage() {
                       <Lock className="h-10 w-10 text-white/90" />
                     </div>
                   )}
-                  <div className="absolute bottom-2 right-2 z-10">
-                    <span className="rounded bg-black/35 px-2 py-0.5 text-[11px] font-medium text-white">
-                      {percentage}%
-                    </span>
-                  </div>
+                  {!isComingSoon && (
+                    <div className="absolute bottom-2 right-2 z-10">
+                      <span className="rounded bg-black/35 px-2 py-0.5 text-[11px] font-medium text-white">
+                        {percentage}%
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div className={cn("flex min-h-0 flex-1 flex-col justify-between space-y-2 p-3", isDark ? "bg-[#1a1a1a]" : "bg-muted/20")}>
                   <p className={cn("line-clamp-2 text-sm font-medium leading-snug", isDark ? "text-white" : "text-foreground")}>
                     {pillar.subtitle}
                   </p>
-                  <div className={cn("flex items-center gap-1.5 text-xs", isDark ? "text-white/85" : "text-muted-foreground")}>
-                    <LayoutList className={cn("h-3.5 w-3.5 shrink-0", isDark ? "text-white/90" : "text-foreground/80")} />
-                    <span>{totalLessons > 0 ? `${totalLessons} ${totalLessons === 1 ? "seção" : "seções"}` : "—"}</span>
-                  </div>
-                  <Progress
-                    value={percentage}
-                    className={cn("h-2 [&>*]:bg-green-500", isDark ? "bg-white/20" : "bg-muted")}
-                  />
-                  {totalLessons > 0 ? (
-                    <p className={cn("text-xs", isDark ? "text-white/60" : "text-muted-foreground")}>
-                      {completedLessons} de {totalLessons} {totalLessons === 1 ? "seção concluída" : "seções concluídas"}
-                    </p>
-                  ) : null}
-                  {isLocked ? (
+                  {isComingSoon ? (
                     <span
                       className={cn(
-                        "inline-flex w-full items-center justify-center gap-1.5 rounded-lg border py-2 text-xs font-medium",
-                        isDark ? "border-white/20 bg-white/5 text-white/80" : "border-border bg-muted/30 text-muted-foreground"
+                        "inline-flex w-full items-center justify-center rounded-lg border py-2 text-sm font-medium",
+                        isDark ? "border-white/20 bg-white/5 text-white/70" : "border-border bg-muted/30 text-muted-foreground"
                       )}
                     >
-                      <Lock className="h-3.5 w-3.5" />
-                      Conclua &quot;{prevPillar?.title}&quot; para desbloquear
+                      Em breve
                     </span>
                   ) : (
-                    <span
-                      className={cn(
-                        "inline-flex w-full items-center justify-center rounded-lg border py-2 text-sm font-medium transition",
-                        isDark
-                          ? "border-white/30 bg-white/5 text-white group-hover:bg-white/10"
-                          : "border-border bg-muted/50 text-foreground group-hover:bg-muted"
+                    <>
+                      <div className={cn("flex items-center gap-1.5 text-xs", isDark ? "text-white/85" : "text-muted-foreground")}>
+                        <LayoutList className={cn("h-3.5 w-3.5 shrink-0", isDark ? "text-white/90" : "text-foreground/80")} />
+                        <span>{totalLessons > 0 ? `${totalLessons} ${totalLessons === 1 ? "seção" : "seções"}` : "—"}</span>
+                      </div>
+                      <Progress
+                        value={percentage}
+                        className={cn("h-2 [&>*]:bg-green-500", isDark ? "bg-white/20" : "bg-muted")}
+                      />
+                      {totalLessons > 0 ? (
+                        <p className={cn("text-xs", isDark ? "text-white/60" : "text-muted-foreground")}>
+                          {completedLessons} de {totalLessons} {totalLessons === 1 ? "seção concluída" : "seções concluídas"}
+                        </p>
+                      ) : null}
+                      {isLocked ? (
+                        <span
+                          className={cn(
+                            "inline-flex w-full items-center justify-center gap-1.5 rounded-lg border py-2 text-xs font-medium",
+                            isDark ? "border-white/20 bg-white/5 text-white/80" : "border-border bg-muted/30 text-muted-foreground"
+                          )}
+                        >
+                          <Lock className="h-3.5 w-3.5" />
+                          Conclua &quot;{prevPillar?.title}&quot; para desbloquear
+                        </span>
+                      ) : (
+                        <span
+                          className={cn(
+                            "inline-flex w-full items-center justify-center rounded-lg border py-2 text-sm font-medium transition",
+                            isDark
+                              ? "border-white/30 bg-white/5 text-white group-hover:bg-white/10"
+                              : "border-border bg-muted/50 text-foreground group-hover:bg-muted"
+                          )}
+                          aria-hidden
+                        >
+                          {percentage > 0 ? "Continuar" : "Começar"}
+                        </span>
                       )}
-                      aria-hidden
-                    >
-                      {percentage > 0 ? "Continuar" : "Começar"}
-                    </span>
+                    </>
                   )}
                 </div>
               </Card>
@@ -138,6 +158,9 @@ export default function MyCompassPage() {
 
             if (isLocked) {
               return <div key={pillar.slug} className="min-w-0 cursor-not-allowed">{cardContent}</div>;
+            }
+            if (isComingSoon) {
+              return <div key={pillar.slug} className="min-w-0 cursor-default">{cardContent}</div>;
             }
             return (
               <Link key={pillar.slug} href={href} className="min-w-0">

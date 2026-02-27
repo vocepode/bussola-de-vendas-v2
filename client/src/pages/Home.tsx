@@ -100,6 +100,7 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
             {PILLARS_ORDER.map((pillar) => {
               const isRaioX = pillar.slug === "raio-x";
+              const isComingSoon = (pillar as { comingSoon?: boolean }).comingSoon === true;
               const raioXOverview = overview?.raioXOverview;
               const module = moduleBySlug.get(pillar.slug);
               const progress = module ? progressByModuleId.get(module.id) : null;
@@ -114,57 +115,84 @@ export default function Home() {
                 : (lessonCount > 0 ? Math.round((percentage / 100) * lessonCount) : 0);
               const href = pillar.href ?? (module ? getModuleHref(module.slug) : getModuleHref(pillar.slug));
 
-              return (
-                <Link key={pillar.slug} href={href} className="min-w-0">
-                  <Card
-                    className={cn(
-                      "group flex h-full min-h-[280px] flex-col gap-0 overflow-hidden rounded-2xl border p-0 shadow-none transition hover:-translate-y-0.5",
-                      isDark
-                        ? "border-[#262626] bg-[#161616] text-white hover:border-violet-500/40"
-                        : "border-border bg-card text-foreground hover:border-primary/50"
-                    )}
+              const cardContent = (
+                <Card
+                  className={cn(
+                    "group flex h-full min-h-[280px] flex-col gap-0 overflow-hidden rounded-2xl border p-0 shadow-none transition",
+                    !isComingSoon && "hover:-translate-y-0.5",
+                    isDark
+                      ? "border-[#262626] bg-[#161616] text-white hover:border-violet-500/40"
+                      : "border-border bg-card text-foreground hover:border-primary/50",
+                    isComingSoon && "opacity-90"
+                  )}
+                >
+                  <div
+                    className="relative flex h-[160px] w-full shrink-0 overflow-hidden rounded-t-2xl"
+                    style={
+                      module && !isComingSoon
+                        ? { background: getModuleGradient(module.color) }
+                        : { background: "linear-gradient(135deg, #b11f83, #2e1269 48%, #0f123f)" }
+                    }
                   >
-                    <div
-                      className="relative flex h-[160px] w-full shrink-0 overflow-hidden rounded-t-2xl"
-                      style={
-                        module
-                          ? { background: getModuleGradient(module.color) }
-                          : { background: "linear-gradient(135deg, #b11f83, #2e1269 48%, #0f123f)" }
-                      }
-                    >
-                      <img
-                        src={pillar.cover}
-                        alt=""
-                        className="absolute inset-0 h-full w-full object-cover opacity-90"
-                        aria-hidden
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/25" />
+                    <img
+                      src={pillar.cover}
+                      alt=""
+                      className={cn(
+                        "absolute inset-0 h-full w-full object-cover opacity-90",
+                        isComingSoon && "grayscale"
+                      )}
+                      aria-hidden
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/25" />
+                    {!isComingSoon && (
                       <div className="absolute bottom-2 right-2 z-10">
                         <span className="rounded bg-black/35 px-2 py-0.5 text-[11px] font-medium text-white">
                           {percentage}%
                         </span>
                       </div>
-                    </div>
+                    )}
+                  </div>
 
-                    <div className={cn("flex min-h-0 flex-1 flex-col justify-between space-y-2 p-3", isDark ? "bg-[#1a1a1a]" : "bg-muted/20")}>
-                      <p className={cn("line-clamp-2 text-sm font-medium leading-snug", isDark ? "text-white" : "text-foreground")}>
-                        {pillar.subtitle}
-                      </p>
-                      <div className={cn("flex items-center gap-1.5 text-xs", isDark ? "text-white/85" : "text-muted-foreground")}>
-                        <LayoutList className={cn("h-3.5 w-3.5 shrink-0", isDark ? "text-white/90" : "text-foreground/80")} />
-                        <span>{lessonCount > 0 ? `${lessonCount} ${lessonCount === 1 ? "seção" : "seções"}` : "—"}</span>
-                      </div>
-                      <Progress
-                        value={percentage}
-                        className={cn("h-2 [&>*]:bg-green-500", isDark ? "bg-white/20" : "bg-muted")}
-                      />
-                      {lessonCount > 0 ? (
-                        <p className={cn("text-xs", isDark ? "text-white/60" : "text-muted-foreground")}>
-                          {completedLabel} de {lessonCount} {lessonCount === 1 ? "seção concluída" : "seções concluídas"}
-                        </p>
-                      ) : null}
-                    </div>
-                  </Card>
+                  <div className={cn("flex min-h-0 flex-1 flex-col justify-between space-y-2 p-3", isDark ? "bg-[#1a1a1a]" : "bg-muted/20")}>
+                    <p className={cn("line-clamp-2 text-sm font-medium leading-snug", isDark ? "text-white" : "text-foreground")}>
+                      {pillar.subtitle}
+                    </p>
+                    {isComingSoon ? (
+                      <span
+                        className={cn(
+                          "inline-flex w-full items-center justify-center rounded-lg border py-2 text-sm font-medium",
+                          isDark ? "border-white/20 bg-white/5 text-white/70" : "border-border bg-muted/30 text-muted-foreground"
+                        )}
+                      >
+                        Em breve
+                      </span>
+                    ) : (
+                      <>
+                        <div className={cn("flex items-center gap-1.5 text-xs", isDark ? "text-white/85" : "text-muted-foreground")}>
+                          <LayoutList className={cn("h-3.5 w-3.5 shrink-0", isDark ? "text-white/90" : "text-foreground/80")} />
+                          <span>{lessonCount > 0 ? `${lessonCount} ${lessonCount === 1 ? "seção" : "seções"}` : "—"}</span>
+                        </div>
+                        <Progress
+                          value={percentage}
+                          className={cn("h-2 [&>*]:bg-green-500", isDark ? "bg-white/20" : "bg-muted")}
+                        />
+                        {lessonCount > 0 ? (
+                          <p className={cn("text-xs", isDark ? "text-white/60" : "text-muted-foreground")}>
+                            {completedLabel} de {lessonCount} {lessonCount === 1 ? "seção concluída" : "seções concluídas"}
+                          </p>
+                        ) : null}
+                      </>
+                    )}
+                  </div>
+                </Card>
+              );
+
+              if (isComingSoon) {
+                return <div key={pillar.slug} className="min-w-0 cursor-default">{cardContent}</div>;
+              }
+              return (
+                <Link key={pillar.slug} href={href} className="min-w-0">
+                  {cardContent}
                 </Link>
               );
             })}

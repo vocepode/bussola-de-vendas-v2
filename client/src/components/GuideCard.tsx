@@ -52,7 +52,10 @@ export function GuideCard({ title, href, cover, dark }: GuideCardProps) {
               <img
                 src={cover}
                 alt=""
-                className="absolute inset-0 h-full w-full object-cover"
+                className={cn(
+                  "absolute inset-0 h-full w-full object-cover",
+                  isPlaceholder && "grayscale"
+                )}
                 onError={() => setImgError(true)}
               />
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20" />
