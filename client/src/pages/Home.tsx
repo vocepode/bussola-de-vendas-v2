@@ -6,6 +6,7 @@ import { GUIDES } from "@/constants/guides";
 import DashboardLayout from "@/components/DashboardLayout";
 import { CourseCard } from "@/components/CourseCard";
 import { GuideCard } from "@/components/GuideCard";
+import { ProgressStatsCards } from "@/components/ProgressStatsCards";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
@@ -68,30 +69,14 @@ export default function Home() {
           <p className={cn("text-sm", isDark ? "text-white/60" : "text-muted-foreground")}>continue de onde parou</p>
         </section>
 
-        <section className="grid gap-3 md:grid-cols-3">
-          <Card className={cn("rounded-xl border p-4 shadow-none", isDark ? "border-[#2e1a4a] bg-[#3b2163] text-white" : "border-primary/30 bg-primary/10 text-foreground")}>
-            <div className="mb-2 flex items-start justify-between">
-              <p className={cn("text-sm", isDark ? "text-white/90" : "text-foreground/90")}>Progresso da Jornada</p>
-              <TrendingUp className={cn("h-4 w-4", isDark ? "text-white/80" : "text-primary")} />
-            </div>
-            <p className="text-3xl font-semibold">{overallProgress}%</p>
-          </Card>
-
-          <Card className={cn("rounded-xl border p-4 shadow-none", isDark ? "border-[#2e1a4a] bg-[#3b2163] text-white" : "border-primary/30 bg-primary/10 text-foreground")}>
-            <div className="mb-2 flex items-start justify-between">
-              <p className={cn("text-sm", isDark ? "text-white/90" : "text-foreground/90")}>Pilares a finalizar</p>
-              <Play className={cn("h-4 w-4", isDark ? "text-white/80" : "text-primary")} />
-            </div>
-            <p className="text-3xl font-semibold">{pillarsRemaining}</p>
-          </Card>
-
-          <Card className={cn("rounded-xl border p-4 shadow-none", isDark ? "border-[#2e1a4a] bg-[#3b2163] text-white" : "border-primary/30 bg-primary/10 text-foreground")}>
-            <div className="mb-2 flex items-start justify-between">
-              <p className={cn("text-sm", isDark ? "text-white/90" : "text-foreground/90")}>Pilares Finalizados</p>
-              <Check className={cn("h-4 w-4", isDark ? "text-white/80" : "text-primary")} />
-            </div>
-            <p className="text-3xl font-semibold">{pillarsCompleted}</p>
-          </Card>
+        <section className="w-full">
+          <ProgressStatsCards
+            items={[
+              { name: "Progresso da Jornada", value: `${overallProgress}%`, icon: TrendingUp },
+              { name: "Pilares a finalizar", value: pillarsRemaining, icon: Play },
+              { name: "Pilares Finalizados", value: pillarsCompleted, icon: Check },
+            ]}
+          />
         </section>
 
         <section className="space-y-3">
