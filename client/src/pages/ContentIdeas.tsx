@@ -335,7 +335,7 @@ export default function ContentIdeas() {
                 <CardContent>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-slate-500">
-                      {idea.format.replace("_", " ")}
+                      {(idea.format ?? "estatico").replace("_", " ")}
                     </span>
                     <Link href={`/roteiro/${idea.id}`}>
                       <Button
