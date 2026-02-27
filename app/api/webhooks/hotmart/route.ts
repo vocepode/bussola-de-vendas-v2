@@ -133,6 +133,9 @@ export async function POST(req: Request) {
     const existing = await db.getUserByEmail(buyer.email);
     if (existing) {
       await db.updateUserProfileName(existing.id, buyer.name);
+      if (process.env.NODE_ENV === "production") {
+        console.info("[webhooks/hotmart] Usuário já existente, e-mail de acesso não reenviado:", buyer.email);
+      }
       return NextResponse.json({ ok: true });
     }
 
@@ -160,7 +163,7 @@ export async function POST(req: Request) {
         });
       } catch (emailError) {
         console.error(
-          "[webhooks/hotmart] Falha ao enviar senha inicial por e-mail. Use o painel admin para gerar link de redefinição:",
+          "[webhooks/hotmart] Falha ao enviar senha inicial por e-mail. Verifique EMAIL_USER e EMAIL_PASS no ambiente. Use o painel admin para gerar link de redefinição:",
           emailError
         );
       }
