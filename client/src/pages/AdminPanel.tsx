@@ -6,6 +6,7 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -17,10 +18,14 @@ export default function AdminPanel() {
 
   const usersQuery = trpc.admin.listUsers.useQuery(undefined, { enabled: isAdmin });
   const utils = trpc.useUtils();
+  const [initialPasswordModalOpen, setInitialPasswordModalOpen] = useState(false);
+  const [createdCredentials, setCreatedCredentials] = useState<{ email: string; initialPassword: string } | null>(null);
 
   const createUser = trpc.admin.createUser.useMutation({
-    onSuccess: () => {
+    onSuccess: ({ initialPassword }, variables) => {
       toast.success("Usuário criado");
+      setCreatedCredentials({ email: variables.email.trim().toLowerCase(), initialPassword });
+      setInitialPasswordModalOpen(true);
       void utils.admin.listUsers.invalidate();
     },
     onError: (error) => toast.error(error.message),
@@ -48,7 +53,6 @@ export default function AdminPanel() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [active, setActive] = useState(true);
 
   const submitting = createUser.isPending;
@@ -60,14 +64,22 @@ export default function AdminPanel() {
     await createUser.mutateAsync({
       name: name.trim() || undefined,
       email,
-      password,
       role: "user",
       isActive: active,
     });
     setName("");
     setEmail("");
-    setPassword("");
     setActive(true);
+  };
+
+  const copyInitialPassword = async () => {
+    if (!createdCredentials) return;
+    try {
+      await navigator.clipboard.writeText(createdCredentials.initialPassword);
+      toast.success("Senha inicial copiada");
+    } catch {
+      toast.error("Não foi possível copiar a senha");
+    }
   };
 
   if (loading) return null;
@@ -123,6 +135,9 @@ export default function AdminPanel() {
         <Card>
           <CardHeader>
             <CardTitle>Criar usuário</CardTitle>
+            <CardDescription>
+              A senha inicial é definida por variável de ambiente e exibida apenas uma vez após criar o usuário.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={onCreate} className="grid gap-4 md:grid-cols-2">
@@ -133,17 +148,6 @@ export default function AdminPanel() {
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Senha inicial</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  minLength={8}
-                />
               </div>
               <div className="space-y-2">
                 <Label>Acesso liberado</Label>
@@ -203,6 +207,39 @@ export default function AdminPanel() {
           </CardContent>
         </Card>
       </div>
+
+      <Dialog
+        open={initialPasswordModalOpen}
+        onOpenChange={(open) => {
+          setInitialPasswordModalOpen(open);
+          if (!open) setCreatedCredentials(null);
+        }}
+      >
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Senha inicial do usuário</DialogTitle>
+            <DialogDescription>Esta senha é exibida apenas nesta tela. Copie e envie ao usuário.</DialogDescription>
+          </DialogHeader>
+          {createdCredentials ? (
+            <div className="space-y-3">
+              <div className="rounded-md border p-3 text-sm">
+                <p>
+                  <span className="font-medium">Email:</span> {createdCredentials.email}
+                </p>
+                <p>
+                  <span className="font-medium">Senha inicial:</span> {createdCredentials.initialPassword}
+                </p>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={copyInitialPassword}>
+                  Copiar senha
+                </Button>
+                <Button onClick={() => setInitialPasswordModalOpen(false)}>Fechar</Button>
+              </div>
+            </div>
+          ) : null}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

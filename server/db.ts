@@ -112,6 +112,7 @@ export async function getUserByEmail(email: string) {
         "name",
         "email",
         "passwordHash",
+        false as "mustChangePassword",
         "role",
         true as "isActive",
         "createdAt",
@@ -139,6 +140,7 @@ export async function getUserById(userId: number) {
         "name",
         "email",
         "passwordHash",
+        false as "mustChangePassword",
         "role",
         true as "isActive",
         "createdAt",
@@ -241,6 +243,7 @@ export async function consumePasswordResetToken(rawToken: string, passwordHash: 
       .update(users)
       .set({
         passwordHash,
+        mustChangePassword: false,
         updatedAt: new Date(),
       })
       .where(eq(users.id, tokenRow.userId));
@@ -349,6 +352,7 @@ export async function updateUserPasswordHash(userId: number, passwordHash: strin
     .update(users)
     .set({
       passwordHash,
+      mustChangePassword: false,
       updatedAt: new Date(),
     })
     .where(eq(users.id, userId));
@@ -358,26 +362,28 @@ export async function updateUserPasswordHash(userId: number, passwordHash: strin
 
 /**
  * Cria ou atualiza usuário a partir do webhook Hotmart.
- * Se o email já existir, atualiza apenas o nome. Caso contrário, cria com o placeholderPasswordHash
- * (o usuário deve usar "Recuperar senha" para definir senha).
+ * Se o email já existir, atualiza apenas o nome.
+ * Caso contrário, cria com hash da senha inicial e marca troca obrigatória de senha.
  */
 export async function upsertUserFromHotmart(
   email: string,
   name: string | null,
   placeholderPasswordHash: string
-): Promise<number> {
+): Promise<{ userId: number; created: boolean }> {
   const existing = await getUserByEmail(email);
   if (existing) {
     await updateUserProfileName(existing.id, name);
-    return existing.id;
+    return { userId: existing.id, created: false };
   }
-  return createUser({
+  const userId = await createUser({
     email,
     name: name ?? null,
     passwordHash: placeholderPasswordHash,
+    mustChangePassword: true,
     role: "user",
     isActive: true,
   });
+  return { userId, created: true };
 }
 
 // ========== MODULES ==========

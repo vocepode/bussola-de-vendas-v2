@@ -143,7 +143,7 @@ export default function ContentMatrix() {
                       items.map((item) => (
                         <Link
                           key={item.script.id}
-                          href={`/roteiro/${item.idea.id}`}
+                          href="/mapa"
                         >
                           <Card className="bg-slate-800/50 border-slate-700 hover:bg-slate-800 hover:border-slate-600 transition-all cursor-pointer">
                             <CardHeader className="p-4 pb-2">

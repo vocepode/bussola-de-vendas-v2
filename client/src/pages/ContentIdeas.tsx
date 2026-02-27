@@ -10,7 +10,6 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Lightbulb, Filter } from "lucide-react";
 import { toast } from "sonner";
-import Link from "next/link";
 
 const TOPICS = [
   { value: "dicas", label: "Dicas" },
@@ -337,15 +336,6 @@ export default function ContentIdeas() {
                     <span className="text-sm text-slate-500">
                       {String(idea.format ?? "estatico").replace("_", " ")}
                     </span>
-                    <Link href={`/roteiro/${idea.id}`}>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="border-slate-700 text-cyan-400 hover:bg-cyan-500/10"
-                      >
-                        Criar Roteiro →
-                      </Button>
-                    </Link>
                   </div>
                 </CardContent>
               </Card>

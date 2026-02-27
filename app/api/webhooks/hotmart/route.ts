@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-import crypto from "node:crypto";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import * as db from "../../../../server/db";
+import { sendEmail } from "../../../../server/email";
+import { getInitialUserPassword } from "../../../../server/initial-password";
 
 // Assinatura do webhook desabilitada: não exige HOTMART_WEBHOOK_SECRET.
 
@@ -11,6 +12,8 @@ const PURCHASE_EVENTS = new Set([
   "PURCHASE_COMPLETE",
   "PURCHASE_COMPLETED",
 ]);
+const ACCESS_URL = "https://link.vocepodevendermais.com.br/bussola-app";
+const WHATSAPP_SUPPORT_URL = "https://link.vocepodevendermais.com.br/suporte-alunos";
 
 const payloadSchema = z.object({
   event: z.string().optional(),
@@ -53,19 +56,44 @@ function getBuyerEmailAndName(data: unknown): { email: string; name: string | nu
   };
 }
 
-let cachedPlaceholderHash: string | null = null;
-/** Senha para novos usuários Hotmart: usa HOTMART_DEFAULT_PASSWORD se definida (para primeiro login); senão gera aleatória (usuário deve usar "Recuperar senha"). */
-async function getPasswordHashForNewUser(): Promise<string> {
-  const defaultPassword = process.env.HOTMART_DEFAULT_PASSWORD;
-  if (defaultPassword && defaultPassword.length >= 6) {
-    return bcrypt.hash(defaultPassword, 10);
-  }
-  if (cachedPlaceholderHash) return cachedPlaceholderHash;
-  cachedPlaceholderHash = await bcrypt.hash(
-    crypto.randomBytes(32).toString("hex"),
-    10
-  );
-  return cachedPlaceholderHash;
+function buildInitialAccessEmailMessage(params: {
+  name: string | null;
+  email: string;
+  initialPassword: string;
+}): { text: string; html: string } {
+  const nome = params.name?.trim() || "aluno(a)";
+  const text = [
+    `Olá, ${nome}!`,
+    "",
+    "Seja bem-vindo(a) ao BússolaApp, o sistema de implementação do método COMPASS.",
+    "",
+    "Seu acesso à plataforma foi liberado com sucesso.",
+    "",
+    `Login: ${params.email}`,
+    `Senha inicial: ${params.initialPassword}`,
+    "",
+    `ACESSE AGORA: ${ACCESS_URL}`,
+    "",
+    "Importante:",
+    "No primeiro acesso, vá em Configurações > Segurança e altere sua senha.",
+    "",
+    "Se precisar de ajuda, responda este e-mail que nosso time te atende ou pode nos chamar no WhatsApp abaixo:",
+    WHATSAPP_SUPPORT_URL,
+    "",
+    "Aurora | Jornada Compass",
+    "Sucesso do cliente",
+  ].join("\n");
+  const html = [
+    `<p>Olá, ${nome}!</p>`,
+    "<p>Seja bem-vindo(a) ao BússolaApp, o sistema de implementação do método COMPASS.</p>",
+    "<p>Seu acesso à plataforma foi liberado com sucesso.</p>",
+    `<p><strong>Login:</strong> ${params.email}<br /><strong>Senha inicial:</strong> ${params.initialPassword}</p>`,
+    `<p><strong>ACESSE AGORA:</strong> <a href="${ACCESS_URL}" target="_blank" rel="noopener noreferrer">${ACCESS_URL}</a></p>`,
+    "<p><strong>Importante:</strong><br />No primeiro acesso, vá em Configurações &gt; Segurança e altere sua senha.</p>",
+    `<p>Se precisar de ajuda, responda este e-mail que nosso time te atende ou pode nos chamar no WhatsApp abaixo:<br /><a href="${WHATSAPP_SUPPORT_URL}" target="_blank" rel="noopener noreferrer">${WHATSAPP_SUPPORT_URL}</a></p>`,
+    "<p>Aurora | Jornada Compass<br />Sucesso do cliente</p>",
+  ].join("");
+  return { text, html };
 }
 
 export async function POST(req: Request) {
@@ -102,15 +130,45 @@ export async function POST(req: Request) {
   }
 
   try {
-    const passwordHash = await getPasswordHashForNewUser();
-    await db.upsertUserFromHotmart(
+    const existing = await db.getUserByEmail(buyer.email);
+    if (existing) {
+      await db.updateUserProfileName(existing.id, buyer.name);
+      return NextResponse.json({ ok: true });
+    }
+
+    const initialPassword = getInitialUserPassword();
+    const passwordHash = await bcrypt.hash(initialPassword, 10);
+    const upserted = await db.upsertUserFromHotmart(
       buyer.email,
       buyer.name,
       passwordHash
     );
+    if (upserted.created) {
+      const subject = "Seu acesso a BússolaApp";
+      const emailContent = buildInitialAccessEmailMessage({
+        name: buyer.name,
+        email: buyer.email,
+        initialPassword,
+      });
+
+      try {
+        await sendEmail({
+          to: buyer.email,
+          subject,
+          message: emailContent.text,
+          html: emailContent.html,
+        });
+      } catch (emailError) {
+        console.error(
+          "[webhooks/hotmart] Falha ao enviar senha inicial por e-mail. Use o painel admin para gerar link de redefinição:",
+          emailError
+        );
+      }
+    }
   } catch (err) {
     console.error("[webhooks/hotmart] Upsert failed:", err);
-    return NextResponse.json({ error: "Upsert failed" }, { status: 500 });
+    const message = err instanceof Error ? err.message : "Upsert failed";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true });

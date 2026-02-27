@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink, TRPCClientError } from "@trpc/client";
 import superjson from "superjson";
 import { useEffect, useMemo, useState } from "react";
-import { UNAUTHED_ERR_MSG } from "@shared/const";
+import { MUST_CHANGE_PASSWORD_ERR_MSG, UNAUTHED_ERR_MSG } from "@shared/const";
 import { trpc } from "@/lib/trpc";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ThemeProvider } from "@/contexts/ThemeContext";
@@ -14,6 +14,11 @@ import { Toaster } from "@/components/ui/sonner";
 function redirectToLoginIfUnauthorized(error: unknown) {
   if (!(error instanceof TRPCClientError)) return;
   if (typeof window === "undefined") return;
+  if (error.message === MUST_CHANGE_PASSWORD_ERR_MSG) {
+    if (window.location.pathname === "/configuracoes") return;
+    window.location.href = "/configuracoes?forcarTrocaSenha=1";
+    return;
+  }
   if (error.message !== UNAUTHED_ERR_MSG) return;
   if (window.location.pathname === "/login") return;
   window.location.href = "/login";

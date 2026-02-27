@@ -3,6 +3,8 @@ import { adminProcedure, publicProcedure, protectedProcedure, router } from "./_
 import { z } from "zod";
 import * as db from "./db";
 import bcrypt from "bcryptjs";
+import { getInitialUserPassword } from "./initial-password";
+import { toAuthMeUser } from "./auth-user";
 
 async function getOverviewData(userId: number) {
   const tableProgress = await db.getUserModuleProgress(userId);
@@ -123,7 +125,7 @@ async function getOverviewData(userId: number) {
 
 export const appRouter = router({
   auth: router({
-    me: publicProcedure.query(opts => opts.ctx.user),
+    me: publicProcedure.query(opts => toAuthMeUser(opts.ctx.user)),
     // No Next/Vercel, o logout (limpeza de cookie) será feito via rota HTTP dedicada.
     logout: publicProcedure.mutation(() => ({ success: true } as const)),
     updateProfile: protectedProcedure
@@ -597,7 +599,6 @@ export const appRouter = router({
         z.object({
           name: z.string().min(1).optional(),
           email: z.string().email(),
-          password: z.string().min(8),
           role: z.enum(["admin", "user"]).default("user"),
           isActive: z.boolean().default(true),
         })
@@ -609,16 +610,27 @@ export const appRouter = router({
           throw new Error("Email já cadastrado");
         }
 
-        const passwordHash = await bcrypt.hash(input.password, 10);
+        let initialPassword: string;
+        try {
+          initialPassword = getInitialUserPassword();
+        } catch (error) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: (error as Error).message,
+          });
+        }
+
+        const passwordHash = await bcrypt.hash(initialPassword, 10);
         const userId = await db.createUser({
           name: input.name ?? null,
           email,
           passwordHash,
+          mustChangePassword: true,
           role: input.role,
           isActive: input.isActive,
         });
 
-        return { success: true as const, userId };
+        return { success: true as const, userId, initialPassword };
       }),
 
     setUserAccess: adminProcedure

@@ -11,6 +11,8 @@ type UseAuthOptions = {
 export function useAuth(options?: UseAuthOptions) {
   const { redirectOnUnauthenticated = false, redirectPath = getLoginUrl() } =
     options ?? {};
+  const forceChangePath = "/configuracoes";
+  const forceChangeQuery = "?forcarTrocaSenha=1";
   const utils = trpc.useUtils();
 
   const meQuery = trpc.auth.me.useQuery(undefined, {
@@ -68,13 +70,31 @@ export function useAuth(options?: UseAuthOptions) {
     if (typeof window === "undefined") return;
     if (window.location.pathname === redirectPath) return;
 
-    window.location.href = redirectPath
+    window.location.href = redirectPath;
   }, [
     redirectOnUnauthenticated,
     redirectPath,
     logoutMutation.isPending,
     meQuery.isLoading,
     state.user,
+  ]);
+
+  useEffect(() => {
+    if (meQuery.isLoading || logoutMutation.isPending) return;
+    if (!state.user?.mustChangePassword) return;
+    if (typeof window === "undefined") return;
+
+    const currentPath = window.location.pathname;
+    const isAlreadyInSettings = currentPath === forceChangePath;
+    if (isAlreadyInSettings) return;
+
+    window.location.href = `${forceChangePath}${forceChangeQuery}`;
+  }, [
+    forceChangePath,
+    forceChangeQuery,
+    logoutMutation.isPending,
+    meQuery.isLoading,
+    state.user?.mustChangePassword,
   ]);
 
   return {

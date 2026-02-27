@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -18,10 +19,13 @@ import { toast } from "sonner";
 export default function SettingsPage() {
   const utils = trpc.useUtils();
   const { theme } = useTheme();
+  const searchParams = useSearchParams();
   const isDark = theme === "dark";
   const { data: me } = trpc.auth.me.useQuery();
+  const mustChangePassword = Boolean(me?.mustChangePassword) || searchParams.get("forcarTrocaSenha") === "1";
 
   const [name, setName] = useState(me?.name ?? "");
+  const [activeTab, setActiveTab] = useState<"perfil" | "seguranca">("perfil");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -53,8 +57,18 @@ export default function SettingsPage() {
     setName(me?.name ?? "");
   }, [me?.name]);
 
+  useEffect(() => {
+    if (mustChangePassword) {
+      setActiveTab("seguranca");
+    }
+  }, [mustChangePassword]);
+
   const onSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (mustChangePassword) {
+      toast.error("Altere a senha inicial antes de editar o perfil");
+      return;
+    }
     if (!name.trim()) {
       toast.error("Informe seu nome completo");
       return;
@@ -121,7 +135,20 @@ export default function SettingsPage() {
           <p className={cn("text-sm", isDark ? "text-white/70" : "text-muted-foreground")}>Gerencie suas informações pessoais e preferências</p>
         </div>
 
-        <Tabs defaultValue="perfil" className="space-y-4">
+        {mustChangePassword ? (
+          <div
+            className={cn(
+              "rounded-xl border px-4 py-3 text-sm",
+              isDark
+                ? "border-amber-300/30 bg-amber-500/10 text-amber-100"
+                : "border-amber-300 bg-amber-50 text-amber-900"
+            )}
+          >
+            Seu acesso está com senha inicial temporária. Troque sua senha agora para continuar usando a plataforma.
+          </div>
+        ) : null}
+
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "perfil" | "seguranca")} className="space-y-4">
           <TabsList
             className={cn(
               "grid h-11 w-full grid-cols-2 p-1",
@@ -130,6 +157,7 @@ export default function SettingsPage() {
           >
             <TabsTrigger
               value="perfil"
+              disabled={mustChangePassword}
               className={cn(
                 isDark
                   ? "data-[state=inactive]:text-white/70 data-[state=active]:bg-violet-500/30 data-[state=active]:text-white data-[state=active]:[&>svg]:text-white"
@@ -234,7 +262,11 @@ export default function SettingsPage() {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button type="submit" className="bg-violet-700 hover:bg-violet-600 text-white" disabled={updateProfile.isPending}>
+                  <Button
+                    type="submit"
+                    className="bg-violet-700 hover:bg-violet-600 text-white"
+                    disabled={updateProfile.isPending || mustChangePassword}
+                  >
                     <Save className="mr-2 h-4 w-4" /> Salvar Perfil
                   </Button>
                 </div>
@@ -263,6 +295,7 @@ export default function SettingsPage() {
                       type="password"
                       value={currentPassword}
                       onChange={(e) => setCurrentPassword(e.target.value)}
+                      placeholder={mustChangePassword ? "Digite a senha inicial recebida" : undefined}
                       className={isDark ? "border-white/20 bg-white/5 text-white placeholder:text-white/50" : "bg-background text-foreground placeholder:text-muted-foreground"}
                     />
                   </div>

@@ -26,7 +26,6 @@ import { trpc } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { LayoutGrid, LayoutList, Loader2, Pencil, Plus } from "lucide-react";
-import Link from "next/link";
 
 type TopicValue = (typeof CONTEUDO_TOPICOS)[number]["value"];
 type FunnelValue = (typeof CONTEUDO_FUNIL)[number]["value"];
@@ -284,9 +283,6 @@ export function IdeiasConteudoSection() {
                         <Pencil className="h-3 w-3" />
                         Editar
                       </Button>
-                      <Button size="sm" variant="ghost" className="h-8 gap-1" asChild>
-                        <Link href={`/roteiro/${idea.id}`}>Roteiro →</Link>
-                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -338,9 +334,6 @@ export function IdeiasConteudoSection() {
                         <Button size="sm" variant="ghost" className="h-8 gap-1 text-xs" onClick={() => setEditingId(idea.id)}>
                           <Pencil className="h-3 w-3" />
                           Editar
-                        </Button>
-                        <Button size="sm" variant="ghost" className="h-8 gap-1 text-xs" asChild>
-                          <Link href={`/roteiro/${idea.id}`}>Criar Roteiro →</Link>
                         </Button>
                       </div>
                     </>

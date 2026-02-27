@@ -827,6 +827,21 @@ html.dark body {
     border: 1px solid #000000 !important;
   }
 
+  #mapa-preview,
+  #mapa-preview * {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-color: #000000 !important;
+  }
+
+  #mapa-preview table,
+  #mapa-preview th,
+  #mapa-preview td {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #000000 !important;
+  }
+
   .print-document {
     max-width: 100%;
     padding: 1rem;

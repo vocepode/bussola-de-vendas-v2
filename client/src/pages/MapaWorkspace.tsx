@@ -6,7 +6,13 @@ import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ChevronDown, ChevronRight, Eye, FileDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ArrowLeft, ChevronDown, ChevronRight, Eye, FileDown, Printer } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
@@ -76,15 +82,28 @@ export default function MapWorkspace() {
                     Pré-visualizar
                   </Link>
                 </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className={cn("gap-2", isDark ? "border-white/20 text-white/90 hover:bg-white/10" : "")}
-                  onClick={() => window.open("/mapa/preview?print=1", "_blank", "noopener,noreferrer")}
-                >
-                  <FileDown className="w-4 h-4" />
-                  Imprimir / Salvar PDF
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className={cn("gap-2", isDark ? "border-white/20 text-white/90 hover:bg-white/10" : "")}
+                    >
+                      <Printer className="w-4 h-4" />
+                      Imprimir
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => window.open("/mapa/preview", "_blank", "noopener,noreferrer")}>
+                      <Eye className="w-4 h-4 mr-2" />
+                      Abrir pré-visualização
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => window.open("/mapa/preview?print=1", "_blank", "noopener,noreferrer")}>
+                      <FileDown className="w-4 h-4 mr-2" />
+                      Imprimir / Salvar PDF
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
             <div className="flex items-center gap-3 mt-3">
