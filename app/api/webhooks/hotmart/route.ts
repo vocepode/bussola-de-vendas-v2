@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import * as db from "../../../../server/db";
 
+// Assinatura do webhook desabilitada: não exige HOTMART_WEBHOOK_SECRET.
+
 const PURCHASE_EVENTS = new Set([
   "PURCHASE_APPROVED",
   "PURCHASE_COMPLETE",
@@ -51,17 +53,6 @@ function getBuyerEmailAndName(data: unknown): { email: string; name: string | nu
   };
 }
 
-function verifySignature(rawBody: string, signature: string | null, secret: string): boolean {
-  if (!signature || !secret) return false;
-  const expected = crypto.createHmac("sha256", secret).update(rawBody).digest("hex");
-  if (expected.length !== signature.length) return false;
-  try {
-    return crypto.timingSafeEqual(Buffer.from(expected, "hex"), Buffer.from(signature, "hex"));
-  } catch {
-    return false;
-  }
-}
-
 let cachedPlaceholderHash: string | null = null;
 async function getPlaceholderPasswordHash(): Promise<string> {
   if (cachedPlaceholderHash) return cachedPlaceholderHash;
@@ -73,21 +64,11 @@ async function getPlaceholderPasswordHash(): Promise<string> {
 }
 
 export async function POST(req: Request) {
-  const secret = process.env.HOTMART_WEBHOOK_SECRET;
-  if (!secret) {
-    return NextResponse.json({ error: "Webhook not configured" }, { status: 501 });
-  }
-
   let rawBody: string;
   try {
     rawBody = await req.text();
   } catch {
     return NextResponse.json({ error: "Invalid body" }, { status: 400 });
-  }
-
-  const signature = req.headers.get("x-hotmart-signature");
-  if (!verifySignature(rawBody, signature, secret)) {
-    return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
   }
 
   let payload: unknown;
