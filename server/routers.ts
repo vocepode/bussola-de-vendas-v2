@@ -608,23 +608,80 @@ export const appRouter = router({
       }),
   }),
 
+  mapa: router({
+    editoriais: router({
+      list: protectedProcedure.query(async ({ ctx }) => db.listMapaEditoriais(ctx.user.id)),
+      create: protectedProcedure
+        .input(z.object({ name: z.string().min(1), whyExplore: z.string().nullable().optional(), context: z.string().nullable().optional() }))
+        .mutation(async ({ ctx, input }) => ({ id: await db.createMapaEditorial(ctx.user.id, input) })),
+      update: protectedProcedure
+        .input(z.object({
+          id: z.number(),
+          name: z.string().min(1).optional(),
+          whyExplore: z.string().nullable().optional(),
+          context: z.string().nullable().optional(),
+          orderIndex: z.number().optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const { id, ...data } = input;
+          await db.updateMapaEditorial(id, ctx.user.id, data);
+          return { success: true };
+        }),
+      delete: protectedProcedure
+        .input(z.object({ id: z.number() }))
+        .mutation(async ({ ctx, input }) => {
+          await db.deleteMapaEditorial(input.id, ctx.user.id);
+          return { success: true };
+        }),
+    }),
+    temas: router({
+      list: protectedProcedure
+        .input(z.object({ editorialId: z.number().optional() }).optional())
+        .query(async ({ ctx, input }) => db.listMapaTemas(ctx.user.id, input?.editorialId)),
+      create: protectedProcedure
+        .input(z.object({ editorialId: z.number(), name: z.string().min(1), context: z.string().nullable().optional() }))
+        .mutation(async ({ ctx, input }) => ({ id: await db.createMapaTema(ctx.user.id, input) })),
+      update: protectedProcedure
+        .input(z.object({
+          id: z.number(),
+          editorialId: z.number().optional(),
+          name: z.string().min(1).optional(),
+          context: z.string().nullable().optional(),
+          orderIndex: z.number().optional(),
+        }))
+        .mutation(async ({ ctx, input }) => {
+          const { id, ...data } = input;
+          await db.updateMapaTema(id, ctx.user.id, data);
+          return { success: true };
+        }),
+      delete: protectedProcedure
+        .input(z.object({ id: z.number() }))
+        .mutation(async ({ ctx, input }) => {
+          await db.deleteMapaTema(input.id, ctx.user.id);
+          return { success: true };
+        }),
+    }),
+  }),
+
   contentIdeas: router({
     create: protectedProcedure
       .input(z.object({
         title: z.string(),
         theme: z.string().optional(),
+        themeId: z.number().optional(),
         topic: z.enum(["dicas", "principais_desejos", "perguntas_comuns", "mitos", "historias", "erros_comuns", "feedbacks", "diferencial_marca", "nossos_produtos"]),
         funnel: z.enum(["c1", "c2", "c3"]),
-        format: z.enum(["video_curto", "video", "carrossel", "imagem", "estatico", "live", "stories"]),
+        format: z.enum(["video_curto", "video", "carrossel", "imagem", "estatico", "live", "stories"]).optional(),
       }))
       .mutation(async ({ ctx, input }) => {
         const ideaId = await db.createContentIdea({
           userId: ctx.user.id,
           title: input.title,
           theme: input.theme || null,
+          themeId: input.themeId ?? null,
           topic: input.topic,
           funnel: input.funnel,
-          format: input.format,
+          format: input.format ?? "estatico",
         });
         return { id: ideaId };
       }),
@@ -634,6 +691,7 @@ export const appRouter = router({
         funnel: z.enum(["c1", "c2", "c3"]).optional(),
         format: z.enum(["video_curto", "video", "carrossel", "imagem", "estatico", "live", "stories"]).optional(),
         theme: z.string().optional(),
+        themeId: z.number().optional(),
       }).optional())
       .query(async ({ ctx, input }) => {
         return await db.listContentIdeas(ctx.user.id, input);
@@ -650,6 +708,7 @@ export const appRouter = router({
         id: z.number(),
         title: z.string().optional(),
         theme: z.string().optional(),
+        themeId: z.number().nullable().optional(),
         topic: z.enum(["dicas", "principais_desejos", "perguntas_comuns", "mitos", "historias", "erros_comuns", "feedbacks", "diferencial_marca", "nossos_produtos"]).optional(),
         funnel: z.enum(["c1", "c2", "c3"]).optional(),
         format: z.enum(["video_curto", "video", "carrossel", "imagem", "estatico", "live", "stories"]).optional(),

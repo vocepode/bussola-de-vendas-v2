@@ -9,6 +9,7 @@ import {
   lessonProgress, moduleProgress, badges, userBadges, resources,
   Module, Section, Lesson, LessonUserState, Exercise, Submission, ModuleProgress, LessonProgress,
   contentIdeas, contentScripts, ContentIdea, ContentScript, InsertContentIdea, InsertContentScript,
+  mapaEditoriais, mapaTemas, MapEditorial, MapTema, InsertMapEditorial, InsertMapTema,
   raioX,
   RaioX,
 } from "../drizzle/schema";
@@ -953,6 +954,7 @@ export async function listContentIdeas(userId: number, filters?: {
   funnel?: "c1" | "c2" | "c3";
   format?: string;
   theme?: string;
+  themeId?: number;
 }) {
   const db = await getDb();
   if (!db) return [];
@@ -961,6 +963,9 @@ export async function listContentIdeas(userId: number, filters?: {
   
   if (filters?.funnel) {
     conditions.push(eq(contentIdeas.funnel, filters.funnel));
+  }
+  if (filters?.themeId != null) {
+    conditions.push(eq(contentIdeas.themeId, filters.themeId));
   }
   
   const results = await db.select().from(contentIdeas).where(and(...conditions));
@@ -994,6 +999,100 @@ export async function updateContentIdea(id: number, userId: number, data: Partia
     .update(contentIdeas)
     .set({ ...data, updatedAt: new Date() })
     .where(and(eq(contentIdeas.id, id), eq(contentIdeas.userId, userId)));
+}
+
+// ========== MAPA - Editoriais e Temas ==========
+
+export async function listMapaEditoriais(userId: number): Promise<MapEditorial[]> {
+  const db = await getDb();
+  if (!db) return [];
+  return await db
+    .select()
+    .from(mapaEditoriais)
+    .where(eq(mapaEditoriais.userId, userId))
+    .orderBy(asc(mapaEditoriais.orderIndex), asc(mapaEditoriais.id));
+}
+
+export async function createMapaEditorial(userId: number, data: { name: string; whyExplore?: string | null; context?: string | null }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const [row] = await db
+    .insert(mapaEditoriais)
+    .values({
+      userId,
+      name: data.name,
+      whyExplore: data.whyExplore ?? null,
+      context: data.context ?? null,
+      orderIndex: 0,
+      updatedAt: new Date(),
+    })
+    .returning({ id: mapaEditoriais.id });
+  if (!row) throw new Error("Failed to create editorial");
+  return row.id;
+}
+
+export async function updateMapaEditorial(id: number, userId: number, data: { name?: string; whyExplore?: string | null; context?: string | null; orderIndex?: number }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db
+    .update(mapaEditoriais)
+    .set({ ...data, updatedAt: new Date() })
+    .where(and(eq(mapaEditoriais.id, id), eq(mapaEditoriais.userId, userId)));
+}
+
+export async function deleteMapaEditorial(id: number, userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db
+    .delete(mapaEditoriais)
+    .where(and(eq(mapaEditoriais.id, id), eq(mapaEditoriais.userId, userId)));
+}
+
+export async function listMapaTemas(userId: number, editorialId?: number): Promise<MapTema[]> {
+  const db = await getDb();
+  if (!db) return [];
+  const conditions = [eq(mapaTemas.userId, userId)];
+  if (editorialId != null) conditions.push(eq(mapaTemas.editorialId, editorialId));
+  return await db
+    .select()
+    .from(mapaTemas)
+    .where(and(...conditions))
+    .orderBy(asc(mapaTemas.orderIndex), asc(mapaTemas.id));
+}
+
+export async function createMapaTema(userId: number, data: { editorialId: number; name: string; context?: string | null }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const [row] = await db
+    .insert(mapaTemas)
+    .values({
+      userId,
+      editorialId: data.editorialId,
+      name: data.name,
+      context: data.context ?? null,
+      orderIndex: 0,
+      updatedAt: new Date(),
+    })
+    .returning({ id: mapaTemas.id });
+  if (!row) throw new Error("Failed to create tema");
+  return row.id;
+}
+
+export async function updateMapaTema(id: number, userId: number, data: { editorialId?: number; name?: string; context?: string | null; orderIndex?: number }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db
+    .update(mapaTemas)
+    .set({ ...data, updatedAt: new Date() })
+    .where(and(eq(mapaTemas.id, id), eq(mapaTemas.userId, userId)));
+}
+
+export async function deleteMapaTema(id: number, userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  await db
+    .delete(mapaTemas)
+    .where(and(eq(mapaTemas.id, id), eq(mapaTemas.userId, userId)));
 }
 
 /**

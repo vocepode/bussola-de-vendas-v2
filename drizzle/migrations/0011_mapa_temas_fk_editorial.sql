@@ -1,0 +1,1 @@
+ALTER TABLE "mapa_temas" ADD CONSTRAINT "mapa_temas_editorialId_mapa_editoriais_id_fk" FOREIGN KEY ("editorialId") REFERENCES "public"."mapa_editoriais"("id") ON DELETE no action ON UPDATE no action;

@@ -3,6 +3,7 @@ export function getModuleHref(slug: string) {
   if (slug === "marco-zero") return "/marco-zero";
   if (slug === "norte") return "/norte";
   if (slug === "raio-x") return "/raio-x";
+  if (slug === "mapa") return "/mapa";
   return `/modulo/${slug}`;
 }
 

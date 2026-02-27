@@ -8,6 +8,7 @@ export default async function Page({
 }) {
   const { slug } = await params;
   if (slug === "raio-x") redirect("/raio-x");
+  if (slug === "mapa") redirect("/mapa");
   return <Module slug={slug} />;
 }
 

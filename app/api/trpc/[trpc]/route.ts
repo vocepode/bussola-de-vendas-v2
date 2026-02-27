@@ -13,6 +13,10 @@ const handler = (req: Request) =>
     req,
     router: appRouter,
     createContext: async () => createContext({ req }),
+    onError: (opts) => {
+      console.error("[tRPC]", opts.path, opts.error);
+      if (opts.error.cause) console.error("[tRPC] cause:", opts.error.cause);
+    },
   });
 
 export { handler as GET, handler as POST };

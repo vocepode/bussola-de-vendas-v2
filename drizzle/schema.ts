@@ -291,6 +291,34 @@ export const resources = pgTable("resources", {
 });
 
 /**
+ * MAPA - Estrutura de Conteúdo: Editoriais (por usuário)
+ */
+export const mapaEditoriais = pgTable("mapa_editoriais", {
+  id: serial("id").primaryKey(),
+  userId: integer("userId").notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  whyExplore: text("whyExplore"),
+  context: text("context"),
+  orderIndex: integer("orderIndex").notNull().default(0),
+  createdAt: timestamp("createdAt", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt", { withTimezone: true }).defaultNow().notNull(),
+});
+
+/**
+ * MAPA - Estrutura de Conteúdo: Temas (por usuário, ligados a uma editoria)
+ */
+export const mapaTemas = pgTable("mapa_temas", {
+  id: serial("id").primaryKey(),
+  userId: integer("userId").notNull(),
+  editorialId: integer("editorialId").notNull().references(() => mapaEditoriais.id),
+  name: varchar("name", { length: 255 }).notNull(),
+  context: text("context"),
+  orderIndex: integer("orderIndex").notNull().default(0),
+  createdAt: timestamp("createdAt", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt", { withTimezone: true }).defaultNow().notNull(),
+});
+
+/**
  * Ideias de Conteúdo (MAPA - Matriz de Conteúdo)
  * Cada ideia representa um conteúdo que será criado
  */
@@ -319,10 +347,11 @@ export const contentIdeas = pgTable("contentIdeas", {
   id: serial("id").primaryKey(),
   userId: integer("userId").notNull(),
   title: varchar("title", { length: 500 }).notNull(), // título da ideia de conteúdo
-  theme: varchar("theme", { length: 255 }), // tema relacionado (do MAPA)
+  theme: varchar("theme", { length: 255 }), // legado; preferir themeId
+  themeId: integer("themeId").references(() => mapaTemas.id), // FK → mapa_temas (Estrutura de Conteúdo)
   topic: contentIdeaTopic("topic").notNull(), // tópico de conteúdo
   funnel: contentIdeaFunnel("funnel").notNull(), // C1-Topo, C2-Meio, C3-Fundo
-  format: contentIdeaFormat("format").notNull(),
+  format: contentIdeaFormat("format").default("estatico"), // opcional na Estrutura; preenchido na Matriz
   createdAt: timestamp("createdAt", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updatedAt", { withTimezone: true }).defaultNow().notNull(),
 });
@@ -518,6 +547,10 @@ export const contentIdeasRelations = relations(contentIdeas, ({ one, many }) => 
     fields: [contentIdeas.userId],
     references: [users.id],
   }),
+  theme: one(mapaTemas, {
+    fields: [contentIdeas.themeId],
+    references: [mapaTemas.id],
+  }),
   scripts: many(contentScripts),
 }));
 
@@ -537,6 +570,17 @@ export const raioXRelations = relations(raioX, ({ one }) => ({
     fields: [raioX.userId],
     references: [users.id],
   }),
+}));
+
+export const mapaEditoriaisRelations = relations(mapaEditoriais, ({ one, many }) => ({
+  user: one(users, { fields: [mapaEditoriais.userId], references: [users.id] }),
+  temas: many(mapaTemas),
+}));
+
+export const mapaTemasRelations = relations(mapaTemas, ({ one, many }) => ({
+  user: one(users, { fields: [mapaTemas.userId], references: [users.id] }),
+  editorial: one(mapaEditoriais, { fields: [mapaTemas.editorialId], references: [mapaEditoriais.id] }),
+  contentIdeas: many(contentIdeas),
 }));
 
 // Types
@@ -566,3 +610,7 @@ export type ContentScript = typeof contentScripts.$inferSelect;
 export type InsertContentScript = typeof contentScripts.$inferInsert;
 export type RaioX = typeof raioX.$inferSelect;
 export type InsertRaioX = typeof raioX.$inferInsert;
+export type MapEditorial = typeof mapaEditoriais.$inferSelect;
+export type InsertMapEditorial = typeof mapaEditoriais.$inferInsert;
+export type MapTema = typeof mapaTemas.$inferSelect;
+export type InsertMapTema = typeof mapaTemas.$inferInsert;

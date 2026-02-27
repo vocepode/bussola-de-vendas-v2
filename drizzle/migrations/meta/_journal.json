@@ -1,1 +1,90 @@
-{"version":"7","dialect":"postgresql","entries":[{"idx":0,"version":"7","when":1770409138105,"tag":"0000_mute_logan","breakpoints":true},{"idx":1,"version":"7","when":1770486705035,"tag":"0001_ambiguous_ser_duncan","breakpoints":true},{"idx":2,"version":"7","when":1770491261365,"tag":"0002_blue_tarantula","breakpoints":true},{"idx":3,"version":"7","when":1770491322279,"tag":"0003_robust_beyonder","breakpoints":true},{"idx":4,"version":"7","when":1778544000000,"tag":"0004_admin_access_and_password_reset","breakpoints":true},{"idx":5,"version":"7","when":1771275381404,"tag":"0005_add_user_avatar_url","breakpoints":true},{"idx":6,"version":"7","when":1771275381405,"tag":"0006_raio_x","breakpoints":true},{"idx":7,"version":"7","when":1739750400000,"tag":"0007_raio_x_secao_analise","breakpoints":true},{"idx":8,"version":"7","when":1772135842389,"tag":"0008_public_micromax","breakpoints":true},{"idx":9,"version":"7","when":1772200000000,"tag":"0009_raio_x_etapas_concluidas","breakpoints":true}]}
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1770409138105,
+      "tag": "0000_mute_logan",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1770486705035,
+      "tag": "0001_ambiguous_ser_duncan",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1770491261365,
+      "tag": "0002_blue_tarantula",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1770491322279,
+      "tag": "0003_robust_beyonder",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1778544000000,
+      "tag": "0004_admin_access_and_password_reset",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1771275381404,
+      "tag": "0005_add_user_avatar_url",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1771275381405,
+      "tag": "0006_raio_x",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1739750400000,
+      "tag": "0007_raio_x_secao_analise",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1772135842389,
+      "tag": "0008_public_micromax",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1772200000000,
+      "tag": "0009_raio_x_etapas_concluidas",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1772209189041,
+      "tag": "0010_mapa_estrutura_editoriais_temas",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1772209216280,
+      "tag": "0011_mapa_temas_fk_editorial",
+      "breakpoints": true
+    }
+  ]
+}
