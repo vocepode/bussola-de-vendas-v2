@@ -54,7 +54,12 @@ function getBuyerEmailAndName(data: unknown): { email: string; name: string | nu
 }
 
 let cachedPlaceholderHash: string | null = null;
-async function getPlaceholderPasswordHash(): Promise<string> {
+/** Senha para novos usuários Hotmart: usa HOTMART_DEFAULT_PASSWORD se definida (para primeiro login); senão gera aleatória (usuário deve usar "Recuperar senha"). */
+async function getPasswordHashForNewUser(): Promise<string> {
+  const defaultPassword = process.env.HOTMART_DEFAULT_PASSWORD;
+  if (defaultPassword && defaultPassword.length >= 6) {
+    return bcrypt.hash(defaultPassword, 10);
+  }
   if (cachedPlaceholderHash) return cachedPlaceholderHash;
   cachedPlaceholderHash = await bcrypt.hash(
     crypto.randomBytes(32).toString("hex"),
@@ -97,11 +102,11 @@ export async function POST(req: Request) {
   }
 
   try {
-    const placeholderHash = await getPlaceholderPasswordHash();
+    const passwordHash = await getPasswordHashForNewUser();
     await db.upsertUserFromHotmart(
       buyer.email,
       buyer.name,
-      placeholderHash
+      passwordHash
     );
   } catch (err) {
     console.error("[webhooks/hotmart] Upsert failed:", err);
