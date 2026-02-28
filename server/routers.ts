@@ -250,6 +250,9 @@ export const appRouter = router({
   }),
 
   workspaces: router({
+    // POLÍTICA: ensure*WorkspaceLessons NUNCA devem apagar lessons nem lessonUserState.
+    // Apenas garantir que as lessons existam (ensureWorkspaceLessons só insere as que faltam por slug).
+    // Chamar deleteModuleLessons aqui apagaria todos os dados salvos dos usuários.
     ensureNorthWorkspaceLessons: protectedProcedure.mutation(async () => {
       const norte = await db.ensureModule({
         slug: "norte",
@@ -269,7 +272,7 @@ export const appRouter = router({
         { slug: "ws-norte-proposta-valor", title: "NORTE • Proposta de Valor", orderIndex: 7 },
       ] as const;
 
-      await db.deleteModuleLessons(norte.id);
+      // Não apagar lessons existentes: preserve dados salvos (lessonUserState). Apenas inserir as que faltam.
       await db.ensureWorkspaceLessons({
         moduleId: norte.id,
         lessons: workspaceLessons.map((l) => ({ ...l, description: null })),

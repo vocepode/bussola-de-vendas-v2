@@ -222,6 +222,22 @@ export default function NorthWorkspace() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
+  const buildLessonIdByStepKey = useCallback((lessons: { id: number; slug?: string | null; title?: string | null }[]) => {
+    const map = new Map<StepKey, number>();
+    const list = lessons ?? [];
+    const normalize = (t: string) => (t ?? "").toLowerCase();
+    for (const s of SUBSTEPS) {
+      const slug = s.lessonSlug ?? "";
+      const found = slug
+        ? list.find((l) => normalize(l.slug ?? "") === normalize(slug))
+        : (s.lessonTitleIncludes
+          ? list.find((l) => normalize(l.title ?? "").includes(normalize(s.lessonTitleIncludes ?? "")))
+          : undefined);
+      if (found) map.set(s.key, found.id);
+    }
+    return map;
+  }, []);
+
   if (
     pillarCheckLoading ||
     !allowed ||
@@ -314,11 +330,16 @@ export default function NorthWorkspace() {
     printAreaRef.current.innerHTML = `<div class="print-document"><h1 class="print-doc-title">${norteModule.title} – Todas as etapas</h1><p>Carregando conteúdo...</p></div>`;
     console.info("[print] norte all loading html length", printAreaRef.current.innerHTML.length);
     try {
-      const result = await utils.workspaces.getWorkspaceStateBySlug.fetch({ slug: "norte" });
+      const [lessons, result] = await Promise.all([
+        utils.lessons.listByModule.fetch({ moduleId: norteModule.id }),
+        utils.workspaces.getWorkspaceStateBySlug.fetch({ slug: "norte" }),
+      ]);
       const apiSteps = result.steps ?? [];
-      const stepsWithDefs = SUBSTEPS.map((stepDef) => {
-        const lessonId = lessonIdByStepKey.get(stepDef.key);
-        const apiStep = apiSteps.find((s: { lessonId?: number }) => s.lessonId === lessonId);
+      const printMap = buildLessonIdByStepKey(lessons);
+      const stepsWithDefs = SUBSTEPS.map((stepDef, i) => {
+        const lessonId = printMap.get(stepDef.key);
+        const apiStep =
+          apiSteps.find((s: { lessonId?: number }) => s.lessonId === lessonId) ?? apiSteps[i];
         return {
           step: stepDef,
           data: (apiStep?.data ?? {}) as Record<string, unknown>,

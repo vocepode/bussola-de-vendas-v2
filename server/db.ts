@@ -549,7 +549,11 @@ export async function ensureWorkspaceLessons(params: {
   return await getLessonsByModuleId(params.moduleId);
 }
 
-/** Remove todas as lições de um módulo (e os estados de usuário associados). Usado para substituir completamente as lições do Norte. */
+/**
+ * Remove todas as lições de um módulo e os dados salvos dos usuários (lessonUserState).
+ * NUNCA chamar a partir de ensure*WorkspaceLessons nem de fluxo automático ao abrir um módulo.
+ * Usar apenas em scripts explícitos de administração ou migração, com ciência do wipe de dados.
+ */
 export async function deleteModuleLessons(moduleId: number): Promise<void> {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
