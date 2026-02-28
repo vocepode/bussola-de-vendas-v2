@@ -6,12 +6,16 @@ import DashboardLayout from "@/components/DashboardLayout";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useTheme } from "@/contexts/ThemeContext";
+import { hasClientAdminPrivileges } from "@/lib/adminAccess";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
 import { Lock, LayoutList } from "lucide-react";
 import Link from "next/link";
+import { useAuth } from "@/_core/hooks/useAuth";
 
 export default function MyCompassPage() {
+  const { user } = useAuth();
+  const isAdmin = hasClientAdminPrivileges(user);
   const { theme } = useTheme();
   const isDark = theme === "dark";
   const { data: overview, isLoading: loadingOverview } = trpc.dashboard.getOverview.useQuery();
@@ -76,7 +80,7 @@ export default function MyCompassPage() {
 
             const prevPillar = pillarIndex > 0 ? PILLARS_ORDER[pillarIndex - 1] : null;
             const prevPercentage = pillarIndex > 0 ? percentagesByIndex[pillarIndex - 1] ?? 0 : 100;
-            const isLocked = !isComingSoon && pillarIndex > 0 && prevPercentage < 100;
+            const isLocked = !isAdmin && !isComingSoon && pillarIndex > 0 && prevPercentage < 100;
 
             const cardContent = (
               <Card

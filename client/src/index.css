@@ -388,6 +388,30 @@ html.dark body {
   color: #111827 !important;
 }
 
+/* Tema escuro: reforça contorno dos campos para separar pergunta e resposta com clareza */
+html.dark .pillar-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]),
+html.dark .content-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]),
+html.dark .marco-zero-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]),
+html.dark .north-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]),
+html.dark .comece-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]),
+html.dark .mapa-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]),
+html.dark .raio-x-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]),
+html.dark .module-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]) {
+  border-color: #3a3a3a !important;
+  background-color: #121212 !important;
+}
+
+html.dark .pillar-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]):focus,
+html.dark .content-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]):focus,
+html.dark .marco-zero-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]):focus,
+html.dark .north-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]):focus,
+html.dark .comece-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]):focus,
+html.dark .mapa-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]):focus,
+html.dark .raio-x-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]):focus,
+html.dark .module-inner :is(textarea, select, input[type="text"], input[type="email"], input[type="number"], input[type="url"], input[type="search"]):focus {
+  border-color: #595959 !important;
+}
+
 /* Pré-visualização (Carta de Navegação): fundo branco, texto e tabelas em preto – só na tela */
 @media screen {
   html.preview-light-theme,

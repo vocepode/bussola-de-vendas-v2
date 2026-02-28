@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
@@ -10,11 +10,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, ArrowLeft, CheckCircle2, Mail, MessageCircle } from "lucide-react";
+import { Loader2, ArrowLeft, CheckCircle2, Mail, MessageCircle, Pencil } from "lucide-react";
 import { getLoginUrl } from "@/const";
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { clearDraft, loadDraft, saveDraft } from "@/lib/draftStorage";
+import { useUnsavedChangesProtection } from "@/hooks/useUnsavedChangesProtection";
 
 const WORKSPACE_SLUG = "comece-por-aqui" as const;
 
@@ -67,6 +69,7 @@ export default function ComecePorAquiWorkspace() {
   });
 
   const lessonId = lessons?.[0]?.id ?? null;
+  const draftKey = useMemo(() => (lessonId ? `draft:comece:${lessonId}` : null), [lessonId]);
 
   const { data: state, isLoading: stateLoading, refetch: refetchState } = trpc.lessonState.get.useQuery(
     { lessonId: lessonId ?? 0 },
@@ -79,16 +82,6 @@ export default function ComecePorAquiWorkspace() {
     },
   });
 
-  const complete = trpc.lessonState.complete.useMutation({
-    onSuccess: async () => {
-      toast.success("Etapa concluída!");
-      await utils.lessonState.get.invalidate({ lessonId: lessonId! });
-      await utils.workspaces.getProgressBySlug.invalidate({ slug: WORKSPACE_SLUG });
-      await utils.dashboard.getOverview.invalidate();
-    },
-    onError: (err) => toast.error(err.message ?? "Não foi possível concluir a etapa."),
-  });
-
   const { data: progress } = trpc.workspaces.getProgressBySlug.useQuery(
     { slug: WORKSPACE_SLUG },
     { enabled: isAuthenticated && !!moduleData?.id }
@@ -96,7 +89,70 @@ export default function ComecePorAquiWorkspace() {
 
   const [localData, setLocalData] = useState<FormData>({});
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const timerRef = useRef<number | null>(null);
+  const pendingPatchRef = useRef<Record<string, unknown>>({});
+  const isCommittingRef = useRef(false);
+  const restoredFromLocalRef = useRef(false);
+
+  const commitPendingPatches = useCallback(async () => {
+    if (isCommittingRef.current || !lessonId) return;
+    isCommittingRef.current = true;
+    try {
+      while (Object.keys(pendingPatchRef.current).length > 0) {
+        const payload = pendingPatchRef.current;
+        pendingPatchRef.current = {};
+        try {
+          const res = await upsertDraft.mutateAsync({ lessonId, patch: payload });
+          setLastSavedAt(new Date(res.updatedAt));
+          if (draftKey) clearDraft(draftKey);
+          setHasUnsavedChanges(false);
+        } catch (err) {
+          pendingPatchRef.current = { ...payload, ...pendingPatchRef.current };
+          setHasUnsavedChanges(true);
+          throw err;
+        }
+      }
+    } finally {
+      isCommittingRef.current = false;
+    }
+  }, [draftKey, lessonId, upsertDraft]);
+
+  const queuePatch = useCallback((patch: Record<string, unknown>) => {
+    if (!patch || Object.keys(patch).length === 0) return;
+    pendingPatchRef.current = { ...pendingPatchRef.current, ...patch };
+    setHasUnsavedChanges(true);
+  }, []);
+
+  const flushSave = useCallback(async (patch?: Record<string, unknown>) => {
+    if (patch) queuePatch(patch);
+    if (timerRef.current) window.clearTimeout(timerRef.current);
+    timerRef.current = null;
+    await commitPendingPatches();
+  }, [commitPendingPatches, queuePatch]);
+
+  const complete = trpc.lessonState.complete.useMutation({
+    onSuccess: async () => {
+      if (draftKey) clearDraft(draftKey);
+      pendingPatchRef.current = {};
+      setHasUnsavedChanges(false);
+      toast.success("Etapa concluída!");
+      await utils.lessonState.get.invalidate({ lessonId: lessonId! });
+      await utils.workspaces.getProgressBySlug.invalidate({ slug: WORKSPACE_SLUG });
+      await utils.dashboard.getOverview.invalidate();
+    },
+    onError: (err) => toast.error(err.message ?? "Não foi possível concluir a etapa."),
+  });
+  const reopen = trpc.lessonState.reopen.useMutation({
+    onSuccess: async () => {
+      toast.success("Edição liberada. Você pode ajustar apenas o que quiser.");
+      await utils.lessonState.get.invalidate({ lessonId: lessonId! });
+      await utils.workspaces.getProgressBySlug.invalidate({ slug: WORKSPACE_SLUG });
+      await utils.workspaces.getWorkspaceStateBySlug.invalidate({ slug: WORKSPACE_SLUG });
+      await utils.dashboard.getOverview.invalidate();
+    },
+    onError: (err) => toast.error(err.message ?? "Não foi possível liberar edição."),
+  });
 
   useEffect(() => {
     const raw = (state as any)?.data;
@@ -107,31 +163,53 @@ export default function ComecePorAquiWorkspace() {
         next[k] = typeof v === "string" ? v : "";
       }
     }
-    setLocalData(next);
     const updatedAt = (state as any)?.updatedAt ? new Date((state as any).updatedAt) : null;
+    const serverUpdatedMs = updatedAt?.getTime() ?? 0;
+    if (draftKey) {
+      const localDraft = loadDraft<FormData>(draftKey);
+      if (localDraft?.data && localDraft.savedAt > serverUpdatedMs) {
+        Object.assign(next, localDraft.data);
+        queuePatch(localDraft.data);
+        if (!restoredFromLocalRef.current) {
+          toast.info("Rascunho local restaurado.");
+          restoredFromLocalRef.current = true;
+        }
+      }
+    }
+    setLocalData(next);
     setLastSavedAt(updatedAt);
-  }, [state?.lessonId]);
+    if (Object.keys(pendingPatchRef.current).length > 0) {
+      void commitPendingPatches().catch(() => {});
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state?.lessonId, draftKey]);
 
   useEffect(() => {
     return () => {
       if (timerRef.current) window.clearTimeout(timerRef.current);
+      void flushSave();
     };
-  }, []);
+  }, [flushSave]);
 
   const scheduleSave = (patch: Record<string, unknown>) => {
     setLocalData((prev) => ({ ...prev, ...patch } as FormData));
+    queuePatch(patch);
     if (timerRef.current) window.clearTimeout(timerRef.current);
     timerRef.current = window.setTimeout(() => {
-      if (!lessonId) return;
-      upsertDraft.mutateAsync({ lessonId, patch }).then((res) => {
-        setLastSavedAt(new Date(res.updatedAt));
-      }).catch(() => {});
+      void commitPendingPatches();
     }, DEBOUNCE_MS);
   };
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     if (!lessonId) return;
+    await flushSave();
     complete.mutate({ lessonId });
+  };
+
+  const handleReopen = async () => {
+    if (!lessonId) return;
+    await flushSave();
+    reopen.mutate({ lessonId });
   };
 
   useEffect(() => {
@@ -139,6 +217,19 @@ export default function ComecePorAquiWorkspace() {
     if (ensureWorkspace.isPending || ensureWorkspace.isSuccess) return;
     ensureWorkspace.mutate();
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (!draftKey || !hasUnsavedChanges || !Object.keys(localData).length) return;
+    saveDraft(draftKey, localData);
+  }, [draftKey, hasUnsavedChanges, localData]);
+
+  useUnsavedChangesProtection({
+    enabled: !!lessonId,
+    hasUnsavedChanges: hasUnsavedChanges || upsertDraft.isPending,
+    onFlush: async () => {
+      await flushSave();
+    },
+  });
 
   if (authLoading || moduleLoading || lessonsLoading || (ensureWorkspace.isPending && !moduleData)) {
     return (
@@ -211,9 +302,29 @@ export default function ComecePorAquiWorkspace() {
                   {savedLabel}
                 </span>
                 {status === "completed" ? (
-                  <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/20 px-2 py-1 text-sm font-medium text-primary">
-                    <CheckCircle2 className="h-4 w-4" /> Concluído
-                  </span>
+                  <>
+                    <span className="inline-flex items-center gap-1.5 rounded-md bg-primary/20 px-2 py-1 text-sm font-medium text-primary">
+                      <CheckCircle2 className="h-4 w-4" /> Concluído
+                    </span>
+                    <Button
+                      variant="outline"
+                      onClick={handleReopen}
+                      disabled={reopen.isPending || complete.isPending}
+                      className="gap-2"
+                    >
+                      {reopen.isPending ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          Liberando edição…
+                        </>
+                      ) : (
+                        <>
+                          <Pencil className="h-4 w-4" />
+                          Editar respostas
+                        </>
+                      )}
+                    </Button>
+                  </>
                 ) : (
                   <Button
                     onClick={handleComplete}
@@ -413,14 +524,33 @@ export default function ComecePorAquiWorkspace() {
                 </Card>
               </section>
 
-              {status !== "completed" && (
-                <div className="flex justify-end pt-4">
+              <div className="flex justify-end pt-4">
+                {status === "completed" ? (
+                  <Button
+                    variant="outline"
+                    onClick={handleReopen}
+                    disabled={reopen.isPending || complete.isPending}
+                    className="gap-2"
+                  >
+                    {reopen.isPending ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Liberando edição…
+                      </>
+                    ) : (
+                      <>
+                        <Pencil className="h-4 w-4" />
+                        Editar respostas
+                      </>
+                    )}
+                  </Button>
+                ) : (
                   <Button onClick={handleComplete} disabled={complete.isPending} className="gap-2">
                     <CheckCircle2 className="h-4 w-4" />
                     Concluir etapa
                   </Button>
-                </div>
-              )}
+                )}
+              </div>
               <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-border mt-6">
                 <Link href="/">
                   <Button variant="outline" size="sm">← Voltar ao Dashboard</Button>

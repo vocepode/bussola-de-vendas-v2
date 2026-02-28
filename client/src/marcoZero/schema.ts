@@ -717,20 +717,6 @@ export const MARCO_ZERO_STEPS: NorthStepDef[] = [
         fieldType: "longText",
         placeholder: "Escreva aqui…",
       },
-      {
-        type: "field",
-        fieldId: "s5_objetivo_qualitativo",
-        label: "Qual seu principal objetivo qualitativo? (ex.: reconhecimento, autoridade)",
-        fieldType: "longText",
-        placeholder: "Escreva aqui…",
-      },
-      {
-        type: "field",
-        fieldId: "s5_visao_5_anos",
-        label: "Onde você quer estar em 5 anos?",
-        fieldType: "longText",
-        placeholder: "Escreva aqui…",
-      },
     ],
   },
 ];

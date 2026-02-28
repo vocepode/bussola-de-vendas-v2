@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft, Save, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { clearDraft, loadDraft, saveDraft } from "@/lib/draftStorage";
+import { useUnsavedChangesProtection } from "@/hooks/useUnsavedChangesProtection";
 
 const STRATEGIES = [
   { value: "vendas", label: "Vendas" },
@@ -50,18 +52,35 @@ const PLATFORMS = [
   { value: "linkedin", label: "LinkedIn" },
 ];
 
+const AUTOSAVE_MS = 1200;
+
+type ScriptDraftData = {
+  strategy: string;
+  funnelGoal: string;
+  progressStatus: string;
+  deadlinePlanning: string;
+  platforms: string[];
+  scriptFields: Record<string, any>;
+};
+
 export default function ScriptEditor({ ideaId }: { ideaId: string }) {
   const router = useRouter();
   const parsedIdeaId = ideaId ? parseInt(ideaId) : null;
+  const draftKey = useMemo(() => (parsedIdeaId ? `draft:script-editor:${parsedIdeaId}` : null), [parsedIdeaId]);
 
   const [strategy, setStrategy] = useState<string>("");
   const [funnelGoal, setFunnelGoal] = useState<string>("");
   const [progressStatus, setProgressStatus] = useState<string>("ideia");
   const [deadlinePlanning, setDeadlinePlanning] = useState<string>("");
   const [platforms, setPlatforms] = useState<string[]>([]);
+  const [scriptId, setScriptId] = useState<number | null>(null);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   
   // Script fields dinâmicos
   const [scriptFields, setScriptFields] = useState<Record<string, any>>({});
+  const autosaveTimerRef = useRef<number | null>(null);
+  const hydratedRef = useRef(false);
+  const lastPersistedSnapshotRef = useRef("");
 
   const { data: idea, isLoading: loadingIdea } = trpc.contentIdeas.getById.useQuery(
     { id: parsedIdeaId! },
@@ -75,68 +94,172 @@ export default function ScriptEditor({ ideaId }: { ideaId: string }) {
 
   const utils = trpc.useUtils();
 
-  const createScript = trpc.contentScripts.create.useMutation({
-    onSuccess: () => {
-      toast.success("Roteiro criado!", {
-        description: "Seu roteiro foi salvo com sucesso.",
-      });
-      utils.contentScripts.getByIdeaId.invalidate({ contentIdeaId: parsedIdeaId! });
-    },
-    onError: (error) => {
-      toast.error("Erro ao criar roteiro", {
-        description: error.message,
-      });
-    },
-  });
+  const createScript = trpc.contentScripts.create.useMutation();
+  const updateScript = trpc.contentScripts.update.useMutation();
 
-  const updateScript = trpc.contentScripts.update.useMutation({
-    onSuccess: () => {
-      toast.success("Roteiro atualizado!", {
-        description: "Suas alterações foram salvas.",
-      });
-      utils.contentScripts.getByIdeaId.invalidate({ contentIdeaId: parsedIdeaId! });
-    },
-    onError: (error) => {
-      toast.error("Erro ao atualizar roteiro", {
-        description: error.message,
-      });
-    },
-  });
+  const currentDraftData = useMemo<ScriptDraftData>(
+    () => ({
+      strategy,
+      funnelGoal,
+      progressStatus,
+      deadlinePlanning,
+      platforms,
+      scriptFields,
+    }),
+    [deadlinePlanning, funnelGoal, platforms, progressStatus, scriptFields, strategy]
+  );
 
   // Carregar dados do script existente
   useEffect(() => {
-    if (existingScript) {
-      setStrategy(existingScript.strategy || "");
-      setFunnelGoal(existingScript.funnelGoal || "");
-      setProgressStatus(existingScript.progressStatus || "ideia");
-      setDeadlinePlanning(existingScript.deadlinePlanning ? new Date(existingScript.deadlinePlanning).toISOString().split('T')[0] : "");
-      setPlatforms(existingScript.platforms || []);
-      setScriptFields(existingScript.scriptFields || {});
-    }
-  }, [existingScript]);
+    if (loadingScript) return;
 
-  const handleSave = () => {
-    if (!parsedIdeaId) return;
-
-    const data = {
-      contentIdeaId: parsedIdeaId,
-      strategy: strategy as any,
-      funnelGoal: funnelGoal as any,
-      progressStatus: progressStatus as any,
-      deadlinePlanning: deadlinePlanning || undefined,
-      platforms: platforms.length > 0 ? platforms : undefined,
-      scriptFields,
+    const serverDraft: ScriptDraftData = {
+      strategy: existingScript?.strategy || "",
+      funnelGoal: existingScript?.funnelGoal || "",
+      progressStatus: existingScript?.progressStatus || "ideia",
+      deadlinePlanning: existingScript?.deadlinePlanning
+        ? new Date(existingScript.deadlinePlanning).toISOString().split("T")[0]
+        : "",
+      platforms: existingScript?.platforms || [],
+      scriptFields: (existingScript?.scriptFields as Record<string, any>) || {},
     };
 
-    if (existingScript) {
-      updateScript.mutate({ id: existingScript.id, ...data });
-    } else {
-      createScript.mutate(data);
+    let nextDraft = serverDraft;
+    const serverUpdatedMs = existingScript?.updatedAt ? new Date(existingScript.updatedAt).getTime() : 0;
+    if (draftKey) {
+      const localDraft = loadDraft<ScriptDraftData>(draftKey);
+      if (localDraft?.data && localDraft.savedAt > serverUpdatedMs) {
+        nextDraft = localDraft.data;
+        setHasUnsavedChanges(true);
+        toast.info("Rascunho local restaurado.");
+      } else {
+        setHasUnsavedChanges(false);
+      }
     }
+
+    setScriptId(existingScript?.id ?? null);
+    setStrategy(nextDraft.strategy);
+    setFunnelGoal(nextDraft.funnelGoal);
+    setProgressStatus(nextDraft.progressStatus);
+    setDeadlinePlanning(nextDraft.deadlinePlanning);
+    setPlatforms(nextDraft.platforms);
+    setScriptFields(nextDraft.scriptFields);
+    lastPersistedSnapshotRef.current = JSON.stringify(nextDraft);
+    hydratedRef.current = true;
+  }, [draftKey, existingScript, loadingScript]);
+
+  const persistScript = useCallback(
+    async (silent: boolean) => {
+      if (!parsedIdeaId || !hydratedRef.current) return;
+      const snapshot = JSON.stringify(currentDraftData);
+      if (snapshot === lastPersistedSnapshotRef.current) return;
+
+      const data = {
+        contentIdeaId: parsedIdeaId,
+        strategy: strategy as any,
+        funnelGoal: funnelGoal as any,
+        progressStatus: progressStatus as any,
+        deadlinePlanning: deadlinePlanning || undefined,
+        platforms: platforms.length > 0 ? platforms : undefined,
+        scriptFields,
+      };
+      const creating = !scriptId;
+
+      try {
+        if (creating) {
+          const created = await createScript.mutateAsync(data);
+          setScriptId(created.id);
+        } else {
+          await updateScript.mutateAsync({ id: scriptId, ...data });
+        }
+        await utils.contentScripts.getByIdeaId.invalidate({ contentIdeaId: parsedIdeaId });
+        lastPersistedSnapshotRef.current = snapshot;
+        if (draftKey) clearDraft(draftKey);
+        setHasUnsavedChanges(false);
+        if (!silent) {
+          toast.success(creating ? "Roteiro criado!" : "Roteiro atualizado!", {
+            description: creating ? "Seu roteiro foi salvo com sucesso." : "Suas alterações foram salvas.",
+          });
+        }
+      } catch (error) {
+        setHasUnsavedChanges(true);
+        if (!silent) {
+          const message = error instanceof Error ? error.message : "Não foi possível salvar o roteiro.";
+          toast.error(creating ? "Erro ao criar roteiro" : "Erro ao atualizar roteiro", {
+            description: message,
+          });
+        }
+        throw error;
+      }
+    },
+    [
+      createScript,
+      currentDraftData,
+      deadlinePlanning,
+      draftKey,
+      funnelGoal,
+      parsedIdeaId,
+      platforms,
+      progressStatus,
+      scriptFields,
+      scriptId,
+      strategy,
+      updateScript,
+      utils.contentScripts.getByIdeaId,
+    ]
+  );
+
+  const flushAutosave = useCallback(async () => {
+    if (autosaveTimerRef.current) {
+      window.clearTimeout(autosaveTimerRef.current);
+      autosaveTimerRef.current = null;
+    }
+    await persistScript(true);
+  }, [persistScript]);
+
+  useEffect(() => {
+    if (!hydratedRef.current || !draftKey) return;
+    const snapshot = JSON.stringify(currentDraftData);
+    if (snapshot === lastPersistedSnapshotRef.current) return;
+
+    setHasUnsavedChanges(true);
+    saveDraft(draftKey, currentDraftData);
+
+    if (autosaveTimerRef.current) {
+      window.clearTimeout(autosaveTimerRef.current);
+    }
+    autosaveTimerRef.current = window.setTimeout(() => {
+      void persistScript(true);
+    }, AUTOSAVE_MS);
+
+    return () => {
+      if (autosaveTimerRef.current) {
+        window.clearTimeout(autosaveTimerRef.current);
+      }
+    };
+  }, [currentDraftData, draftKey, persistScript]);
+
+  useEffect(() => {
+    return () => {
+      void flushAutosave();
+    };
+  }, [flushAutosave]);
+
+  useUnsavedChangesProtection({
+    enabled: !!parsedIdeaId,
+    hasUnsavedChanges:
+      hasUnsavedChanges ||
+      createScript.isPending ||
+      updateScript.isPending,
+    onFlush: flushAutosave,
+  });
+
+  const handleSave = () => {
+    void persistScript(false);
   };
 
   const updateScriptField = (field: string, value: any) => {
-    setScriptFields(prev => ({ ...prev, [field]: value }));
+    setScriptFields((prev) => ({ ...prev, [field]: value }));
   };
 
   const togglePlatform = (platform: string) => {

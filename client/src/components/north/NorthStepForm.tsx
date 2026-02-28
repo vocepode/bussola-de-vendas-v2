@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
@@ -20,8 +20,10 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Loader2, RotateCcw, CheckCircle2, HelpCircle, ChevronDown, ChevronRight } from "lucide-react";
+import { Loader2, RotateCcw, CheckCircle2, HelpCircle, ChevronDown, ChevronRight, Pencil } from "lucide-react";
 import type { NorthBlock, NorthStepDef, NorthShowWhen } from "@/north/schema";
+import { clearDraft, loadDraft, saveDraft } from "@/lib/draftStorage";
+import { useUnsavedChangesProtection } from "@/hooks/useUnsavedChangesProtection";
 
 type Props = {
   lessonId: number;
@@ -67,12 +69,17 @@ function debounceMs() {
   return 800;
 }
 
+const FIELD_INPUT_CLASS =
+  "border-input bg-background text-foreground placeholder:text-muted-foreground dark:border-white/20 dark:bg-[#121212] dark:text-white dark:placeholder:text-white/45";
+const FIELD_OPTION_CLASS = "rounded-md border p-3 hover:bg-muted/30 dark:border-white/20";
+
 function StringListField(props: {
   label: string;
   helperText?: string;
   placeholder?: string;
   value: unknown;
   onChange: (next: string[]) => void;
+  inputClassName?: string;
   /** Quando definido, exibe contador "Adicionadas: X/Y" e bloqueia Concluir etapa até atingir o mínimo. */
   minItems?: number;
 }) {
@@ -106,6 +113,7 @@ function StringListField(props: {
           value={current}
           placeholder={props.placeholder}
           onChange={(e) => setCurrent(e.target.value)}
+          className={props.inputClassName}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               e.preventDefault();
@@ -140,6 +148,7 @@ function StringListField(props: {
 
 export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fixedRowLabelsByFieldId, footerExtra }: Props) {
   const utils = trpc.useUtils();
+  const draftKey = useMemo(() => `draft:lesson:${lessonId}`, [lessonId]);
 
   const { data: state, isLoading } = trpc.lessonState.get.useQuery(
     { lessonId },
@@ -154,10 +163,13 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
 
   const complete = trpc.lessonState.complete.useMutation({
     onSuccess: async () => {
+      clearDraft(draftKey);
+      setHasUnsavedChanges(false);
       toast.success("Etapa concluída!");
       await utils.lessonState.get.invalidate({ lessonId });
       if (workspaceSlug) {
         await utils.workspaces.getProgressBySlug.invalidate({ slug: workspaceSlug });
+        await utils.workspaces.getWorkspaceStateBySlug.invalidate({ slug: workspaceSlug });
       }
       await utils.dashboard.getOverview.invalidate();
     },
@@ -166,18 +178,83 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
 
   const reset = trpc.lessonState.reset.useMutation({
     onSuccess: async () => {
+      clearDraft(draftKey);
+      setHasUnsavedChanges(false);
       toast.success("Respostas resetadas.");
       await utils.lessonState.get.invalidate({ lessonId });
+      if (workspaceSlug) {
+        await utils.workspaces.getWorkspaceStateBySlug.invalidate({ slug: workspaceSlug });
+      }
     },
     onError: (err) => toast.error(err.message || "Não foi possível resetar."),
+  });
+  const reopen = trpc.lessonState.reopen.useMutation({
+    onSuccess: async () => {
+      toast.success("Edição liberada. Você pode ajustar apenas o que quiser.");
+      await utils.lessonState.get.invalidate({ lessonId });
+      if (workspaceSlug) {
+        await utils.workspaces.getProgressBySlug.invalidate({ slug: workspaceSlug });
+        await utils.workspaces.getWorkspaceStateBySlug.invalidate({ slug: workspaceSlug });
+      }
+      await utils.dashboard.getOverview.invalidate();
+    },
+    onError: (err) => toast.error(err.message || "Não foi possível liberar edição."),
   });
 
   const [localData, setLocalData] = useState<Record<string, unknown>>({});
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [columnHelpOpen, setColumnHelpOpen] = useState<string | null>(null);
   const [examplesOpen, setExamplesOpen] = useState(false);
   const timerRef = useRef<number | null>(null);
   const lastPrefillSigRef = useRef<string | null>(null);
+  const pendingPatchRef = useRef<Record<string, unknown>>({});
+  const isCommittingRef = useRef(false);
+  const restoredFromLocalRef = useRef(false);
+
+  const commitPendingPatches = useCallback(async () => {
+    if (isCommittingRef.current || lessonId <= 0) return;
+    isCommittingRef.current = true;
+    try {
+      while (Object.keys(pendingPatchRef.current).length > 0) {
+        const payload = pendingPatchRef.current;
+        pendingPatchRef.current = {};
+        try {
+          const res = await upsertDraft.mutateAsync({ lessonId, patch: payload });
+          setLastSavedAt(new Date(res.updatedAt));
+          clearDraft(draftKey);
+          setHasUnsavedChanges(false);
+        } catch (err) {
+          pendingPatchRef.current = { ...payload, ...pendingPatchRef.current };
+          setHasUnsavedChanges(true);
+          throw err;
+        }
+      }
+    } finally {
+      isCommittingRef.current = false;
+    }
+  }, [draftKey, lessonId, upsertDraft]);
+
+  const queuePatch = useCallback((patch: Record<string, unknown>) => {
+    if (!patch || Object.keys(patch).length === 0) return;
+    pendingPatchRef.current = { ...pendingPatchRef.current, ...patch };
+    setHasUnsavedChanges(true);
+  }, []);
+
+  const scheduleSave = useCallback((patch: Record<string, unknown>) => {
+    queuePatch(patch);
+    if (timerRef.current) window.clearTimeout(timerRef.current);
+    timerRef.current = window.setTimeout(() => {
+      void commitPendingPatches();
+    }, debounceMs());
+  }, [commitPendingPatches, queuePatch]);
+
+  const flushSave = useCallback(async (patch?: Record<string, unknown>) => {
+    if (patch) queuePatch(patch);
+    if (timerRef.current) window.clearTimeout(timerRef.current);
+    timerRef.current = null;
+    await commitPendingPatches();
+  }, [commitPendingPatches, queuePatch]);
 
   useEffect(() => {
     let next = isRecord((state as any)?.data) ? ((state as any).data as Record<string, unknown>) : {};
@@ -197,21 +274,48 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
       next = { ...next, [b.fieldId]: initial };
       patch[b.fieldId] = initial;
     }
-    setLocalData(next);
+
     const updatedAt = (state as any)?.updatedAt ? new Date((state as any).updatedAt) : null;
+    const serverUpdatedMs = updatedAt?.getTime() ?? 0;
+    const localDraft = loadDraft<Record<string, unknown>>(draftKey);
+    const useLocalDraft = !!localDraft && localDraft.savedAt > serverUpdatedMs;
+    if (useLocalDraft && localDraft?.data && isRecord(localDraft.data)) {
+      next = { ...next, ...localDraft.data };
+      queuePatch(localDraft.data);
+      if (!restoredFromLocalRef.current) {
+        toast.info("Rascunho local restaurado.");
+        restoredFromLocalRef.current = true;
+      }
+    }
+
+    setLocalData(next);
     setLastSavedAt(updatedAt);
     if (Object.keys(patch).length > 0) {
-      flushSave(patch).catch(() => {});
+      void flushSave(patch).catch(() => {});
+    } else if (useLocalDraft) {
+      void commitPendingPatches().catch(() => {});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state?.lessonId, step.blocks, fixedRowLabelsByFieldId]);
+  }, [state?.lessonId, step.blocks, fixedRowLabelsByFieldId, draftKey]);
+
+  useEffect(() => {
+    if (!lessonId || !hasUnsavedChanges || !Object.keys(localData).length) return;
+    saveDraft(draftKey, localData);
+  }, [draftKey, hasUnsavedChanges, lessonId, localData]);
 
   useEffect(() => {
     return () => {
       if (timerRef.current) window.clearTimeout(timerRef.current);
+      void flushSave();
     };
-  }, []);
-
+  }, [flushSave]);
+  useUnsavedChangesProtection({
+    enabled: lessonId > 0,
+    hasUnsavedChanges: hasUnsavedChanges || upsertDraft.isPending,
+    onFlush: async () => {
+      await flushSave();
+    },
+  });
 
   const status = ((state as any)?.status as "draft" | "completed" | undefined) ?? "draft";
 
@@ -221,25 +325,6 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
     if (!lastSavedAt) return "Não salvo ainda";
     return `Salvo ${lastSavedAt.toLocaleString()}`;
   }, [saving, lastSavedAt]);
-
-  const scheduleSave = (patch: Record<string, unknown>) => {
-    if (timerRef.current) window.clearTimeout(timerRef.current);
-    timerRef.current = window.setTimeout(async () => {
-      try {
-        const res = await upsertDraft.mutateAsync({ lessonId, patch });
-        setLastSavedAt(new Date(res.updatedAt));
-      } catch {
-        // erro já tratado pelo react-query
-      }
-    }, debounceMs());
-  };
-
-  const flushSave = async (patch: Record<string, unknown>) => {
-    if (timerRef.current) window.clearTimeout(timerRef.current);
-    timerRef.current = null;
-    const res = await upsertDraft.mutateAsync({ lessonId, patch });
-    setLastSavedAt(new Date(res.updatedAt));
-  };
 
   // Prefill opcional de tabela a partir de uma lista (ex.: concorrentes do Diagnóstico do negócio)
   useEffect(() => {
@@ -549,6 +634,7 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
               onChange={(e) => setField(b.fieldId, e.target.value, { flush: false })}
               onBlur={(e) => setField(b.fieldId, e.target.value, { flush: true })}
               rows={rows}
+              className={FIELD_INPUT_CLASS}
             />
           </div>
         );
@@ -568,6 +654,7 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
               placeholder={b.placeholder}
               onChange={(e) => setField(b.fieldId, e.target.value === "" ? null : e.target.value, { flush: false })}
               onBlur={(e) => setField(b.fieldId, e.target.value === "" ? null : e.target.value, { flush: true })}
+              className={FIELD_INPUT_CLASS}
             />
           </div>
         );
@@ -585,6 +672,7 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
               placeholder={b.placeholder}
               onChange={(e) => setField(b.fieldId, e.target.value, { flush: false })}
               onBlur={(e) => setField(b.fieldId, e.target.value, { flush: true })}
+              className={FIELD_INPUT_CLASS}
             />
           </div>
         );
@@ -603,7 +691,7 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
               {options.map((o) => {
                 const checked = selected === o.id;
                 return (
-                  <label key={o.id} className="flex items-start gap-3 rounded-md border p-3 hover:bg-muted/30">
+                  <label key={o.id} className={`flex items-start gap-3 ${FIELD_OPTION_CLASS}`}>
                     <Checkbox
                       checked={checked}
                       onCheckedChange={(v) => {
@@ -634,7 +722,7 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
               {options.map((o) => {
                 const checked = selected.includes(o.id);
                 return (
-                  <label key={o.id} className="flex items-start gap-3 rounded-md border p-3 hover:bg-muted/30">
+                  <label key={o.id} className={`flex items-start gap-3 ${FIELD_OPTION_CLASS}`}>
                     <Checkbox
                       checked={checked}
                       onCheckedChange={(v) => {
@@ -675,7 +763,7 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
               {options.map((o) => {
                 const checked = selected.includes(o.id);
                 return (
-                  <label key={o.id} className="flex items-start gap-3 rounded-md border p-3 hover:bg-muted/30">
+                  <label key={o.id} className={`flex items-start gap-3 ${FIELD_OPTION_CLASS}`}>
                     <Checkbox
                       checked={checked}
                       onCheckedChange={(v) => toggle(o.id, !!v)}
@@ -742,6 +830,7 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
             placeholder={b.placeholder}
             value={value}
             onChange={(next) => setField(b.fieldId, next, { flush: true })}
+            inputClassName={FIELD_INPUT_CLASS}
             minItems={minItems}
           />
         );
@@ -822,23 +911,47 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
 
         {footerExtra}
 
-        <Button
-          className="gap-2"
-          onClick={() => complete.mutate({ lessonId })}
-          disabled={complete.isPending || (status !== "completed" && !requiredFieldsFilled)}
-        >
-          {complete.isPending ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              Concluindo…
-            </>
-          ) : (
-            <>
-              <CheckCircle2 className="w-4 h-4" />
-              Concluir etapa
-            </>
-          )}
-        </Button>
+        {status === "completed" ? (
+          <Button
+            variant="outline"
+            className="gap-2"
+            onClick={() => reopen.mutate({ lessonId })}
+            disabled={reopen.isPending || reset.isPending || complete.isPending}
+          >
+            {reopen.isPending ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Liberando edição…
+              </>
+            ) : (
+              <>
+                <Pencil className="w-4 h-4" />
+                Editar respostas
+              </>
+            )}
+          </Button>
+        ) : (
+          <Button
+            className="gap-2"
+            onClick={async () => {
+              await flushSave();
+              complete.mutate({ lessonId });
+            }}
+            disabled={complete.isPending || !requiredFieldsFilled}
+          >
+            {complete.isPending ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Concluindo…
+              </>
+            ) : (
+              <>
+                <CheckCircle2 className="w-4 h-4" />
+                Concluir etapa
+              </>
+            )}
+          </Button>
+        )}
       </div>
     </div>
   );

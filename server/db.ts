@@ -4,6 +4,7 @@ import postgres from "postgres";
 import { setDefaultResultOrder, lookup } from "node:dns/promises";
 import { isIP } from "node:net";
 import crypto from "node:crypto";
+import { isForcedAdminEmail } from "./admin-access";
 import { 
   InsertUser, users, sessions, passwordResetTokens, modules, sections, lessons, lessonUserState, exercises, submissions, 
   lessonProgress, moduleProgress, badges, userBadges, resources,
@@ -34,6 +35,15 @@ function isMissingIsActiveColumnError(error: unknown): boolean {
   const message = (error as { message?: string })?.message ?? "";
   const causeCode = (error as { cause?: { code?: string } })?.cause?.code ?? "";
   return message.includes('users.isActive') || (causeCode === "42703" && message.includes("users"));
+}
+
+function normalizeForcedAdminUser<T extends { email: string; role: "user" | "admin"; isActive: boolean } | undefined>(
+  user: T
+): T {
+  if (!user) return user;
+  if (!isForcedAdminEmail(user.email)) return user;
+  if (user.role === "admin" && user.isActive) return user;
+  return { ...user, role: "admin", isActive: true } as T;
 }
 
 /** Extrai host e port da URL (tudo após o último @ até a primeira / ou ?). */
@@ -112,7 +122,7 @@ export async function getUserByEmail(email: string) {
   if (!db) return undefined;
   try {
     const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
-    return result[0];
+    return normalizeForcedAdminUser(result[0]);
   } catch (error) {
     if (!isMissingIsActiveColumnError(error) || !_sql) throw error;
     const fallback = await _sql`
@@ -131,7 +141,7 @@ export async function getUserByEmail(email: string) {
       where "email" = ${email}
       limit 1
     `;
-    return fallback[0] as typeof users.$inferSelect | undefined;
+    return normalizeForcedAdminUser(fallback[0] as typeof users.$inferSelect | undefined);
   }
 }
 
@@ -140,7 +150,7 @@ export async function getUserById(userId: number) {
   if (!db) return undefined;
   try {
     const result = await db.select().from(users).where(eq(users.id, userId)).limit(1);
-    return result[0];
+    return normalizeForcedAdminUser(result[0]);
   } catch (error) {
     if (!isMissingIsActiveColumnError(error) || !_sql) throw error;
     const fallback = await _sql`
@@ -159,7 +169,7 @@ export async function getUserById(userId: number) {
       where "id" = ${userId}
       limit 1
     `;
-    return fallback[0] as typeof users.$inferSelect | undefined;
+    return normalizeForcedAdminUser(fallback[0] as typeof users.$inferSelect | undefined);
   }
 }
 
@@ -273,7 +283,7 @@ export async function listUsersForAdmin() {
   if (!db) return [];
 
   try {
-    return await db
+    const rows = await db
       .select({
         id: users.id,
         name: users.name,
@@ -285,9 +295,10 @@ export async function listUsersForAdmin() {
       })
       .from(users)
       .orderBy(desc(users.createdAt));
+    return rows.map((row) => (isForcedAdminEmail(row.email) ? { ...row, role: "admin" as const, isActive: true } : row));
   } catch (error) {
     if (!isMissingIsActiveColumnError(error) || !_sql) throw error;
-    return (await _sql`
+    const rows = (await _sql`
       select
         "id",
         "name",
@@ -307,12 +318,17 @@ export async function listUsersForAdmin() {
       createdAt: Date;
       lastSignedIn: Date;
     }[];
+    return rows.map((row) => (isForcedAdminEmail(row.email) ? { ...row, role: "admin" as const, isActive: true } : row));
   }
 }
 
 export async function setUserAccess(userId: number, isActive: boolean) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
+  const existing = await getUserById(userId);
+  if (existing && isForcedAdminEmail(existing.email) && !isActive) {
+    throw new Error("Este administrador não pode ser desativado.");
+  }
 
   await db
     .update(users)
@@ -330,6 +346,10 @@ export async function setUserAccess(userId: number, isActive: boolean) {
 export async function setUserRole(userId: number, role: "user" | "admin") {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
+  const existing = await getUserById(userId);
+  if (existing && isForcedAdminEmail(existing.email) && role !== "admin") {
+    throw new Error("Este administrador não pode ter o perfil rebaixado.");
+  }
   await db
     .update(users)
     .set({ role, updatedAt: new Date() })
@@ -634,7 +654,8 @@ export async function upsertLessonUserDraft(params: {
     .update(lessonUserState)
     .set({
       data: nextData,
-      status: "draft",
+      // Preserva "completed" no próprio UPDATE para evitar corrida com a ação de concluir.
+      status: sql`CASE WHEN ${lessonUserState.status} = 'completed' THEN 'completed' ELSE 'draft' END`,
       updatedAt: new Date(),
     })
     .where(eq(lessonUserState.id, existing.id))
@@ -670,6 +691,32 @@ export async function completeLessonUserState(params: { userId: number; lessonId
     });
 
   if (!row) throw new Error("Failed to complete lesson user state");
+  return row;
+}
+
+export async function reopenLessonUserState(params: { userId: number; lessonId: number }) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const [row] = await db
+    .insert(lessonUserState)
+    .values({
+      userId: params.userId,
+      lessonId: params.lessonId,
+      data: {},
+      status: "draft",
+      updatedAt: new Date(),
+    })
+    .onConflictDoUpdate({
+      target: [lessonUserState.userId, lessonUserState.lessonId],
+      set: { status: "draft", updatedAt: new Date() },
+    })
+    .returning({
+      status: lessonUserState.status,
+      updatedAt: lessonUserState.updatedAt,
+    });
+
+  if (!row) throw new Error("Failed to reopen lesson user state");
   return row;
 }
 
@@ -1066,6 +1113,22 @@ export async function updateContentIdea(id: number, userId: number, data: Partia
     .where(and(eq(contentIdeas.id, id), eq(contentIdeas.userId, userId)));
 }
 
+/**
+ * Excluir ideia de conteúdo (e roteiro vinculado, se existir)
+ */
+export async function deleteContentIdea(id: number, userId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  await db
+    .delete(contentScripts)
+    .where(and(eq(contentScripts.contentIdeaId, id), eq(contentScripts.userId, userId)));
+
+  await db
+    .delete(contentIdeas)
+    .where(and(eq(contentIdeas.id, id), eq(contentIdeas.userId, userId)));
+}
+
 // ========== MAPA - Editoriais e Temas ==========
 
 export async function listMapaEditoriais(userId: number): Promise<MapEditorial[]> {
@@ -1108,6 +1171,16 @@ export async function updateMapaEditorial(id: number, userId: number, data: { na
 export async function deleteMapaEditorial(id: number, userId: number) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
+
+  const temasDaEditoria = await db
+    .select({ id: mapaTemas.id })
+    .from(mapaTemas)
+    .where(and(eq(mapaTemas.userId, userId), eq(mapaTemas.editorialId, id)));
+
+  for (const tema of temasDaEditoria) {
+    await deleteMapaTema(tema.id, userId);
+  }
+
   await db
     .delete(mapaEditoriais)
     .where(and(eq(mapaEditoriais.id, id), eq(mapaEditoriais.userId, userId)));
@@ -1171,6 +1244,23 @@ export async function updateMapaTema(id: number, userId: number, data: { editori
 export async function deleteMapaTema(id: number, userId: number) {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
+
+  const ideiasDoTema = await db
+    .select({ id: contentIdeas.id })
+    .from(contentIdeas)
+    .where(and(eq(contentIdeas.userId, userId), eq(contentIdeas.themeId, id)));
+
+  const ideaIds = ideiasDoTema.map((row) => row.id);
+  if (ideaIds.length > 0) {
+    await db
+      .delete(contentScripts)
+      .where(and(eq(contentScripts.userId, userId), inArray(contentScripts.contentIdeaId, ideaIds)));
+  }
+
+  await db
+    .delete(contentIdeas)
+    .where(and(eq(contentIdeas.userId, userId), eq(contentIdeas.themeId, id)));
+
   await db
     .delete(mapaTemas)
     .where(and(eq(mapaTemas.id, id), eq(mapaTemas.userId, userId)));
@@ -1401,6 +1491,52 @@ export async function concluirEtapaRaioX(
       .set({
         etapasConcluidas: arr,
         progressoGeral,
+        updatedAt: now,
+      })
+      .where(eq(raioX.userId, userId))
+      .returning({ updatedAt: raioX.updatedAt, etapasConcluidas: raioX.etapasConcluidas });
+    return updated;
+  };
+
+  try {
+    const updated = await runUpdate();
+    return {
+      updatedAt: updated?.updatedAt ?? now,
+      etapasConcluidas: (updated?.etapasConcluidas as string[]) ?? arr,
+    };
+  } catch (err) {
+    if (isMissingColumnError(err)) {
+      await db.execute(sql`ALTER TABLE "raio_x" ADD COLUMN IF NOT EXISTS "etapas_concluidas" jsonb DEFAULT '[]'::jsonb`);
+      const updated = await runUpdate();
+      return {
+        updatedAt: updated?.updatedAt ?? now,
+        etapasConcluidas: (updated?.etapasConcluidas as string[]) ?? arr,
+      };
+    }
+    throw err;
+  }
+}
+
+export async function reabrirEtapaRaioX(
+  userId: number,
+  secao: "redes_sociais" | "web" | "analise"
+): Promise<{ updatedAt: Date; etapasConcluidas: string[] }> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const row = await getRaioXByUserId(userId);
+  if (!row) throw new Error("Raio-X não encontrado");
+  const current = (row as { etapasConcluidas?: string[] }).etapasConcluidas;
+  const arr = Array.isArray(current) ? current.filter((s) => s !== secao) : [];
+  const progressoGeral = Math.round((arr.length / RAIO_X_SECOES.length) * 100);
+  const now = new Date();
+
+  const runUpdate = async () => {
+    const [updated] = await db
+      .update(raioX)
+      .set({
+        etapasConcluidas: arr,
+        progressoGeral,
+        concluido: false,
         updatedAt: now,
       })
       .where(eq(raioX.userId, userId))

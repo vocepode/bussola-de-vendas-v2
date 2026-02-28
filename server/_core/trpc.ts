@@ -2,6 +2,7 @@ import { MUST_CHANGE_PASSWORD_ERR_MSG, NOT_ADMIN_ERR_MSG, UNAUTHED_ERR_MSG } fro
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import type { TrpcContext } from "./context";
+import { hasAdminPrivileges } from "../admin-access";
 
 const t = initTRPC.context<TrpcContext>().create({
   transformer: superjson,
@@ -39,18 +40,19 @@ export const protectedProcedure = t.procedure.use(requireUser);
 export const adminProcedure = t.procedure.use(
   t.middleware(async opts => {
     const { ctx, next } = opts;
+    const user = ctx.user;
 
-    if (!ctx.user || ctx.user.role !== 'admin') {
+    if (!user || !hasAdminPrivileges(user)) {
       throw new TRPCError({ code: "FORBIDDEN", message: NOT_ADMIN_ERR_MSG });
     }
-    if (ctx.user.mustChangePassword && !MUST_CHANGE_PASSWORD_ALLOWED_PATHS.has(opts.path)) {
+    if (user.mustChangePassword && !MUST_CHANGE_PASSWORD_ALLOWED_PATHS.has(opts.path)) {
       throw new TRPCError({ code: "FORBIDDEN", message: MUST_CHANGE_PASSWORD_ERR_MSG });
     }
 
     return next({
       ctx: {
         ...ctx,
-        user: ctx.user,
+        user,
       },
     });
   }),

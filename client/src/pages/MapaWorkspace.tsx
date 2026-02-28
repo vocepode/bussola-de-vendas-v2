@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRequirePillarAccess } from "@/_core/hooks/useRequirePillarAccess";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -13,11 +14,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ArrowLeft, ChevronDown, ChevronRight, Eye, FileDown, Loader2, Printer } from "lucide-react";
+import { ArrowLeft, ChevronDown, ChevronRight, Eye, FileDown, Loader2, Pencil, Printer } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
 import { MAPA_ESTRUTURA_STEPS, type MapaEstruturaStepKey } from "@/constants/mapa";
+import { getModuleHref, PILLARS_ORDER } from "@/constants/pillars";
 import { EditoriaisSection } from "@/components/mapa/EditoriaisSection";
 import { TemasSection } from "@/components/mapa/TemasSection";
 import { TemasPorEditoriaSection } from "@/components/mapa/TemasPorEditoriaSection";
@@ -41,6 +43,7 @@ export default function MapWorkspace() {
 
   const { data: progress } = trpc.workspaces.getProgressBySlug.useQuery({ slug: "mapa" });
   const progressPercentage = progress?.percentage ?? 0;
+  const isCompleted = progressPercentage >= 100;
 
   const handleEstruturaStep = (step: MapaEstruturaStepKey) => {
     setActiveStep(step);
@@ -50,6 +53,21 @@ export default function MapWorkspace() {
   const handleMatrizPlaceholder = () => {
     setMatrizActive(true);
   };
+
+  const handleEditarRespostas = () => {
+    setMatrizActive(false);
+    setMatrizOpen(false);
+    setEstruturaOpen(true);
+    setActiveStep("editoriais");
+  };
+
+  const stepIndex = MAPA_ESTRUTURA_STEPS.indexOf(activeStep);
+  const prevStep = stepIndex > 0 ? MAPA_ESTRUTURA_STEPS[stepIndex - 1] : null;
+  const nextStep = stepIndex >= 0 && stepIndex < MAPA_ESTRUTURA_STEPS.length - 1 ? MAPA_ESTRUTURA_STEPS[stepIndex + 1] : null;
+  const pillarIndex = PILLARS_ORDER.findIndex((p) => p.slug === "mapa");
+  const nextPilar = pillarIndex >= 0 && pillarIndex < PILLARS_ORDER.length - 1 ? PILLARS_ORDER[pillarIndex + 1] : null;
+  const nextPilarHref =
+    nextPilar && !nextPilar.comingSoon ? (nextPilar.href ?? getModuleHref(nextPilar.slug)) : null;
 
   if (pillarCheckLoading || !allowed) {
     return (
@@ -83,6 +101,23 @@ export default function MapWorkspace() {
                 <h1 className={cn("text-xl font-bold truncate", isDark ? "text-white" : "")}>MAPA</h1>
               </div>
               <div className="flex items-center gap-2">
+                <Badge
+                  variant={isCompleted ? "default" : "secondary"}
+                  className={cn(isCompleted ? "gap-1" : "", isDark && "border-white/20 bg-white/10 text-white/90")}
+                >
+                  {isCompleted ? "Concluído" : "Rascunho"}
+                </Badge>
+                {isCompleted ? (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={cn("gap-2", isDark ? "border-white/20 text-white/90 hover:bg-white/10" : "")}
+                    onClick={handleEditarRespostas}
+                  >
+                    <Pencil className="w-4 h-4" />
+                    Editar respostas
+                  </Button>
+                ) : null}
                 <Button
                   variant="outline"
                   size="sm"
@@ -215,6 +250,26 @@ export default function MapWorkspace() {
                     {activeStep === "temas" && <TemasSection />}
                     {activeStep === "temas_por_editoria" && <TemasPorEditoriaSection />}
                     {activeStep === "ideias" && <IdeiasConteudoSection />}
+                    <div className={cn("pt-8 mt-8 flex flex-wrap items-center gap-3 border-t", isDark ? "border-[#262626]" : "border-border")}>
+                      {prevStep ? (
+                        <Button variant="outline" size="sm" onClick={() => handleEstruturaStep(prevStep)}>
+                          ← Seção anterior
+                        </Button>
+                      ) : null}
+                      {nextStep ? (
+                        <Button size="sm" onClick={() => handleEstruturaStep(nextStep)}>
+                          Avançar →
+                        </Button>
+                      ) : nextPilarHref ? (
+                        <Link href={nextPilarHref}>
+                          <Button size="sm">Avançar → Próximo pilar</Button>
+                        </Link>
+                      ) : (
+                        <Button size="sm" disabled>
+                          Próximo pilar em breve
+                        </Button>
+                      )}
+                    </div>
                   </CardContent>
                 </Card>
               )}

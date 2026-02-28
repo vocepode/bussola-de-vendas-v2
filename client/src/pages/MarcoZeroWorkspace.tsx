@@ -78,6 +78,10 @@ export default function MarcoZeroWorkspace() {
     { slug: "marco-zero" },
     { enabled: isAuthenticated && !!marcoZeroModule?.id }
   );
+  const { data: marcoZeroWorkspaceState } = trpc.workspaces.getWorkspaceStateBySlug.useQuery(
+    { slug: "marco-zero" },
+    { enabled: isAuthenticated && !!marcoZeroModule?.id }
+  );
 
   const [activeStep, setActiveStep] = useState<StepKey>(() => STEPS[0]?.key ?? "jornada");
   const printAreaRef = useRef<HTMLDivElement>(null);
@@ -120,15 +124,16 @@ export default function MarcoZeroWorkspace() {
       { enabled: !!activeLessonId && isAuthenticated }
     );
 
-  const [statusByStep, setStatusByStep] = useState<Partial<Record<StepKey, "draft" | "completed">>>({});
-
-  useEffect(() => {
-    if (!activeState) return;
-    const s = (activeState as any).status as "draft" | "completed" | undefined;
-    if (!s) return;
-    setStatusByStep((prev) => ({ ...prev, [activeStep]: s }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeState?.lessonId]);
+  const statusByStep = useMemo(() => {
+    const steps = marcoZeroWorkspaceState?.steps ?? [];
+    const out: Partial<Record<StepKey, "draft" | "completed">> = {};
+    STEPS.forEach((s) => {
+      const lessonId = lessonIdByStepKey.get(s.key);
+      const st = steps.find((step: { lessonId?: number }) => step.lessonId === lessonId);
+      out[s.key] = (st?.status === "completed" ? "completed" : "draft") as "draft" | "completed";
+    });
+    return out;
+  }, [marcoZeroWorkspaceState?.steps, lessonIdByStepKey]);
 
   useEffect(() => {
     if (!isAuthenticated) return;

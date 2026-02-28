@@ -10,16 +10,19 @@ import { Input } from "@/components/ui/input";
 import { trpc } from "@/lib/trpc";
 import { NotionBlocksRenderer } from "@/components/notion/NotionBlocksRenderer";
 import { 
-  ArrowLeft, CheckCircle2, Loader2, Send, FileUp 
+  ArrowLeft, CheckCircle2, Loader2, Send, FileUp, Pencil
 } from "lucide-react";
 import Link from "next/link";
 import { getLoginUrl } from "@/const";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { clearDraft, loadDraft, saveDraft } from "@/lib/draftStorage";
+import { useUnsavedChangesProtection } from "@/hooks/useUnsavedChangesProtection";
 
 export default function Lesson({ id }: { id: string }) {
   const { isAuthenticated, loading: authLoading } = useAuth();
   const lessonId = parseInt(id || "0");
+  const draftKey = lessonId > 0 ? `draft:lesson-page:${lessonId}` : null;
 
   const [answer, setAnswer] = useState("");
   const [selectedOption, setSelectedOption] = useState<string>("");
@@ -52,6 +55,7 @@ export default function Lesson({ id }: { id: string }) {
       setAnswer("");
       setSelectedOption("");
       setFileUrl("");
+      if (draftKey) clearDraft(draftKey);
     },
     onError: (error) => {
       toast.error(error.message || "Erro ao enviar exercício");
@@ -63,6 +67,14 @@ export default function Lesson({ id }: { id: string }) {
       lessonId,
       status: "completed",
     });
+  };
+
+  const handleReopenLesson = async () => {
+    await markProgress.mutateAsync({
+      lessonId,
+      status: "in_progress",
+    });
+    toast.success("Edição liberada. Ajuste suas respostas e conclua novamente.");
   };
 
   const handleSubmitExercise = async (exerciseId: number, type: string) => {
@@ -87,6 +99,38 @@ export default function Lesson({ id }: { id: string }) {
       fileUrl: type === "file_upload" ? fileUrl : undefined,
     });
   };
+
+  useEffect(() => {
+    if (!draftKey) return;
+    const draft = loadDraft<{ answer: string; selectedOption: string; fileUrl: string }>(draftKey);
+    if (!draft?.data) return;
+    setAnswer(draft.data.answer ?? "");
+    setSelectedOption(draft.data.selectedOption ?? "");
+    setFileUrl(draft.data.fileUrl ?? "");
+  }, [draftKey]);
+
+  useEffect(() => {
+    if (!draftKey) return;
+    if (!answer && !selectedOption && !fileUrl) {
+      clearDraft(draftKey);
+      return;
+    }
+    saveDraft(draftKey, { answer, selectedOption, fileUrl });
+  }, [answer, draftKey, fileUrl, selectedOption]);
+
+  useUnsavedChangesProtection({
+    enabled: !!draftKey,
+    hasUnsavedChanges:
+      !!answer.trim() ||
+      !!selectedOption ||
+      !!fileUrl ||
+      submitExercise.isPending,
+    onFlush: () => {
+      if (!draftKey) return;
+      if (!answer && !selectedOption && !fileUrl) return;
+      saveDraft(draftKey, { answer, selectedOption, fileUrl });
+    },
+  });
 
   if (authLoading || lessonLoading) {
     return (
@@ -146,9 +190,21 @@ export default function Lesson({ id }: { id: string }) {
             </Button>
             
             {isCompleted && (
-              <div className="flex items-center gap-2 text-green-600">
-                <CheckCircle2 className="w-5 h-5" />
-                <span className="text-sm font-medium">Concluído</span>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 text-green-600">
+                  <CheckCircle2 className="w-5 h-5" />
+                  <span className="text-sm font-medium">Concluído</span>
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleReopenLesson}
+                  disabled={markProgress.isPending}
+                  className="gap-2"
+                >
+                  <Pencil className="w-4 h-4" />
+                  Editar respostas
+                </Button>
               </div>
             )}
           </div>
@@ -327,16 +383,33 @@ export default function Lesson({ id }: { id: string }) {
         )}
 
         {/* Mark Complete Button */}
-        {!isCompleted && (
-          <Card className="bg-primary/5 border-primary/20">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-semibold mb-1">Concluir Lição</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Marque como concluída para avançar no módulo
-                  </p>
-                </div>
+        <Card className="bg-primary/5 border-primary/20">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold mb-1">{isCompleted ? "Edição de Respostas" : "Concluir Lição"}</h3>
+                <p className="text-sm text-muted-foreground">
+                  {isCompleted
+                    ? "Reabra para ajustar respostas sem refazer tudo."
+                    : "Marque como concluída para avançar no módulo"}
+                </p>
+              </div>
+              {isCompleted ? (
+                <Button
+                  variant="outline"
+                  onClick={handleReopenLesson}
+                  disabled={markProgress.isPending}
+                  size="lg"
+                  className="gap-2"
+                >
+                  {markProgress.isPending ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Pencil className="w-4 h-4" />
+                  )}
+                  Editar respostas
+                </Button>
+              ) : (
                 <Button
                   onClick={handleMarkComplete}
                   disabled={markProgress.isPending}
@@ -349,10 +422,10 @@ export default function Lesson({ id }: { id: string }) {
                   )}
                   Concluir
                 </Button>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+              )}
+            </div>
+          </CardContent>
+        </Card>
       </main>
     </div>
   );

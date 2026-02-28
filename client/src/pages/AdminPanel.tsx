@@ -20,11 +20,12 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { hasClientAdminPrivileges } from "@/lib/adminAccess";
 import Link from "next/link";
 
 export default function AdminPanel() {
   const { user, loading } = useAuth();
-  const isAdmin = user?.role === "admin";
+  const isAdmin = hasClientAdminPrivileges(user);
 
   const usersQuery = trpc.admin.listUsers.useQuery(undefined, { enabled: isAdmin });
   const utils = trpc.useUtils();

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,10 @@ import {
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { Loader2, Plus, Trash2 } from "lucide-react";
+import { clearDraft, loadDraft, saveDraft } from "@/lib/draftStorage";
+import { useUnsavedChangesProtection } from "@/hooks/useUnsavedChangesProtection";
+
+const DRAFT_KEY = "draft:mapa:temas:new";
 
 export function TemasSection() {
   const utils = trpc.useUtils();
@@ -24,8 +28,10 @@ export function TemasSection() {
   });
   const { data: temas, isLoading } = trpc.mapa.temas.list.useQuery();
   const createMutation = trpc.mapa.temas.create.useMutation({
-    onSuccess: () => {
-      utils.mapa.temas.list.invalidate();
+    onSuccess: async () => {
+      await utils.mapa.temas.list.invalidate();
+      await utils.workspaces.getProgressBySlug.invalidate({ slug: "mapa" });
+      await utils.dashboard.getOverview.invalidate();
       toast.success("Tema salvo.");
     },
     onError: (err) => {
@@ -33,10 +39,24 @@ export function TemasSection() {
     },
   });
   const updateMutation = trpc.mapa.temas.update.useMutation({
-    onSuccess: () => utils.mapa.temas.list.invalidate(),
+    onSuccess: async () => {
+      await utils.mapa.temas.list.invalidate();
+      await utils.workspaces.getProgressBySlug.invalidate({ slug: "mapa" });
+      await utils.dashboard.getOverview.invalidate();
+    },
+    onError: (err) => {
+      toast.error(err.message || "Não foi possível atualizar o tema.");
+    },
   });
   const deleteMutation = trpc.mapa.temas.delete.useMutation({
-    onSuccess: () => utils.mapa.temas.list.invalidate(),
+    onSuccess: async () => {
+      await utils.mapa.temas.list.invalidate();
+      await utils.workspaces.getProgressBySlug.invalidate({ slug: "mapa" });
+      await utils.dashboard.getOverview.invalidate();
+    },
+    onError: (err) => {
+      toast.error(err.message || "Não foi possível remover o tema.");
+    },
   });
 
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -44,6 +64,29 @@ export function TemasSection() {
   const [newContext, setNewContext] = useState("");
   const [newEditorialId, setNewEditorialId] = useState<string>("");
   const [showNewForm, setShowNewForm] = useState(false);
+
+  useEffect(() => {
+    const draft = loadDraft<{ name: string; context: string; editorialId: string; show: boolean }>(DRAFT_KEY);
+    if (!draft?.data) return;
+    setNewName(draft.data.name ?? "");
+    setNewContext(draft.data.context ?? "");
+    setNewEditorialId(draft.data.editorialId ?? "");
+    setShowNewForm(!!draft.data.show);
+  }, []);
+
+  useEffect(() => {
+    const hasData = !!newName.trim() || !!newContext.trim() || !!newEditorialId;
+    if (!hasData && !showNewForm) {
+      clearDraft(DRAFT_KEY);
+      return;
+    }
+    saveDraft(DRAFT_KEY, {
+      name: newName,
+      context: newContext,
+      editorialId: newEditorialId,
+      show: showNewForm,
+    });
+  }, [newContext, newEditorialId, newName, showNewForm]);
 
   const handleCreate = () => {
     const editorialId = newEditorialId ? parseInt(newEditorialId, 10) : undefined;
@@ -56,10 +99,26 @@ export function TemasSection() {
           setNewContext("");
           setNewEditorialId("");
           setShowNewForm(false);
+          clearDraft(DRAFT_KEY);
         },
       }
     );
   };
+
+  useUnsavedChangesProtection({
+    hasUnsavedChanges:
+      (showNewForm && (!!newName.trim() || !!newContext.trim() || !!newEditorialId)) ||
+      createMutation.isPending,
+    onFlush: () => {
+      if (!showNewForm) return;
+      saveDraft(DRAFT_KEY, {
+        name: newName,
+        context: newContext,
+        editorialId: newEditorialId,
+        show: true,
+      });
+    },
+  });
 
   if (isLoading) {
     return (
@@ -147,6 +206,7 @@ export function TemasSection() {
                   setNewName("");
                   setNewContext("");
                   setNewEditorialId("");
+                  clearDraft(DRAFT_KEY);
                 }}
               >
                 Cancelar

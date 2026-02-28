@@ -22,18 +22,25 @@ import {
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import { ChevronDown, ChevronRight, Loader2, Plus, Trash2 } from "lucide-react";
+import { clearDraft, loadDraft, saveDraft } from "@/lib/draftStorage";
+import { useUnsavedChangesProtection } from "@/hooks/useUnsavedChangesProtection";
+
+const DRAFT_KEY = "draft:mapa:editoriais:new";
 
 export function EditoriaisSection() {
   const utils = trpc.useUtils();
   const { data: editoriais, isLoading } = trpc.mapa.editoriais.list.useQuery();
   const newFormRef = useRef<HTMLDivElement>(null);
   const createMutation = trpc.mapa.editoriais.create.useMutation({
-    onSuccess: () => {
-      utils.mapa.editoriais.list.invalidate();
+    onSuccess: async () => {
+      await utils.mapa.editoriais.list.invalidate();
+      await utils.workspaces.getProgressBySlug.invalidate({ slug: "mapa" });
+      await utils.dashboard.getOverview.invalidate();
       setShowNewForm(false);
       setNewName("");
       setNewWhy("");
       setNewContext("");
+      clearDraft(DRAFT_KEY);
       toast.success("Editoria salva.");
     },
     onError: (err) => {
@@ -41,10 +48,24 @@ export function EditoriaisSection() {
     },
   });
   const updateMutation = trpc.mapa.editoriais.update.useMutation({
-    onSuccess: () => utils.mapa.editoriais.list.invalidate(),
+    onSuccess: async () => {
+      await utils.mapa.editoriais.list.invalidate();
+      await utils.workspaces.getProgressBySlug.invalidate({ slug: "mapa" });
+      await utils.dashboard.getOverview.invalidate();
+    },
+    onError: (err) => {
+      toast.error(err.message || "Não foi possível atualizar a editoria.");
+    },
   });
   const deleteMutation = trpc.mapa.editoriais.delete.useMutation({
-    onSuccess: () => utils.mapa.editoriais.list.invalidate(),
+    onSuccess: async () => {
+      await utils.mapa.editoriais.list.invalidate();
+      await utils.workspaces.getProgressBySlug.invalidate({ slug: "mapa" });
+      await utils.dashboard.getOverview.invalidate();
+    },
+    onError: (err) => {
+      toast.error(err.message || "Não foi possível remover a editoria.");
+    },
   });
 
   const [showNewForm, setShowNewForm] = useState(false);
@@ -61,6 +82,29 @@ export function EditoriaisSection() {
     }
   }, [showNewForm]);
 
+  useEffect(() => {
+    const draft = loadDraft<{ name: string; why: string; context: string; show: boolean }>(DRAFT_KEY);
+    if (!draft?.data) return;
+    setNewName(draft.data.name ?? "");
+    setNewWhy(draft.data.why ?? "");
+    setNewContext(draft.data.context ?? "");
+    setShowNewForm(!!draft.data.show);
+  }, []);
+
+  useEffect(() => {
+    const hasData = !!newName.trim() || !!newWhy.trim() || !!newContext.trim();
+    if (!hasData && !showNewForm) {
+      clearDraft(DRAFT_KEY);
+      return;
+    }
+    saveDraft(DRAFT_KEY, {
+      name: newName,
+      why: newWhy,
+      context: newContext,
+      show: showNewForm,
+    });
+  }, [newContext, newName, newWhy, showNewForm]);
+
   const handleCreate = () => {
     if (!newName.trim()) return;
     createMutation.mutate({
@@ -74,6 +118,21 @@ export function EditoriaisSection() {
     setShowNewForm(true);
     setEditingId(null);
   };
+
+  useUnsavedChangesProtection({
+    hasUnsavedChanges:
+      (showNewForm && (!!newName.trim() || !!newWhy.trim() || !!newContext.trim())) ||
+      createMutation.isPending,
+    onFlush: () => {
+      if (!showNewForm) return;
+      saveDraft(DRAFT_KEY, {
+        name: newName,
+        why: newWhy,
+        context: newContext,
+        show: true,
+      });
+    },
+  });
 
   if (isLoading) {
     return (
@@ -173,6 +232,7 @@ export function EditoriaisSection() {
                     setNewName("");
                     setNewWhy("");
                     setNewContext("");
+                    clearDraft(DRAFT_KEY);
                   }}
                 >
                   Cancelar

@@ -8,6 +8,7 @@ import { buildInitialAccessEmailMessage, WELCOME_EMAIL_SUBJECT } from "./email-t
 import bcrypt from "bcryptjs";
 import { getInitialUserPassword } from "./initial-password";
 import { toAuthMeUser } from "./auth-user";
+import { hasAdminPrivileges } from "./admin-access";
 
 function generateRandomPassword(length = 12): string {
   const chars = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789";
@@ -22,6 +23,7 @@ async function getOverviewData(userId: number) {
   const userBadges = await db.getUserBadges(userId);
   const submissions = await db.getUserSubmissions(userId);
   const modules = await db.getAllModules();
+  const WORKSPACE_LIKE_SLUGS = new Set(["comece-por-aqui", "marco-zero", "norte", "raio-x", "mapa", "rota"]);
 
   const progressByModuleId = new Map(tableProgress.map((p) => [p.moduleId, p]));
   const mergedProgress: typeof tableProgress = [];
@@ -29,7 +31,15 @@ async function getOverviewData(userId: number) {
     const ws = await db.getWorkspaceProgressByModule(userId, mod.id);
     const row = progressByModuleId.get(mod.id);
     const tablePct = row?.progressPercentage ?? 0;
-    const pct = Math.max(tablePct, ws.percentage);
+    // Para módulos de workspace, fonte de verdade é o estado do workspace (lessonUserState),
+    // não a tabela legada moduleProgress.
+    // ROTA (coming soon) deve ficar em 0% até implementação real do módulo.
+    const pct =
+      mod.slug === "rota"
+        ? 0
+        : WORKSPACE_LIKE_SLUGS.has(mod.slug)
+          ? ws.percentage
+          : Math.max(tablePct, ws.percentage);
     const status = pct === 100 ? "completed" : pct > 0 ? "in_progress" : "locked";
     if (row) {
       mergedProgress.push({ ...row, progressPercentage: pct, status });
@@ -101,17 +111,16 @@ async function getOverviewData(userId: number) {
     PILLAR_SLUGS.map((slug) => {
       if (slug === "raio-x") return [slug, raioXPct] as const;
       if (slug === "mapa") return [slug, mapaPct] as const;
+      if (slug === "rota") return [slug, 0] as const;
       const mod = modules.find((m) => m.slug === slug);
       const entry = mod ? mergedProgress.find((p) => p.moduleId === mod.id) : null;
       return [slug, entry?.progressPercentage ?? 0] as const;
     })
   );
   const pillarPercentages = PILLAR_SLUGS.map((s) => progressBySlug.get(s) ?? 0);
-  const overallProgress =
-    pillarPercentages.length > 0
-      ? Math.round(pillarPercentages.reduce((a, b) => a + b, 0) / pillarPercentages.length)
-      : 0;
   const completedCount = pillarPercentages.filter((p) => p === 100).length;
+  const overallProgress =
+    PILLAR_SLUGS.length > 0 ? Math.round((completedCount / PILLAR_SLUGS.length) * 100) : 0;
   const pillarsRemaining = Math.max(PILLAR_SLUGS.length - completedCount, 0);
 
   const mapaCompletedSections = Math.min(Math.round((mapaPct / 100) * MAPA_SECTIONS_COUNT), MAPA_SECTIONS_COUNT);
@@ -342,6 +351,10 @@ export const appRouter = router({
     canAccessPillar: protectedProcedure
       .input(z.object({ slug: z.string() }))
       .query(async ({ ctx, input }) => {
+        // Regra de bloqueio por progresso é somente para alunos.
+        if (hasAdminPrivileges(ctx.user)) {
+          return { allowed: true as const, previousSlug: undefined as string | undefined };
+        }
         const order = ["comece-por-aqui", "marco-zero", "norte", "raio-x", "mapa", "rota"] as const;
         const index = order.indexOf(input.slug as (typeof order)[number]);
         if (index <= 0 || input.slug === "rota") return { allowed: true as const, previousSlug: undefined as string | undefined };
@@ -443,6 +456,29 @@ export const appRouter = router({
           });
           const progressPercentage = await db.calculateModuleProgress(ctx.user.id, lesson.moduleId);
           const status = progressPercentage === 100 ? "completed" : "in_progress";
+          await db.upsertModuleProgress({
+            userId: ctx.user.id,
+            moduleId: lesson.moduleId,
+            status,
+            progressPercentage,
+          });
+        }
+        return result;
+      }),
+
+    reopen: protectedProcedure
+      .input(z.object({ lessonId: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        const result = await db.reopenLessonUserState({ userId: ctx.user.id, lessonId: input.lessonId });
+        const lesson = await db.getLessonById(input.lessonId);
+        if (lesson) {
+          await db.upsertLessonProgress({
+            userId: ctx.user.id,
+            lessonId: input.lessonId,
+            status: "in_progress",
+          });
+          const progressPercentage = await db.calculateModuleProgress(ctx.user.id, lesson.moduleId);
+          const status = progressPercentage === 100 ? "completed" : progressPercentage > 0 ? "in_progress" : "locked";
           await db.upsertModuleProgress({
             userId: ctx.user.id,
             moduleId: lesson.moduleId,
@@ -728,7 +764,11 @@ export const appRouter = router({
     deleteUser: adminProcedure
       .input(z.object({ userId: z.number() }))
       .mutation(async ({ input, ctx }) => {
-        if (input.userId === ctx.user.id) {
+        const requester = ctx.user;
+        if (!requester) {
+          throw new TRPCError({ code: "UNAUTHORIZED", message: "Não autenticado." });
+        }
+        if (input.userId === requester.id) {
           throw new TRPCError({ code: "BAD_REQUEST", message: "Você não pode excluir sua própria conta." });
         }
         const user = await db.getUserById(input.userId);
@@ -846,6 +886,12 @@ export const appRouter = router({
       .mutation(async ({ ctx, input }) => {
         const { id, ...data } = input;
         await db.updateContentIdea(id, ctx.user.id, data);
+        return { success: true };
+      }),
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ ctx, input }) => {
+        await db.deleteContentIdea(input.id, ctx.user.id);
         return { success: true };
       }),
   }),
@@ -987,6 +1033,13 @@ export const appRouter = router({
       .input(z.object({ secao: z.enum(["redes_sociais", "web", "analise"]) }))
       .mutation(async ({ ctx, input }) => {
         const result = await db.concluirEtapaRaioX(ctx.user.id, input.secao);
+        return { success: true, updatedAt: result.updatedAt.toISOString(), etapasConcluidas: result.etapasConcluidas };
+      }),
+
+    reabrirEtapa: protectedProcedure
+      .input(z.object({ secao: z.enum(["redes_sociais", "web", "analise"]) }))
+      .mutation(async ({ ctx, input }) => {
+        const result = await db.reabrirEtapaRaioX(ctx.user.id, input.secao);
         return { success: true, updatedAt: result.updatedAt.toISOString(), etapasConcluidas: result.etapasConcluidas };
       }),
 

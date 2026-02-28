@@ -211,7 +211,7 @@ export default function MarcoZeroPreview() {
       { label: "Perfil do cliente", value: [s3.s3_publico_regiao, s3.s3_faixa_etaria_principal, s3.s3_genero].map((v) => formatValue(v)).join(" · ") },
       { label: "Nível de tecnologia", value: formatScaleChoiceValue(s3.s3_nivel_tecnologia, "s3_nivel_tecnologia") },
       { label: "Sentimento em relação a vendas online", value: formatValue(s2.s2_5) },
-      { label: "Metas declaradas", value: [s5.s5_objetivo_faturamento, s5.s5_objetivo_qualitativo].map((v) => formatValue(v)).join(" — ") },
+      { label: "Meta declarada de faturamento", value: formatValue(s5.s5_objetivo_faturamento) },
       { label: "Produto principal", value: formatValue(s4.s4_principal_produto_servico) },
     ];
   }, [allDataByKey, empresaDisplay, studentDisplay, dataInicioDisplay]);

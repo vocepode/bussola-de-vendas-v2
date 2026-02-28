@@ -1,4 +1,5 @@
 import type { User } from "../drizzle/schema";
+import { hasAdminPrivileges } from "./admin-access";
 
 export type AuthMeUser = {
   id: number;
@@ -16,7 +17,7 @@ export function toAuthMeUser(user: User | null | undefined): AuthMeUser | null {
     id: user.id,
     name: user.name,
     email: user.email,
-    role: user.role,
+    role: hasAdminPrivileges(user) ? "admin" : "user",
     isActive: user.isActive,
     avatarUrl: user.avatarUrl ?? null,
     mustChangePassword: user.mustChangePassword,

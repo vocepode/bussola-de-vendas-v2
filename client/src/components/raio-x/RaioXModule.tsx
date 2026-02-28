@@ -30,8 +30,10 @@ import { getModuleHref, PILLARS_ORDER } from "@/constants/pillars";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useTheme } from "@/contexts/ThemeContext";
-import { CheckCircle2, Circle, ChevronDown, ChevronRight, Loader2, Lock } from "lucide-react";
+import { CheckCircle2, Circle, ChevronDown, ChevronRight, Loader2, Lock, Pencil } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { clearDraft, loadDraft, saveDraft } from "@/lib/draftStorage";
+import { useUnsavedChangesProtection } from "@/hooks/useUnsavedChangesProtection";
 
 function RaioXSidebarTree({
   nodes,
@@ -112,6 +114,7 @@ function RaioXSidebarTree({
 const DEBOUNCE_MS = 2500;
 /** Debounce para a seção Análise (dados do mês). */
 const DEBOUNCE_ANALISE_MS = 1500;
+const RAIO_X_DRAFT_KEY = "draft:raio-x:workspace";
 
 export function RaioXModule({
   data,
@@ -119,7 +122,9 @@ export function RaioXModule({
   progresso: progressoInicial,
   onSaveSecao,
   onConcluirEtapa,
+  onReabrirEtapa,
   isConcluindoEtapa,
+  isReabrindoEtapa,
   etapasConcluidas: etapasConcluidasProp = [],
 }: {
   data: {
@@ -127,6 +132,7 @@ export function RaioXModule({
     secaoRedesSociais?: Record<string, unknown>;
     secaoWeb?: Record<string, unknown>;
     secaoAnalise?: Record<string, unknown>;
+    updatedAt?: string | Date;
     etapasConcluidas?: string[];
     concluido?: boolean;
   } | null | undefined;
@@ -134,7 +140,9 @@ export function RaioXModule({
   progresso: number;
   onSaveSecao?: (secao: "redes_sociais" | "web" | "analise", payload: Record<string, unknown>) => void;
   onConcluirEtapa?: (secao: "redes_sociais" | "web" | "analise") => void;
+  onReabrirEtapa?: (secao: "redes_sociais" | "web" | "analise") => void;
   isConcluindoEtapa?: boolean;
+  isReabrindoEtapa?: boolean;
   etapasConcluidas?: string[];
 }) {
   const etapasConcluidas = Array.isArray(data?.etapasConcluidas) ? data.etapasConcluidas : etapasConcluidasProp;
@@ -148,75 +156,193 @@ export function RaioXModule({
   const [secaoAnalise, setSecaoAnalise] = useState<SecaoAnaliseType>(() =>
     mergeSecaoAnalise(data?.secaoAnalise)
   );
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const timerRedesRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timerWebRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const timerAnaliseRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingRef = useRef<{ redes: boolean; web: boolean; analise: boolean }>({
+    redes: false,
+    web: false,
+    analise: false,
+  });
+  const payloadRef = useRef<{
+    redes: SecaoRedesSociaisType | null;
+    web: SecaoWebType | null;
+    analise: SecaoAnaliseType | null;
+  }>({
+    redes: null,
+    web: null,
+    analise: null,
+  });
+  const restoredFromLocalRef = useRef(false);
+  const syncRestoredDraftRef = useRef(false);
+
+  const refreshUnsavedFlag = useCallback(() => {
+    const hasPending =
+      pendingRef.current.redes ||
+      pendingRef.current.web ||
+      pendingRef.current.analise ||
+      timerRedesRef.current != null ||
+      timerWebRef.current != null ||
+      timerAnaliseRef.current != null;
+    setHasUnsavedChanges(hasPending);
+  }, []);
+
+  const flushPendingSection = useCallback(
+    (section: "redes" | "web" | "analise") => {
+      if (!pendingRef.current[section]) return;
+      pendingRef.current[section] = false;
+      if (section === "redes" && payloadRef.current.redes) {
+        onSaveSecao?.("redes_sociais", payloadRef.current.redes as unknown as Record<string, unknown>);
+      } else if (section === "web" && payloadRef.current.web) {
+        onSaveSecao?.("web", payloadRef.current.web as unknown as Record<string, unknown>);
+      } else if (section === "analise" && payloadRef.current.analise) {
+        onSaveSecao?.("analise", payloadRef.current.analise as unknown as Record<string, unknown>);
+      }
+      refreshUnsavedFlag();
+    },
+    [onSaveSecao, refreshUnsavedFlag]
+  );
+
+  const flushAllPending = useCallback(() => {
+    if (timerRedesRef.current) {
+      clearTimeout(timerRedesRef.current);
+      timerRedesRef.current = null;
+    }
+    if (timerWebRef.current) {
+      clearTimeout(timerWebRef.current);
+      timerWebRef.current = null;
+    }
+    if (timerAnaliseRef.current) {
+      clearTimeout(timerAnaliseRef.current);
+      timerAnaliseRef.current = null;
+    }
+    flushPendingSection("redes");
+    flushPendingSection("web");
+    flushPendingSection("analise");
+  }, [flushPendingSection]);
 
   useEffect(() => {
-    if (timerRef.current == null) {
+    const serverUpdatedMs = data?.updatedAt ? new Date(data.updatedAt).getTime() : 0;
+    const localDraft = loadDraft<{
+      secaoRedesSociais: SecaoRedesSociaisType;
+      secaoWeb: SecaoWebType;
+      secaoAnalise: SecaoAnaliseType;
+    }>(RAIO_X_DRAFT_KEY);
+    const useLocalDraft = !!localDraft && localDraft.savedAt > serverUpdatedMs;
+
+    if (timerRedesRef.current == null && timerWebRef.current == null) {
       setSecaoRedesSociais((prev) =>
-        mergeSecaoRedesSociais((data?.secaoRedesSociais ?? prev) as Record<string, unknown> | undefined)
+        useLocalDraft && localDraft?.data?.secaoRedesSociais
+          ? mergeSecaoRedesSociais(localDraft.data.secaoRedesSociais as unknown as Record<string, unknown>)
+          : mergeSecaoRedesSociais((data?.secaoRedesSociais ?? prev) as Record<string, unknown> | undefined)
       );
       setSecaoWeb((prev) =>
-        mergeSecaoWeb((data?.secaoWeb ?? prev) as Record<string, unknown> | undefined)
+        useLocalDraft && localDraft?.data?.secaoWeb
+          ? mergeSecaoWeb(localDraft.data.secaoWeb as unknown as Record<string, unknown>)
+          : mergeSecaoWeb((data?.secaoWeb ?? prev) as Record<string, unknown> | undefined)
       );
     }
     if (timerAnaliseRef.current == null) {
       setSecaoAnalise((prev) =>
-        mergeSecaoAnalise((data?.secaoAnalise ?? prev) as Record<string, unknown> | undefined)
+        useLocalDraft && localDraft?.data?.secaoAnalise
+          ? mergeSecaoAnalise(localDraft.data.secaoAnalise as unknown as Record<string, unknown>)
+          : mergeSecaoAnalise((data?.secaoAnalise ?? prev) as Record<string, unknown> | undefined)
       );
     }
-  }, [data?.secaoRedesSociais, data?.secaoWeb, data?.secaoAnalise]);
+
+    if (useLocalDraft && !restoredFromLocalRef.current) {
+      if (localDraft?.data) {
+        payloadRef.current.redes = localDraft.data.secaoRedesSociais;
+        payloadRef.current.web = localDraft.data.secaoWeb;
+        payloadRef.current.analise = localDraft.data.secaoAnalise;
+        pendingRef.current.redes = true;
+        pendingRef.current.web = true;
+        pendingRef.current.analise = true;
+        setHasUnsavedChanges(true);
+        syncRestoredDraftRef.current = true;
+      }
+      restoredFromLocalRef.current = true;
+    } else if (!useLocalDraft) {
+      clearDraft(RAIO_X_DRAFT_KEY);
+    }
+  }, [data?.secaoRedesSociais, data?.secaoWeb, data?.secaoAnalise, data?.updatedAt]);
+
+  useEffect(() => {
+    if (!syncRestoredDraftRef.current) return;
+    syncRestoredDraftRef.current = false;
+    flushAllPending();
+  }, [flushAllPending]);
 
   const saveRedes = useCallback(
     (payload: SecaoRedesSociaisType) => {
       setSecaoRedesSociais(payload);
-      if (timerRef.current) clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => {
-        onSaveSecao?.("redes_sociais", payload as unknown as Record<string, unknown>);
-        timerRef.current = null;
+      payloadRef.current.redes = payload;
+      pendingRef.current.redes = true;
+      setHasUnsavedChanges(true);
+      if (timerRedesRef.current) clearTimeout(timerRedesRef.current);
+      timerRedesRef.current = setTimeout(() => {
+        timerRedesRef.current = null;
+        flushPendingSection("redes");
       }, DEBOUNCE_MS);
     },
-    [onSaveSecao]
+    [flushPendingSection]
   );
 
   const saveWeb = useCallback(
     (payload: SecaoWebType) => {
       setSecaoWeb(payload);
-      if (timerRef.current) clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => {
-        onSaveSecao?.("web", payload as unknown as Record<string, unknown>);
-        timerRef.current = null;
+      payloadRef.current.web = payload;
+      pendingRef.current.web = true;
+      setHasUnsavedChanges(true);
+      if (timerWebRef.current) clearTimeout(timerWebRef.current);
+      timerWebRef.current = setTimeout(() => {
+        timerWebRef.current = null;
+        flushPendingSection("web");
       }, DEBOUNCE_MS);
     },
-    [onSaveSecao]
+    [flushPendingSection]
   );
 
   const saveAnalise = useCallback(
     (payload: SecaoAnaliseType, options?: { immediate?: boolean }) => {
       setSecaoAnalise(payload);
+      payloadRef.current.analise = payload;
+      pendingRef.current.analise = true;
+      setHasUnsavedChanges(true);
       if (timerAnaliseRef.current) {
         clearTimeout(timerAnaliseRef.current);
         timerAnaliseRef.current = null;
       }
-      const flush = () => {
-        onSaveSecao?.("analise", payload as unknown as Record<string, unknown>);
-      };
       if (options?.immediate) {
-        flush();
+        flushPendingSection("analise");
       } else {
         timerAnaliseRef.current = setTimeout(() => {
-          flush();
+          flushPendingSection("analise");
           timerAnaliseRef.current = null;
         }, DEBOUNCE_ANALISE_MS);
       }
     },
-    [onSaveSecao, secaoRedesSociais, secaoWeb]
+    [flushPendingSection]
   );
 
   useEffect(() => () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    if (timerAnaliseRef.current) clearTimeout(timerAnaliseRef.current);
-  }, []);
+    flushAllPending();
+  }, [flushAllPending]);
+
+  useEffect(() => {
+    if (!hasUnsavedChanges) return;
+    saveDraft(RAIO_X_DRAFT_KEY, {
+      secaoRedesSociais,
+      secaoWeb,
+      secaoAnalise,
+    });
+  }, [hasUnsavedChanges, secaoAnalise, secaoRedesSociais, secaoWeb]);
+
+  useUnsavedChangesProtection({
+    hasUnsavedChanges,
+    onFlush: flushAllPending,
+  });
 
   const progressoLocal = progressoInicial ?? 0;
   const norteDataTyped = norteData as NorteData | undefined;
@@ -391,16 +517,31 @@ export function RaioXModule({
                     ) : null}
                     {secaoAtual && onConcluirEtapa ? (
                       secaoJaConcluida ? (
-                        <span className="inline-flex items-center gap-2 rounded-md border border-green-500/50 bg-green-500/10 px-3 py-2 text-sm font-medium text-green-700 dark:text-green-400">
-                          <CheckCircle2 className="h-4 w-4" />
-                          Etapa concluída
-                        </span>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="gap-2"
+                          onClick={() => onReabrirEtapa?.(secaoAtual)}
+                          disabled={isReabrindoEtapa || isConcluindoEtapa || !onReabrirEtapa}
+                        >
+                          {isReabrindoEtapa ? (
+                            <>
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              Liberando edição…
+                            </>
+                          ) : (
+                            <>
+                              <Pencil className="h-4 w-4" />
+                              Editar respostas
+                            </>
+                          )}
+                        </Button>
                       ) : (
                         <Button
                           size="sm"
                           className="gap-2"
                           onClick={() => onConcluirEtapa(secaoAtual)}
-                          disabled={isConcluindoEtapa}
+                          disabled={isConcluindoEtapa || isReabrindoEtapa}
                         >
                           {isConcluindoEtapa ? (
                             <>

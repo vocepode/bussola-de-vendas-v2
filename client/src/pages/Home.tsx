@@ -10,6 +10,7 @@ import { GuideCard } from "@/components/GuideCard";
 import { ProgressStatsCards } from "@/components/ProgressStatsCards";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { hasClientAdminPrivileges } from "@/lib/adminAccess";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/lib/trpc";
 import { useAuth } from "@/_core/hooks/useAuth";
@@ -19,6 +20,7 @@ import Link from "next/link";
 
 export default function Home() {
   const { user } = useAuth();
+  const isAdmin = hasClientAdminPrivileges(user);
   const { theme } = useTheme();
   const isDark = theme === "dark";
   const { data: overview, isLoading: loadingOverview, isError: errorOverview, refetch: refetchOverview } = trpc.dashboard.getOverview.useQuery();
@@ -122,7 +124,7 @@ export default function Home() {
               const href = pillar.href ?? (module ? getModuleHref(module.slug) : getModuleHref(pillar.slug));
               const prevPillar = pillarIndex > 0 ? PILLARS_ORDER[pillarIndex - 1] : null;
               const prevPercentage = pillarIndex > 0 ? percentagesByIndex[pillarIndex - 1] ?? 0 : 100;
-              const isLocked = !isComingSoon && pillarIndex > 0 && prevPercentage < 100;
+              const isLocked = !isAdmin && !isComingSoon && pillarIndex > 0 && prevPercentage < 100;
 
               const cardContent = (
                 <Card

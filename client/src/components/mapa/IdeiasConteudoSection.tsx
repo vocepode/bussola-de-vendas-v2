@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -25,18 +25,23 @@ import { CONTEUDO_TOPICOS, CONTEUDO_FUNIL } from "@/constants/mapa";
 import { trpc } from "@/lib/trpc";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { LayoutGrid, LayoutList, Loader2, Pencil, Plus } from "lucide-react";
+import { LayoutGrid, LayoutList, Loader2, Pencil, Plus, Trash2 } from "lucide-react";
+import { clearDraft, loadDraft, saveDraft } from "@/lib/draftStorage";
+import { useUnsavedChangesProtection } from "@/hooks/useUnsavedChangesProtection";
 
 type TopicValue = (typeof CONTEUDO_TOPICOS)[number]["value"];
 type FunnelValue = (typeof CONTEUDO_FUNIL)[number]["value"];
+const DRAFT_KEY = "draft:mapa:ideias:new";
 
 export function IdeiasConteudoSection() {
   const utils = trpc.useUtils();
   const { data: temas } = trpc.mapa.temas.list.useQuery(undefined, { refetchOnMount: "always" });
   const { data: ideias, isLoading } = trpc.contentIdeas.list.useQuery(undefined, { refetchOnMount: "always" });
   const createMutation = trpc.contentIdeas.create.useMutation({
-    onSuccess: () => {
-      utils.contentIdeas.list.invalidate();
+    onSuccess: async () => {
+      await utils.contentIdeas.list.invalidate();
+      await utils.workspaces.getProgressBySlug.invalidate({ slug: "mapa" });
+      await utils.dashboard.getOverview.invalidate();
       toast.success("Ideia de conteúdo salva.");
     },
     onError: (err) => {
@@ -44,12 +49,25 @@ export function IdeiasConteudoSection() {
     },
   });
   const updateMutation = trpc.contentIdeas.update.useMutation({
-    onSuccess: () => {
-      utils.contentIdeas.list.invalidate();
+    onSuccess: async () => {
+      await utils.contentIdeas.list.invalidate();
+      await utils.workspaces.getProgressBySlug.invalidate({ slug: "mapa" });
+      await utils.dashboard.getOverview.invalidate();
       toast.success("Ideia atualizada.");
     },
     onError: (err) => {
       toast.error(err.message || "Não foi possível atualizar. Tente novamente.");
+    },
+  });
+  const deleteMutation = trpc.contentIdeas.delete.useMutation({
+    onSuccess: async () => {
+      await utils.contentIdeas.list.invalidate();
+      await utils.workspaces.getProgressBySlug.invalidate({ slug: "mapa" });
+      await utils.dashboard.getOverview.invalidate();
+      toast.success("Ideia removida.");
+    },
+    onError: (err) => {
+      toast.error(err.message || "Não foi possível remover a ideia.");
     },
   });
 
@@ -60,6 +78,31 @@ export function IdeiasConteudoSection() {
   const [newThemeId, setNewThemeId] = useState<string>("");
   const [newTopic, setNewTopic] = useState<string>("");
   const [newFunnel, setNewFunnel] = useState<string>("");
+
+  useEffect(() => {
+    const draft = loadDraft<{ title: string; themeId: string; topic: string; funnel: string; show: boolean }>(DRAFT_KEY);
+    if (!draft?.data) return;
+    setNewTitle(draft.data.title ?? "");
+    setNewThemeId(draft.data.themeId ?? "");
+    setNewTopic(draft.data.topic ?? "");
+    setNewFunnel(draft.data.funnel ?? "");
+    setShowNewForm(!!draft.data.show);
+  }, []);
+
+  useEffect(() => {
+    const hasData = !!newTitle.trim() || !!newThemeId || !!newTopic || !!newFunnel;
+    if (!hasData && !showNewForm) {
+      clearDraft(DRAFT_KEY);
+      return;
+    }
+    saveDraft(DRAFT_KEY, {
+      title: newTitle,
+      themeId: newThemeId,
+      topic: newTopic,
+      funnel: newFunnel,
+      show: showNewForm,
+    });
+  }, [newFunnel, newThemeId, newTitle, newTopic, showNewForm]);
 
   const handleCreate = () => {
     if (!newTitle.trim() || !newTopic || !newFunnel) return;
@@ -78,10 +121,27 @@ export function IdeiasConteudoSection() {
           setNewTopic("");
           setNewFunnel("");
           setShowNewForm(false);
+          clearDraft(DRAFT_KEY);
         },
       }
     );
   };
+
+  useUnsavedChangesProtection({
+    hasUnsavedChanges:
+      (showNewForm && (!!newTitle.trim() || !!newThemeId || !!newTopic || !!newFunnel)) ||
+      createMutation.isPending,
+    onFlush: () => {
+      if (!showNewForm) return;
+      saveDraft(DRAFT_KEY, {
+        title: newTitle,
+        themeId: newThemeId,
+        topic: newTopic,
+        funnel: newFunnel,
+        show: true,
+      });
+    },
+  });
 
   const listaTemas = temas ?? [];
   const listaIdeias = ideias ?? [];
@@ -225,6 +285,7 @@ export function IdeiasConteudoSection() {
                   setNewThemeId("");
                   setNewTopic("");
                   setNewFunnel("");
+                  clearDraft(DRAFT_KEY);
                 }}
               >
                 Cancelar
@@ -262,7 +323,7 @@ export function IdeiasConteudoSection() {
                   <TableHead>Ideia</TableHead>
                   <TableHead>Tópico</TableHead>
                   <TableHead>Funil</TableHead>
-                  <TableHead className="w-[140px] text-right">Ações</TableHead>
+                  <TableHead className="w-[200px] text-right">Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -279,10 +340,21 @@ export function IdeiasConteudoSection() {
                       {CONTEUDO_FUNIL.find((f) => f.value === idea.funnel)?.label ?? idea.funnel}
                     </TableCell>
                     <TableCell className="text-right">
-                      <Button size="sm" variant="ghost" className="h-8 gap-1" onClick={() => setEditingId(idea.id)}>
-                        <Pencil className="h-3 w-3" />
-                        Editar
-                      </Button>
+                      <div className="flex justify-end gap-1">
+                        <Button size="sm" variant="ghost" className="h-8 gap-1" onClick={() => setEditingId(idea.id)}>
+                          <Pencil className="h-3 w-3" />
+                          Editar
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-8 text-destructive hover:text-destructive"
+                          onClick={() => deleteMutation.mutate({ id: idea.id })}
+                          disabled={deleteMutation.isPending}
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -330,10 +402,19 @@ export function IdeiasConteudoSection() {
                           {CONTEUDO_FUNIL.find((f) => f.value === idea.funnel)?.label ?? idea.funnel}
                         </Badge>
                       </div>
-                      <div className="flex justify-end mt-3 pt-2 border-t border-border/50">
+                      <div className="flex justify-end gap-1 mt-3 pt-2 border-t border-border/50">
                         <Button size="sm" variant="ghost" className="h-8 gap-1 text-xs" onClick={() => setEditingId(idea.id)}>
                           <Pencil className="h-3 w-3" />
                           Editar
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-8 text-destructive hover:text-destructive"
+                          onClick={() => deleteMutation.mutate({ id: idea.id })}
+                          disabled={deleteMutation.isPending}
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
                         </Button>
                       </div>
                     </>

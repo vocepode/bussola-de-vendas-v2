@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { trpc } from "@/lib/trpc";
+import { hasClientAdminPrivileges } from "@/lib/adminAccess";
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
 import { Lock, Save, ShieldCheck, Upload, User } from "lucide-react";
@@ -22,6 +23,7 @@ export default function SettingsPage() {
   const searchParams = useSearchParams();
   const isDark = theme === "dark";
   const { data: me } = trpc.auth.me.useQuery();
+  const isAdmin = hasClientAdminPrivileges(me);
   const mustChangePassword = Boolean(me?.mustChangePassword) || searchParams.get("forcarTrocaSenha") === "1";
 
   const [name, setName] = useState(me?.name ?? "");
@@ -255,7 +257,7 @@ export default function SettingsPage() {
                     <div className="space-y-1.5">
                       <Label className={isDark ? "text-white/90" : "text-foreground"}>Função</Label>
                       <div>
-                        <Badge className={isDark ? "bg-white/10 text-white" : "bg-muted text-foreground"}>{me?.role === "admin" ? "Admin" : "Aluno"}</Badge>
+                        <Badge className={isDark ? "bg-white/10 text-white" : "bg-muted text-foreground"}>{isAdmin ? "Admin" : "Aluno"}</Badge>
                       </div>
                     </div>
                   </div>
