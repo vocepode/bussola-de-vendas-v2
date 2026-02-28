@@ -68,6 +68,10 @@ export default function NorthPreview() {
 
   const { user } = useAuth();
   const { data: module } = trpc.modules.getBySlug.useQuery({ slug: "norte" }, { enabled: true });
+  const { data: norteLessons } = trpc.lessons.listByModule.useQuery(
+    { moduleId: module?.id ?? 0 },
+    { enabled: !!module?.id }
+  );
   const { data: progress } = trpc.workspaces.getProgressBySlug.useQuery({ slug: "norte" });
   const { data: workspace, isLoading } = trpc.workspaces.getWorkspaceStateBySlug.useQuery({ slug: "norte" });
   const { data: comecePorAqui } = trpc.workspaces.getWorkspaceStateBySlug.useQuery(
@@ -75,15 +79,29 @@ export default function NorthPreview() {
     { enabled: true }
   );
 
+  const lessonIdByStepKey = useMemo(() => {
+    const map = new Map<StepKey, number>();
+    const list = norteLessons ?? [];
+    const normalize = (t: string) => (t ?? "").toLowerCase();
+    for (const stepDef of NORTE_ETAPAS) {
+      const found = stepDef.lessonSlug
+        ? list.find((l: { slug?: string }) => normalize(l?.slug) === normalize(stepDef.lessonSlug!))
+        : list.find((l: { title?: string }) => normalize(l?.title).includes(normalize(stepDef.title)));
+      if (found) map.set(stepDef.key, (found as { id: number }).id);
+    }
+    return map;
+  }, [norteLessons]);
+
   const stepsWithData = useMemo(() => {
     const steps = workspace?.steps ?? [];
-    return NORTE_ETAPAS.map((def, i) => {
-      const step = steps[i];
+    return NORTE_ETAPAS.map((def) => {
+      const lessonId = lessonIdByStepKey.get(def.key);
+      const step = steps.find((s: { lessonId?: number }) => s.lessonId === lessonId);
       const data = (step?.data ?? {}) as Record<string, unknown>;
       const status = (step?.status ?? "draft") as "draft" | "completed";
       return { def, data, status };
     });
-  }, [workspace?.steps]);
+  }, [workspace?.steps, lessonIdByStepKey]);
 
   const comeceData = useMemo(() => {
     const first = comecePorAqui?.steps?.[0];

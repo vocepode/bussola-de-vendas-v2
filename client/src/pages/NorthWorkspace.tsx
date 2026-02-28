@@ -185,12 +185,13 @@ export default function NorthWorkspace() {
   const statusByStep = useMemo(() => {
     const steps = norteWorkspaceState?.steps ?? [];
     const out: Partial<Record<StepKey, "draft" | "completed">> = {};
-    SUBSTEPS.forEach((s, i) => {
-      const st = steps[i];
+    SUBSTEPS.forEach((s) => {
+      const lessonId = lessonIdByStepKey.get(s.key);
+      const st = steps.find((step: { lessonId?: number }) => step.lessonId === lessonId);
       out[s.key] = (st?.status === "completed" ? "completed" : "draft") as "draft" | "completed";
     });
     return out;
-  }, [norteWorkspaceState?.steps]);
+  }, [norteWorkspaceState?.steps, lessonIdByStepKey]);
 
   // Travado por enquanto para permitir validar todas as etapas
   const isLocked = useCallback((_stepKey: StepKey) => false, []);
@@ -212,8 +213,7 @@ export default function NorthWorkspace() {
     const steps = marcoZeroWorkspaceState?.steps ?? [];
     const diagnosticoStep =
       steps.find((s) => s.data && typeof s.data === "object" && "s3_concorrentes" in s.data) ??
-      steps.find((s) => s.title === "Diagnóstico do Negócio") ??
-      steps[2];
+      steps.find((s) => s.title === "Diagnóstico do Negócio");
     const data = diagnosticoStep?.data as Record<string, unknown> | undefined;
     const arr = data?.s3_concorrentes;
     return Array.isArray(arr) ? (arr as unknown[]).filter((x): x is string => typeof x === "string" && !!x.trim()) : [];
@@ -315,11 +315,16 @@ export default function NorthWorkspace() {
     console.info("[print] norte all loading html length", printAreaRef.current.innerHTML.length);
     try {
       const result = await utils.workspaces.getWorkspaceStateBySlug.fetch({ slug: "norte" });
-      const stepsWithDefs = (result.steps ?? []).map((s, i) => ({
-        step: SUBSTEPS[i] ?? { key: "", title: s.title, moduleSlug: "norte" as const, blocks: [] },
-        data: s.data ?? {},
-        title: s.title,
-      }));
+      const apiSteps = result.steps ?? [];
+      const stepsWithDefs = SUBSTEPS.map((stepDef) => {
+        const lessonId = lessonIdByStepKey.get(stepDef.key);
+        const apiStep = apiSteps.find((s: { lessonId?: number }) => s.lessonId === lessonId);
+        return {
+          step: stepDef,
+          data: (apiStep?.data ?? {}) as Record<string, unknown>,
+          title: apiStep?.title ?? stepDef.title,
+        };
+      });
       const html = `<div class="print-document"><h1 class="print-doc-title">${norteModule.title} – Todas as etapas</h1>${buildAllStepsPrintHtml(stepsWithDefs)}</div>`;
       printAreaRef.current.innerHTML = html;
       console.info("[print] norte all html length", printAreaRef.current.innerHTML.length);

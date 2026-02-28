@@ -215,11 +215,16 @@ export default function MarcoZeroWorkspace() {
     console.info("[print] marco-zero all loading html length", printAreaRef.current.innerHTML.length);
     try {
       const result = await utils.workspaces.getWorkspaceStateBySlug.fetch({ slug: "marco-zero" });
-      const stepsWithDefs = (result.steps ?? []).map((s, i) => ({
-        step: STEPS[i] ?? { key: "", title: s.title, moduleSlug: "marco-zero" as const, blocks: [] },
-        data: s.data ?? {},
-        title: s.title,
-      }));
+      const apiSteps = result.steps ?? [];
+      const stepsWithDefs = STEPS.map((stepDef) => {
+        const lessonId = lessonIdByStepKey.get(stepDef.key);
+        const apiStep = apiSteps.find((s: { lessonId?: number }) => s.lessonId === lessonId);
+        return {
+          step: stepDef,
+          data: (apiStep?.data ?? {}) as Record<string, unknown>,
+          title: apiStep?.title ?? stepDef.title,
+        };
+      });
 
       const progressPercent = progress?.percentage ?? 0;
       const html = buildWorkspaceReportHtml({

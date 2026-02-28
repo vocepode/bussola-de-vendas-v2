@@ -92,6 +92,10 @@ export default function MarcoZeroPreview() {
 
   const { user } = useAuth();
   const { data: module } = trpc.modules.getBySlug.useQuery({ slug: "marco-zero" }, { enabled: true });
+  const { data: marcoZeroLessons } = trpc.lessons.listByModule.useQuery(
+    { moduleId: module?.id ?? 0 },
+    { enabled: !!module?.id }
+  );
   const { data: progress } = trpc.workspaces.getProgressBySlug.useQuery({ slug: "marco-zero" });
   const { data: workspace, isLoading } = trpc.workspaces.getWorkspaceStateBySlug.useQuery({ slug: "marco-zero" });
   const { data: comecePorAqui } = trpc.workspaces.getWorkspaceStateBySlug.useQuery(
@@ -99,15 +103,29 @@ export default function MarcoZeroPreview() {
     { enabled: true }
   );
 
+  const lessonIdByStepKey = useMemo(() => {
+    const map = new Map<StepKey, number>();
+    const list = marcoZeroLessons ?? [];
+    const normalize = (t: string) => (t ?? "").toLowerCase();
+    for (const stepDef of MARCO_ZERO_STEPS) {
+      const found = stepDef.lessonSlug
+        ? list.find((l: { slug?: string }) => normalize(l?.slug) === normalize(stepDef.lessonSlug!))
+        : list.find((l: { title?: string }) => normalize(l?.title).includes(normalize(stepDef.title)));
+      if (found) map.set(stepDef.key, (found as { id: number }).id);
+    }
+    return map;
+  }, [marcoZeroLessons]);
+
   const stepsWithData = useMemo(() => {
     const steps = workspace?.steps ?? [];
-    return MARCO_ZERO_STEPS.map((def, i) => {
-      const step = steps[i];
+    return MARCO_ZERO_STEPS.map((def) => {
+      const lessonId = lessonIdByStepKey.get(def.key);
+      const step = steps.find((s: { lessonId?: number }) => s.lessonId === lessonId);
       const data = (step?.data ?? {}) as Record<string, unknown>;
       const status = (step?.status ?? "draft") as "draft" | "completed";
       return { def, data, status };
     });
-  }, [workspace?.steps]);
+  }, [workspace?.steps, lessonIdByStepKey]);
 
   const comeceData = useMemo(() => {
     const first = comecePorAqui?.steps?.[0];
