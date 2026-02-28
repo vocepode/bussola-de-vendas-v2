@@ -108,9 +108,10 @@ export default function MarcoZeroPreview() {
     const list = marcoZeroLessons ?? [];
     const normalize = (t: string) => (t ?? "").toLowerCase();
     for (const stepDef of MARCO_ZERO_STEPS) {
-      const found = stepDef.lessonSlug
-        ? list.find((l: { slug?: string }) => normalize(l?.slug) === normalize(stepDef.lessonSlug!))
-        : list.find((l: { title?: string }) => normalize(l?.title).includes(normalize(stepDef.title)));
+      const slug = stepDef.lessonSlug ?? "";
+      const found = slug
+        ? list.find((l: { slug?: string }) => normalize(l?.slug ?? "") === normalize(slug))
+        : list.find((l: { title?: string }) => normalize(l?.title ?? "").includes(normalize(stepDef.title)));
       if (found) map.set(stepDef.key, (found as { id: number }).id);
     }
     return map;
