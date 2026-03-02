@@ -33,12 +33,14 @@ import {
   Grid2x2,
   LogOut,
   Settings,
+  ShieldCheck,
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import type { CSSProperties } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
+import { hasClientAdminPrivileges } from "@/lib/adminAccess";
 import { DashboardLayoutSkeleton } from "./DashboardLayoutSkeleton";
 
 const MAIN_MENU = [
@@ -47,8 +49,6 @@ const MAIN_MENU = [
   { icon: BookOpen, label: "Meus cursos", path: "/meus-cursos" },
   { icon: FolderOpen, label: "Meus Materiais", path: "/materiais" },
 ] as const;
-
-const ACCOUNT_MENU = [{ icon: Settings, label: "Configurações", path: "/configuracoes" }] as const;
 
 function isPathActive(pathname: string, itemPath: string) {
   if (itemPath === "/") return pathname === "/";
@@ -61,9 +61,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const pathname = usePathname();
   const { theme } = useTheme();
   const isMobile = useIsMobile();
+  const isAdmin = hasClientAdminPrivileges(user);
   /** Quando tema é dark: shell e conteúdo escuros. Quando tema é light: shell e conteúdo claros em todas as seções. */
   const sidebarLight = theme !== "dark";
   const contentLight = theme === "light";
+  const accountMenu = [
+    { icon: Settings, label: "Configurações", path: "/configuracoes" },
+    ...(isAdmin ? [{ icon: ShieldCheck, label: "Admin", path: "/admin" }] : []),
+  ];
 
   useEffect(() => {
     if (loading) return;
@@ -126,7 +131,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
 
           <SidebarMenu className="mt-1.5">
-            {ACCOUNT_MENU.map((item) => (
+            {accountMenu.map((item) => (
               <SidebarMenuItem key={item.path}>
                 <SidebarMenuButton
                   isActive={isPathActive(pathname, item.path)}
@@ -202,6 +207,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   <Settings className="mr-2 h-4 w-4" />
                   Configurações
                 </DropdownMenuItem>
+                {isAdmin ? (
+                  <DropdownMenuItem onClick={() => router.push("/admin")} className="cursor-pointer">
+                    <ShieldCheck className="mr-2 h-4 w-4" />
+                    Admin
+                  </DropdownMenuItem>
+                ) : null}
                 <DropdownMenuItem onClick={logout} className="cursor-pointer text-red-500 focus:text-red-500">
                   <LogOut className="mr-2 h-4 w-4" />
                   Sair
@@ -313,6 +324,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     <Settings className="mr-2 h-4 w-4" />
                     Configurações
                   </DropdownMenuItem>
+                  {isAdmin ? (
+                    <DropdownMenuItem onClick={() => router.push("/admin")} className="cursor-pointer">
+                      <ShieldCheck className="mr-2 h-4 w-4" />
+                      Admin
+                    </DropdownMenuItem>
+                  ) : null}
                   <DropdownMenuItem onClick={logout} className="cursor-pointer text-red-500 focus:text-red-500">
                     <LogOut className="mr-2 h-4 w-4" />
                     Sair

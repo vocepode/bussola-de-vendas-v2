@@ -729,6 +729,18 @@ export const appRouter = router({
         return { success: true as const };
       }),
 
+    setUserRole: adminProcedure
+      .input(
+        z.object({
+          userId: z.number(),
+          role: z.enum(["admin", "user"]),
+        })
+      )
+      .mutation(async ({ input }) => {
+        await db.setUserRole(input.userId, input.role);
+        return { success: true as const };
+      }),
+
     generatePasswordResetLink: adminProcedure
       .input(z.object({ userId: z.number() }))
       .mutation(async ({ input }) => {

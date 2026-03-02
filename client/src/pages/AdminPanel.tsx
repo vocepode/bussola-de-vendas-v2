@@ -20,6 +20,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import ThemeSwitch from "@/components/ui/theme-switch";
 import { hasClientAdminPrivileges } from "@/lib/adminAccess";
 import Link from "next/link";
 
@@ -43,6 +44,13 @@ export default function AdminPanel() {
   });
 
   const setAccess = trpc.admin.setUserAccess.useMutation({
+    onSuccess: () => {
+      void utils.admin.listUsers.invalidate();
+    },
+    onError: (error) => toast.error(error.message),
+  });
+
+  const setUserRole = trpc.admin.setUserRole.useMutation({
     onSuccess: () => {
       void utils.admin.listUsers.invalidate();
     },
@@ -79,6 +87,7 @@ export default function AdminPanel() {
   const [deleteConfirmUser, setDeleteConfirmUser] = useState<{ id: number; name: string; email: string } | null>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState<"admin" | "user">("user");
   const [active, setActive] = useState(true);
 
   const submitting = createUser.isPending;
@@ -90,11 +99,12 @@ export default function AdminPanel() {
     await createUser.mutateAsync({
       name: name.trim() || undefined,
       email,
-      role: "user",
+      role,
       isActive: active,
     });
     setName("");
     setEmail("");
+    setRole("user");
     setActive(true);
   };
 
@@ -160,6 +170,19 @@ export default function AdminPanel() {
 
         <Card>
           <CardHeader>
+            <CardTitle>Controle de tema</CardTitle>
+            <CardDescription>Alterne entre tema claro e escuro da interface.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="inline-flex items-center gap-3 rounded-md border px-3 py-2">
+              <span className="text-sm font-medium">Tema</span>
+              <ThemeSwitch />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
             <CardTitle>Criar usuário</CardTitle>
             <CardDescription>
               A senha inicial é definida por variável de ambiente e exibida apenas uma vez após criar o usuário.
@@ -180,6 +203,18 @@ export default function AdminPanel() {
                 <div className="h-10 flex items-center">
                   <Switch checked={active} onCheckedChange={setActive} />
                 </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="role">Perfil</Label>
+                <select
+                  id="role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value as "admin" | "user")}
+                  className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
+                >
+                  <option value="user">Aluno</option>
+                  <option value="admin">Admin</option>
+                </select>
               </div>
               <div className="md:col-span-2">
                 <Button type="submit" disabled={submitting}>
@@ -209,7 +244,7 @@ export default function AdminPanel() {
                   <div>
                     <p className="font-medium">{u.name || "Sem nome"}</p>
                     <p className="text-sm text-muted-foreground">{u.email}</p>
-                    <p className="text-xs text-muted-foreground">Perfil: {u.role}</p>
+                    <p className="text-xs text-muted-foreground">Perfil: {u.role === "admin" ? "Admin" : "Aluno"}</p>
                   </div>
                   <div className="flex gap-2">
                     <Button
@@ -218,6 +253,22 @@ export default function AdminPanel() {
                       disabled={setAccess.isPending}
                     >
                       {u.isActive ? "Bloquear acesso" : "Liberar acesso"}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        setUserRole.mutate({
+                          userId: u.id,
+                          role: u.role === "admin" ? "user" : "admin",
+                        })
+                      }
+                      disabled={setUserRole.isPending && setUserRole.variables?.userId === u.id}
+                    >
+                      {setUserRole.isPending && setUserRole.variables?.userId === u.id
+                        ? "Salvando..."
+                        : u.role === "admin"
+                          ? "Tornar aluno"
+                          : "Tornar admin"}
                     </Button>
                     <Button
                       variant="secondary"
