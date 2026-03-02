@@ -50,13 +50,6 @@ export default function AdminPanel() {
     onError: (error) => toast.error(error.message),
   });
 
-  const setUserRole = trpc.admin.setUserRole.useMutation({
-    onSuccess: () => {
-      void utils.admin.listUsers.invalidate();
-    },
-    onError: (error) => toast.error(error.message),
-  });
-
   const generateResetLink = trpc.admin.generatePasswordResetLink.useMutation({
     onSuccess: async ({ resetUrl }) => {
       const fullUrl = `${window.location.origin}${resetUrl}`;
@@ -87,7 +80,6 @@ export default function AdminPanel() {
   const [deleteConfirmUser, setDeleteConfirmUser] = useState<{ id: number; name: string; email: string } | null>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState<"admin" | "user">("user");
   const [active, setActive] = useState(true);
 
   const submitting = createUser.isPending;
@@ -99,12 +91,11 @@ export default function AdminPanel() {
     await createUser.mutateAsync({
       name: name.trim() || undefined,
       email,
-      role,
+      role: "user",
       isActive: active,
     });
     setName("");
     setEmail("");
-    setRole("user");
     setActive(true);
   };
 
@@ -204,18 +195,6 @@ export default function AdminPanel() {
                   <Switch checked={active} onCheckedChange={setActive} />
                 </div>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="role">Perfil</Label>
-                <select
-                  id="role"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value as "admin" | "user")}
-                  className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
-                >
-                  <option value="user">Aluno</option>
-                  <option value="admin">Admin</option>
-                </select>
-              </div>
               <div className="md:col-span-2">
                 <Button type="submit" disabled={submitting}>
                   {submitting ? "Criando..." : "Criar usuário"}
@@ -244,7 +223,7 @@ export default function AdminPanel() {
                   <div>
                     <p className="font-medium">{u.name || "Sem nome"}</p>
                     <p className="text-sm text-muted-foreground">{u.email}</p>
-                    <p className="text-xs text-muted-foreground">Perfil: {u.role === "admin" ? "Admin" : "Aluno"}</p>
+                    <p className="text-xs text-muted-foreground">Perfil: {u.role}</p>
                   </div>
                   <div className="flex gap-2">
                     <Button
@@ -253,22 +232,6 @@ export default function AdminPanel() {
                       disabled={setAccess.isPending}
                     >
                       {u.isActive ? "Bloquear acesso" : "Liberar acesso"}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() =>
-                        setUserRole.mutate({
-                          userId: u.id,
-                          role: u.role === "admin" ? "user" : "admin",
-                        })
-                      }
-                      disabled={setUserRole.isPending && setUserRole.variables?.userId === u.id}
-                    >
-                      {setUserRole.isPending && setUserRole.variables?.userId === u.id
-                        ? "Salvando..."
-                        : u.role === "admin"
-                          ? "Tornar aluno"
-                          : "Tornar admin"}
                     </Button>
                     <Button
                       variant="secondary"
