@@ -3,7 +3,7 @@
  * como admin enviando e-mail de acesso.
  *
  * Uso: yarn setup-admins (ou tsx scripts/setup-admins.ts)
- * Requer: DATABASE_URL, EMAIL_USER, EMAIL_PASS, HOTMART_DEFAULT_PASSWORD (ou senha para suporte)
+ * Requer: DATABASE_URL, EMAIL_USER, GOOGLE_APP_PASSWORD (ou EMAIL_PASS), HOTMART_DEFAULT_PASSWORD (ou senha para suporte)
  */
 import "dotenv/config";
 

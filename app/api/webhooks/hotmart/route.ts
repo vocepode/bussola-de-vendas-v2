@@ -121,7 +121,7 @@ export async function POST(req: Request) {
         });
       } catch (emailError) {
         console.error(
-          "[webhooks/hotmart] Falha ao enviar senha inicial por e-mail. Verifique EMAIL_USER e EMAIL_PASS no ambiente. Use o painel admin para gerar link de redefinição:",
+          "[webhooks/hotmart] Falha ao enviar senha inicial por e-mail. Verifique EMAIL_USER e GOOGLE_APP_PASSWORD (ou EMAIL_PASS) no ambiente. Use o painel admin para gerar link de redefinição:",
           emailError
         );
       }

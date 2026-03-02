@@ -26,6 +26,8 @@ Edite o `.env` e preencha (mínimo):
 | Variável | Obrigatório | Descrição |
 |----------|-------------|-----------|
 | `DATABASE_URL` | Sim | Connection string do **Supabase Postgres** |
+| `EMAIL_USER` | Para envio de e-mail | Conta remetente (Gmail SMTP) |
+| `GOOGLE_APP_PASSWORD` (ou `EMAIL_PASS`) | Para envio de e-mail | Senha de app da conta Google remetente |
 | `ALLOW_PUBLIC_SIGNUP` | Não | Se `true`, libera o endpoint `/api/auth/register` |
 | `NOTION_EXPORT_DIR` | Não | Diretório do export do Notion (HTML/CSV) |
 | `IMPORT_USER_EMAIL` | Não | Email do usuário dono das ideias (para importação do CSV) |

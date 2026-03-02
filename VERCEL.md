@@ -34,6 +34,7 @@
 Em **Project Settings → Environment Variables**, configure:
 
 - **`DATABASE_URL`** (obrigatório): connection string do Supabase Postgres (recomendado usar o pooler + SSL).
+- **`EMAIL_USER`** e **`GOOGLE_APP_PASSWORD`** (ou **`EMAIL_PASS`**): necessários para envio de e-mail via Gmail SMTP.
 - (Opcional) **`ALLOW_PUBLIC_SIGNUP=true`**: libera cadastro via `/api/auth/register`.
 
 Para Supabase: em **Settings → Database**, use a connection string do **Connection pooling (Session)** com `?sslmode=require`.
@@ -56,4 +57,3 @@ O arquivo `vercel.json` na raiz reforça esses comandos.
 
 - **Sessão/cookies**: o login usa cookie httpOnly `app_session_id` (`COOKIE_NAME` em `shared/const.ts`). Em produção, use o mesmo domínio da Vercel para os cookies funcionarem.
 - **Banco**: rode as migrações do Drizzle antes de usar em produção: `yarn db:push` (pode ser local com `DATABASE_URL` de produção, ou em um job de CI).
-

@@ -12,10 +12,11 @@ export async function sendEmail(params: {
   message: string;
   html?: string;
 }): Promise<void> {
-  const user = process.env.EMAIL_USER;
-  const pass = process.env.EMAIL_PASS;
+  const user = process.env.EMAIL_USER?.trim();
+  const rawPass = process.env.GOOGLE_APP_PASSWORD ?? process.env.EMAIL_PASS;
+  const pass = rawPass?.replace(/\s+/g, "");
   if (!user || !pass) {
-    throw new Error("EMAIL_USER e EMAIL_PASS devem estar definidos no ambiente.");
+    throw new Error("EMAIL_USER e GOOGLE_APP_PASSWORD (ou EMAIL_PASS) devem estar definidos no ambiente.");
   }
 
   const transporter = nodemailer.createTransport({
