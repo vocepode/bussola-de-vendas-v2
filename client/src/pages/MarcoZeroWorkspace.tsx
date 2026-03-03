@@ -231,7 +231,31 @@ export default function MarcoZeroWorkspace() {
         };
       });
 
-      const progressPercent = progress?.percentage ?? 0;
+      const sectionPcts = stepsWithDefs.map(({ step: stepDef, data }) => {
+        const blocks = stepDef.blocks.filter((b) => b.type === "field" || b.type === "table");
+        let filled = 0;
+        for (const b of blocks) {
+          const fieldId = b.type === "field" ? b.fieldId : b.fieldId;
+          const val = (data as Record<string, unknown>)[fieldId];
+          if (b.type === "table") {
+            const rows = Array.isArray(val) ? (val as Record<string, unknown>[]) : [];
+            const hasData = rows.some((r) => r && typeof r === "object" && Object.values(r).some((v) => String(v ?? "").trim() !== ""));
+            if (hasData) filled++;
+          } else {
+            if (val == null) continue;
+            if (Array.isArray(val)) { if (val.length > 0) filled++; continue; }
+            if (typeof val === "object") { if (Object.keys(val as object).length > 0) filled++; continue; }
+            if (String(val).trim() !== "") filled++;
+          }
+        }
+        const total = blocks.length;
+        return total ? Math.round((filled / total) * 100) : 0;
+      });
+      const progressPercent =
+        sectionPcts.length > 0
+          ? Math.round(sectionPcts.reduce((a, p) => a + p, 0) / sectionPcts.length)
+          : progress?.percentage ?? 0;
+
       const html = buildWorkspaceReportHtml({
         moduleTitle: marcoZeroModule.title,
         steps: stepsWithDefs,

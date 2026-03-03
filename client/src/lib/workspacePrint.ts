@@ -1,5 +1,6 @@
 "use client";
 
+import { formatCurrencyBR } from "@/lib/utils";
 import type { NorthBlock, NorthStepDef } from "@/north/schema";
 
 function escapeHtml(s: string): string {
@@ -8,8 +9,31 @@ function escapeHtml(s: string): string {
   return div.innerHTML;
 }
 
-function formatValue(value: unknown): string {
+function formatValue(value: unknown, fieldId?: string, fieldType?: string): string {
   if (value == null) return "—";
+  if (fieldType === "currency") {
+    const formatted = formatCurrencyBR(value);
+    return formatted === "—" ? "—" : formatted;
+  }
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    if (trimmed.startsWith("{") && fieldId) {
+      try {
+        const parsed = JSON.parse(trimmed) as Record<string, unknown>;
+        if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+          const keys = Object.keys(parsed);
+          if (keys.length > 1 || keys.includes(fieldId)) {
+            const v = parsed[fieldId];
+            const s = v != null ? String(v).replace(/\\n/g, "\n") : "";
+            return s || "—";
+          }
+        }
+      } catch {
+        // não é JSON válido
+      }
+    }
+    return value.replace(/\\n/g, "\n");
+  }
   if (Array.isArray(value)) {
     if (value.length === 0) return "—";
     return value.every((x) => typeof x === "string")
@@ -43,7 +67,7 @@ export function buildStepPrintHtml(
     }
     if (b.type === "field") {
       const value = data[b.fieldId];
-      const text = formatValue(value);
+      const text = formatValue(value, b.fieldId, b.fieldType);
       parts.push(
         `<div class="print-field"><strong class="print-field-label">${escapeHtml(b.label)}</strong><div class="print-field-value">${escapeHtml(text)}</div></div>`
       );
@@ -59,10 +83,16 @@ export function buildStepPrintHtml(
       } else {
         const headers = b.columns.map((c) => `<th>${escapeHtml(c.label)}</th>`).join("");
         const bodyRows = rows
-          .map(
-            (r: any) =>
-              `<tr>${b.columns.map((c) => `<td>${escapeHtml(String(r[c.key] ?? ""))}</td>`).join("")}</tr>`
-          )
+          .map((r: Record<string, unknown>) => {
+            const cells = b.columns.map((c) => {
+              const cellVal = r[c.key] ?? "";
+              const isCurrency =
+                c.key === "valor" || (c as { placeholder?: string }).placeholder?.includes("R$");
+              const display = isCurrency ? formatCurrencyBR(cellVal) : String(cellVal);
+              return `<td>${escapeHtml(display)}</td>`;
+            });
+            return `<tr>${cells.join("")}</tr>`;
+          })
           .join("");
         parts.push(
           `<div class="print-table-wrap"><strong class="print-field-label">${escapeHtml(b.label)}</strong><table class="print-table"><thead><tr>${headers}</tr></thead><tbody>${bodyRows}</tbody></table></div>`
@@ -152,11 +182,17 @@ export function buildWorkspaceReportHtml(params: {
 }
 
 function renderFieldForReport(
-  b: { type: "field" | "table"; label: string; fieldId: string; columns?: { key: string; label: string }[] },
+  b: {
+    type: "field" | "table";
+    label: string;
+    fieldId: string;
+    fieldType?: string;
+    columns?: { key: string; label: string; placeholder?: string }[];
+  },
   data: Record<string, unknown>
 ) {
   if (b.type === "field") {
-    const value = formatValue(data[b.fieldId]);
+    const value = formatValue(data[b.fieldId], b.fieldId, b.fieldType);
     return `
       <div class="ws-report-item">
         <strong>${escapeHtml(b.label)}</strong>
@@ -182,10 +218,15 @@ function renderFieldForReport(
       </thead>
       <tbody>
         ${rows
-          .map(
-            (r: any) =>
-              `<tr>${columns.map((c) => `<td>${escapeHtml(String(r[c.key] ?? ""))}</td>`).join("")}</tr>`
-          )
+          .map((r: Record<string, unknown>) => {
+            const cells = columns.map((c) => {
+              const cellVal = r[c.key] ?? "";
+              const isCurrency = c.key === "valor" || c.placeholder?.includes("R$");
+              const display = isCurrency ? formatCurrencyBR(cellVal) : String(cellVal);
+              return `<td>${escapeHtml(display)}</td>`;
+            });
+            return `<tr>${cells.join("")}</tr>`;
+          })
           .join("")}
       </tbody>
     </table>

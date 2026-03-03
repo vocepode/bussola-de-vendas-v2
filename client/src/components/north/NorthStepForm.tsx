@@ -23,6 +23,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Loader2, RotateCcw, CheckCircle2, HelpCircle, ChevronDown, ChevronRight, Pencil } from "lucide-react";
 import type { NorthBlock, NorthStepDef, NorthShowWhen } from "@/north/schema";
 import { clearDraft, loadDraft, saveDraft } from "@/lib/draftStorage";
+import { formatCurrencyBR, parseCurrencyBR } from "@/lib/utils";
 import { useUnsavedChangesProtection } from "@/hooks/useUnsavedChangesProtection";
 
 type Props = {
@@ -647,23 +648,45 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
                 {safeRows.length ? (
                   safeRows.map((r, rIdx) => (
                     <TableRow key={rIdx} className="border-[#262626] hover:bg-white/5">
-                      {b.columns.map((c) => (
-                        <TableCell key={c.key} className="border-[#262626]">
-                          {isFixed && c.key === firstColKey ? (
-                            <span className="text-sm text-white/90">
-                              {overrideLabels?.[rIdx] ?? String((r as any)[c.key] ?? "")}
-                            </span>
-                          ) : (
-                            <Input
-                              value={String((r as any)[c.key] ?? "")}
-                              placeholder={c.placeholder}
-                              onChange={(e) => updateCell(rIdx, c.key, e.target.value, false)}
-                              onBlur={(e) => updateCell(rIdx, c.key, e.target.value, true)}
-                              className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
-                            />
-                          )}
-                        </TableCell>
-                      ))}
+                      {b.columns.map((c) => {
+                        const isCurrency =
+                          c.key === "valor" || (c as { placeholder?: string }).placeholder?.includes("R$");
+                        const cellVal = (r as Record<string, unknown>)[c.key];
+                        const displayVal = isCurrency
+                          ? (formatCurrencyBR(cellVal) === "—" ? "" : formatCurrencyBR(cellVal))
+                          : String(cellVal ?? "");
+                        return (
+                          <TableCell key={c.key} className="border-[#262626]">
+                            {isFixed && c.key === firstColKey ? (
+                              <span className="text-sm text-white/90">
+                                {overrideLabels?.[rIdx] ?? String((r as any)[c.key] ?? "")}
+                              </span>
+                            ) : (
+                              <Input
+                                value={displayVal}
+                                placeholder={c.placeholder}
+                                onChange={(e) =>
+                                  updateCell(
+                                    rIdx,
+                                    c.key,
+                                    isCurrency ? parseCurrencyBR(e.target.value) : e.target.value,
+                                    false
+                                  )
+                                }
+                                onBlur={(e) =>
+                                  updateCell(
+                                    rIdx,
+                                    c.key,
+                                    isCurrency ? parseCurrencyBR(e.target.value) : e.target.value,
+                                    true
+                                  )
+                                }
+                                className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
+                              />
+                            )}
+                          </TableCell>
+                        );
+                      })}
                       {!isFixed ? (
                         <TableCell className="border-[#262626]">
                           <Button variant="ghost" size="sm" onClick={() => removeRow(rIdx)} className="text-white/90 hover:bg-white/10">
@@ -735,7 +758,7 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
         );
       }
 
-      if (b.fieldType === "shortText" || b.fieldType === "currency") {
+      if (b.fieldType === "shortText") {
         return (
           <div key={idx} className="space-y-2">
             <div>
@@ -747,6 +770,31 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
               placeholder={b.placeholder}
               onChange={(e) => setField(b.fieldId, e.target.value, { flush: false })}
               onBlur={(e) => setField(b.fieldId, e.target.value, { flush: true })}
+              className={FIELD_INPUT_CLASS}
+            />
+          </div>
+        );
+      }
+      if (b.fieldType === "currency") {
+        const raw = normalizeFieldDisplayValue(value, b.fieldId);
+        const display = raw.trim() ? formatCurrencyBR(raw) : "";
+        return (
+          <div key={idx} className="space-y-2">
+            <div>
+              <div className="font-medium">{b.label}</div>
+              {b.helperText ? <div className="text-xs text-muted-foreground">{b.helperText}</div> : null}
+            </div>
+            <Input
+              value={display}
+              placeholder={b.placeholder ?? "R$ 0,00"}
+              onChange={(e) => {
+                const parsed = parseCurrencyBR(e.target.value);
+                setField(b.fieldId, parsed, { flush: false });
+              }}
+              onBlur={(e) => {
+                const parsed = parseCurrencyBR(e.target.value);
+                setField(b.fieldId, parsed, { flush: true });
+              }}
               className={FIELD_INPUT_CLASS}
             />
           </div>

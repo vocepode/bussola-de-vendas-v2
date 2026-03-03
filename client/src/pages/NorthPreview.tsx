@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { trpc } from "@/lib/trpc";
+import { formatCurrencyBR } from "@/lib/utils";
 import { NORTE_ETAPAS } from "@/norte/etapas";
 import type { NorthBlock } from "@/north/schema";
 import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
@@ -38,8 +39,13 @@ function normalizeFieldDisplayValue(value: unknown, fieldId: string): string {
   return value.replace(/\\n/g, "\n");
 }
 
-function formatValue(value: unknown, fieldId?: string): string {
+function formatValue(value: unknown, fieldId?: string, fieldType?: string): string {
   if (value == null) return EMPTY_LABEL;
+  if (fieldType === "currency") {
+    const raw = typeof value === "string" && fieldId ? normalizeFieldDisplayValue(value, fieldId) : String(value ?? "");
+    const formatted = formatCurrencyBR(raw.trim() ? raw : null);
+    return formatted === "—" ? EMPTY_LABEL : formatted;
+  }
   if (typeof value === "string" && fieldId) {
     const normalized = normalizeFieldDisplayValue(value, fieldId);
     return normalized.trim() === "" ? EMPTY_LABEL : normalized;
@@ -109,12 +115,21 @@ export default function NorthPreview() {
     const map = new Map<StepKey, number>();
     const list = norteLessons ?? [];
     const normalize = (t: string) => (t ?? "").toLowerCase();
+    const usedIds = new Set<number>();
     for (const stepDef of NORTE_ETAPAS) {
       const slug = stepDef.lessonSlug ?? "";
-      const found = slug
-        ? list.find((l: { slug?: string }) => normalize(l?.slug ?? "") === normalize(slug))
-        : list.find((l: { title?: string }) => normalize(l?.title ?? "").includes(normalize(stepDef.title)));
-      if (found) map.set(stepDef.key, (found as { id: number }).id);
+      let found =
+        slug
+          ? (list.find((l: { slug?: string }) => normalize(l?.slug ?? "") === normalize(slug)) as { id: number } | undefined)
+          : undefined;
+      if (!found) {
+        const titleNeedle = (stepDef as { lessonTitleIncludes?: string }).lessonTitleIncludes ?? stepDef.title;
+        found = list.find((l: { title?: string }) => normalize(l?.title ?? "").includes(normalize(titleNeedle))) as { id: number } | undefined;
+      }
+      if (found && !usedIds.has(found.id)) {
+        usedIds.add(found.id);
+        map.set(stepDef.key, found.id);
+      }
     }
     return map;
   }, [norteLessons]);
@@ -349,7 +364,11 @@ export default function NorthPreview() {
                     <div className="space-y-4">
                       {visible.map((b, i) => {
                         if (b.type === "field") {
-                          const value = formatValue((data as Record<string, unknown>)[b.fieldId], b.fieldId);
+                          const value = formatValue(
+                            (data as Record<string, unknown>)[b.fieldId],
+                            b.fieldId,
+                            b.fieldType
+                          );
                           return (
                             <div key={i}>
                               <div className="font-semibold text-slate-800">{b.label}</div>
@@ -385,11 +404,20 @@ export default function NorthPreview() {
                                     ) : (
                                       (rows as Record<string, unknown>[]).map((r, ridx) => (
                                         <tr key={ridx}>
-                                          {b.columns.map((c) => (
-                                            <td key={c.key} className="border border-slate-200 px-2 py-1">
-                                              {String(r[c.key] ?? "").trim() || EMPTY_LABEL}
-                                            </td>
-                                          ))}
+                                          {b.columns.map((c) => {
+                                            const cellVal = r[c.key] ?? "";
+                                            const isCurrency =
+                                              c.key === "valor" ||
+                                              (c as { placeholder?: string }).placeholder?.includes("R$");
+                                            const display = isCurrency
+                                              ? (formatCurrencyBR(cellVal) === "—" ? EMPTY_LABEL : formatCurrencyBR(cellVal))
+                                              : (String(cellVal).trim() || EMPTY_LABEL);
+                                            return (
+                                              <td key={c.key} className="border border-slate-200 px-2 py-1">
+                                                {display}
+                                              </td>
+                                            );
+                                          })}
                                         </tr>
                                       ))
                                     )}

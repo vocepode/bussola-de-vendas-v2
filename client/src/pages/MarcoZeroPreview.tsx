@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { trpc } from "@/lib/trpc";
+import { formatCurrencyBR } from "@/lib/utils";
 import { MARCO_ZERO_STEPS } from "@/marcoZero/schema";
 import type { NorthBlock } from "@/north/schema";
 import { Loader2, CheckCircle2, Circle, AlertCircle } from "lucide-react";
@@ -37,6 +38,26 @@ function formatScaleChoiceValue(value: unknown, fieldId: string): string {
   return EMPTY_LABEL;
 }
 
+/** Expande dados de etapa: se algum valor for string com JSON de objeto inteiro (campo gravado errado), mescla as chaves no resultado para o Resumo Executivo encontrar s3_*, s2_*, etc. */
+function normalizeStepDataForSummary(data: Record<string, unknown>): Record<string, unknown> {
+  const out = { ...data };
+  for (const v of Object.values(data)) {
+    if (typeof v !== "string") continue;
+    const trimmed = v.trim();
+    if (!trimmed.startsWith("{")) continue;
+    try {
+      const parsed = JSON.parse(trimmed) as Record<string, unknown>;
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed) && Object.keys(parsed).length > 1) {
+        Object.assign(out, parsed);
+        break;
+      }
+    } catch {
+      // ignore
+    }
+  }
+  return out;
+}
+
 /** Se o valor for string que é JSON de objeto inteiro (campo gravado errado), retorna só o texto deste campo. */
 function normalizeFieldDisplayValue(value: unknown, fieldId: string): string {
   if (value == null) return "";
@@ -61,6 +82,11 @@ function normalizeFieldDisplayValue(value: unknown, fieldId: string): string {
 
 function formatValue(value: unknown, block?: NorthBlock): string {
   if (value == null) return EMPTY_LABEL;
+  if (block?.type === "field" && block.fieldType === "currency") {
+    const raw = typeof value === "string" ? normalizeFieldDisplayValue(value, block.fieldId) : String(value ?? "");
+    const formatted = formatCurrencyBR(raw.trim() ? raw : null);
+    return formatted === "—" ? EMPTY_LABEL : formatted;
+  }
   if (typeof value === "string" && block?.type === "field" && block.fieldId) {
     const normalized = normalizeFieldDisplayValue(value, block.fieldId);
     return normalized.trim() === "" ? EMPTY_LABEL : normalized;
@@ -133,12 +159,20 @@ export default function MarcoZeroPreview() {
     const map = new Map<StepKey, number>();
     const list = marcoZeroLessons ?? [];
     const normalize = (t: string) => (t ?? "").toLowerCase();
+    const usedIds = new Set<number>();
     for (const stepDef of MARCO_ZERO_STEPS) {
       const slug = stepDef.lessonSlug ?? "";
-      const found = slug
-        ? list.find((l: { slug?: string }) => normalize(l?.slug ?? "") === normalize(slug))
-        : list.find((l: { title?: string }) => normalize(l?.title ?? "").includes(normalize(stepDef.title)));
-      if (found) map.set(stepDef.key, (found as { id: number }).id);
+      let found =
+        slug
+          ? (list.find((l: { slug?: string }) => normalize(l?.slug ?? "") === normalize(slug)) as { id: number } | undefined)
+          : undefined;
+      if (!found) {
+        found = list.find((l: { title?: string }) => normalize(l?.title ?? "").includes(normalize(stepDef.title))) as { id: number } | undefined;
+      }
+      if (found && !usedIds.has(found.id)) {
+        usedIds.add(found.id);
+        map.set(stepDef.key, found.id);
+      }
     }
     return map;
   }, [marcoZeroLessons]);
@@ -183,13 +217,16 @@ export default function MarcoZeroPreview() {
   useEffect(() => {
     if (typeof document === "undefined") return;
     const html = document.documentElement;
+    const hadDark = html.classList.contains("dark");
+    const hadLight = html.classList.contains("light");
     html.classList.remove("dark");
-    html.classList.add("preview-light-theme");
+    html.classList.add("light", "preview-light-theme");
     document.body.style.backgroundColor = "#ffffff";
     document.body.style.color = "#000000";
     return () => {
-      html.classList.add("dark");
-      html.classList.remove("preview-light-theme");
+      html.classList.remove("light", "preview-light-theme");
+      if (hadDark) html.classList.add("dark");
+      else if (hadLight) html.classList.add("light");
       document.body.style.backgroundColor = "";
       document.body.style.color = "";
     };
@@ -201,17 +238,16 @@ export default function MarcoZeroPreview() {
     return () => clearTimeout(t);
   }, [pdfFull, isLoading]);
 
-  const pct = progress?.percentage ?? 0;
-  const studentDisplay = user?.name ?? comeceData?.comoChamar ?? "Aluno";
-  const empresaDisplay = comeceData?.nomeFantasia ?? EMPTY_LABEL;
-  const dataInicioDisplay = comeceData?.dataInicio ?? EMPTY_LABEL;
-  const today = new Date().toLocaleDateString("pt-BR");
-
   const sectionStatusList = stepsWithData.map(({ def, status }) => {
     const isCompleted = status === "completed";
     const label = isCompleted ? "Concluído" : "Incompleto";
     return { key: def.key, title: def.title, completed: isCompleted, label };
   });
+
+  const studentDisplay = user?.name ?? comeceData?.comoChamar ?? "Aluno";
+  const empresaDisplay = comeceData?.nomeFantasia ?? EMPTY_LABEL;
+  const dataInicioDisplay = comeceData?.dataInicio ?? EMPTY_LABEL;
+  const today = new Date().toLocaleDateString("pt-BR");
 
   const allDataByKey = useMemo(() => {
     const m = new Map<string, Record<string, unknown>>();
@@ -219,25 +255,25 @@ export default function MarcoZeroPreview() {
     return m;
   }, [stepsWithData]);
 
-  const s3Diagnostico = allDataByKey.get("diagnostico") ?? {};
+  const s3Diagnostico = normalizeStepDataForSummary((allDataByKey.get("diagnostico") ?? {}) as Record<string, unknown>);
   const tempoDeMercadoDisplay = formatValue(s3Diagnostico.s3_tempo_mercado);
 
   const resumoItems: { label: string; value: string }[] = useMemo(() => {
-    const s2 = allDataByKey.get("desafios") ?? {};
-    const s3 = allDataByKey.get("diagnostico") ?? {};
-    const s4 = allDataByKey.get("produtos") ?? {};
-    const s5 = allDataByKey.get("identidade") ?? {};
+    const s2 = normalizeStepDataForSummary((allDataByKey.get("desafios") ?? {}) as Record<string, unknown>);
+    const s3 = normalizeStepDataForSummary((allDataByKey.get("diagnostico") ?? {}) as Record<string, unknown>);
+    const s4 = normalizeStepDataForSummary((allDataByKey.get("produtos") ?? {}) as Record<string, unknown>);
+    const s5 = normalizeStepDataForSummary((allDataByKey.get("identidade") ?? {}) as Record<string, unknown>);
     return [
       { label: "Identificação (empresa / cliente)", value: `${empresaDisplay} · ${studentDisplay}` },
       { label: "Dados do Comece por Aqui", value: `Empresa: ${empresaDisplay} · Como chamar: ${studentDisplay} · Início: ${dataInicioDisplay}` },
       { label: "Tempo de mercado", value: formatValue(s3.s3_tempo_mercado) },
-      { label: "Situação financeira", value: [s3.s3_faturamento_ano, s3.s3_ticket_medio].map((v) => formatValue(v)).join(" / ") },
+      { label: "Situação financeira", value: [formatCurrencyBR(s3.s3_faturamento_ano), formatCurrencyBR(s3.s3_ticket_medio)].join(" / ") },
       { label: "Canais / marketing", value: formatValue(s3.s3_marketing_estrutura) },
       { label: "Presença digital", value: formatValue(s3.s3_plataformas_links) },
       { label: "Perfil do cliente", value: [s3.s3_publico_regiao, s3.s3_faixa_etaria_principal, s3.s3_genero].map((v) => formatValue(v)).join(" · ") },
       { label: "Nível de tecnologia", value: formatScaleChoiceValue(s3.s3_nivel_tecnologia, "s3_nivel_tecnologia") },
       { label: "Sentimento em relação a vendas online", value: formatValue(s2.s2_5) },
-      { label: "Meta declarada de faturamento", value: formatValue(s5.s5_objetivo_faturamento) },
+      { label: "Meta declarada de faturamento", value: formatCurrencyBR(s5.s5_objetivo_faturamento) },
       { label: "Produto principal", value: formatValue(s4.s4_principal_produto_servico) },
     ];
   }, [allDataByKey, empresaDisplay, studentDisplay, dataInicioDisplay]);
@@ -265,6 +301,11 @@ export default function MarcoZeroPreview() {
       return { key: def.key, title: def.title, filled, total, pct };
     });
   }, [stepsWithData]);
+
+  const pct =
+    sectionProgressList.length > 0
+      ? Math.round(sectionProgressList.reduce((acc, s) => acc + s.pct, 0) / sectionProgressList.length)
+      : progress?.percentage ?? 0;
 
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-slate-500">Carregando preview...</div>}>
@@ -449,11 +490,20 @@ export default function MarcoZeroPreview() {
                                     ) : (
                                       (rows as Record<string, unknown>[]).map((r, ridx) => (
                                         <tr key={ridx}>
-                                          {b.columns.map((c) => (
-                                            <td key={c.key} className="border border-slate-200 px-2 py-1">
-                                              {String(r[c.key] ?? "").trim() || EMPTY_LABEL}
-                                            </td>
-                                          ))}
+                                          {b.columns.map((c) => {
+                                            const cellVal = r[c.key] ?? "";
+                                            const isCurrency =
+                                              c.key === "valor" ||
+                                              (c as { placeholder?: string }).placeholder?.includes("R$");
+                                            const display = isCurrency
+                                              ? (formatCurrencyBR(cellVal) === "—" ? EMPTY_LABEL : formatCurrencyBR(cellVal))
+                                              : (String(cellVal).trim() || EMPTY_LABEL);
+                                            return (
+                                              <td key={c.key} className="border border-slate-200 px-2 py-1">
+                                                {display}
+                                              </td>
+                                            );
+                                          })}
                                         </tr>
                                       ))
                                     )}

@@ -245,13 +245,16 @@ export default function RaioXPreview() {
   useEffect(() => {
     if (typeof document === "undefined") return;
     const html = document.documentElement;
+    const hadDark = html.classList.contains("dark");
+    const hadLight = html.classList.contains("light");
     html.classList.remove("dark");
-    html.classList.add("preview-light-theme");
+    html.classList.add("light", "preview-light-theme");
     document.body.style.backgroundColor = "#ffffff";
     document.body.style.color = "#000000";
     return () => {
-      html.classList.remove("preview-light-theme");
-      html.classList.add("dark");
+      html.classList.remove("light", "preview-light-theme");
+      if (hadDark) html.classList.add("dark");
+      else if (hadLight) html.classList.add("light");
       document.body.style.backgroundColor = "";
       document.body.style.color = "";
     };
