@@ -1,8 +1,16 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 type GL = WebGLRenderingContext;
+
+/** Tenta obter contexto WebGL (padrão ou experimental para navegadores antigos). */
+function getWebGLContext(canvas: HTMLCanvasElement): WebGLRenderingContext | null {
+  return (
+    canvas.getContext("webgl") ||
+    (canvas.getContext("experimental-webgl") as WebGLRenderingContext | null)
+  );
+}
 
 const vsSource = `
   attribute vec4 aVertexPosition;
@@ -145,19 +153,23 @@ function initShaderProgram(gl: GL, vertexSrc: string, fragmentSrc: string): WebG
 
 const ShaderBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [webGLFailed, setWebGLFailed] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const gl = canvas.getContext("webgl");
+    const gl = getWebGLContext(canvas);
     if (!gl) {
-      console.warn("WebGL not supported.");
+      setWebGLFailed(true);
       return;
     }
 
     const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
-    if (!shaderProgram) return;
+    if (!shaderProgram) {
+      setWebGLFailed(true);
+      return;
+    }
 
     const positionBuffer = gl.createBuffer();
     if (!positionBuffer) return;
@@ -210,7 +222,23 @@ const ShaderBackground = () => {
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="fixed inset-0 z-0 h-full w-full pointer-events-none" />;
+  return (
+    <>
+      <canvas
+        ref={canvasRef}
+        className="fixed inset-0 z-0 h-full w-full pointer-events-none"
+        aria-hidden
+      />
+      {/* Fallback quando WebGL não está disponível (Safari antigo, WebGL desativado, etc.) */}
+      {webGLFailed && (
+        <div
+          className="fixed inset-0 z-0 h-full w-full pointer-events-none bg-gradient-to-br from-slate-950 via-violet-950/90 to-slate-950 animate-pulse"
+          style={{ animationDuration: "4s", animationTimingFunction: "ease-in-out" }}
+          aria-hidden
+        />
+      )}
+    </>
+  );
 };
 
 export default ShaderBackground;
