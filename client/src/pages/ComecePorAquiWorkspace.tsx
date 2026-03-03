@@ -21,6 +21,7 @@ import { useUnsavedChangesProtection } from "@/hooks/useUnsavedChangesProtection
 const WORKSPACE_SLUG = "comece-por-aqui" as const;
 
 const DEBOUNCE_MS = 800;
+const SAVE_TIMEOUT_MS = 25000;
 
 function formatPhone(value: string): string {
   const digits = value.replace(/\D/g, "").slice(0, 11);
@@ -77,8 +78,12 @@ export default function ComecePorAquiWorkspace() {
   );
 
   const upsertDraft = trpc.lessonState.upsertDraft.useMutation({
-    onSuccess: () => {
-      utils.lessonState.get.invalidate({ lessonId: lessonId! }).catch(() => {});
+    onSuccess: async () => {
+      await utils.lessonState.get.invalidate({ lessonId: lessonId! }).catch(() => {});
+      await utils.workspaces.getWorkspaceStateBySlug.invalidate({ slug: WORKSPACE_SLUG }).catch(() => {});
+    },
+    onError: (err) => {
+      toast.error(err.message || "Falha ao salvar. Tente novamente.");
     },
   });
 
@@ -103,13 +108,19 @@ export default function ComecePorAquiWorkspace() {
         const payload = pendingPatchRef.current;
         pendingPatchRef.current = {};
         try {
-          const res = await upsertDraft.mutateAsync({ lessonId, patch: payload });
+          const savePromise = upsertDraft.mutateAsync({ lessonId, patch: payload });
+          const timeoutPromise = new Promise<never>((_, reject) => {
+            setTimeout(() => reject(new Error("Salvamento demorou muito. Tente novamente.")), SAVE_TIMEOUT_MS);
+          });
+          const res = await Promise.race([savePromise, timeoutPromise]);
           setLastSavedAt(new Date(res.updatedAt));
           if (draftKey) clearDraft(draftKey);
           setHasUnsavedChanges(false);
         } catch (err) {
           pendingPatchRef.current = { ...payload, ...pendingPatchRef.current };
           setHasUnsavedChanges(true);
+          const msg = err instanceof Error ? err.message : "";
+          if (msg.includes("Salvamento demorou muito")) toast.error(msg);
           throw err;
         }
       }

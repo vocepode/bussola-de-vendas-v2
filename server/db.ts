@@ -571,10 +571,20 @@ export async function ensureWorkspaceLessons(params: {
 
 /**
  * Remove todas as lições de um módulo e os dados salvos dos usuários (lessonUserState).
- * NUNCA chamar a partir de ensure*WorkspaceLessons nem de fluxo automático ao abrir um módulo.
- * Usar apenas em scripts explícitos de administração ou migração, com ciência do wipe de dados.
+ * NUNCA chamar a partir de ensure*WorkspaceLessons, rotas da API ou fluxo automático.
+ * Exige opts.dangerousConfirm para evitar chamada acidental; usar apenas em scripts de admin/migração.
  */
-export async function deleteModuleLessons(moduleId: number): Promise<void> {
+export async function deleteModuleLessons(
+  moduleId: number,
+  opts?: { dangerousConfirm?: boolean }
+): Promise<void> {
+  if (opts?.dangerousConfirm !== true) {
+    throw new Error(
+      "deleteModuleLessons apaga todos os dados salvos do módulo. " +
+        "Chame apenas em scripts com opts: { dangerousConfirm: true }. " +
+        "Nunca use em ensure*WorkspaceLessons ou rotas da aplicação."
+    );
+  }
   const db = await getDb();
   if (!db) throw new Error("Database not available");
   const existing = await db.select({ id: lessons.id }).from(lessons).where(eq(lessons.moduleId, moduleId));

@@ -65,8 +65,16 @@ function satisfiesShowWhen(data: Record<string, unknown>, showWhen?: NorthShowWh
   return v === want || String(v ?? "").trim() === String(want).trim();
 }
 
-function debounceMs() {
-  return 800;
+const DEBOUNCE_MS = 800;
+const DEBOUNCE_LARGE_MS = 1800;
+const LARGE_PAYLOAD_BYTES = 50000;
+const SAVE_TIMEOUT_MS = 25000;
+
+function debounceMsForPatch(patch: Record<string, unknown>): number {
+  const size = typeof patch === "object" && patch !== null
+    ? JSON.stringify(patch).length
+    : 0;
+  return size >= LARGE_PAYLOAD_BYTES ? DEBOUNCE_LARGE_MS : DEBOUNCE_MS;
 }
 
 const FIELD_INPUT_CLASS =
@@ -156,8 +164,14 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
   );
 
   const upsertDraft = trpc.lessonState.upsertDraft.useMutation({
-    onSuccess: () => {
-      utils.lessonState.get.invalidate({ lessonId }).catch(() => {});
+    onSuccess: async () => {
+      await utils.lessonState.get.invalidate({ lessonId }).catch(() => {});
+      if (workspaceSlug) {
+        await utils.workspaces.getWorkspaceStateBySlug.invalidate({ slug: workspaceSlug }).catch(() => {});
+      }
+    },
+    onError: (err) => {
+      toast.error(err.message || "Falha ao salvar. Tente novamente ou divida o texto em partes menores.");
     },
   });
 
@@ -219,14 +233,31 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
       while (Object.keys(pendingPatchRef.current).length > 0) {
         const payload = pendingPatchRef.current;
         pendingPatchRef.current = {};
+        // #region agent log
+        const payloadSize = JSON.stringify(payload).length;
+        fetch("http://127.0.0.1:7242/ingest/6525ceb4-a6e9-48a8-a6b4-9299a34af0f0", { method: "POST", headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "263fed" }, body: JSON.stringify({ sessionId: "263fed", location: "NorthStepForm.tsx:commitStart", message: "commit start", data: { lessonId, payloadKeys: Object.keys(payload), payloadSizeBytes: payloadSize }, timestamp: Date.now(), hypothesisId: "A" }) }).catch(() => {});
+        // #endregion
         try {
-          const res = await upsertDraft.mutateAsync({ lessonId, patch: payload });
+          const savePromise = upsertDraft.mutateAsync({ lessonId, patch: payload });
+          const timeoutPromise = new Promise<never>((_, reject) => {
+            setTimeout(() => reject(new Error("Salvamento demorou muito. Tente novamente ou divida o texto em partes menores.")), SAVE_TIMEOUT_MS);
+          });
+          const res = await Promise.race([savePromise, timeoutPromise]);
+          // #region agent log
+          fetch("http://127.0.0.1:7242/ingest/6525ceb4-a6e9-48a8-a6b4-9299a34af0f0", { method: "POST", headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "263fed" }, body: JSON.stringify({ sessionId: "263fed", location: "NorthStepForm.tsx:commitResolved", message: "save resolved", data: { hasUpdatedAt: !!res?.updatedAt }, timestamp: Date.now(), hypothesisId: "E" }) }).catch(() => {});
+          // #endregion
           setLastSavedAt(new Date(res.updatedAt));
           clearDraft(draftKey);
           setHasUnsavedChanges(false);
         } catch (err) {
+          // #region agent log
+          const errMsg = err instanceof Error ? err.message : String(err);
+          fetch("http://127.0.0.1:7242/ingest/6525ceb4-a6e9-48a8-a6b4-9299a34af0f0", { method: "POST", headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "263fed" }, body: JSON.stringify({ sessionId: "263fed", location: "NorthStepForm.tsx:commitRejected", message: "save rejected", data: { errorMessage: errMsg.slice(0, 200), isTimeout: errMsg.includes("Salvamento demorou muito") }, timestamp: Date.now(), hypothesisId: "B" }) }).catch(() => {});
+          // #endregion
           pendingPatchRef.current = { ...payload, ...pendingPatchRef.current };
           setHasUnsavedChanges(true);
+          const msg = err instanceof Error ? err.message : "";
+          if (msg.includes("Salvamento demorou muito")) toast.error(msg);
           throw err;
         }
       }
@@ -244,9 +275,10 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
   const scheduleSave = useCallback((patch: Record<string, unknown>) => {
     queuePatch(patch);
     if (timerRef.current) window.clearTimeout(timerRef.current);
+    const delay = debounceMsForPatch(patch);
     timerRef.current = window.setTimeout(() => {
       void commitPendingPatches();
-    }, debounceMs());
+    }, delay);
   }, [commitPendingPatches, queuePatch]);
 
   const flushSave = useCallback(async (patch?: Record<string, unknown>) => {

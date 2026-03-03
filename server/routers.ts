@@ -1,5 +1,12 @@
 import crypto from "node:crypto";
+import { appendFile } from "node:fs/promises";
+import { join } from "node:path";
 import { TRPCError } from "@trpc/server";
+
+const DEBUG_LOG_PATH = join(process.cwd(), ".cursor", "debug-263fed.log");
+function debugLog(payload: Record<string, unknown>) {
+  appendFile(DEBUG_LOG_PATH, JSON.stringify({ sessionId: "263fed", ...payload, timestamp: Date.now() }) + "\n").catch(() => {});
+}
 import { adminProcedure, publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { z } from "zod";
 import * as db from "./db";
@@ -435,11 +442,20 @@ export const appRouter = router({
         })
       )
       .mutation(async ({ ctx, input }) => {
-        return await db.upsertLessonUserDraft({
+        // #region agent log
+        const patchSize = JSON.stringify(input.patch).length;
+        debugLog({ location: "routers.ts:upsertDraft:start", message: "upsertDraft start", data: { lessonId: input.lessonId, patchKeys: Object.keys(input.patch).length, patchSizeBytes: patchSize }, hypothesisId: "A" });
+        // #endregion
+        const startMs = Date.now();
+        const result = await db.upsertLessonUserDraft({
           userId: ctx.user.id,
           lessonId: input.lessonId,
           patch: input.patch,
         });
+        // #region agent log
+        debugLog({ location: "routers.ts:upsertDraft:done", message: "upsertDraft done", data: { durationMs: Date.now() - startMs }, hypothesisId: "E" });
+        // #endregion
+        return result;
       }),
 
     complete: protectedProcedure
