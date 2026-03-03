@@ -43,6 +43,48 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return !!value && typeof value === "object" && !Array.isArray(value);
 }
 
+/** Se o valor for string que é JSON de objeto inteiro (ex.: campo gravado errado), retorna só o texto deste campo para exibir. */
+function normalizeFieldDisplayValue(value: unknown, fieldId: string): string {
+  if (value == null) return "";
+  if (typeof value !== "string") return String(value);
+  const trimmed = value.trim();
+  if (trimmed === "") return "";
+  if (trimmed.startsWith("{")) {
+    try {
+      const parsed = JSON.parse(trimmed) as Record<string, unknown>;
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+        const keys = Object.keys(parsed);
+        if (keys.length > 1 || keys.includes(fieldId)) {
+          const fieldVal = parsed[fieldId];
+          const str = fieldVal != null ? String(fieldVal) : "";
+          return str.replace(/\\n/g, "\n");
+        }
+      }
+    } catch {
+      // não é JSON válido, segue com o valor original
+    }
+  }
+  return value.replace(/\\n/g, "\n");
+}
+
+/** Evita gravar no servidor um valor que é o JSON inteiro do passo (bug de um campo com objeto todo). */
+function sanitizeFieldValueForSave(value: unknown, fieldId: string): unknown {
+  if (value == null) return value;
+  if (typeof value !== "string") return value;
+  const trimmed = value.trim();
+  if (!trimmed.startsWith("{")) return value;
+  try {
+    const parsed = JSON.parse(trimmed) as Record<string, unknown>;
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed) && Object.keys(parsed).length > 1) {
+      const fieldVal = parsed[fieldId];
+      return fieldVal != null ? fieldVal : "";
+    }
+  } catch {
+    // ignora
+  }
+  return value;
+}
+
 function satisfiesShowWhen(data: Record<string, unknown>, showWhen?: NorthShowWhen | null): boolean {
   if (!showWhen) return true;
   const v = data[showWhen.fieldId];
@@ -405,8 +447,9 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
   }, [lessonId, state?.lessonId, tablePrefill?.fieldId, tablePrefill?.rowKey, JSON.stringify(tablePrefill?.values)]);
 
   const setField = (fieldId: string, value: unknown, { flush }: { flush: boolean }) => {
-    setLocalData((prev) => ({ ...prev, [fieldId]: value }));
-    const patch = { [fieldId]: value };
+    const sanitized = sanitizeFieldValueForSave(value, fieldId);
+    setLocalData((prev) => ({ ...prev, [fieldId]: sanitized }));
+    const patch = { [fieldId]: sanitized };
     if (flush) {
       flushSave(patch).catch((err: any) => toast.error(err?.message || "Falha ao salvar."));
     } else {
@@ -661,7 +704,7 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
               {b.helperText ? <div className="text-xs text-muted-foreground">{b.helperText}</div> : null}
             </div>
             <Textarea
-              value={String(value ?? "")}
+              value={normalizeFieldDisplayValue(value, b.fieldId)}
               placeholder={b.placeholder}
               onChange={(e) => setField(b.fieldId, e.target.value, { flush: false })}
               onBlur={(e) => setField(b.fieldId, e.target.value, { flush: true })}
@@ -700,7 +743,7 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
               {b.helperText ? <div className="text-xs text-muted-foreground">{b.helperText}</div> : null}
             </div>
             <Input
-              value={String(value ?? "")}
+              value={normalizeFieldDisplayValue(value, b.fieldId)}
               placeholder={b.placeholder}
               onChange={(e) => setField(b.fieldId, e.target.value, { flush: false })}
               onBlur={(e) => setField(b.fieldId, e.target.value, { flush: true })}

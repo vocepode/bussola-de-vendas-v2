@@ -84,6 +84,7 @@ export async function getDb() {
     const resolvedUrl = await databaseUrlWithIpv4(databaseUrl);
     _sql = postgres(resolvedUrl, {
       prepare: false,
+      max: 2,
     });
     _db = drizzle(_sql);
   } catch (error) {
@@ -635,46 +636,33 @@ export async function upsertLessonUserDraft(params: {
   const db = await getDb();
   if (!db) throw new Error("Database not available");
 
-  const existing = await getLessonUserState(params.userId, params.lessonId);
-  const nextData = {
-    ...(existing?.data ?? {}),
-    ...(params.patch ?? {}),
-  };
-
-  if (!existing) {
-    const [row] = await db
-      .insert(lessonUserState)
-      .values({
-        userId: params.userId,
-        lessonId: params.lessonId,
-        data: nextData,
-        status: "draft",
-        updatedAt: new Date(),
-      })
-      .returning({
-        status: lessonUserState.status,
-        data: lessonUserState.data,
-        updatedAt: lessonUserState.updatedAt,
-      });
-    if (!row) throw new Error("Failed to create lesson user state");
-    return row as any;
-  }
+  const now = new Date();
+  const patchData = params.patch ?? {};
 
   const [row] = await db
-    .update(lessonUserState)
-    .set({
-      data: nextData,
-      // Preserva "completed" no próprio UPDATE para evitar corrida com a ação de concluir.
-      status: sql`CASE WHEN ${lessonUserState.status} = 'completed' THEN 'completed' ELSE 'draft' END`,
-      updatedAt: new Date(),
+    .insert(lessonUserState)
+    .values({
+      userId: params.userId,
+      lessonId: params.lessonId,
+      data: patchData,
+      status: "draft",
+      updatedAt: now,
     })
-    .where(eq(lessonUserState.id, existing.id))
+    .onConflictDoUpdate({
+      target: [lessonUserState.userId, lessonUserState.lessonId],
+      set: {
+        data: sql`COALESCE("lessonUserState".data, '{}'::jsonb) || ${JSON.stringify(patchData)}::jsonb`,
+        status: sql`CASE WHEN "lessonUserState".status = 'completed' THEN 'completed'::lesson_user_state_status ELSE 'draft'::lesson_user_state_status END`,
+        updatedAt: now,
+      },
+    })
     .returning({
       status: lessonUserState.status,
       data: lessonUserState.data,
       updatedAt: lessonUserState.updatedAt,
     });
-  if (!row) throw new Error("Failed to update lesson user state");
+
+  if (!row) throw new Error("Failed to upsert lesson user state");
   return row as any;
 }
 
@@ -1439,23 +1427,19 @@ export async function upsertRaioXSecao(
       : secao === "web"
         ? { secaoWeb: data }
         : { secaoAnalise: data };
-  const existing = await getRaioXByUserId(userId);
   const now = new Date();
-  if (existing) {
-    const [row] = await db
-      .update(raioX)
-      .set({ ...field, updatedAt: now })
-      .where(eq(raioX.userId, userId))
-      .returning({ updatedAt: raioX.updatedAt });
-    return { updatedAt: row?.updatedAt ?? now };
-  }
   const [row] = await db
-    .insert(raioX).values({
+    .insert(raioX)
+    .values({
       userId,
       version: "2.0.3",
       ...field,
       createdAt: now,
       updatedAt: now,
+    })
+    .onConflictDoUpdate({
+      target: raioX.userId,
+      set: { ...field, updatedAt: now },
     })
     .returning({ updatedAt: raioX.updatedAt });
   return { updatedAt: row?.updatedAt ?? now };

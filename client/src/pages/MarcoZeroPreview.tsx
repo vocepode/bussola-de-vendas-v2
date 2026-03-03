@@ -37,8 +37,34 @@ function formatScaleChoiceValue(value: unknown, fieldId: string): string {
   return EMPTY_LABEL;
 }
 
+/** Se o valor for string que é JSON de objeto inteiro (campo gravado errado), retorna só o texto deste campo. */
+function normalizeFieldDisplayValue(value: unknown, fieldId: string): string {
+  if (value == null) return "";
+  if (typeof value !== "string") return String(value);
+  const trimmed = value.trim();
+  if (trimmed === "" || !trimmed.startsWith("{")) return value.replace(/\\n/g, "\n");
+  try {
+    const parsed = JSON.parse(trimmed) as Record<string, unknown>;
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+      const keys = Object.keys(parsed);
+      if (keys.length > 1 || keys.includes(fieldId)) {
+        const fieldVal = parsed[fieldId];
+        const str = fieldVal != null ? String(fieldVal) : "";
+        return str.replace(/\\n/g, "\n");
+      }
+    }
+  } catch {
+    // não é JSON válido
+  }
+  return value.replace(/\\n/g, "\n");
+}
+
 function formatValue(value: unknown, block?: NorthBlock): string {
   if (value == null) return EMPTY_LABEL;
+  if (typeof value === "string" && block?.type === "field" && block.fieldId) {
+    const normalized = normalizeFieldDisplayValue(value, block.fieldId);
+    return normalized.trim() === "" ? EMPTY_LABEL : normalized;
+  }
   if (Array.isArray(value)) {
     if (value.length === 0) return EMPTY_LABEL;
     const first = value[0];

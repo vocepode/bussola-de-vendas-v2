@@ -16,8 +16,34 @@ const EMPTY_LABEL = "(não preenchido)";
 
 type StepKey = (typeof NORTE_ETAPAS)[number]["key"];
 
-function formatValue(value: unknown): string {
+/** Se o valor for string que é JSON de objeto inteiro (campo gravado errado), retorna só o texto deste campo. */
+function normalizeFieldDisplayValue(value: unknown, fieldId: string): string {
+  if (value == null) return "";
+  if (typeof value !== "string") return String(value);
+  const trimmed = value.trim();
+  if (trimmed === "" || !trimmed.startsWith("{")) return value.replace(/\\n/g, "\n");
+  try {
+    const parsed = JSON.parse(trimmed) as Record<string, unknown>;
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+      const keys = Object.keys(parsed);
+      if (keys.length > 1 || keys.includes(fieldId)) {
+        const fieldVal = parsed[fieldId];
+        const str = fieldVal != null ? String(fieldVal) : "";
+        return str.replace(/\\n/g, "\n");
+      }
+    }
+  } catch {
+    // não é JSON válido
+  }
+  return value.replace(/\\n/g, "\n");
+}
+
+function formatValue(value: unknown, fieldId?: string): string {
   if (value == null) return EMPTY_LABEL;
+  if (typeof value === "string" && fieldId) {
+    const normalized = normalizeFieldDisplayValue(value, fieldId);
+    return normalized.trim() === "" ? EMPTY_LABEL : normalized;
+  }
   if (Array.isArray(value)) {
     if (value.length === 0) return EMPTY_LABEL;
     return value.map((v) => (typeof v === "string" ? v : JSON.stringify(v))).join(", ");
@@ -323,7 +349,7 @@ export default function NorthPreview() {
                     <div className="space-y-4">
                       {visible.map((b, i) => {
                         if (b.type === "field") {
-                          const value = formatValue((data as Record<string, unknown>)[b.fieldId]);
+                          const value = formatValue((data as Record<string, unknown>)[b.fieldId], b.fieldId);
                           return (
                             <div key={i}>
                               <div className="font-semibold text-slate-800">{b.label}</div>
