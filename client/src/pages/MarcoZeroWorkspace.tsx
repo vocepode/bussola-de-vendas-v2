@@ -261,7 +261,8 @@ export default function MarcoZeroWorkspace() {
         const blocks = getVisibleBlocks(allBlocks, data as Record<string, unknown>);
         let filled = 0;
         for (const b of blocks) {
-          const fieldId = b.type === "field" ? b.fieldId : b.fieldId;
+          if (b.type !== "field" && b.type !== "table") continue;
+          const fieldId = b.fieldId;
           const val = (data as Record<string, unknown>)[fieldId];
           if (b.type === "table") {
             const rows = Array.isArray(val) ? (val as Record<string, unknown>[]) : [];
