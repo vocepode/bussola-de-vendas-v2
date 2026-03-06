@@ -292,8 +292,13 @@ export default function MarcoZeroWorkspace() {
 
       printAreaRef.current.innerHTML = html;
       console.info("[print] marco-zero all html length", printAreaRef.current.innerHTML.length);
+      // Dar tempo ao navegador para aplicar o DOM e o layout antes de abrir o diálogo de impressão
+      // (na primeira vez o conteúdo pode sair vazio se print() for chamado imediatamente)
+      await new Promise((resolve) => setTimeout(resolve, 200));
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => window.print());
+        requestAnimationFrame(() => {
+          window.print();
+        });
       });
     } finally {
       setPrinting(false);
