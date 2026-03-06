@@ -563,23 +563,32 @@ export function mergeSecaoRedesSociais(
     ? { ...initial.instagram, ...(api.instagram as Record<string, unknown>) }
     : initial.instagram;
   const concorrentesRaw = (instagramRaw as { concorrentes?: unknown }).concorrentes;
-  const concorrentes: ConcorrenteInstagram[] = Array.isArray(concorrentesRaw)
-    ? concorrentesRaw.map((c: Record<string, unknown>) => ({
-        id: typeof c.id === "string" ? c.id : nanoid(),
-        username: typeof c.username === "string" ? c.username : "",
-        tipo: c.tipo === "direto" || c.tipo === "indireto" || c.tipo === "referencia" ? c.tipo : "direto",
-        analise: normalizarAnaliseConcorrente(
-          c.analise && typeof c.analise === "object" ? (c.analise as Record<string, unknown>) : {}
-        ),
-        oFazeMelhor: typeof c.oFazeMelhor === "string" ? c.oFazeMelhor : "",
-        oportunidades: typeof c.oportunidades === "string" ? c.oportunidades : "",
-        nota: typeof c.nota === "string" ? c.nota : "",
-      }))
-    : [];
+  // API e estado usam objeto { concorrentes: [], conclusao, concluido }; não array direto
+  const concorrentesArray: unknown[] = Array.isArray(concorrentesRaw)
+    ? concorrentesRaw
+    : concorrentesRaw && typeof concorrentesRaw === "object" && "concorrentes" in (concorrentesRaw as object) && Array.isArray((concorrentesRaw as { concorrentes: unknown }).concorrentes)
+      ? (concorrentesRaw as { concorrentes: unknown[] }).concorrentes
+      : [];
+  const concorrentes: ConcorrenteInstagram[] = concorrentesArray.map((c: Record<string, unknown>) => ({
+    id: typeof c.id === "string" ? c.id : nanoid(),
+    username: typeof c.username === "string" ? c.username : "",
+    tipo: c.tipo === "direto" || c.tipo === "indireto" || c.tipo === "referencia" ? c.tipo : "direto",
+    analise: normalizarAnaliseConcorrente(
+      c.analise && typeof c.analise === "object" ? (c.analise as Record<string, unknown>) : {}
+    ),
+    oFazeMelhor: typeof c.oFazeMelhor === "string" ? c.oFazeMelhor : "",
+    oportunidades: typeof c.oportunidades === "string" ? c.oportunidades : "",
+    nota: typeof c.nota === "string" ? c.nota : "",
+  }));
+  const concorrentesObj = concorrentesRaw && typeof concorrentesRaw === "object" && !Array.isArray(concorrentesRaw)
+    ? (concorrentesRaw as { conclusao?: string; concluido?: boolean })
+    : {};
   const conclusao = typeof (instagramRaw as Record<string, unknown>).conclusao === "string"
     ? String((instagramRaw as Record<string, unknown>).conclusao)
-    : "";
-  const concluido = (instagramRaw as Record<string, unknown>).concluido === true;
+    : typeof concorrentesObj.conclusao === "string"
+      ? concorrentesObj.conclusao
+      : "";
+  const concluido = (instagramRaw as Record<string, unknown>).concluido === true || concorrentesObj.concluido === true;
   const instagram = {
     ...instagramRaw,
     concorrentes: { concorrentes, conclusao, concluido },
