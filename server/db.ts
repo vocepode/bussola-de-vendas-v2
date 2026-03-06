@@ -744,7 +744,7 @@ export async function resetLessonUserState(params: { userId: number; lessonId: n
   return row;
 }
 
-/** Progresso do workspace: conta quantas lições do módulo estão com status "completed" em lessonUserState. */
+/** Progresso do workspace: conta por slug único para que duplicatas no banco não inflem o total (ex.: Norte com 14 lições = 7 etapas). */
 export async function getWorkspaceProgressByModule(
   userId: number,
   moduleId: number
@@ -753,8 +753,15 @@ export async function getWorkspaceProgressByModule(
   if (!db) return { completed: 0, total: 0, percentage: 0 };
 
   const moduleLessons = await getLessonsByModuleId(moduleId);
-  const total = moduleLessons.length;
-  if (total === 0) return { completed: 0, total: 0, percentage: 0 };
+  if (moduleLessons.length === 0) return { completed: 0, total: 0, percentage: 0 };
+
+  const slugToLessonIds = new Map<string, number[]>();
+  for (const l of moduleLessons) {
+    const list = slugToLessonIds.get(l.slug ?? "") ?? [];
+    list.push(l.id);
+    slugToLessonIds.set(l.slug ?? "", list);
+  }
+  const total = slugToLessonIds.size;
 
   const completedRows = await db
     .select({ lessonId: lessonUserState.lessonId })
@@ -766,8 +773,12 @@ export async function getWorkspaceProgressByModule(
         inArray(lessonUserState.lessonId, moduleLessons.map((l) => l.id))
       )
     );
-  const completed = completedRows.length;
-  const percentage = Math.round((completed / total) * 100);
+  const completedLessonIds = new Set(completedRows.map((r) => r.lessonId));
+  let completed = 0;
+  for (const ids of slugToLessonIds.values()) {
+    if (ids.some((id) => completedLessonIds.has(id))) completed++;
+  }
+  const percentage = total === 0 ? 0 : Math.round((completed / total) * 100);
   return { completed, total, percentage };
 }
 

@@ -34,8 +34,14 @@ async function getOverviewData(userId: number) {
 
   const progressByModuleId = new Map(tableProgress.map((p) => [p.moduleId, p]));
   const mergedProgress: typeof tableProgress = [];
+  const lessonCounts = await db.getLessonCountsByModuleIds(modules.map((m) => m.id));
+
   for (const mod of modules) {
     const ws = await db.getWorkspaceProgressByModule(userId, mod.id);
+    // Módulos workspace (comece-por-aqui, marco-zero, norte): total por slug único (evita duplicatas no banco).
+    if (["comece-por-aqui", "marco-zero", "norte"].includes(mod.slug)) {
+      lessonCounts[mod.id] = ws.total;
+    }
     const row = progressByModuleId.get(mod.id);
     const tablePct = row?.progressPercentage ?? 0;
     // Para módulos de workspace, fonte de verdade é o estado do workspace (lessonUserState),
@@ -63,8 +69,7 @@ async function getOverviewData(userId: number) {
     }
   }
 
-  const lessonCounts = await db.getLessonCountsByModuleIds(modules.map((m) => m.id));
-
+  // Raio-X e MAPA não usam lições; progresso vem de tabelas próprias (raio_x, mapa editoriais/temas/ideias) com totais fixos.
   const RAIO_X_SECTIONS_COUNT = 3;
   let raioXPct = 0;
   try {
