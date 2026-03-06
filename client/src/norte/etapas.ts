@@ -181,7 +181,8 @@ export const NORTE_ETAPAS: NorthSubstepDef[] = [
         type: "field",
         fieldId: "n2_localizacao",
         label: "Localização predominante",
-        fieldType: "singleChoice",
+        helperText: "Pode marcar mais de uma.",
+        fieldType: "multiChoice",
         required: true,
         options: [
           { id: "local", label: "Local (cidade)" },

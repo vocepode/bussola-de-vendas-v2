@@ -411,7 +411,8 @@ export const MARCO_ZERO_STEPS: NorthStepDef[] = [
         type: "field",
         fieldId: "s3_publico_regiao",
         label: "De qual região o seu público alvo faz parte?",
-        fieldType: "singleChoice",
+        helperText: "Pode marcar mais de uma.",
+        fieldType: "multiChoice",
         options: [
           { id: "local", label: "Local (no seu bairro ou na sua cidade)" },
           { id: "regional", label: "Regional (cidades/estados próximos)" },
