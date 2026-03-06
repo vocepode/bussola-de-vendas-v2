@@ -253,7 +253,7 @@ export default function MapWorkspace() {
                     <div className={cn("pt-8 mt-8 flex flex-wrap items-center gap-3 border-t", isDark ? "border-[#262626]" : "border-border")}>
                       {prevStep ? (
                         <Button variant="outline" size="sm" onClick={() => handleEstruturaStep(prevStep)}>
-                          ← Seção anterior
+                          ← Tarefa anterior
                         </Button>
                       ) : null}
                       {nextStep ? (
@@ -262,7 +262,7 @@ export default function MapWorkspace() {
                         </Button>
                       ) : nextPilarHref ? (
                         <Link href={nextPilarHref}>
-                          <Button size="sm">Avançar → Próximo pilar</Button>
+                          <Button size="sm">Avançar módulo</Button>
                         </Link>
                       ) : (
                         <Button size="sm" disabled>

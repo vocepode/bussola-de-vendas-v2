@@ -9,8 +9,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, ArrowLeft, CheckCircle2, Mail, MessageCircle, Pencil } from "lucide-react";
+import { Loader2, ArrowLeft, CheckCircle2, Mail, MessageCircle, Pencil, RotateCcw } from "lucide-react";
 import { getLoginUrl } from "@/const";
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
@@ -163,6 +174,19 @@ export default function ComecePorAquiWorkspace() {
       await utils.dashboard.getOverview.invalidate();
     },
     onError: (err) => toast.error(err.message ?? "Não foi possível liberar edição."),
+  });
+  const reset = trpc.lessonState.reset.useMutation({
+    onSuccess: async () => {
+      if (draftKey) clearDraft(draftKey);
+      pendingPatchRef.current = {};
+      setHasUnsavedChanges(false);
+      setLocalData({});
+      toast.success("Respostas resetadas.");
+      await utils.lessonState.get.invalidate({ lessonId: lessonId! });
+      await utils.workspaces.getWorkspaceStateBySlug.invalidate({ slug: WORKSPACE_SLUG });
+      await utils.workspaces.getProgressBySlug.invalidate({ slug: WORKSPACE_SLUG });
+    },
+    onError: (err) => toast.error(err.message ?? "Não foi possível resetar."),
   });
 
   useEffect(() => {
@@ -535,12 +559,46 @@ export default function ComecePorAquiWorkspace() {
                 </Card>
               </section>
 
-              <div className="flex justify-end pt-4">
+              <div className="flex flex-wrap items-center gap-3 justify-end pt-4">
+                {lessonId ? (
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="outline" size="sm" className="gap-2" disabled={reset.isPending}>
+                        <RotateCcw className="h-4 w-4" />
+                        Resetar respostas
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Resetar respostas?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Isso vai apagar todas as respostas deste módulo para você e começar do zero.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => reset.mutate({ lessonId })}
+                          disabled={reset.isPending}
+                        >
+                          {reset.isPending ? (
+                            <span className="inline-flex items-center gap-2">
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              Resetando…
+                            </span>
+                          ) : (
+                            "Resetar"
+                          )}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                ) : null}
                 {status === "completed" ? (
                   <Button
                     variant="outline"
                     onClick={handleReopen}
-                    disabled={reopen.isPending || complete.isPending}
+                    disabled={reopen.isPending || complete.isPending || reset.isPending}
                     className="gap-2"
                   >
                     {reopen.isPending ? (
@@ -556,7 +614,7 @@ export default function ComecePorAquiWorkspace() {
                     )}
                   </Button>
                 ) : (
-                  <Button onClick={handleComplete} disabled={complete.isPending} className="gap-2">
+                  <Button onClick={handleComplete} disabled={complete.isPending || reset.isPending} className="gap-2">
                     <CheckCircle2 className="h-4 w-4" />
                     Concluir etapa
                   </Button>

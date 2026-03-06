@@ -433,42 +433,44 @@ export default function MarcoZeroWorkspace() {
                       lessonId={activeLessonId}
                       step={STEPS.find((s) => s.key === activeStep)!}
                       workspaceSlug="marco-zero"
-                    />
-                    <div className="pt-8 mt-8 flex flex-wrap items-center gap-4 border-t border-[#262626]">
-                      <Button variant="outline" size="sm" onClick={() => refetchState()} className="border-white/20 text-white hover:bg-white/10">
-                        Recarregar estado
-                      </Button>
-                      <div className="flex flex-wrap items-center gap-3">
-                        {(() => {
-                          const stepIndex = STEPS.findIndex((s) => s.key === activeStep);
-                          const prevStep = stepIndex > 0 ? STEPS[stepIndex - 1] : null;
-                          const nextStep = stepIndex >= 0 && stepIndex < STEPS.length - 1 ? STEPS[stepIndex + 1] : null;
-                          const pillarIndex = PILLARS_ORDER.findIndex((p) => p.slug === "marco-zero");
-                          const nextPilar = pillarIndex >= 0 && pillarIndex < PILLARS_ORDER.length - 1 ? PILLARS_ORDER[pillarIndex + 1] : null;
-                          const nextPilarHref = nextPilar ? (nextPilar.href ?? getModuleHref(nextPilar.slug)) : null;
+                      footerExtra={
+                        <Button variant="ghost" size="sm" onClick={() => refetchState()} className="text-white/70 hover:text-white hover:bg-white/10">
+                          Recarregar estado
+                        </Button>
+                      }
+                      navigationPrev={(() => {
+                        const stepIndex = STEPS.findIndex((s) => s.key === activeStep);
+                        const prevStep = stepIndex > 0 ? STEPS[stepIndex - 1] : null;
+                        return prevStep ? (
+                          <Button variant="outline" size="sm" onClick={() => setActiveStep(prevStep.key)} className="border-white/20 text-white hover:bg-white/10">
+                            ← Tarefa anterior
+                          </Button>
+                        ) : null;
+                      })()}
+                      navigationNext={(() => {
+                        const stepIndex = STEPS.findIndex((s) => s.key === activeStep);
+                        const nextStep = stepIndex >= 0 && stepIndex < STEPS.length - 1 ? STEPS[stepIndex + 1] : null;
+                        const pillarIndex = PILLARS_ORDER.findIndex((p) => p.slug === "marco-zero");
+                        const nextPilar = pillarIndex >= 0 && pillarIndex < PILLARS_ORDER.length - 1 ? PILLARS_ORDER[pillarIndex + 1] : null;
+                        const nextPilarHref = nextPilar ? (nextPilar.href ?? getModuleHref(nextPilar.slug)) : null;
+                        const btnClass = "bg-primary text-primary-foreground hover:bg-primary/90";
+                        if (nextStep) {
                           return (
-                            <>
-                              {prevStep ? (
-                                <Button variant="outline" size="sm" onClick={() => setActiveStep(prevStep.key)} className="border-white/20 text-white hover:bg-white/10">
-                                  ← Seção anterior
-                                </Button>
-                              ) : null}
-                              {nextStep ? (
-                                <Button size="sm" onClick={() => setActiveStep(nextStep.key)} className="bg-primary text-primary-foreground hover:bg-primary/90">
-                                  Avançar →
-                                </Button>
-                              ) : nextPilarHref ? (
-                                <Link href={nextPilarHref}>
-                                  <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
-                                    Avançar → Próximo pilar
-                                  </Button>
-                                </Link>
-                              ) : null}
-                            </>
+                            <Button size="sm" onClick={() => setActiveStep(nextStep.key)} className={btnClass}>
+                              Avançar →
+                            </Button>
                           );
-                        })()}
-                      </div>
-                    </div>
+                        }
+                        if (nextPilarHref) {
+                          return (
+                            <Link href={nextPilarHref}>
+                              <Button size="sm" className={btnClass}>Avançar módulo</Button>
+                            </Link>
+                          );
+                        }
+                        return null;
+                      })()}
+                    />
                   </>
                 )}
               </CardContent>

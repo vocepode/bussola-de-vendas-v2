@@ -1065,6 +1065,13 @@ export const appRouter = router({
         return { success: true, updatedAt: result.updatedAt.toISOString(), etapasConcluidas: result.etapasConcluidas };
       }),
 
+    resetarSecao: protectedProcedure
+      .input(z.object({ secao: z.enum(["redes_sociais", "web", "analise"]) }))
+      .mutation(async ({ ctx, input }) => {
+        const result = await db.resetarSecaoRaioX(ctx.user.id, input.secao);
+        return { success: true, updatedAt: result.updatedAt.toISOString(), etapasConcluidas: result.etapasConcluidas };
+      }),
+
     updateProgress: protectedProcedure
       .input(z.object({ progresso: z.number().min(0).max(100) }))
       .mutation(async ({ ctx, input }) => {

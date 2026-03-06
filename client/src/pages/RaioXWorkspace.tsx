@@ -71,6 +71,17 @@ export default function RaioXWorkspace() {
       toast.error(err.message || "Erro ao liberar edição da etapa.");
     },
   });
+  const resetarSecao = trpc.raioX.resetarSecao.useMutation({
+    onSuccess: async (result) => {
+      if (result.updatedAt) setLastSavedAt(new Date(result.updatedAt));
+      await utils.raioX.get.invalidate();
+      await utils.dashboard.getOverview.invalidate();
+      toast.success("Respostas da seção resetadas.");
+    },
+    onError: (err) => {
+      toast.error(err.message || "Erro ao resetar seção.");
+    },
+  });
 
   const handleSaveSecao = (secao: "redes_sociais" | "web" | "analise", payload: Record<string, unknown>) => {
     saveSecao.mutate({ secao, data: payload });
@@ -82,6 +93,10 @@ export default function RaioXWorkspace() {
 
   const handleReabrirEtapa = (secao: "redes_sociais" | "web" | "analise") => {
     reabrirEtapa.mutate({ secao });
+  };
+
+  const handleResetarSecao = (secao: "redes_sociais" | "web" | "analise") => {
+    resetarSecao.mutate({ secao });
   };
 
   if (pillarCheckLoading || !allowed || isLoading) {
@@ -216,8 +231,10 @@ export default function RaioXWorkspace() {
               onSaveSecao={handleSaveSecao}
               onConcluirEtapa={handleConcluirEtapa}
               onReabrirEtapa={handleReabrirEtapa}
+              onResetarSecao={handleResetarSecao}
               isConcluindoEtapa={concluirEtapa.isPending}
               isReabrindoEtapa={reabrirEtapa.isPending}
+              isResetandoSecao={resetarSecao.isPending}
               etapasConcluidas={data.data.etapasConcluidas}
             />
           ) : null}

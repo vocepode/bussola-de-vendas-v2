@@ -497,40 +497,43 @@ export default function NorthWorkspace() {
                           ? { n1_matrioska_empresa: [companyName] }
                           : undefined
                       }
-                    />
-                    <div className="pt-8 mt-8 flex flex-wrap items-center gap-4 border-t border-border">
-                      <Button variant="outline" size="sm" onClick={() => refetchState()}>
-                        Recarregar estado
-                      </Button>
-                      <div className="flex flex-wrap items-center gap-3">
-                        {(() => {
-                          const stepIndex = SUBSTEPS.findIndex((s) => s.key === activeStep);
-                          const prevStep = stepIndex > 0 ? SUBSTEPS[stepIndex - 1] : null;
-                          const nextStep = stepIndex >= 0 && stepIndex < SUBSTEPS.length - 1 ? SUBSTEPS[stepIndex + 1] : null;
-                          const pillarIndex = PILLARS_ORDER.findIndex((p) => p.slug === "norte");
-                          const nextPilar = pillarIndex >= 0 && pillarIndex < PILLARS_ORDER.length - 1 ? PILLARS_ORDER[pillarIndex + 1] : null;
-                          const nextPilarHref = nextPilar ? (nextPilar.href ?? getModuleHref(nextPilar.slug)) : null;
+                      footerExtra={
+                        <Button variant="ghost" size="sm" onClick={() => refetchState()} className="text-muted-foreground">
+                          Recarregar estado
+                        </Button>
+                      }
+                      navigationPrev={(() => {
+                        const stepIndex = SUBSTEPS.findIndex((s) => s.key === activeStep);
+                        const prevStep = stepIndex > 0 ? SUBSTEPS[stepIndex - 1] : null;
+                        return prevStep ? (
+                          <Button variant="outline" size="sm" onClick={() => setActiveStep(prevStep.key)}>
+                            ← Tarefa anterior
+                          </Button>
+                        ) : null;
+                      })()}
+                      navigationNext={(() => {
+                        const stepIndex = SUBSTEPS.findIndex((s) => s.key === activeStep);
+                        const nextStep = stepIndex >= 0 && stepIndex < SUBSTEPS.length - 1 ? SUBSTEPS[stepIndex + 1] : null;
+                        const pillarIndex = PILLARS_ORDER.findIndex((p) => p.slug === "norte");
+                        const nextPilar = pillarIndex >= 0 && pillarIndex < PILLARS_ORDER.length - 1 ? PILLARS_ORDER[pillarIndex + 1] : null;
+                        const nextPilarHref = nextPilar ? (nextPilar.href ?? getModuleHref(nextPilar.slug)) : null;
+                        if (nextStep) {
                           return (
-                            <>
-                              {prevStep ? (
-                                <Button variant="outline" size="sm" onClick={() => setActiveStep(prevStep.key)}>
-                                  ← Seção anterior
-                                </Button>
-                              ) : null}
-                              {nextStep ? (
-                                <Button size="sm" onClick={() => setActiveStep(nextStep.key)}>
-                                  Avançar →
-                                </Button>
-                              ) : nextPilarHref ? (
-                                <Link href={nextPilarHref}>
-                                  <Button size="sm">Avançar → Próximo pilar</Button>
-                                </Link>
-                              ) : null}
-                            </>
+                            <Button size="sm" onClick={() => setActiveStep(nextStep.key)}>
+                              Avançar →
+                            </Button>
                           );
-                        })()}
-                      </div>
-                    </div>
+                        }
+                        if (nextPilarHref) {
+                          return (
+                            <Link href={nextPilarHref}>
+                              <Button size="sm">Avançar módulo</Button>
+                            </Link>
+                          );
+                        }
+                        return null;
+                      })()}
+                    />
                   </>
                 )}
               </CardContent>

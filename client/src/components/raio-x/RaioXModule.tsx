@@ -1,6 +1,17 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect, useMemo } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MeuInstagram } from "./secao-01-redes-sociais/instagram/MeuInstagram";
 import { Concorrentes } from "./secao-01-redes-sociais/instagram/Concorrentes";
@@ -30,7 +41,7 @@ import { getModuleHref, PILLARS_ORDER } from "@/constants/pillars";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useTheme } from "@/contexts/ThemeContext";
-import { CheckCircle2, Circle, ChevronDown, ChevronRight, Loader2, Lock, Pencil } from "lucide-react";
+import { CheckCircle2, Circle, ChevronDown, ChevronRight, Loader2, Lock, Pencil, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { clearDraft, loadDraft, saveDraft } from "@/lib/draftStorage";
 import { useUnsavedChangesProtection } from "@/hooks/useUnsavedChangesProtection";
@@ -123,8 +134,10 @@ export function RaioXModule({
   onSaveSecao,
   onConcluirEtapa,
   onReabrirEtapa,
+  onResetarSecao,
   isConcluindoEtapa,
   isReabrindoEtapa,
+  isResetandoSecao,
   etapasConcluidas: etapasConcluidasProp = [],
 }: {
   data: {
@@ -141,8 +154,10 @@ export function RaioXModule({
   onSaveSecao?: (secao: "redes_sociais" | "web" | "analise", payload: Record<string, unknown>) => void;
   onConcluirEtapa?: (secao: "redes_sociais" | "web" | "analise") => void;
   onReabrirEtapa?: (secao: "redes_sociais" | "web" | "analise") => void;
+  onResetarSecao?: (secao: "redes_sociais" | "web" | "analise") => void;
   isConcluindoEtapa?: boolean;
   isReabrindoEtapa?: boolean;
+  isResetandoSecao?: boolean;
   etapasConcluidas?: string[];
 }) {
   const etapasConcluidas = Array.isArray(data?.etapasConcluidas) ? data.etapasConcluidas : etapasConcluidasProp;
@@ -499,21 +514,53 @@ export function RaioXModule({
                         ? "analise"
                         : null;
                 const secaoJaConcluida = secaoAtual != null && etapasConcluidas.includes(secaoAtual);
+                const currentSection = activeStepKey.split(".")[0];
+                const nextSection = nextStepKey?.split(".")[0];
+                const nextLabel = !nextStepKey
+                  ? "Avançar módulo"
+                  : nextSection !== currentSection
+                    ? "Avançar seção"
+                    : "Avançar";
                 return (
                   <>
                     {prevStepKey ? (
                       <Button variant="outline" size="sm" onClick={() => setActiveStepKey(prevStepKey)}>
-                        ← Seção anterior
+                        ← Tarefa anterior
                       </Button>
                     ) : null}
-                    {nextStepKey ? (
-                      <Button size="sm" onClick={() => setActiveStepKey(nextStepKey)}>
-                        Avançar →
-                      </Button>
-                    ) : nextPilarHref ? (
-                      <Link href={nextPilarHref}>
-                        <Button size="sm">Avançar → Próximo pilar</Button>
-                      </Link>
+                    {secaoAtual && onResetarSecao ? (
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="outline" size="sm" className="gap-2" disabled={isResetandoSecao}>
+                            <RotateCcw className="h-4 w-4" />
+                            Resetar respostas
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Resetar respostas desta seção?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Isso vai apagar todas as respostas desta seção. Você poderá preencher de novo do zero.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => onResetarSecao(secaoAtual)}
+                              disabled={isResetandoSecao}
+                            >
+                              {isResetandoSecao ? (
+                                <span className="inline-flex items-center gap-2">
+                                  <Loader2 className="h-4 w-4 animate-spin" />
+                                  Resetando…
+                                </span>
+                              ) : (
+                                "Resetar"
+                              )}
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     ) : null}
                     {secaoAtual && onConcluirEtapa ? (
                       secaoJaConcluida ? (
@@ -556,6 +603,15 @@ export function RaioXModule({
                           )}
                         </Button>
                       )
+                    ) : null}
+                    {nextStepKey ? (
+                      <Button size="sm" onClick={() => setActiveStepKey(nextStepKey)}>
+                        {nextLabel === "Avançar seção" ? "Avançar seção →" : "Avançar →"}
+                      </Button>
+                    ) : nextPilarHref ? (
+                      <Link href={nextPilarHref}>
+                        <Button size="sm">{nextLabel}</Button>
+                      </Link>
                     ) : null}
                   </>
                 );

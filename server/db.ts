@@ -1568,6 +1568,60 @@ export async function reabrirEtapaRaioX(
   }
 }
 
+/** Zera os dados da seção e remove da lista de etapas concluídas (permite "voltar" e preencher de novo). */
+export async function resetarSecaoRaioX(
+  userId: number,
+  secao: "redes_sociais" | "web" | "analise"
+): Promise<{ updatedAt: Date; etapasConcluidas: string[] }> {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  const row = await getRaioXByUserId(userId);
+  if (!row) throw new Error("Raio-X não encontrado");
+  const current = (row as { etapasConcluidas?: string[] }).etapasConcluidas;
+  const arr = Array.isArray(current) ? current.filter((s) => s !== secao) : [];
+  const progressoGeral = Math.round((arr.length / RAIO_X_SECOES.length) * 100);
+  const now = new Date();
+  const sectionClear =
+    secao === "redes_sociais"
+      ? { secaoRedesSociais: {} }
+      : secao === "web"
+        ? { secaoWeb: {} }
+        : { secaoAnalise: {} };
+
+  const runUpdate = async () => {
+    const [updated] = await db
+      .update(raioX)
+      .set({
+        ...sectionClear,
+        etapasConcluidas: arr,
+        progressoGeral,
+        concluido: false,
+        updatedAt: now,
+      })
+      .where(eq(raioX.userId, userId))
+      .returning({ updatedAt: raioX.updatedAt, etapasConcluidas: raioX.etapasConcluidas });
+    return updated;
+  };
+
+  try {
+    const updated = await runUpdate();
+    return {
+      updatedAt: updated?.updatedAt ?? now,
+      etapasConcluidas: (updated?.etapasConcluidas as string[]) ?? arr,
+    };
+  } catch (err) {
+    if (isMissingColumnError(err)) {
+      await db.execute(sql`ALTER TABLE "raio_x" ADD COLUMN IF NOT EXISTS "etapas_concluidas" jsonb DEFAULT '[]'::jsonb`);
+      const updated = await runUpdate();
+      return {
+        updatedAt: updated?.updatedAt ?? now,
+        etapasConcluidas: (updated?.etapasConcluidas as string[]) ?? arr,
+      };
+    }
+    throw err;
+  }
+}
+
 export async function createRaioXIfNotExists(userId: number, norteCompleto: boolean, norteData: Record<string, unknown> | null): Promise<RaioX> {
   const db = await getDb();
   if (!db) throw new Error("Database not available");

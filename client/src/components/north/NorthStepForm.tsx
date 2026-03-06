@@ -38,6 +38,10 @@ type Props = {
   /** Para tabelas com fixedRows: sobrescreve o label de cada linha (ex.: nome da empresa do Comece por Aqui). */
   fixedRowLabelsByFieldId?: Record<string, string[]>;
   footerExtra?: React.ReactNode;
+  /** Botão(es) à esquerda da barra (ex.: ← Tarefa anterior). */
+  navigationPrev?: React.ReactNode;
+  /** Botão(es) à direita da barra (ex.: Avançar / Avançar módulo). */
+  navigationNext?: React.ReactNode;
 };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -197,7 +201,7 @@ function StringListField(props: {
   );
 }
 
-export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fixedRowLabelsByFieldId, footerExtra }: Props) {
+export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fixedRowLabelsByFieldId, footerExtra, navigationPrev, navigationNext }: Props) {
   const utils = trpc.useUtils();
   const draftKey = useMemo(() => `draft:lesson:${lessonId}`, [lessonId]);
 
@@ -1000,12 +1004,13 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
         ))}
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between pt-2">
+      <div className="flex flex-wrap items-center gap-3 pt-2 border-t border-border">
+        {navigationPrev}
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="outline" className="gap-2" disabled={reset.isPending}>
               <RotateCcw className="w-4 h-4" />
-              Resetar respostas desta etapa
+              Resetar respostas
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
@@ -1032,8 +1037,6 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-
-        {footerExtra}
 
         {status === "completed" ? (
           <Button
@@ -1076,6 +1079,9 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
             )}
           </Button>
         )}
+
+        {footerExtra}
+        {navigationNext}
       </div>
     </div>
   );
