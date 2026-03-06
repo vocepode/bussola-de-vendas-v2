@@ -68,12 +68,12 @@ export function LoginForm() {
             <Label htmlFor="email" className="text-xs font-normal text-slate-300 md:text-sm">
               E-mail
             </Label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 h-[15px] w-[15px] -translate-y-1/2 text-slate-400" />
+            <div className="relative flex items-stretch">
+              <Mail className="pointer-events-none absolute left-3 top-1/2 z-10 h-[15px] w-[15px] shrink-0 -translate-y-1/2 text-slate-400" />
               <Input
                 id="email"
                 type="email"
-                className="h-9 rounded-lg border border-slate-700 bg-slate-200 pl-9 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-blue-200 dark:bg-slate-200 dark:text-slate-900 dark:placeholder:text-slate-500 md:h-10"
+                className="h-9 w-full min-h-[2.25rem] rounded-lg border border-slate-700 bg-slate-200 pl-9 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-blue-200 dark:bg-slate-200 dark:text-slate-900 dark:placeholder:text-slate-500 md:h-10 md:min-h-[2.5rem]"
                 placeholder="vocepode@vocepode.pro"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -87,12 +87,12 @@ export function LoginForm() {
             <Label htmlFor="password" className="text-xs font-normal text-slate-300 md:text-sm">
               Senha
             </Label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 h-[15px] w-[15px] -translate-y-1/2 text-slate-400" />
+            <div className="relative flex items-stretch">
+              <Lock className="pointer-events-none absolute left-3 top-1/2 z-10 h-[15px] w-[15px] shrink-0 -translate-y-1/2 text-slate-400" />
               <Input
                 id="password"
                 type={showPassword ? "text" : "password"}
-                className="h-9 rounded-lg border border-slate-700 bg-slate-200 pl-9 pr-9 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-blue-200 dark:bg-slate-200 dark:text-slate-900 dark:placeholder:text-slate-500 md:h-10"
+                className="h-9 w-full min-h-[2.25rem] rounded-lg border border-slate-700 bg-slate-200 pl-9 pr-9 text-sm text-slate-900 placeholder:text-slate-500 focus-visible:ring-2 focus-visible:ring-blue-200 dark:bg-slate-200 dark:text-slate-900 dark:placeholder:text-slate-500 md:h-10 md:min-h-[2.5rem]"
                 placeholder="Sua senha"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -101,7 +101,7 @@ export function LoginForm() {
               />
               <button
                 type="button"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500"
+                className="absolute right-3 top-1/2 z-10 -translate-y-1/2 text-slate-500 hover:text-slate-600 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:ring-offset-0"
                 onClick={() => setShowPassword((v) => !v)}
                 disabled={submitting}
                 aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
@@ -111,8 +111,8 @@ export function LoginForm() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between pt-1 text-[12px] text-slate-400 md:text-sm">
-            <label className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-[12px] text-slate-400 md:text-sm">
+            <label className="flex cursor-pointer items-center gap-2 select-none">
               <Checkbox
                 checked={rememberMe}
                 onCheckedChange={(value) => setRememberMe(Boolean(value))}
@@ -127,7 +127,7 @@ export function LoginForm() {
 
           <Button
             type="submit"
-            className="mx-auto mt-1 flex h-10 w-32 rounded-full bg-violet-800 text-base font-semibold text-white hover:bg-violet-700 md:mt-2 md:w-40"
+            className="mx-auto mt-1 flex h-10 min-h-[2.5rem] w-32 shrink-0 rounded-full bg-violet-800 text-base font-semibold text-white hover:bg-violet-700 md:mt-2 md:w-40"
             disabled={submitting}
           >
             {submitting ? "Entrando..." : "Entrar"}
