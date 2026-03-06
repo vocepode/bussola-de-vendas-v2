@@ -137,17 +137,17 @@ export default function MapWorkspace() {
                       className={cn("gap-2", isDark ? "border-white/20 text-white/90 hover:bg-white/10" : "")}
                     >
                       <Printer className="w-4 h-4" />
-                      Imprimir
+                      Imprimir / Salvar PDF
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => window.open("/mapa/preview", "_blank", "noopener,noreferrer")}>
-                      <Eye className="w-4 h-4 mr-2" />
-                      Abrir pré-visualização
-                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => window.open("/mapa/preview?print=1", "_blank", "noopener,noreferrer")}>
                       <FileDown className="w-4 h-4 mr-2" />
-                      Imprimir / Salvar PDF
+                      PDF Completo
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => window.open("/mapa/preview", "_blank", "noopener,noreferrer")}>
+                      <FileDown className="w-4 h-4 mr-2" />
+                      PDF por Etapa
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

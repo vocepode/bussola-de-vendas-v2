@@ -398,6 +398,7 @@ export const appRouter = router({
         };
       }),
 
+    /** Somente leitura: retorna o estado das lições do módulo. Nunca altera dados de outro módulo. */
     getWorkspaceStateBySlug: protectedProcedure
       .input(z.object({ slug: z.enum(["marco-zero", "norte", "comece-por-aqui"]) }))
       .query(async ({ ctx, input }) => {

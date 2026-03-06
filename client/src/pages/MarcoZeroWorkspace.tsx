@@ -13,17 +13,9 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Loader2, ArrowLeft, CheckCircle2, Circle, AlertTriangle, Printer, FileDown } from "lucide-react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { getLoginUrl } from "@/const";
@@ -111,9 +103,6 @@ export default function MarcoZeroWorkspace() {
   const [activeStep, setActiveStep] = useState<StepKey>(() => STEPS[0]?.key ?? "jornada");
   const printAreaRef = useRef<HTMLDivElement>(null);
   const [printing, setPrinting] = useState(false);
-  const [pdfSectionsOpen, setPdfSectionsOpen] = useState(false);
-  const [pdfSectionKeys, setPdfSectionKeys] = useState<StepKey[]>(() => STEPS.map((s) => s.key));
-
   const lessonIdByStepKey = useMemo(() => {
     const map = new Map<StepKey, number>();
     const allByModule: Record<string, typeof norteLessons> = {
@@ -346,68 +335,18 @@ export default function MarcoZeroWorkspace() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={handlePrintAllSteps}>
+                    <FileDown className="w-4 h-4 mr-2" />
+                    PDF Completo
+                  </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => window.open("/marco-zero/preview?pdf=full", "_blank", "noopener,noreferrer")}
                   >
                     <FileDown className="w-4 h-4 mr-2" />
-                    PDF Completo
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setPdfSectionsOpen(true)}>
-                    <FileDown className="w-4 h-4 mr-2" />
-                    PDF por Seção
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handlePrintCurrentStep}>
-                    <FileDown className="w-4 h-4 mr-2" />
-                    Imprimir etapa atual
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handlePrintAllSteps}>
-                    <FileDown className="w-4 h-4 mr-2" />
-                    Imprimir todas as etapas
+                    PDF por Etapa
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <Dialog open={pdfSectionsOpen} onOpenChange={setPdfSectionsOpen}>
-                <DialogContent className="sm:max-w-md border-[#262626] bg-[#161616] text-white">
-                  <DialogHeader>
-                    <DialogTitle>PDF por Seção</DialogTitle>
-                  </DialogHeader>
-                  <p className="text-sm text-white/70">
-                    Selecione as seções para incluir no PDF. Depois, use a pré-visualização para imprimir ou salvar.
-                  </p>
-                  <div className="space-y-3 py-2">
-                    {STEPS.map((s) => (
-                      <label key={s.key} className="flex items-center gap-2 cursor-pointer">
-                        <Checkbox
-                          checked={pdfSectionKeys.includes(s.key)}
-                          onCheckedChange={(checked) => {
-                            setPdfSectionKeys((prev) =>
-                              checked ? [...prev, s.key] : prev.filter((k) => k !== s.key)
-                            );
-                          }}
-                        />
-                        <span>{s.title}</span>
-                      </label>
-                    ))}
-                  </div>
-                  <div className="flex justify-end gap-2">
-                    <Button variant="outline" size="sm" onClick={() => setPdfSectionsOpen(false)}>
-                      Cancelar
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={() => {
-                        const q = new URLSearchParams();
-                        if (pdfSectionKeys.length > 0) q.set("sections", pdfSectionKeys.join(","));
-                        setPdfSectionsOpen(false);
-                        window.open(`/marco-zero/preview?${q.toString()}`, "_blank", "noopener,noreferrer");
-                      }}
-                    >
-                      Abrir pré-visualização
-                    </Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
               {status === "completed" ? (
                 <Badge className="gap-1.5 bg-primary text-primary-foreground">
                   <CheckCircle2 className="w-3.5 h-3.5" />

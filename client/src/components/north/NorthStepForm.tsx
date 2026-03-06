@@ -401,7 +401,8 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
     return `Salvo ${lastSavedAt.toLocaleString()}`;
   }, [saving, lastSavedAt]);
 
-  // Prefill opcional de tabela a partir de uma lista (ex.: concorrentes do Diagnóstico do negócio)
+  // Prefill opcional de tabela a partir de uma lista (ex.: concorrentes do Diagnóstico do negócio).
+  // Nunca sobrescrever dados existentes com prefill vazio (evita perda da Matrioska dos Concorrentes no Norte).
   useEffect(() => {
     if (!tablePrefill) return;
     if (!state) return;
