@@ -569,17 +569,20 @@ export function mergeSecaoRedesSociais(
     : concorrentesRaw && typeof concorrentesRaw === "object" && "concorrentes" in (concorrentesRaw as object) && Array.isArray((concorrentesRaw as { concorrentes: unknown }).concorrentes)
       ? (concorrentesRaw as { concorrentes: unknown[] }).concorrentes
       : [];
-  const concorrentes: ConcorrenteInstagram[] = concorrentesArray.map((c: Record<string, unknown>) => ({
-    id: typeof c.id === "string" ? c.id : nanoid(),
-    username: typeof c.username === "string" ? c.username : "",
-    tipo: c.tipo === "direto" || c.tipo === "indireto" || c.tipo === "referencia" ? c.tipo : "direto",
-    analise: normalizarAnaliseConcorrente(
-      c.analise && typeof c.analise === "object" ? (c.analise as Record<string, unknown>) : {}
-    ),
-    oFazeMelhor: typeof c.oFazeMelhor === "string" ? c.oFazeMelhor : "",
-    oportunidades: typeof c.oportunidades === "string" ? c.oportunidades : "",
-    nota: typeof c.nota === "string" ? c.nota : "",
-  }));
+  const concorrentes: ConcorrenteInstagram[] = concorrentesArray.map((c) => {
+    const x = c as Record<string, unknown>;
+    return {
+      id: typeof x.id === "string" ? x.id : nanoid(),
+      username: typeof x.username === "string" ? x.username : "",
+      tipo: x.tipo === "direto" || x.tipo === "indireto" || x.tipo === "referencia" ? x.tipo : "direto",
+      analise: normalizarAnaliseConcorrente(
+        x.analise && typeof x.analise === "object" ? (x.analise as Record<string, unknown>) : {}
+      ),
+      oFazeMelhor: typeof x.oFazeMelhor === "string" ? x.oFazeMelhor : "",
+      oportunidades: typeof x.oportunidades === "string" ? x.oportunidades : "",
+      nota: typeof x.nota === "string" ? x.nota : "",
+    };
+  });
   const concorrentesObj = concorrentesRaw && typeof concorrentesRaw === "object" && !Array.isArray(concorrentesRaw)
     ? (concorrentesRaw as { conclusao?: string; concluido?: boolean })
     : {};
