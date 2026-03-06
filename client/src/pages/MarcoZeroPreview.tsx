@@ -280,7 +280,8 @@ export default function MarcoZeroPreview() {
 
   const sectionProgressList = useMemo(() => {
     return stepsWithData.map(({ def, data }) => {
-      const blocks = def.blocks.filter((b) => b.type === "field" || b.type === "table");
+      const allBlocks = def.blocks.filter((b) => b.type === "field" || b.type === "table");
+      const blocks = getVisibleBlocks(allBlocks, data as Record<string, unknown>);
       let filled = 0;
       for (const b of blocks) {
         const fieldId = b.type === "field" ? b.fieldId : b.fieldId;

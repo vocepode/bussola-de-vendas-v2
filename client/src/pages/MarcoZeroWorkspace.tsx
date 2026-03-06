@@ -29,11 +29,36 @@ import DashboardLayout from "@/components/DashboardLayout";
 import { getLoginUrl } from "@/const";
 import { getModuleHref, PILLARS_ORDER } from "@/constants/pillars";
 import { MARCO_ZERO_STEPS } from "@/marcoZero/schema";
+import type { NorthBlock } from "@/north/schema";
 import { NorthStepForm } from "@/components/north/NorthStepForm";
 import { buildStepPrintHtml, buildWorkspaceReportHtml } from "@/lib/workspacePrint";
 
 const STEPS = MARCO_ZERO_STEPS;
 type StepKey = (typeof STEPS)[number]["key"];
+
+function getVisibleBlocks(blocks: NorthBlock[], data: Record<string, unknown>): NorthBlock[] {
+  return blocks.filter((b) => {
+    if (b.type !== "field" && b.type !== "table") return false;
+    const showWhen = "showWhen" in b ? b.showWhen : undefined;
+    if (!showWhen) return true;
+    const raw = data[showWhen.fieldId];
+    const val = Array.isArray(showWhen.value) ? showWhen.value : [showWhen.value];
+    const op = showWhen.operator ?? "eq";
+    if (op === "neq") {
+      const match = Array.isArray(raw)
+        ? (raw as string[]).some((r) => val.includes(r))
+        : val.includes(String(raw ?? ""));
+      return !match;
+    }
+    if (op === "contains") {
+      if (!Array.isArray(raw)) return val.includes(String(raw ?? ""));
+      return (raw as string[]).some((r) => val.includes(r));
+    }
+    return Array.isArray(raw)
+      ? (raw as string[]).some((r) => val.includes(r))
+      : val.includes(String(raw ?? ""));
+  });
+}
 
 export default function MarcoZeroWorkspace() {
   const { isAuthenticated, loading: authLoading, user } = useAuth();
@@ -232,7 +257,8 @@ export default function MarcoZeroWorkspace() {
       });
 
       const sectionPcts = stepsWithDefs.map(({ step: stepDef, data }) => {
-        const blocks = stepDef.blocks.filter((b) => b.type === "field" || b.type === "table");
+        const allBlocks = stepDef.blocks.filter((b) => b.type === "field" || b.type === "table");
+        const blocks = getVisibleBlocks(allBlocks, data as Record<string, unknown>);
         let filled = 0;
         for (const b of blocks) {
           const fieldId = b.type === "field" ? b.fieldId : b.fieldId;
