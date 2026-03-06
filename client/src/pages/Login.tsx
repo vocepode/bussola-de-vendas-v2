@@ -5,18 +5,14 @@ import ShaderBackground from "@/components/ui/shader-background";
 
 export default function Login() {
   return (
-    <main
-      className="relative w-full overflow-x-hidden overflow-y-auto bg-black"
-      style={{ minHeight: "100vh", minHeight: "100dvh" } as React.CSSProperties}
-    >
-      <ShaderBackground />
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-black/25" />
+    <>
+      <style>{`.login-viewport-min{min-height:100vh;min-height:100dvh}`}</style>
+      <main className="login-viewport-min relative w-full overflow-x-hidden overflow-y-auto bg-black">
+        <ShaderBackground />
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-black/25" />
 
-      <div
-        className="relative z-10 grid grid-cols-1 lg:grid-cols-3"
-        style={{ minHeight: "100vh", minHeight: "100dvh" } as React.CSSProperties}
-      >
-        <section className="relative hidden min-h-full lg:col-span-2 lg:block">
+        <div className="login-viewport-min relative z-10 grid grid-cols-1 lg:grid-cols-3">
+          <section className="relative hidden min-h-full lg:col-span-2 lg:block">
           <div className="absolute inset-0 z-[2] bg-black/35" />
           <div className="absolute inset-0 z-10 flex items-center justify-center px-12">
             <div className="mt-14 flex items-center gap-7">
@@ -41,10 +37,7 @@ export default function Login() {
           </div>
         </section>
 
-        <section
-          className="relative z-10 flex min-h-full items-start justify-center px-4 pb-8 pt-28 lg:col-span-1 lg:min-h-full lg:items-center lg:border-l lg:border-white/10 lg:bg-violet-900/60 lg:px-7 lg:py-10"
-          style={{ minHeight: "100vh", minHeight: "100dvh" } as React.CSSProperties}
-        >
+        <section className="login-viewport-min relative z-10 flex min-h-full items-start justify-center px-4 pb-8 pt-28 lg:col-span-1 lg:min-h-full lg:items-center lg:border-l lg:border-white/10 lg:bg-violet-900/60 lg:px-7 lg:py-10">
           <div className="absolute inset-0 bg-gradient-to-b from-white/5 via-white/[0.02] to-violet-950/35" />
           <div className="relative z-10 w-full max-w-sm rounded-3xl border border-violet-200/25 bg-violet-950/45 px-4 pb-4 pt-5 shadow-2xl backdrop-blur-sm lg:max-w-xl lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none">
             <div className="hidden -mx-5 -mt-5 mb-5 border-b border-white/10 bg-transparent px-5 py-5 text-center lg:-mx-0 lg:-mt-0 lg:mb-7 lg:block lg:px-0 lg:py-3">
@@ -80,5 +73,6 @@ export default function Login() {
         </section>
       </div>
     </main>
+    </>
   );
 }
