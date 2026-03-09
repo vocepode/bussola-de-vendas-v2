@@ -267,6 +267,8 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [columnHelpOpen, setColumnHelpOpen] = useState<string | null>(null);
   const [examplesOpen, setExamplesOpen] = useState(false);
+  const [focusedCurrencyFieldId, setFocusedCurrencyFieldId] = useState<string | null>(null);
+  const [currencyEditInput, setCurrencyEditInput] = useState<string>("");
   const timerRef = useRef<number | null>(null);
   const lastPrefillSigRef = useRef<string | null>(null);
   const pendingPatchRef = useRef<Record<string, unknown>>({});
@@ -783,6 +785,8 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
       if (b.fieldType === "currency") {
         const raw = normalizeFieldDisplayValue(value, b.fieldId);
         const display = raw.trim() ? formatCurrencyBR(raw) : "";
+        const isFocused = focusedCurrencyFieldId === b.fieldId;
+        const inputValue = isFocused ? currencyEditInput : display;
         return (
           <div key={idx} className="space-y-2">
             <div>
@@ -790,15 +794,22 @@ export function NorthStepForm({ lessonId, step, workspaceSlug, tablePrefill, fix
               {b.helperText ? <div className="text-xs text-muted-foreground">{b.helperText}</div> : null}
             </div>
             <Input
-              value={display}
+              value={inputValue}
               placeholder={b.placeholder ?? "R$ 0,00"}
+              onFocus={() => {
+                setFocusedCurrencyFieldId(b.fieldId);
+                setCurrencyEditInput(raw.trim() ? raw : "");
+              }}
               onChange={(e) => {
-                const parsed = parseCurrencyBR(e.target.value);
+                const next = e.target.value;
+                setCurrencyEditInput(next);
+                const parsed = parseCurrencyBR(next);
                 setField(b.fieldId, parsed, { flush: false });
               }}
               onBlur={(e) => {
                 const parsed = parseCurrencyBR(e.target.value);
                 setField(b.fieldId, parsed, { flush: true });
+                setFocusedCurrencyFieldId(null);
               }}
               className={FIELD_INPUT_CLASS}
             />

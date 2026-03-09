@@ -417,6 +417,7 @@ export const MARCO_ZERO_STEPS: NorthStepDef[] = [
           { id: "local", label: "Local (no seu bairro ou na sua cidade)" },
           { id: "regional", label: "Regional (cidades/estados próximos)" },
           { id: "nacional", label: "Nacional (todo o país)" },
+          { id: "internacional", label: "Internacional" },
         ],
       },
       {
