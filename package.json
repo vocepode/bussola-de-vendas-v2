@@ -14,7 +14,8 @@
     "import:html": "tsx scripts/import-notion-html.ts",
     "import:ideas": "tsx scripts/import-notion-csv-content-ideas.ts",
     "user:create": "tsx scripts/create-user.ts",
-    "setup-admins": "tsx scripts/setup-admins.ts"
+    "setup-admins": "tsx scripts/setup-admins.ts",
+    "backup:db": "bash scripts/backup-db.sh"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.693.0",

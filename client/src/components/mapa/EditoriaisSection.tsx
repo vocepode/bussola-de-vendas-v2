@@ -75,12 +75,26 @@ export function EditoriaisSection() {
   const [newContext, setNewContext] = useState("");
   const [instrucoesOpen, setInstrucoesOpen] = useState(false);
   const [exemploOpen, setExemploOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<"table" | "cards">("table");
 
   useEffect(() => {
     if (showNewForm && newFormRef.current) {
       newFormRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
   }, [showNewForm]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const stored = window.localStorage.getItem("mapa:editoriais:viewMode");
+    if (stored === "table" || stored === "cards") {
+      setViewMode(stored);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem("mapa:editoriais:viewMode", viewMode);
+  }, [viewMode]);
 
   useEffect(() => {
     const draft = loadDraft<{ name: string; why: string; context: string; show: boolean }>(DRAFT_KEY);
@@ -144,11 +158,37 @@ export function EditoriaisSection() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold">Editoriais</h2>
-        <p className="text-sm text-muted-foreground mt-1">
-          Defina as editorias do seu conteúdo: nome, por que explorar e contexto de uso.
-        </p>
+      <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h2 className="text-xl font-semibold">Editoriais</h2>
+          <p className="text-sm text-muted-foreground mt-1">
+            Defina as editorias do seu conteúdo: nome, por que explorar e contexto de uso.
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="inline-flex rounded-md border bg-muted/40 p-0.5">
+            <Button
+              type="button"
+              size="sm"
+              variant={viewMode === "table" ? "default" : "ghost"}
+              className="px-3"
+              onClick={() => setViewMode("table")}
+              aria-pressed={viewMode === "table"}
+            >
+              Tabela
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              variant={viewMode === "cards" ? "default" : "ghost"}
+              className="px-3"
+              onClick={() => setViewMode("cards")}
+              aria-pressed={viewMode === "cards"}
+            >
+              Cards
+            </Button>
+          </div>
+        </div>
       </div>
 
       <Collapsible open={instrucoesOpen} onOpenChange={setInstrucoesOpen}>
@@ -244,62 +284,129 @@ export function EditoriaisSection() {
       )}
 
       {(editoriais ?? []).length > 0 && (
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[140px]">Nome</TableHead>
-                <TableHead>Por que explorar</TableHead>
-                <TableHead>Contexto</TableHead>
-                <TableHead className="w-[120px] text-right">Ações</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+        <>
+          {viewMode === "table" && (
+            <div className="rounded-md border">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[140px]">Nome</TableHead>
+                    <TableHead>Por que explorar</TableHead>
+                    <TableHead>Contexto</TableHead>
+                    <TableHead className="w-[120px] text-right">Ações</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {(editoriais ?? []).map((ed) => (
+                    <TableRow key={ed.id}>
+                      {editingId === ed.id ? (
+                        <TableCell colSpan={4} className="p-4 bg-muted/30">
+                          <EditorialEditForm
+                            editorial={ed}
+                            onSave={(data) => {
+                              updateMutation.mutate(
+                                { id: ed.id, ...data },
+                                { onSuccess: () => setEditingId(null) }
+                              );
+                            }}
+                            onCancel={() => setEditingId(null)}
+                            isSaving={updateMutation.isPending}
+                          />
+                        </TableCell>
+                      ) : (
+                        <>
+                          <TableCell className="font-medium">{ed.name}</TableCell>
+                          <TableCell
+                            className="max-w-[200px] truncate text-muted-foreground"
+                            title={ed.whyExplore ?? undefined}
+                          >
+                            {ed.whyExplore ?? "—"}
+                          </TableCell>
+                          <TableCell
+                            className="max-w-[200px] truncate text-muted-foreground"
+                            title={ed.context ?? undefined}
+                          >
+                            {ed.context ?? "—"}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <div className="flex justify-end gap-1">
+                              <Button size="sm" variant="ghost" onClick={() => setEditingId(ed.id)}>
+                                Editar
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="text-destructive hover:text-destructive"
+                                onClick={() => deleteMutation.mutate({ id: ed.id })}
+                                disabled={deleteMutation.isPending}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </>
+                      )}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+
+          {viewMode === "cards" && (
+            <div className="grid gap-4 md:grid-cols-2">
               {(editoriais ?? []).map((ed) => (
-                <TableRow key={ed.id}>
-                  {editingId === ed.id ? (
-                    <TableCell colSpan={4} className="p-4 bg-muted/30">
+                <Card key={ed.id}>
+                  <CardContent className="pt-4 space-y-3">
+                    {editingId === ed.id ? (
                       <EditorialEditForm
                         editorial={ed}
                         onSave={(data) => {
-                          updateMutation.mutate({ id: ed.id, ...data }, { onSuccess: () => setEditingId(null) });
+                          updateMutation.mutate(
+                            { id: ed.id, ...data },
+                            { onSuccess: () => setEditingId(null) }
+                          );
                         }}
                         onCancel={() => setEditingId(null)}
                         isSaving={updateMutation.isPending}
                       />
-                    </TableCell>
-                  ) : (
-                    <>
-                      <TableCell className="font-medium">{ed.name}</TableCell>
-                      <TableCell className="max-w-[200px] truncate text-muted-foreground" title={ed.whyExplore ?? undefined}>
-                        {ed.whyExplore ?? "—"}
-                      </TableCell>
-                      <TableCell className="max-w-[200px] truncate text-muted-foreground" title={ed.context ?? undefined}>
-                        {ed.context ?? "—"}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end gap-1">
-                          <Button size="sm" variant="ghost" onClick={() => setEditingId(ed.id)}>
-                            Editar
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            className="text-destructive hover:text-destructive"
-                            onClick={() => deleteMutation.mutate({ id: ed.id })}
-                            disabled={deleteMutation.isPending}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
+                    ) : (
+                      <>
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="min-w-0 flex-1">
+                            <p className="font-semibold text-foreground">{ed.name}</p>
+                            {ed.whyExplore && (
+                              <p className="mt-1 text-sm text-muted-foreground line-clamp-3">
+                                {ed.whyExplore}
+                              </p>
+                            )}
+                          </div>
+                          <div className="flex gap-1 shrink-0">
+                            <Button size="sm" variant="ghost" onClick={() => setEditingId(ed.id)}>
+                              Editar
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-destructive hover:text-destructive"
+                              onClick={() => deleteMutation.mutate({ id: ed.id })}
+                              disabled={deleteMutation.isPending}
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
                         </div>
-                      </TableCell>
-                    </>
-                  )}
-                </TableRow>
+                        {ed.context && (
+                          <p className="text-sm text-muted-foreground line-clamp-3">{ed.context}</p>
+                        )}
+                      </>
+                    )}
+                  </CardContent>
+                </Card>
               ))}
-            </TableBody>
-          </Table>
-        </div>
+            </div>
+          )}
+        </>
       )}
 
       {(!editoriais || editoriais.length === 0) && !showNewForm && (

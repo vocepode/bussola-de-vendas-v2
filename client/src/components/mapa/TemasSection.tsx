@@ -225,11 +225,11 @@ export function TemasSection() {
                   <span className="text-amber-600">(recomendado: pelo menos 4 temas)</span>
                 )}
               </p>
-              <div className="space-y-2">
+              <div className="grid gap-3 md:grid-cols-2">
                 {(temasEd).map((tema) => (
                   <div
                     key={tema.id}
-                    className="flex items-start justify-between gap-4 rounded border p-3"
+                    className="flex flex-col justify-between gap-3 rounded border p-3"
                   >
                     {editingId === tema.id ? (
                       <TemaEditForm
@@ -246,10 +246,12 @@ export function TemasSection() {
                         <div className="min-w-0 flex-1">
                           <p className="font-medium">{tema.name}</p>
                           {tema.context && (
-                            <p className="text-sm text-muted-foreground mt-1">{tema.context}</p>
+                            <p className="text-sm text-muted-foreground mt-1 line-clamp-3">
+                              {tema.context}
+                            </p>
                           )}
                         </div>
-                        <div className="flex gap-2 shrink-0">
+                        <div className="mt-1 flex gap-2 justify-end">
                           <Button size="sm" variant="ghost" onClick={() => setEditingId(tema.id)}>
                             Editar
                           </Button>

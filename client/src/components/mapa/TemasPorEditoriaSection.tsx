@@ -43,9 +43,11 @@ export function TemasPorEditoriaSection() {
             <CardContent className="pt-4">
               <p className="font-semibold text-foreground">{editorial.name}</p>
               {editorial.whyExplore && (
-                <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{editorial.whyExplore}</p>
+                <p className="text-xs text-muted-foreground mt-1 line-clamp-3">
+                  {editorial.whyExplore}
+                </p>
               )}
-              <ul className="mt-3 space-y-1">
+              <ul className="mt-3 space-y-1.5">
                 {temasEd.map((t) => (
                   <li key={t.id} className="text-sm flex items-start gap-2">
                     <span className="text-muted-foreground">•</span>
